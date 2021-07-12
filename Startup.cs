@@ -50,7 +50,7 @@ namespace eComm_Reporting_Application
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=SubscriptionGroups}/{action=Index}/{id?}");
             });
         }
     }
