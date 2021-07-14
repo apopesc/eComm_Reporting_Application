@@ -107,3 +107,15 @@ body {
     font-size: 30px;
     color: #FFFFFF;
 }
+
+.filter-data{
+    margin-left: 5%;
+    margin-top: 15px;
+}
+.radio-label{
+    float:left;
+}
+.radio-btns{
+    float:left;
+    margin-left:10px;
+}
