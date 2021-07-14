@@ -73,6 +73,7 @@ body {
 .top-bar{
     max-width:100%;
     padding-left:0px;
+    height:80px;
 }
 
 .tjx-icon{
@@ -86,4 +87,23 @@ body {
     box-sizing: border-box;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     padding: 4px;
+}
+
+.page-header {
+    background-color: #9E0000;
+    margin-inline: 2.5%;
+    height: 42px;
+    margin-top: 40px;
+}
+
+.page-content {
+    max-width: 100%;
+}
+
+.title-text {
+    margin-left: 22px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    color: #FFFFFF;
 }
