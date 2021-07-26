@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "s/3JMyHWI3UojFfpyYdxfuGO0tOlPqJMqhMzIlSqO56eUUyKwG2TD/1eJNBdn8jTmjt7RX8JiYiVBK9Bp8CSOQ==",
+  "dgSpecHash": "C2bvOSvAAH34t7GYLGeDO5ZVBF+931nqEwnYqLS/WuR7CHasUYLw3rV4VkMFfCfAHvL5e+latXz0TAnuqE67Ug==",
   "success": true,
   "projectFilePath": "C:\\Users\\and06572\\source\\repos\\eComm_Reporting_Application\\eComm_Reporting_Application\\eComm_Reporting_Application.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\and06572\\.nuget\\packages\\bootstrap.chosen\\1.0.0\\bootstrap.chosen.1.0.0.nupkg.sha512",
+    "C:\\Users\\and06572\\.nuget\\packages\\jquery\\1.6.4\\jquery.1.6.4.nupkg.sha512",
     "C:\\Users\\and06572\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\and06572\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
     "C:\\Users\\and06572\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\3.1.0\\microsoft.aspnetcore.razor.language.3.1.0.nupkg.sha512",

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eComm_Reporting_Application.Controllers
 {
-    public class STPVPPController : Controller
+    public class MarMaxxReportsController : Controller
     {
         public IActionResult Index()
         {

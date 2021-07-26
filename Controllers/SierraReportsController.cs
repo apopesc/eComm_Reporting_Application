@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eComm_Reporting_Application.Controllers
 {
-    public class BCFSubscriptionsController : Controller
+    public class SierraReportsController : Controller
     {
         public IActionResult Index()
         {

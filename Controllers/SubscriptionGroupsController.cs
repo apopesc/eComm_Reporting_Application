@@ -10,7 +10,12 @@ namespace eComm_Reporting_Application.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            List<string> groupsList = new List<string>();
+            groupsList.Add("Ecomm SVP, Merchandising and Planning");
+            groupsList.Add("Ecomm Merchandise Managers");
+            groupsList.Add("Ecomm Admins");
+            groupsList.Add("Ecomm Merch Admins");
+            return View(groupsList);
         }
     }
 }

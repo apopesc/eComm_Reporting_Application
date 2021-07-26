@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - eComm_Reporting_Application</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-multiselect.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -19,22 +20,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="SubscriptionGroups" asp-action="Index">Subscription Groups</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SubscriptionGroups" asp-action="Index">User Subscription Groups</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="STPBCF" asp-action="Index">STP BCF</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MarMaxxReports" asp-action="Index">MarMaxx Reports Subscriptions</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="VPPSubscriptions" asp-action="Index">VPP Subscriptions</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="STPVPP" asp-action="Index">STP VPP</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="PPSubscriptions" asp-action="Index">PP Subscriptions</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="BCFSubscriptions" asp-action="Index">BCF Subscriptions</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SierraReports" asp-action="Index">Sierra Reports Subscriptions</a>
                         </li>
                     </ul>
                 </div>
@@ -54,6 +46,7 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-multiselect.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>

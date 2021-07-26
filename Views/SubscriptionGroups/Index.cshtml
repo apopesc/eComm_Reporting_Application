@@ -1,9 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Subscriptions Page";
+    ViewData["Title"] = "User Subscriptions Groups";
 }
 <div class="page-header">
     <div class="page-title">
-        <h1 class="title-text">Subscription Groups</h1>
+        <h1 class="title-text">User Subscription Groups</h1>
     </div>
 </div>
 <div class="filter-data">
@@ -15,5 +15,14 @@
             <input type="checkbox" id="no" name="is_active" value="no" />
             <label for="no">No</label>
         </div>
+    </div>
+    <div class="group">
+        <label for="groupsDropdown">Group:</label>
+        <select id="groupsDropdown" name="groupsDropdown" multiple>
+            <option value="SVP">Ecomm SVP, Merchandising and Planning</option>
+            <option value="Managers">Ecomm Merchandise Managers</option>
+            <option value="Admins">Ecomm Admins</option>
+            <option value="Merch Admins">Ecomm Merch Admins</option>
+        </select>
     </div>
 </div>

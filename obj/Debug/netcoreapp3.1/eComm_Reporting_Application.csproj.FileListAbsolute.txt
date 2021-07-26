@@ -107,8 +107,5 @@ C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Appli
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\Razor\Views\SubscriptionGroups\Index.cshtml.g.cs
-C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\Razor\Views\STPBCF\Index.cshtml.g.cs
-C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\Razor\Views\BCFSubscriptions\Index.cshtml.g.cs
-C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\Razor\Views\PPSubscriptions\Index.cshtml.g.cs
-C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\Razor\Views\STPVPP\Index.cshtml.g.cs
-C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\Razor\Views\VPPSubscriptions\Index.cshtml.g.cs
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\Razor\Views\MarMaxxReports\Index.cshtml.g.cs
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\Razor\Views\SierraReports\Index.cshtml.g.cs
