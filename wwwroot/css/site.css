@@ -119,3 +119,7 @@ body {
     float:left;
     margin-left:10px;
 }
+
+.multiselect{
+    width:300px;
+}

@@ -4,4 +4,6 @@
 // Write your JavaScript code.
 $(document).ready(function () {
     $('#groupsDropdown').multiselect();
+    $('#groupIDDropdown').multiselect();
+    $('#masterGroupDropdown').multiselect();
 });
