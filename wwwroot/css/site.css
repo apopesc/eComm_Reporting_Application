@@ -123,3 +123,44 @@ body {
 .multiselect{
     width:300px;
 }
+
+.is-active {
+    width: 470px;
+    height: 38px;
+    padding: 12px 0;
+    float: left;
+    margin-right: 110px;
+}
+
+.groupID {
+    width: 470px;
+    padding: 8px 0;
+    float: left;
+}
+
+.group {
+    width: 470px;
+    padding: 8px 0;
+    float: left;
+    margin-right: 110px;
+}
+
+.master-group {
+    width: 470px;
+    padding: 8px 0;
+    float: left;
+}
+
+.first-row{
+    width: 100%;
+    display: inline-block;
+}
+
+.second-row {
+    width: 100%;
+    display: inline-block;
+}
+
+#yesBox{
+    margin-right:5px;
+}
