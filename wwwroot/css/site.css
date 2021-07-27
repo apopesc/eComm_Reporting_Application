@@ -159,8 +159,14 @@ body {
 .second-row {
     width: 100%;
     display: inline-block;
+    margin-top: -7px;
 }
 
 #yesBox{
-    margin-right:5px;
+    margin-right: 5px;
+}
+
+.filter-label{
+    font-weight: 600;
+    margin-right: 6px;
 }
