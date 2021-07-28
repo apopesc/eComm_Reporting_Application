@@ -170,3 +170,22 @@ body {
     font-weight: 600;
     margin-right: 6px;
 }
+
+.btnViewData {
+    float: right;
+    margin-top: -22px;
+    margin-right: 2.5%;
+    width: 100px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 7px #999;
+}
+
+    .btnViewData:active {
+        box-shadow: 0 4px #666;
+        transform: translateY(4px);
+    }
+
+.btnViewData:focus {
+    outline: none;
+}
