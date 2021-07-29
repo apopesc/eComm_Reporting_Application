@@ -15,9 +15,9 @@
         <div class="is-active">
             <p class="radio-label filter-label">Is Active:</p>
             <div class="radio-btns">
-                <input type="checkbox" id="yes" name="is_active" value="yes" />
-                <label id ="yesBox" for="yes">Yes</label>
-                <input type="checkbox" id="no" name="is_active" value="no" />
+                @Html.CheckBoxFor(m => m.isActive, htmlAttributes: new { @checked = true })
+                <label id="yesBox" for="yes">Yes</label>
+                @Html.CheckBoxFor(m => m.isActive, htmlAttributes: new { @checked = false })
                 <label for="no">No</label>
             </div>
         </div>
@@ -53,7 +53,7 @@
         </div>
     </div>
     
-    <button class="btnViewData" type="button">View Data</button>
+    <button id="btnViewData" class="btnViewData" type="button">View Data</button>
 </div>
 
 <div class="separator-line">

@@ -6,4 +6,9 @@ $(document).ready(function () {
     $('#groupDropdown').multiselect();
     $('#groupIDDropdown').multiselect();
     $('#masterGroupDropdown').multiselect();
+
+    $("#btnViewData").click(function () {
+        var selectedGroupID = $('#groupIDDropdown').find(":selected").text();
+        alert("View Data Clicked");
+    })
 });
