@@ -1,4 +1,6 @@
-﻿@{
+﻿@model eComm_Reporting_Application.Models.SubscriptionGroupsModel
+
+@{
     ViewData["Title"] = "User Subscriptions Groups";
 }
 
@@ -22,10 +24,10 @@
         <div class="groupID">
             <label class="filter-label" for="groupIDDropdown">Group ID:</label>
             <select id="groupIDDropdown" name="groupIDDropdown" multiple>
-                <option value="SVP">SVP</option>
-                <option value="MM">MM</option>
-                <option value="Admin">Admin</option>
-                <option value="NYBO">NYBO MM Assist</option>
+                @foreach (var groupID in @Model.groupsIDList)
+                {
+                    <option value=@groupID> @groupID </option>
+                }
             </select>
         </div>
     </div>
@@ -34,19 +36,19 @@
         <div class="group">
             <label class="filter-label" for="groupDropdown">Group:</label>
             <select id="groupDropdown" name="groupDropdown" multiple>
-                <option value="SVP">Ecomm SVP, Merchandising and Planning</option>
-                <option value="Managers">Ecomm Merchandise Managers</option>
-                <option value="Admins">Ecomm Admins</option>
-                <option value="Merch Admins">Ecomm Merch Admins</option>
+                @foreach (var group in @Model.groupsList)
+                {
+                    <option value=@group> @group </option>
+                }
             </select>
         </div>
         <div class="master-group">
             <label class="filter-label" for="masterGroupDropdown">Master Group:</label>
             <select id="masterGroupDropdown" name="masterGroupDropdown" multiple>
-                <option value="Merchandising">Merchandising</option>
-                <option value="Admin">Admin</option>
-                <option value="Fulfillment">Fulfillment</option>
-                <option value="EcommIT">Ecomm IT</option>
+                @foreach (var master_groupID in @Model.masterGroupsIDList)
+                {
+                    <option value=@master_groupID> @master_groupID </option>
+                }
             </select>
         </div>
     </div>
