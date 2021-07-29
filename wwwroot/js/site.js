@@ -3,7 +3,7 @@
 
 // Write your JavaScript code.
 $(document).ready(function () {
-    $('#groupsDropdown').multiselect();
+    $('#groupDropdown').multiselect();
     $('#groupIDDropdown').multiselect();
     $('#masterGroupDropdown').multiselect();
 });
