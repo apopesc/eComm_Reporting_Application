@@ -45,9 +45,9 @@
         <div class="master-group">
             <label class="filter-label" for="masterGroupDropdown">Master Group:</label>
             <select id="masterGroupDropdown" name="masterGroupDropdown" multiple>
-                @foreach (var master_groupID in @Model.masterGroupsIDList)
+                @foreach (var master_group in @Model.masterGroupsList)
                 {
-                    <option value=@master_groupID> @master_groupID </option>
+                    <option value=@master_group> @master_group </option>
                 }
             </select>
         </div>

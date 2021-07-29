@@ -1,7 +1,5 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
 
-// Write your JavaScript code.
 $(document).ready(function () {
     $('#groupDropdown').multiselect();
     $('#groupIDDropdown').multiselect();
@@ -9,6 +7,11 @@ $(document).ready(function () {
 
     $("#btnViewData").click(function () {
         var selectedGroupID = $('#groupIDDropdown').find(":selected").text();
-        alert("View Data Clicked");
+        var selectedGroup = $('#groupDropdown').find(":selected").text();
+        var selectedMasterGroup = $('#masterGroupDropdown').find(":selected").text();
+        //Some additional logic to get the checkbox values - might need to use an enum: yes selected, no selected, both selected
+
+        //Have to put AJAX Call here to pass to a controller function (remember to put a URL in the AJAX call that points to the controller)
+        alert("Data Being Passed to Controller| Group ID-" + selectedGroupID + "| Group-" + selectedGroup + "| MasterGroup-" + selectedMasterGroup);
     })
 });

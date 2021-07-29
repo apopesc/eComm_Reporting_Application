@@ -25,17 +25,17 @@ namespace eComm_Reporting_Application.Controllers
             groups_list.Add("Ecomm Admins");
             groups_list.Add("Ecomm Merch Admins");
             
-            List<string> master_groupsID_list = new List<string>();
-            master_groupsID_list.Add("Merchandising");
-            master_groupsID_list.Add("Admin");
-            master_groupsID_list.Add("Fulfillment");
-            master_groupsID_list.Add("Ecomm IT");
-
+            List<string> master_groups_list = new List<string>();
+            master_groups_list.Add("Merchandising");
+            master_groups_list.Add("Admin");
+            master_groups_list.Add("Fulfillment");
+            master_groups_list.Add("Ecomm IT");
+            
             SubscriptionGroupsModel subModel = new SubscriptionGroupsModel() {
                 isActive = is_active,
                 groupsIDList = groupsID_list,
                 groupsList = groups_list,
-                masterGroupsIDList = master_groupsID_list
+                masterGroupsList = master_groups_list
             };
             
             return View(subModel);

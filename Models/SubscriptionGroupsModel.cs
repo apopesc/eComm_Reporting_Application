@@ -10,6 +10,6 @@ namespace eComm_Reporting_Application.Models
         public bool isActive { get; set; }
         public List<string> groupsIDList { get; set; }
         public List<string> groupsList { get; set; }
-        public List<string> masterGroupsIDList { get; set; }
+        public List<string> masterGroupsList { get; set; }
     }
 }
