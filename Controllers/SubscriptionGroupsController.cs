@@ -40,5 +40,11 @@ namespace eComm_Reporting_Application.Controllers
             
             return View(subModel);
         }
+
+        [HttpPost]
+        public IActionResult ReceiveFilters(SubscriptionGroupsModel filters)
+        {
+            return Json("Filter Data Received in Subscriptions Controller: " + filters);
+        }
     }
 }
