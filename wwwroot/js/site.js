@@ -42,25 +42,21 @@ $(document).ready(function () {
             selectedMasterGroup_List[i] = selectedMasterGroup_List[i].trim();
         }
 
-        //Creating data object to be passed to the controller
-        var filterData = {
-            isActive: selectedCheckBoxVal,
-            selectedGroupIDs: selectedGroupID_List,
-            selectedGroups: selectedGroup_List,
-            selectedMasterGroups: selectedMasterGroup_List
-        }
-
         //Posting collected filter data back to the SubscriptionsGroupsController
         var controllerUrl = '/SubscriptionGroups/ReceiveFilters';
 
         $.ajax({
             type: "POST",
             url: controllerUrl,
-            contentType: 'application/json',
             dataType: "json",
             success: successFunc,
             error: errorFunc,
-            data: JSON.stringify(filterData)
+            data: {
+                isActive: selectedCheckBoxVal,
+                selectedGroupIDs: selectedGroupID_List,
+                selectedGroups: selectedGroup_List,
+                selectedMasterGroups: selectedMasterGroup_List
+            }
         });
 
         function successFunc(data, status) {
@@ -71,6 +67,6 @@ $(document).ready(function () {
             alert("Error Sending Filter Data to the Subscriptions Controller");
         }
 
-        //Have to put AJAX Call here to pass to a controller function (remember to put a URL in the AJAX call that points to the controller)
+        
     })
 });

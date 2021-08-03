@@ -13,6 +13,7 @@ namespace eComm_Reporting_Application.Controllers
         {
             bool is_active = false;
             
+            // ------------------- Temporarily Hard Coded Data, will be pulling this from DB in the future ------------------//
             List<string> groupsID_list = new List<string>();
             groupsID_list.Add("SVP");
             groupsID_list.Add("MM");
@@ -30,7 +31,8 @@ namespace eComm_Reporting_Application.Controllers
             master_groups_list.Add("Admin");
             master_groups_list.Add("Fulfillment");
             master_groups_list.Add("Ecomm IT");
-            
+            //--------------------------------------------------------------------------------------------------------------//
+
             SubscriptionGroupsModel subModel = new SubscriptionGroupsModel() {
                 isActive = is_active,
                 groupsIDList = groupsID_list,
@@ -42,9 +44,10 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public IActionResult ReceiveFilters(SubscriptionGroupsModel filters)
+        public IActionResult ReceiveFilters(int isActive, List<string> selectedGroupIDs, List<string> selectedGroups, List<string> selectedMasterGroups)
         {
-            return Json("Filter Data Received in Subscriptions Controller: " + filters);
+            
+            return Json("Filter Data Received in Subscriptions Controller: ");
         }
     }
 }
