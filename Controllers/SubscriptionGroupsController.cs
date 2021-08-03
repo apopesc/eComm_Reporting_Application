@@ -11,7 +11,7 @@ namespace eComm_Reporting_Application.Controllers
     {
         public IActionResult Index()
         {
-            bool is_active = false;
+            int is_active = 0;
             
             // ------------------- Temporarily Hard Coded Data, will be pulling this from DB in the future ------------------//
             List<string> groupsID_list = new List<string>();
@@ -46,8 +46,55 @@ namespace eComm_Reporting_Application.Controllers
         [HttpPost]
         public IActionResult ReceiveFilters(int isActive, List<string> selectedGroupIDs, List<string> selectedGroups, List<string> selectedMasterGroups)
         {
+            SubscriptionGroupsModel filterData = new SubscriptionGroupsModel();
+
+            //Calling the function to get the table data
+            List<SubscriptionGroupsTableModel> tableData = GetTableData(filterData);
             
-            return Json("Filter Data Received in Subscriptions Controller: ");
+            //Returning the table data to the front end
+            return Json(tableData);
+        }
+
+        public List<SubscriptionGroupsTableModel> GetTableData(SubscriptionGroupsModel filterData)
+        {   
+            //Need to pass filterData to a DB stored procedure to get data for this list
+            List<SubscriptionGroupsTableModel> tableData = new List<SubscriptionGroupsTableModel>();
+            //It is a list of objects (each object property maps to a column - userEmail, isActive, etc...)
+
+            // ------------------- Temporarily Hard Coded Data, will be pulling this from DB in the future ------------------//
+            SubscriptionGroupsTableModel entry1 = new SubscriptionGroupsTableModel();
+            entry1.userEmail = "Mark_DeOliveira@tjx.com";
+            entry1.isActive = 'Y';
+            entry1.group = "Ecomm SVP, Merchandising and Planning";
+            entry1.groupID = "SVP";
+            entry1.masterGroup = "Merchandising";
+            tableData.Add(entry1);
+
+            SubscriptionGroupsTableModel entry2 = new SubscriptionGroupsTableModel();
+            entry2.userEmail = "paul_bibbo@tjx.com";
+            entry2.isActive = 'Y';
+            entry2.group = "Ecomm SVP, Merchandising and Planning";
+            entry2.groupID = "SVP";
+            entry2.masterGroup = "Merchandising";
+            tableData.Add(entry2);
+
+            SubscriptionGroupsTableModel entry3 = new SubscriptionGroupsTableModel();
+            entry3.userEmail = "Alicia_Garfield@tjx.com";
+            entry3.isActive = 'Y';
+            entry3.group = "Ecomm SVP, Merchandising and Planning";
+            entry3.groupID = "SVP";
+            entry3.masterGroup = "Merchandising";
+            tableData.Add(entry3);
+
+            SubscriptionGroupsTableModel entry4 = new SubscriptionGroupsTableModel();
+            entry4.userEmail = "katie_fink@tjx.com";
+            entry4.isActive = 'Y';
+            entry4.group = "Ecomm SVP, Merchandising and Planning";
+            entry4.groupID = "SVP";
+            entry4.masterGroup = "Merchandising";
+            tableData.Add(entry4);
+            //--------------------------------------------------------------------------------------------------------------//
+            return tableData;
         }
     }
 }

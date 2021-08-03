@@ -60,13 +60,14 @@ $(document).ready(function () {
         });
 
         function successFunc(data, status) {
-            alert(data);
+            alert("Data Succesfully Passed to Subscriptions Controller");
+            console.log(data);
+            //data would normally contain the table data, and be used to populate the table
         }
 
         function errorFunc() {
             alert("Error Sending Filter Data to the Subscriptions Controller");
         }
 
-        
     })
 });
