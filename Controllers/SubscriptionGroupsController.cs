@@ -63,7 +63,7 @@ namespace eComm_Reporting_Application.Controllers
 
             // ------------------- Temporarily Hard Coded Data, will be pulling this from DB in the future ------------------//
             SubscriptionGroupsTableModel entry1 = new SubscriptionGroupsTableModel();
-            entry1.userEmail = "Mark_DeOliveira@tjx.com";
+            entry1.userEmail = "andrei_popescu@tjxcanada.ca";
             entry1.isActive = 'Y';
             entry1.group = "Ecomm SVP, Merchandising and Planning";
             entry1.groupID = "SVP";

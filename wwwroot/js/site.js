@@ -59,9 +59,14 @@ $(document).ready(function () {
             }
         });
 
-        function successFunc(data, status) {
+        function successFunc(tableData, status) {
             alert("Data Succesfully Passed to Subscriptions Controller");
-            console.log(data);
+            var subTable = $('<table>').addClass('userSubscriptionsTable');
+            for (i = 0; i < tableData.length; i++) {
+                var row = $('<tr>').addClass('userSubscriptionsRow').text('result' + i);
+                subTable.append(row);
+            }
+            $('#userSubscriptionData').append(subTable);
             //data would normally contain the table data, and be used to populate the table
         }
 
