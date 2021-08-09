@@ -240,10 +240,10 @@ body {
 .userSubscriptionsRow_Header {
     border-bottom: 1px solid #ADADAD;
     height: 40px;
-    background: lightgrey;
+    background: #E5E5E5;
 }
 
-.deleteBtn{
+.deleteBtn {
     border: none;
     background: white;
     margin-left: 1px;

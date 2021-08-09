@@ -62,6 +62,9 @@ $(document).ready(function () {
         function successFunc(tableData, status) {
             alert("Data Succesfully Passed to Subscriptions Controller");
 
+            //Clearing table initially
+            $('#userSubscriptionData').empty();
+
             var subTable = $('<table>').addClass('userSubscriptionsTable');
 
             //Temporarily hard coding table headers---------------------------------------------------------
