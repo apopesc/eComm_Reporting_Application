@@ -205,3 +205,11 @@ body {
 .nav-option{
     margin-inline: 0.8rem;
 }
+
+#userSubscriptionData {
+    margin-top: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+}
