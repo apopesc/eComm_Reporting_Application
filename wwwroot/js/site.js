@@ -61,39 +61,48 @@ $(document).ready(function () {
 
         function successFunc(tableData, status) {
             alert("Data Succesfully Passed to Subscriptions Controller");
+
+            //Adding border to the table
+            $('#userSubscriptionData').css('border', '1px solid black');
+            $('#userSubscriptionData').css('border-radius', '15px');
+
             var subTable = $('<table>').addClass('userSubscriptionsTable');
 
             //Temporarily hard coding table headers-------------------------------------------------
-            var Hrow = $('<tr>').addClass('userSubscriptionsRow')
-            var tableHeader1 = $('<th>').addClass('userSubscriptionsHeader').text('User_Email');
+            let Hrow = $('<tr>').addClass('userSubscriptionsRow_Header')
+            let tableHeader1 = $('<th>').addClass('userSubscriptionsHeader').text('User_Email');
             Hrow.append(tableHeader1); //Adding it to the row
-            var tableHeader2 = $('<th>').addClass('userSubscriptionsHeader').text('Is_Active');
+            let tableHeader2 = $('<th>').addClass('userSubscriptionsHeader').text('Is_Active');
             Hrow.append(tableHeader2);
-            var tableHeader3 = $('<th>').addClass('userSubscriptionsHeader').text('Group');
+            let tableHeader3 = $('<th>').addClass('userSubscriptionsHeader').text('Group');
             Hrow.append(tableHeader3);
-            var tableHeader4 = $('<th>').addClass('userSubscriptionsHeader').text('Group_ID');
+            let tableHeader4 = $('<th>').addClass('userSubscriptionsHeader').text('Group_ID');
             Hrow.append(tableHeader4);
-            var tableHeader5 = $('<th>').addClass('userSubscriptionsHeader').text('MasterGroup');
+            let tableHeader5 = $('<th>').addClass('userSubscriptionsHeader').text('MasterGroup');
             Hrow.append(tableHeader5);
             subTable.append(Hrow); //Adding the row to the table
 
             //-------------------------------------------------------------------------------------
             for (i = 0; i < tableData.length; i++) {
-                var row = $('<tr>').addClass('userSubscriptionsRow');
-                var tableEntry1 = $('<td>').addClass('userSubscriptionsEntry').text(tableData[i].userEmail);
+
+                if (i == tableData.length - 1) { //This is so that the bottom border isn't added to the last row (it pops out of the table otherwise)
+                    var row = $('<tr>').addClass('userSubscriptionsRow_Last');
+                } else {
+                    var row = $('<tr>').addClass('userSubscriptionsRow');
+                }
+                let tableEntry1 = $('<td>').addClass('userSubscriptionsEntry_Email').text(tableData[i].userEmail);
                 row.append(tableEntry1);
-                var tableEntry2 = $('<td>').addClass('userSubscriptionsEntry').text(tableData[i].isActive);
+                let tableEntry2 = $('<td>').addClass('userSubscriptionsEntry').text(tableData[i].isActive);
                 row.append(tableEntry2);
-                var tableEntry3 = $('<td>').addClass('userSubscriptionsEntry').text(tableData[i].group);
+                let tableEntry3 = $('<td>').addClass('userSubscriptionsEntry').text(tableData[i].group);
                 row.append(tableEntry3);
-                var tableEntry4 = $('<td>').addClass('userSubscriptionsEntry').text(tableData[i].groupID);
+                let tableEntry4 = $('<td>').addClass('userSubscriptionsEntry').text(tableData[i].groupID);
                 row.append(tableEntry4);
-                var tableEntry5 = $('<td>').addClass('userSubscriptionsEntry').text(tableData[i].masterGroup);
+                let tableEntry5 = $('<td>').addClass('userSubscriptionsEntry').text(tableData[i].masterGroup);
                 row.append(tableEntry5);
                 subTable.append(row);
             }
             $('#userSubscriptionData').append(subTable);
-            //data would normally contain the table data, and be used to populate the table
         }
 
         function errorFunc() {

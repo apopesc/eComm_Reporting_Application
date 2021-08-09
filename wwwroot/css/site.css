@@ -213,3 +213,31 @@ body {
     margin-right: auto;
     width: 90%;
 }
+
+.userSubscriptionsTable {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.userSubscriptionsHeader{
+    text-align: center;
+}
+
+.userSubscriptionsEntry {
+    text-align: center;
+}
+
+.userSubscriptionsRow {
+    border-bottom: 1px solid #ADADAD;
+    height: 32px;
+}
+
+.userSubscriptionsRow_Last {
+    height: 32px;
+}
+
+.userSubscriptionsRow_Header {
+    border-bottom: 1px solid #ADADAD;
+    height: 40px;
+}
+
