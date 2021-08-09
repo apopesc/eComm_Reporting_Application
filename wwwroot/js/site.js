@@ -62,14 +62,12 @@ $(document).ready(function () {
         function successFunc(tableData, status) {
             alert("Data Succesfully Passed to Subscriptions Controller");
 
-            //Adding border to the table
-            $('#userSubscriptionData').css('border', '1px solid black');
-            $('#userSubscriptionData').css('border-radius', '15px');
-
             var subTable = $('<table>').addClass('userSubscriptionsTable');
 
-            //Temporarily hard coding table headers-------------------------------------------------
+            //Temporarily hard coding table headers---------------------------------------------------------
             let Hrow = $('<tr>').addClass('userSubscriptionsRow_Header')
+            let tableHeader_Icons = $('<th>').addClass('userSubscriptionsHeader').text(''); //Invisible header for icons
+            Hrow.append(tableHeader_Icons); 
             let tableHeader1 = $('<th>').addClass('userSubscriptionsHeader').text('User_Email');
             Hrow.append(tableHeader1); //Adding it to the row
             let tableHeader2 = $('<th>').addClass('userSubscriptionsHeader').text('Is_Active');
@@ -82,7 +80,7 @@ $(document).ready(function () {
             Hrow.append(tableHeader5);
             subTable.append(Hrow); //Adding the row to the table
 
-            //-------------------------------------------------------------------------------------
+            //----------------------------------------------------------------------------------------------
             for (i = 0; i < tableData.length; i++) {
 
                 if (i == tableData.length - 1) { //This is so that the bottom border isn't added to the last row (it pops out of the table otherwise)
@@ -90,8 +88,23 @@ $(document).ready(function () {
                 } else {
                     var row = $('<tr>').addClass('userSubscriptionsRow');
                 }
+                
+                //Adding the icons to each row ------------------------------------------------------------
+                let tableEntry_Icons = $('<td>').addClass('userSubscriptionsEntry_Icons'); 
+                let deleteIcon = $('<button>').addClass('deleteBtn');
+                let deleteLink = $('<i>').addClass('fa fa-trash');
+                deleteIcon.append(deleteLink);
+                tableEntry_Icons.append(deleteIcon);
+
+                let editIcon = $('<button>').addClass('editBtn');
+                let editLink = $('<i>').addClass('fas fa-pencil-alt');
+                editIcon.append(editLink);
+                tableEntry_Icons.append(editIcon);
+                row.append(tableEntry_Icons);
+                //-----------------------------------------------------------------------------------------
+
                 let tableEntry1 = $('<td>').addClass('userSubscriptionsEntry_Email').text(tableData[i].userEmail);
-                row.append(tableEntry1);
+                row.append(tableEntry1); //adding element to the row
                 let tableEntry2 = $('<td>').addClass('userSubscriptionsEntry').text(tableData[i].isActive);
                 row.append(tableEntry2);
                 let tableEntry3 = $('<td>').addClass('userSubscriptionsEntry').text(tableData[i].group);
@@ -100,7 +113,7 @@ $(document).ready(function () {
                 row.append(tableEntry4);
                 let tableEntry5 = $('<td>').addClass('userSubscriptionsEntry').text(tableData[i].masterGroup);
                 row.append(tableEntry5);
-                subTable.append(row);
+                subTable.append(row); //adding row to the table
             }
             $('#userSubscriptionData').append(subTable);
         }

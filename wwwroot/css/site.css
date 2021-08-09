@@ -217,6 +217,7 @@ body {
 .userSubscriptionsTable {
     width: 100%;
     margin: 0 auto;
+    border: 1px solid black;
 }
 
 .userSubscriptionsHeader{
@@ -239,5 +240,21 @@ body {
 .userSubscriptionsRow_Header {
     border-bottom: 1px solid #ADADAD;
     height: 40px;
+    background: lightgrey;
 }
 
+.deleteBtn{
+    border: none;
+    background: white;
+    margin-left: 1px;
+}
+
+.editBtn {
+    border: none;
+    background: white;
+    margin-left: 1px;
+}
+/*tr.userSubscriptionsRow_Header th{
+    background: lightgrey;
+    border-radius: 15px;
+}*/
