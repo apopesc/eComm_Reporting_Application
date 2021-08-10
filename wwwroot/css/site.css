@@ -254,6 +254,33 @@ body {
     background: white;
     margin-left: 1px;
 }
+
+#addNewUserSubscription {
+    float: right;
+    margin-top: 50px;
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: -8px;
+}
+
+.addNewText {
+    float: left;
+    margin-right: 7px;
+    line-height: 48px;
+    color: #9E0000;
+    font-weight: 700;
+}
+
+.addNewBtn{
+    float: left;
+    border: none;
+    background: white;
+}
+
+.fa-plus-circle {
+    font-size: 3em;
+    color: #9E0000;
+}
 /*tr.userSubscriptionsRow_Header th{
     background: lightgrey;
     border-radius: 15px;
