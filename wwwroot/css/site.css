@@ -181,6 +181,7 @@ body {
     border: none;
     border-radius: 8px;
     box-shadow: 0 5px #999;
+    font-weight: 700;
 }
 
     .btnViewData:active {
@@ -305,13 +306,13 @@ body {
     position: absolute;
     bottom: 75px;
     right: 3.4%;
-
     width: 100px;
     border: none;
     border-radius: 8px;
     box-shadow: 0 5px #999;
     background-color: #9E0000;
     color: white;
+    font-weight: 700;
 }
 
     .btnSubmit:active {
