@@ -277,6 +277,11 @@ body {
     background: white;
 }
 
+    .addNewBtn:focus {
+        outline: none;
+        transform: rotate(45deg);
+    }
+
 .fa-plus-circle {
     font-size: 3em;
     color: #9E0000;
