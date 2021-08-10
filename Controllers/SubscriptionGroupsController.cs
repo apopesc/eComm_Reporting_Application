@@ -71,7 +71,7 @@ namespace eComm_Reporting_Application.Controllers
             tableData.Add(entry1);
 
             SubscriptionGroupsTableModel entry2 = new SubscriptionGroupsTableModel();
-            entry2.userEmail = "paul_bibbo@tjx.com";
+            entry2.userEmail = "test_guy@tjxcanada.ca";
             entry2.isActive = 'Y';
             entry2.group = "Ecomm SVP, Merchandising and Planning";
             entry2.groupID = "SVP";
@@ -79,7 +79,7 @@ namespace eComm_Reporting_Application.Controllers
             tableData.Add(entry2);
 
             SubscriptionGroupsTableModel entry3 = new SubscriptionGroupsTableModel();
-            entry3.userEmail = "Alicia_Garfield@tjx.com";
+            entry3.userEmail = "testing@tjxcanada.ca";
             entry3.isActive = 'Y';
             entry3.group = "Ecomm SVP, Merchandising and Planning";
             entry3.groupID = "SVP";
@@ -87,12 +87,13 @@ namespace eComm_Reporting_Application.Controllers
             tableData.Add(entry3);
 
             SubscriptionGroupsTableModel entry4 = new SubscriptionGroupsTableModel();
-            entry4.userEmail = "katie_fink@tjx.com";
+            entry4.userEmail = "testdude@tjxcanada.ca";
             entry4.isActive = 'Y';
             entry4.group = "Ecomm SVP, Merchandising and Planning";
             entry4.groupID = "SVP";
             entry4.masterGroup = "Merchandising";
             tableData.Add(entry4);
+
             //--------------------------------------------------------------------------------------------------------------//
             return tableData;
         }
