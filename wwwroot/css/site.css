@@ -286,6 +286,27 @@ body {
     font-size: 3em;
     color: #9E0000;
 }
+
+.btnSubmit {
+    /*float: right;
+    margin-top: 1%;
+    margin-bottom: 6%;
+    margin-right: 2.5%;*/
+    width: 100px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 5px #999;
+    background-color: #9E0000;
+    color: white;
+}
+
+    .btnSubmit:active {
+        box-shadow: 0 2px #666;
+        transform: translateY(4px);
+    }
+    .btnSubmit:focus {
+        outline: none;
+    }
 /*tr.userSubscriptionsRow_Header th{
     background: lightgrey;
     border-radius: 15px;
