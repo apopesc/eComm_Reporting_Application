@@ -239,7 +239,7 @@ body {
     text-align: center;
 }
 
-.userSubscriptionsEntry {
+.userSubscriptionsEntry_isActive, .userSubscriptionsEntry_Group, .userSubscriptionsEntry_GroupID, .userSubscriptionsEntry_masterGroup {
     text-align: center;
 }
 

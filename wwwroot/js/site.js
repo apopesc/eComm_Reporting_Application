@@ -6,6 +6,7 @@ $(document).ready(function () {
     $('#groupIDDropdown').multiselect();
     $('#masterGroupDropdown').multiselect();
 
+
     $("#btnViewData").click(function () {
         var selectedGroupID = $('#groupIDDropdown').find(":selected").text();
         var selectedGroup = $('#groupDropdown').find(":selected").text();
@@ -25,7 +26,7 @@ $(document).ready(function () {
 
         //Turning the dropdown selected values into lists, removing whitespace
         var selectedGroupID_List = selectedGroupID.split('  ');
-        
+
         for (let i = 0; i < selectedGroupID_List.length; i++) {
             selectedGroupID_List[i] = selectedGroupID_List[i].trim();
         }
@@ -70,7 +71,7 @@ $(document).ready(function () {
             //Temporarily hard coding table headers---------------------------------------------------------
             let Hrow = $('<tr>').addClass('userSubscriptionsRow_Header')
             let tableHeader_Icons = $('<th>').addClass('userSubscriptionsHeader').text(''); //Invisible header for icons
-            Hrow.append(tableHeader_Icons); 
+            Hrow.append(tableHeader_Icons);
             let tableHeader1 = $('<th>').addClass('userSubscriptionsHeader').text('User_Email');
             Hrow.append(tableHeader1); //Adding it to the row
             let tableHeader2 = $('<th>').addClass('userSubscriptionsHeader').text('Is_Active');
@@ -87,13 +88,13 @@ $(document).ready(function () {
             for (i = 0; i < tableData.length; i++) {
 
                 if (i == tableData.length - 1) { //This is so that the bottom border isn't added to the last row (it pops out of the table otherwise)
-                    var row = $('<tr>').addClass('userSubscriptionsRow_Last');
+                    var row = $('<tr>').addClass('userSubscriptionsRow_Last').attr('id', tableData[i].userEmail); //adding the class for styling and the ID for potential later use
                 } else {
-                    var row = $('<tr>').addClass('userSubscriptionsRow');
+                    var row = $('<tr>').addClass('userSubscriptionsRow').attr('id', tableData[i].userEmail);
                 }
-                
+
                 //Adding the icons to each row ------------------------------------------------------------
-                let tableEntry_Icons = $('<td>').addClass('userSubscriptionsEntry_Icons'); 
+                let tableEntry_Icons = $('<td>').addClass('userSubscriptionsEntry_Icons');
                 let deleteIcon = $('<button>').addClass('deleteBtn');
                 let deleteLink = $('<i>').addClass('fa fa-trash');
                 deleteIcon.append(deleteLink);
@@ -108,14 +109,15 @@ $(document).ready(function () {
 
                 let tableEntry1 = $('<td>').addClass('userSubscriptionsEntry_Email').text(tableData[i].userEmail);
                 row.append(tableEntry1); //adding element to the row
-                let tableEntry2 = $('<td>').addClass('userSubscriptionsEntry').text(tableData[i].isActive);
+                let tableEntry2 = $('<td>').addClass('userSubscriptionsEntry_isActive').text(tableData[i].isActive);
                 row.append(tableEntry2);
-                let tableEntry3 = $('<td>').addClass('userSubscriptionsEntry').text(tableData[i].group);
+                let tableEntry3 = $('<td>').addClass('userSubscriptionsEntry_Group').text(tableData[i].group);
                 row.append(tableEntry3);
-                let tableEntry4 = $('<td>').addClass('userSubscriptionsEntry').text(tableData[i].groupID);
+                let tableEntry4 = $('<td>').addClass('userSubscriptionsEntry_GroupID').text(tableData[i].groupID);
                 row.append(tableEntry4);
-                let tableEntry5 = $('<td>').addClass('userSubscriptionsEntry').text(tableData[i].masterGroup);
+                let tableEntry5 = $('<td>').addClass('userSubscriptionsEntry_masterGroup').text(tableData[i].masterGroup);
                 row.append(tableEntry5);
+
                 subTable.append(row); //adding row to the table
             }
             $('#userSubscriptionData').append(subTable);
@@ -125,5 +127,59 @@ $(document).ready(function () {
             alert("Error Sending Filter Data to the Subscriptions Controller");
         }
 
-    })
+    });
+
+
+    $('#userSubscriptionData').on('click','.deleteBtn',function () { //Need to use on click for a dynamically generated element
+        
+        let selectedEmail = $(this).closest("tr")
+            .find(".userSubscriptionsEntry_Email")
+            .text();
+
+        let selectedActive = $(this).closest("tr")
+            .find(".userSubscriptionsEntry_isActive")
+            .text();
+
+        let selectedGroup = $(this).closest("tr")
+            .find(".userSubscriptionsEntry_Group")
+            .text();
+
+        let selectedGroupID = $(this).closest("tr")
+            .find(".userSubscriptionsEntry_GroupID")
+            .text();
+
+        let selectedMasterGroup = $(this).closest("tr")
+            .find(".userSubscriptionsEntry_masterGroup")
+            .text();
+
+        alert("Selected Item to be Deleted - Email: " + selectedEmail + ", Active: "
+            + selectedActive + ", Group: " + selectedGroup + ", Group ID: " + selectedGroupID + ", Master Group: " + selectedMasterGroup);
+    });
+
+
+    $('#userSubscriptionData').on('click', '.editBtn', function () { //Need to use on click for a dynamically generated element
+
+        let selectedEmail = $(this).closest("tr")
+            .find(".userSubscriptionsEntry_Email")
+            .text();
+
+        let selectedActive = $(this).closest("tr")
+            .find(".userSubscriptionsEntry_isActive")
+            .text();
+
+        let selectedGroup = $(this).closest("tr")
+            .find(".userSubscriptionsEntry_Group")
+            .text();
+
+        let selectedGroupID = $(this).closest("tr")
+            .find(".userSubscriptionsEntry_GroupID")
+            .text();
+
+        let selectedMasterGroup = $(this).closest("tr")
+            .find(".userSubscriptionsEntry_masterGroup")
+            .text();
+
+        alert("Selected Item to be Edited - Email: " + selectedEmail + ", Active: "
+            + selectedActive + ", Group: " + selectedGroup + ", Group ID: " + selectedGroupID + ", Master Group: " + selectedMasterGroup);
+    });
 });
