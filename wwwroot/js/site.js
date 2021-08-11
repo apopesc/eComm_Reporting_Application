@@ -5,9 +5,17 @@ $(document).ready(function () {
     $('#groupDropdown').multiselect();
     $('#groupIDDropdown').multiselect();
     $('#masterGroupDropdown').multiselect();
-
+    $('#addNewBtn').prop('disabled', true);
+    $('#addNewBtn').css('cursor', 'not-allowed');
+    $('#btnSubmit').prop('disabled', true);
+    $('#btnSubmit').css('cursor', 'not-allowed');
 
     $("#btnViewData").click(function () {
+        $('#addNewBtn').prop('disabled', false);
+        $('#addNewBtn').css('cursor', 'pointer');
+        $('#btnSubmit').prop('disabled', false);
+        $('#btnSubmit').css('cursor', 'pointer');
+
         var selectedGroupID = $('#groupIDDropdown').find(":selected").text();
         var selectedGroup = $('#groupDropdown').find(":selected").text();
         var selectedMasterGroup = $('#masterGroupDropdown').find(":selected").text();
