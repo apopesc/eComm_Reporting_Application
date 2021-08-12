@@ -4,13 +4,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eComm_Reporting_Application.Models;
+using Microsoft.Extensions.Configuration;
+using System.Data.SqlClient;
 
 namespace eComm_Reporting_Application.Controllers
 {
     public class SubscriptionGroupsController : Controller
     {
+        private readonly IConfiguration configuration;
+        public SubscriptionGroupsController(IConfiguration config)
+        {
+            this.configuration = config;
+        }
+
         public IActionResult Index()
         {
+            //Testing pulling data from the DB -------------------------------------------------------------------------------//
+            string connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+
+            SqlConnection connection = new SqlConnection(connectionstring);
+            connection.Open();
+            SqlCommand com = new SqlCommand("Select count(*) from BCF_Subscriptions", connection);
+
+            var count = (int)com.ExecuteScalar();
+            connection.Close();
+            //----------------------------------------------------------------------------------------------------------------//
+            
             int is_active = 0;
             
             // ------------------- Temporarily Hard Coded Data, will be pulling this from DB in the future ------------------//

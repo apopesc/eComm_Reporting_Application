@@ -110,3 +110,9 @@ C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Appli
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\Razor\Views\MarMaxxReports\Index.cshtml.g.cs
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\Razor\Views\SierraReports\Index.cshtml.g.cs
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\libman.json
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\System.Data.SqlClient.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
