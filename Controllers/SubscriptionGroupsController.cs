@@ -20,11 +20,11 @@ namespace eComm_Reporting_Application.Controllers
         public IActionResult Index()
         {
             //Testing pulling data from the DB -------------------------------------------------------------------------------//
-            string connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+            string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
 
             SqlConnection connection = new SqlConnection(connectionstring);
             connection.Open();
-            SqlCommand com = new SqlCommand("Select count(*) from BCF_Subscriptions", connection);
+            SqlCommand com = new SqlCommand("Select count(*) from UserSubscriptionFilters", connection);
 
             var count = (int)com.ExecuteScalar();
             connection.Close();
