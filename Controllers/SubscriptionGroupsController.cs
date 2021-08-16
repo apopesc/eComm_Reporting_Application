@@ -21,7 +21,7 @@ namespace eComm_Reporting_Application.Controllers
         public IActionResult Index()
         {
             int is_active = 0;
-            //Testing pulling data from the DB -------------------------------------------------------------------------------//
+
             string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
 
             SqlConnection connection = new SqlConnection(connectionstring);
@@ -78,6 +78,10 @@ namespace eComm_Reporting_Application.Controllers
         public IActionResult ReceiveFilters(int isActive, List<string> selectedGroupIDs, List<string> selectedGroups, List<string> selectedMasterGroups)
         {
             SubscriptionGroupsModel filterData = new SubscriptionGroupsModel();
+            filterData.isActive = isActive;
+            filterData.groupsIDList = selectedGroupIDs;
+            filterData.groupsList = selectedGroups;
+            filterData.masterGroupsList = selectedMasterGroups;
 
             //Calling the function to get the table data
             List<SubscriptionGroupsTableModel> tableData = GetTableData(filterData);
@@ -87,45 +91,42 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         public List<SubscriptionGroupsTableModel> GetTableData(SubscriptionGroupsModel filterData)
-        {   
-            //Need to pass filterData to a DB stored procedure to get data for this list
+        {
+            //A list of objects (each object property maps to a column - userEmail, isActive, etc...)
             List<SubscriptionGroupsTableModel> tableData = new List<SubscriptionGroupsTableModel>();
-            //It is a list of objects (each object property maps to a column - userEmail, isActive, etc...)
+            
+            string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+            SqlConnection connection = new SqlConnection(connectionstring);
 
-            // ------------------- Temporarily Hard Coded Data, will be pulling this from DB in the future ------------------//
-            SubscriptionGroupsTableModel entry1 = new SubscriptionGroupsTableModel();
-            entry1.userEmail = "andrei_popescu@tjxcanada.ca";
-            entry1.isActive = 'Y';
-            entry1.group = "Ecomm SVP, Merchandising and Planning";
-            entry1.groupID = "SVP";
-            entry1.masterGroup = "Merchandising";
-            tableData.Add(entry1);
+            //Converting lists to string for the query
+            string groupsListString = String.Join("', '", filterData.groupsList.ToArray());
+            groupsListString = "'" + groupsListString + "'"; 
+            string groupsIDListString = String.Join("', '", filterData.groupsIDList.ToArray());
+            groupsIDListString = "'" + groupsIDListString + "'";
+            string masterGroupsListString = String.Join("', '", filterData.masterGroupsList.ToArray());
+            masterGroupsListString = "'" + masterGroupsListString + "'";
 
-            SubscriptionGroupsTableModel entry2 = new SubscriptionGroupsTableModel();
-            entry2.userEmail = "test_guy@tjxcanada.ca";
-            entry2.isActive = 'Y';
-            entry2.group = "Ecomm SVP, Merchandising and Planning";
-            entry2.groupID = "SVP";
-            entry2.masterGroup = "Merchandising";
-            tableData.Add(entry2);
+            
+            SqlCommand tableQuery = new SqlCommand("SELECT * FROM UserSubscriptions WHERE User_Group IN (" + groupsListString + ") AND Group_ID IN (" + groupsIDListString + ") AND Master_Group IN ("+ masterGroupsListString + ");", connection);
+            using (connection)
+            {
+                connection.Open();
+                using (SqlDataReader reader = tableQuery.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        SubscriptionGroupsTableModel entry = new SubscriptionGroupsTableModel();
+                        entry.userEmail = reader.GetString(0);
+                        entry.isActive = reader.GetString(1);
+                        entry.group = reader.GetString(2);
+                        entry.groupID = reader.GetString(3);
+                        entry.masterGroup = reader.GetString(4);
+                        tableData.Add(entry);
+                    }
+                }
+                connection.Close();
+            }
 
-            SubscriptionGroupsTableModel entry3 = new SubscriptionGroupsTableModel();
-            entry3.userEmail = "testing@tjxcanada.ca";
-            entry3.isActive = 'Y';
-            entry3.group = "Ecomm SVP, Merchandising and Planning";
-            entry3.groupID = "SVP";
-            entry3.masterGroup = "Merchandising";
-            tableData.Add(entry3);
-
-            SubscriptionGroupsTableModel entry4 = new SubscriptionGroupsTableModel();
-            entry4.userEmail = "testdude@tjxcanada.ca";
-            entry4.isActive = 'Y';
-            entry4.group = "Ecomm SVP, Merchandising and Planning";
-            entry4.groupID = "SVP";
-            entry4.masterGroup = "Merchandising";
-            tableData.Add(entry4);
-
-            //--------------------------------------------------------------------------------------------------------------//
             return tableData;
         }
     }

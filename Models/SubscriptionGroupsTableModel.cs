@@ -9,7 +9,7 @@ namespace eComm_Reporting_Application.Models
     public class SubscriptionGroupsTableModel
     {
         public string userEmail { get; set; }
-        public char isActive { get; set; }
+        public string isActive { get; set; }
         public string group { get; set; }
         public string groupID { get; set; }
         public string masterGroup { get; set; }
