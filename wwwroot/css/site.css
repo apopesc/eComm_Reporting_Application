@@ -322,6 +322,10 @@ body {
     .btnSubmit:focus {
         outline: none;
     }
+.multiselect-container {
+    overflow: scroll;
+    max-height: 300px;
+}
 /*tr.userSubscriptionsRow_Header th{
     background: lightgrey;
     border-radius: 15px;
