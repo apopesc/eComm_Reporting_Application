@@ -97,17 +97,86 @@ namespace eComm_Reporting_Application.Controllers
             
             string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
             SqlConnection connection = new SqlConnection(connectionstring);
+            SqlCommand tableQuery;
 
-            //Converting lists to string for the query
+            //If dropdowns are empty, it is passing back a list with null as the first value, correcting that to an empty list.
+            if(filterData.groupsList[0] == null)
+            {
+                filterData.groupsList.Clear();
+            }
+            if (filterData.groupsIDList[0] == null)
+            {
+                filterData.groupsIDList.Clear();
+            }
+            if (filterData.masterGroupsList[0] == null)
+            {
+                filterData.masterGroupsList.Clear();
+            }
+
+            //Setting the isActive value for the query
+            string isActiveString;
+            if(filterData.isActive == 1)
+            {
+                isActiveString = "'Y'";
+            }
+            else if(filterData.isActive == 2)
+            {
+                isActiveString = "'N'";
+            }
+            else //If neither or both are selected, show all data for isActive
+            {
+                isActiveString = "'Y', 'N'";
+            }
+
+            //Converting lists to strings for the query
             string groupsListString = String.Join("', '", filterData.groupsList.ToArray());
-            groupsListString = "'" + groupsListString + "'"; 
+            groupsListString = "'" + groupsListString + "'";
             string groupsIDListString = String.Join("', '", filterData.groupsIDList.ToArray());
             groupsIDListString = "'" + groupsIDListString + "'";
             string masterGroupsListString = String.Join("', '", filterData.masterGroupsList.ToArray());
             masterGroupsListString = "'" + masterGroupsListString + "'";
 
-            
-            SqlCommand tableQuery = new SqlCommand("SELECT * FROM UserSubscriptions WHERE User_Group IN (" + groupsListString + ") AND Group_ID IN (" + groupsIDListString + ") AND Master_Group IN ("+ masterGroupsListString + ");", connection);
+            //If none of the dropdowns are empty --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            if (filterData.groupsList.Count > 0 && filterData.groupsIDList.Count > 0 && filterData.masterGroupsList.Count > 0) 
+            {
+                tableQuery = new SqlCommand("SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND User_Group IN (" + groupsListString + ") AND Group_ID IN (" + groupsIDListString + ") AND Master_Group IN (" + masterGroupsListString + ");", connection);
+            }
+            //If group dropdown is empty ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            else if (filterData.groupsList.Count == 0 && filterData.groupsIDList.Count > 0 && filterData.masterGroupsList.Count > 0)
+            {
+                tableQuery = new SqlCommand("SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND Group_ID IN (" + groupsIDListString + ") AND Master_Group IN (" + masterGroupsListString + ");", connection);
+            }
+            //If groupID dropdown is empty --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            else if (filterData.groupsList.Count > 0 && filterData.groupsIDList.Count == 0 && filterData.masterGroupsList.Count > 0)
+            {
+                tableQuery = new SqlCommand("SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND User_Group IN (" + groupsListString + ") AND Master_Group IN (" + masterGroupsListString + ");", connection);
+            }
+            //If master group dropdown is empty ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            else if (filterData.groupsList.Count > 0 && filterData.groupsIDList.Count > 0 && filterData.masterGroupsList.Count == 0)
+            {
+                tableQuery = new SqlCommand("SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND User_Group IN (" + groupsListString + ") AND Group_ID IN (" + groupsIDListString + ");", connection);
+            }
+            //If group and groupID dropdowns are empty --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            else if (filterData.groupsList.Count == 0 && filterData.groupsIDList.Count == 0 && filterData.masterGroupsList.Count > 0)
+            {
+                tableQuery = new SqlCommand("SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND Master_Group IN (" + masterGroupsListString + ");", connection);
+            }
+            //If group and masterGroup dropdowns are empty ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            else if (filterData.groupsList.Count == 0 && filterData.groupsIDList.Count > 0 && filterData.masterGroupsList.Count == 0)
+            {
+                tableQuery = new SqlCommand("SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND Group_ID IN (" + groupsIDListString + ");", connection);
+            }
+            //If groupID and masterGroup dropdowns are empty --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            else if (filterData.groupsList.Count > 0 && filterData.groupsIDList.Count == 0 && filterData.masterGroupsList.Count == 0)
+            {
+                tableQuery = new SqlCommand("SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND User_Group IN (" + groupsListString + ");", connection);
+            }
+            //If all dropdowns are empty ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            else
+            {
+                tableQuery = new SqlCommand("SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ");", connection);
+            }
+
             using (connection)
             {
                 connection.Open();
