@@ -30,7 +30,7 @@ namespace eComm_Reporting_Application.Controllers
 
 
         //Getting filter data from the database
-        public SubscriptionGroupsModel GetFilterData()
+        private SubscriptionGroupsModel GetFilterData()
         {
             int is_active = 0;
 
@@ -105,7 +105,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
 
-        public List<SubscriptionGroupsTableModel> GetTableData(SubscriptionGroupsModel filterData)
+        private List<SubscriptionGroupsTableModel> GetTableData(SubscriptionGroupsModel filterData)
         {
             //A list of objects (each object property maps to a column - userEmail, isActive, etc...)
             List<SubscriptionGroupsTableModel> tableData = new List<SubscriptionGroupsTableModel>();

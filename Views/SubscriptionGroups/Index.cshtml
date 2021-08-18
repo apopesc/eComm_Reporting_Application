@@ -4,6 +4,10 @@
     ViewData["Title"] = "User Subscriptions Groups";
 }
 
+@section Scripts{ 
+    <script src ="~/js/userSubscriptions.js"></script>
+}
+
 <div class="page-header">
     <div class="page-title">
         <h1 class="title-text">User Subscription Groups</h1>
@@ -16,7 +20,7 @@
             <p class="radio-label filter-label">Is Active:</p>
             <div class="radio-btns">
                 <input type="checkbox" id="checkYes" name="is_active" value="yes"/>
-                <label id="yesBox" for="yes">Yes</label>
+                <label id="yesBox" class ="yes-box" for="yes">Yes</label>
                 <input type="checkbox" id="checkNo" name="is_active" value="no" />
                 <label for="no">No</label>
             </div>

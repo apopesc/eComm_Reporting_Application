@@ -1,7 +1,8 @@
 ﻿
-const checkBoxEnum = Object.freeze({"none":0, "yes":1, "no":2, "both":3}) //creating javascript enum
+const checkBoxEnum = Object.freeze({ "none": 0, "yes": 1, "no": 2, "both": 3 }) //creating javascript enum
 
 $(document).ready(function () {
+
     $('#groupDropdown').multiselect();
     $('#groupIDDropdown').multiselect();
     $('#masterGroupDropdown').multiselect();
@@ -138,8 +139,8 @@ $(document).ready(function () {
     });
 
 
-    $('#userSubscriptionData').on('click','.deleteBtn',function () { //Need to use on click for a dynamically generated element
-        
+    $('#userSubscriptionData').on('click', '.deleteBtn', function () { //Need to use on click for a dynamically generated element
+
         let selectedEmail = $(this).closest("tr")
             .find(".userSubscriptionsEntry_Email")
             .text();
@@ -190,4 +191,5 @@ $(document).ready(function () {
         alert("Selected Item to be Edited - Email: " + selectedEmail + ", Active: "
             + selectedActive + ", Group: " + selectedGroup + ", Group ID: " + selectedGroupID + ", Master Group: " + selectedMasterGroup);
     });
+
 });

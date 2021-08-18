@@ -163,7 +163,13 @@ body {
     margin-top: -7px;
 }
 
-#yesBox{
+.addnew-row {
+    width: 92%;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.yes-box{
     margin-right: 5px;
 }
 
@@ -326,6 +332,10 @@ body {
     overflow: scroll;
     max-height: 300px;
 }
+.email-input{
+    width: 290px;
+}
+
 /*tr.userSubscriptionsRow_Header th{
     background: lightgrey;
     border-radius: 15px;
