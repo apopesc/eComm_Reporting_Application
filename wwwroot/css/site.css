@@ -169,6 +169,12 @@ body {
     margin-top: 10px;
 }
 
+.addnew-row-last {
+    width: 92%;
+    display: inline-block;
+    margin-top: 20px;
+}
+
 .yes-box{
     margin-right: 5px;
 }
@@ -336,6 +342,32 @@ body {
     width: 290px;
 }
 
+.btnAddUserPage {
+    float: left;
+    margin-right: 2.5%;
+    width: 100px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 5px #999;
+    font-weight: 500;
+}
+
+    .btnAddUserPage:active {
+        box-shadow: 0 2px #666;
+        transform: translateY(4px);
+    }
+
+    .btnAddUserPage:focus {
+        outline: none;
+    }
+
+#addUserSubmit {
+    width: 150px;
+    margin-left: 130px;
+    background-color: #9E0000;
+    color: white;
+    font-weight: 700;
+}
 /*tr.userSubscriptionsRow_Header th{
     background: lightgrey;
     border-radius: 15px;

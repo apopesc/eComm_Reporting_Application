@@ -6,8 +6,6 @@ $(document).ready(function () {
     $('#groupDropdown').multiselect();
     $('#groupIDDropdown').multiselect();
     $('#masterGroupDropdown').multiselect();
-    $('#addNewBtn').prop('disabled', true);
-    $('#addNewBtn').css('cursor', 'not-allowed');
     $('#btnSubmit').prop('disabled', true);
     $('#btnSubmit').css('cursor', 'not-allowed');
 
