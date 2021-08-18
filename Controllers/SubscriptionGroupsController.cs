@@ -12,20 +12,32 @@ namespace eComm_Reporting_Application.Controllers
 {
     public class SubscriptionGroupsController : Controller
     {
+
         private readonly IConfiguration configuration;
+
         public SubscriptionGroupsController(IConfiguration config)
         {
             this.configuration = config;
         }
 
+
         public IActionResult Index()
+        {
+            SubscriptionGroupsModel subModel = GetFilterData(); 
+            
+            return View(subModel);
+        }
+
+
+        //Getting filter data from the database
+        public SubscriptionGroupsModel GetFilterData()
         {
             int is_active = 0;
 
             string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
 
             SqlConnection connection = new SqlConnection(connectionstring);
-            
+
             SqlCommand groupsQuery = new SqlCommand("SELECT DISTINCT User_Group FROM UserSubscriptionFilters WHERE User_Group IS NOT NULL", connection);
             SqlCommand groupIDsQuery = new SqlCommand("SELECT DISTINCT Group_ID FROM UserSubscriptionFilters WHERE Group_ID IS NOT NULL", connection);
             SqlCommand masterGroupsQuery = new SqlCommand("SELECT DISTINCT Master_Group FROM UserSubscriptionFilters WHERE Master_Group IS NOT NULL", connection);
@@ -39,7 +51,7 @@ namespace eComm_Reporting_Application.Controllers
                 connection.Open();
                 using (SqlDataReader reader = groupsQuery.ExecuteReader())
                 {
-                    while(reader.Read())
+                    while (reader.Read())
                     {
                         var groupString = reader.GetString(0);
                         groups_list.Add(groupString);
@@ -63,16 +75,18 @@ namespace eComm_Reporting_Application.Controllers
                 }
                 connection.Close();
             }
-            
-            SubscriptionGroupsModel subModel = new SubscriptionGroupsModel() {
+
+            SubscriptionGroupsModel filterDataModel = new SubscriptionGroupsModel()
+            {
                 isActive = is_active,
                 groupsIDList = groupsID_list,
                 groupsList = groups_list,
                 masterGroupsList = master_groups_list
             };
-            
-            return View(subModel);
+
+            return filterDataModel;
         }
+
 
         [HttpPost]
         public IActionResult ReceiveFilters(int isActive, List<string> selectedGroupIDs, List<string> selectedGroups, List<string> selectedMasterGroups)
@@ -89,6 +103,7 @@ namespace eComm_Reporting_Application.Controllers
             //Returning the table data to the front end
             return Json(tableData);
         }
+
 
         public List<SubscriptionGroupsTableModel> GetTableData(SubscriptionGroupsModel filterData)
         {
@@ -198,9 +213,13 @@ namespace eComm_Reporting_Application.Controllers
 
             return tableData;
         }
+
+
         public IActionResult AddNewUser()
         {
-            return View();
+            SubscriptionGroupsModel subModel = GetFilterData();
+
+            return View(subModel);
         }
     }
 }

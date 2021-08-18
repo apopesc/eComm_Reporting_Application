@@ -9,3 +9,50 @@
         <h1 class="title-text">Add New User</h1>
     </div>
 </div>
+
+
+<div class="filter-data">
+    <div class="first-row">
+        <div class="is-active">
+            <p class="radio-label filter-label">Is Active:</p>
+            <div class="radio-btns">
+                <input type="checkbox" id="checkYes" name="is_active" value="yes" />
+                <label id="yesBox" for="yes">Yes</label>
+                <input type="checkbox" id="checkNo" name="is_active" value="no" />
+                <label for="no">No</label>
+            </div>
+        </div>
+        <div class="groupID">
+            <label class="filter-label" for="groupIDDropdown">Group ID:</label>
+            <select id="groupIDDropdown" name="groupIDDropdown" multiple>
+                @foreach (var groupID in @Model.groupsIDList)
+                {
+                    <option value=@groupID> @groupID </option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="second-row">
+        <div class="group">
+            <label class="filter-label" for="groupDropdown">Group:</label>
+            <select id="groupDropdown" name="groupDropdown" multiple>
+                @foreach (var group in @Model.groupsList)
+                {
+                    <option value=@group> @group </option>
+                }
+            </select>
+        </div>
+        <div class="master-group">
+            <label class="filter-label" for="masterGroupDropdown">Master Group:</label>
+            <select id="masterGroupDropdown" name="masterGroupDropdown" multiple>
+                @foreach (var master_group in @Model.masterGroupsList)
+                {
+                    <option value=@master_group> @master_group </option>
+                }
+            </select>
+        </div>
+    </div>
+</div>
+
+    
