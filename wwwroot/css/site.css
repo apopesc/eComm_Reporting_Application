@@ -331,13 +331,16 @@ body {
         box-shadow: 0 2px #666;
         transform: translateY(4px);
     }
+
     .btnSubmit:focus {
         outline: none;
     }
+
 .multiselect-container {
     overflow: scroll;
     max-height: 300px;
 }
+
 .email-input{
     width: 290px;
 }

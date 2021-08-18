@@ -10,8 +10,6 @@ $(document).ready(function () {
     $('#btnSubmit').css('cursor', 'not-allowed');
 
     $("#btnViewData").click(function () {
-        $('#addNewBtn').prop('disabled', false);
-        $('#addNewBtn').css('cursor', 'pointer');
         $('#btnSubmit').prop('disabled', false);
         $('#btnSubmit').css('cursor', 'pointer');
 
@@ -68,8 +66,7 @@ $(document).ready(function () {
         });
 
         function successFunc(tableData, status) {
-            alert("Data Succesfully Passed to Subscriptions Controller");
-
+            
             //Clearing table initially
             $('#userSubscriptionData').empty();
 
