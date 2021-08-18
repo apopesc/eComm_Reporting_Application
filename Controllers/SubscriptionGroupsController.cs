@@ -198,5 +198,9 @@ namespace eComm_Reporting_Application.Controllers
 
             return tableData;
         }
+        public IActionResult AddNewUser()
+        {
+            return View();
+        }
     }
 }
