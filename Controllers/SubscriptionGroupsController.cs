@@ -223,10 +223,25 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddUserToDB(string userEmail, int isActive, List<string> selectedGroupIDs, List<string> selectedGroups, List<string> selectedMasterGroups)
+        public IActionResult AddUserToDB(string userEmail, string isActive, List<string> selectedGroupIDs, List<string> selectedGroups, List<string> selectedMasterGroups)
         {
+            try
+            {
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                SqlCommand groupsQuery = new SqlCommand("SELECT DISTINCT User_Group FROM UserSubscriptionFilters WHERE User_Group IS NOT NULL", connection);
+
+
+                return Json("Success saving user: " + userEmail +"!");
+            }
+            catch (Exception e)
+            {
+                return Json("Error Saving to Database: " + e);
+            }
             //Might not be int isActive
-            return Json("Success");
+            
         }
     }
 }
