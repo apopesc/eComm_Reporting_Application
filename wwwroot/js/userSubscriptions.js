@@ -65,7 +65,7 @@ $(document).ready(function () {
             }
         });
 
-        function successFunc(tableData, status) {
+        function successFunc(tableData) {
             
             //Clearing table initially
             $('#userSubscriptionData').empty();

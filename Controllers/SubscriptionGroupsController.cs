@@ -221,5 +221,12 @@ namespace eComm_Reporting_Application.Controllers
 
             return View(subModel);
         }
+
+        [HttpPost]
+        public IActionResult AddUserToDB(string userEmail, int isActive, List<string> selectedGroupIDs, List<string> selectedGroups, List<string> selectedMasterGroups)
+        {
+            //Might not be int isActive
+            return Json("Success");
+        }
     }
 }

@@ -336,9 +336,20 @@ body {
         outline: none;
     }
 
-.multiselect-container {
-    overflow: scroll;
-    max-height: 300px;
+
+
+@media screen and (max-width: 1920px) {
+    .multiselect-container {
+        overflow: scroll;
+        max-height: 300px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .multiselect-container {
+        overflow: scroll;
+        max-height: 250px;
+    }
 }
 
 .email-input{
