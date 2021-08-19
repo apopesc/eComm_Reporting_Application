@@ -91,17 +91,25 @@ namespace eComm_Reporting_Application.Controllers
         [HttpPost]
         public IActionResult ReceiveFilters(int isActive, List<string> selectedGroupIDs, List<string> selectedGroups, List<string> selectedMasterGroups)
         {
-            SubscriptionGroupsModel filterData = new SubscriptionGroupsModel();
-            filterData.isActive = isActive;
-            filterData.groupsIDList = selectedGroupIDs;
-            filterData.groupsList = selectedGroups;
-            filterData.masterGroupsList = selectedMasterGroups;
+            try
+            {
+                SubscriptionGroupsModel filterData = new SubscriptionGroupsModel();
+                filterData.isActive = isActive;
+                filterData.groupsIDList = selectedGroupIDs;
+                filterData.groupsList = selectedGroups;
+                filterData.masterGroupsList = selectedMasterGroups;
 
-            //Calling the function to get the table data
-            List<SubscriptionGroupsTableModel> tableData = GetTableData(filterData);
+                //Calling the function to get the table data
+                List<SubscriptionGroupsTableModel> tableData = GetTableData(filterData);
+
+                //Returning the table data to the front end
+                return Json(tableData);
+            }
+            catch (Exception e)
+            {
+                return Json("Error retrieving table data: " + e);
+            }
             
-            //Returning the table data to the front end
-            return Json(tableData);
         }
 
 
@@ -114,8 +122,11 @@ namespace eComm_Reporting_Application.Controllers
             SqlConnection connection = new SqlConnection(connectionstring);
             SqlCommand tableQuery;
 
+            //object m = null;
+            //string s = m.ToString();
+
             //If dropdowns are empty, it is passing back a list with null as the first value, correcting that to an empty list.
-            if(filterData.groupsList[0] == null)
+            if (filterData.groupsList[0] == null)
             {
                 filterData.groupsList.Clear();
             }
@@ -232,7 +243,7 @@ namespace eComm_Reporting_Application.Controllers
                 SqlConnection connection = new SqlConnection(connectionstring);
 
                 SqlCommand addUserQuery = new SqlCommand("INSERT INTO UserSubscriptions (User_Email, Is_Active, User_Group, Group_ID, Master_Group) " +
-                    "VALUES ('" + userEmail + "', '" + isActive + "', '" + selectedGroupID + "', '" + selectedGroup + "', '" + selectedMasterGroup + "');", connection);
+                    "VALUES ('" + userEmail + "', '" + isActive + "', '" + selectedGroup + "', '" + selectedGroupID + "', '" + selectedMasterGroup + "');", connection);
 
                 using (connection)
                 {
