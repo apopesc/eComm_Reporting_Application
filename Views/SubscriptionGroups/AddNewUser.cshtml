@@ -37,6 +37,7 @@
         <div class="groupID">
             <label class="filter-label" for="groupIDDropdown">Group ID:</label>
             <select id="addNew_groupIDDropdown" name="groupIDDropdown">
+                <option value="" disabled selected>None Selected</option>
                 @foreach (var groupID in @Model.groupsIDList)
                 {
                     <option value=@groupID> @groupID </option>
@@ -49,6 +50,7 @@
         <div class="group">
             <label class="filter-label" for="groupDropdown">Group:</label>
             <select id="addNew_groupDropdown" name="groupDropdown">
+                <option value="" disabled selected>None Selected</option>
                 @foreach (var group in @Model.groupsList)
                 {
                     <option value=@group> @group </option>
@@ -61,6 +63,7 @@
         <div class="master-group">
             <label class="filter-label" for="masterGroupDropdown">Master Group:</label>
             <select id="addNew_masterGroupDropdown" name="masterGroupDropdown">
+                <option value="" disabled selected>None Selected</option>
                 @foreach (var master_group in @Model.masterGroupsList)
                 {
                     <option value=@master_group> @master_group </option>

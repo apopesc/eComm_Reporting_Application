@@ -33,7 +33,7 @@
             alert("Please enter a valid email address before submitting.");
         } else if (enteredIsActive == '') {
             alert("Please enter a value for Is Active.");
-        } else if (enteredGroupID == '' || enteredGroup == '' || enteredMasterGroup == '') {
+        } else if (enteredGroupID == null || enteredGroup == null || enteredMasterGroup == null) {
             alert("Please enter a value for Group ID, Group, and MasterGroup");
         } else {
 
