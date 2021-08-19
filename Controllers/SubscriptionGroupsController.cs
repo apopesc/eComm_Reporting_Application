@@ -223,7 +223,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddUserToDB(string userEmail, string isActive, List<string> selectedGroupIDs, List<string> selectedGroups, List<string> selectedMasterGroups)
+        public IActionResult AddUserToDB(string userEmail, string isActive, string selectedGroupID, string selectedGroup, string selectedMasterGroup)
         {
             try
             {
@@ -231,8 +231,17 @@ namespace eComm_Reporting_Application.Controllers
 
                 SqlConnection connection = new SqlConnection(connectionstring);
 
-                SqlCommand groupsQuery = new SqlCommand("SELECT DISTINCT User_Group FROM UserSubscriptionFilters WHERE User_Group IS NOT NULL", connection);
+                SqlCommand addUserQuery = new SqlCommand("INSERT INTO UserSubscriptions (User_Email, Is_Active, User_Group, Group_ID, Master_Group) " +
+                    "VALUES ('" + userEmail + "', '" + isActive + "', '" + selectedGroupID + "', '" + selectedGroup + "', '" + selectedMasterGroup + "');", connection);
 
+                using (connection)
+                {
+                    connection.Open();
+
+                    SqlDataReader reader = addUserQuery.ExecuteReader();
+                    
+                    connection.Close();
+                }
 
                 return Json("Success saving user: " + userEmail +"!");
             }
@@ -240,8 +249,6 @@ namespace eComm_Reporting_Application.Controllers
             {
                 return Json("Error Saving to Database: " + e);
             }
-            //Might not be int isActive
-            
         }
     }
 }

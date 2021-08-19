@@ -15,9 +15,9 @@
         var enteredEmail = $("#addNew_UserEmail").val();
         var isValidEmail = ValidateEmail(enteredEmail);
 
-        var selectedGroupID = $('#addNew_groupIDDropdown').find(":selected").text();
-        var selectedGroup = $('#addNew_groupDropdown').find(":selected").text();
-        var selectedMasterGroup = $('#addNew_masterGroupDropdown').find(":selected").text();
+        var enteredGroupID = $('#addNew_groupIDDropdown').val();
+        var enteredGroup = $('#addNew_groupDropdown').val();
+        var enteredMasterGroup = $('#addNew_masterGroupDropdown').val();
 
         var enteredIsActive;
 
@@ -33,25 +33,9 @@
             alert("Please enter a valid email address before submitting.");
         } else if (enteredIsActive == '') {
             alert("Please enter a value for Is Active.");
-        } else if (selectedGroupID == '' || selectedGroup == '' || selectedMasterGroup == '') {
+        } else if (enteredGroupID == '' || enteredGroup == '' || enteredMasterGroup == '') {
             alert("Please enter a value for Group ID, Group, and MasterGroup");
         } else {
-
-            //Turning the dropdown selected values into lists, removing whitespace
-            var selectedGroupID_List = selectedGroupID.split('  ');
-            for (let i = 0; i < selectedGroupID_List.length; i++) {
-                selectedGroupID_List[i] = selectedGroupID_List[i].trim();
-            }
-
-            var selectedGroup_List = selectedGroup.split('  ');
-            for (let i = 0; i < selectedGroup_List.length; i++) {
-                selectedGroup_List[i] = selectedGroup_List[i].trim();
-            }
-
-            var selectedMasterGroup_List = selectedMasterGroup.split('  ');
-            for (let i = 0; i < selectedMasterGroup_List.length; i++) {
-                selectedMasterGroup_List[i] = selectedMasterGroup_List[i].trim();
-            }
 
             //Posting the collected data to the SubscriptionsGroupsController
             var controllerUrl = '/SubscriptionGroups/AddUserToDB';
@@ -65,9 +49,9 @@
                 data: {
                     userEmail: enteredEmail,
                     isActive: enteredIsActive,
-                    selectedGroupIDs: selectedGroupID_List,
-                    selectedGroups: selectedGroup_List,
-                    selectedMasterGroups: selectedMasterGroup_List
+                    selectedGroupID: enteredGroupID,
+                    selectedGroup: enteredGroup,
+                    selectedMasterGroup: enteredMasterGroup
                 }
             });
 
