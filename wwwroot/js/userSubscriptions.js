@@ -4,7 +4,6 @@ const checkBoxEnum = Object.freeze({ "none": 0, "yes": 1, "no": 2, "both": 3 }) 
 $(document).ready(function () {
 
     $('#groupDropdown').multiselect();
-    $('#groupIDDropdown').multiselect();
     $('#masterGroupDropdown').multiselect();
     $('#btnSubmit').prop('disabled', true);
     $('#btnSubmit').css('cursor', 'not-allowed');
@@ -13,7 +12,6 @@ $(document).ready(function () {
         $('#btnSubmit').prop('disabled', false);
         $('#btnSubmit').css('cursor', 'pointer');
 
-        var selectedGroupID = $('#groupIDDropdown').find(":selected").text();
         var selectedGroup = $('#groupDropdown').find(":selected").text();
         var selectedMasterGroup = $('#masterGroupDropdown').find(":selected").text();
 
@@ -30,11 +28,6 @@ $(document).ready(function () {
         }
 
         //Turning the dropdown selected values into lists, removing whitespace
-        var selectedGroupID_List = selectedGroupID.split('  ');
-        for (let i = 0; i < selectedGroupID_List.length; i++) {
-            selectedGroupID_List[i] = selectedGroupID_List[i].trim();
-        }
-
         var selectedGroup_List = selectedGroup.split('  ');
         for (let i = 0; i < selectedGroup_List.length; i++) {
             selectedGroup_List[i] = selectedGroup_List[i].trim();
@@ -56,7 +49,6 @@ $(document).ready(function () {
             error: errorFunc,
             data: {
                 isActive: selectedCheckBoxVal,
-                selectedGroupIDs: selectedGroupID_List,
                 selectedGroups: selectedGroup_List,
                 selectedMasterGroups: selectedMasterGroup_List
             }
