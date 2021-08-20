@@ -1,0 +1,149 @@
+﻿.is-active {
+    width: 200px;
+    height: 38px;
+    padding: 14px 0;
+    float: left;
+    margin-left: -45px;
+}
+
+.first-row {
+    width: 100%;
+    display: inline-block;
+}
+
+.btnViewData {
+    float: right;
+    margin-top: -22px;
+    margin-right: 2.5%;
+    width: 100px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 5px #999;
+    font-weight: 500;
+}
+
+    .btnViewData:active {
+        box-shadow: 0 2px #666;
+        transform: translateY(4px);
+    }
+
+    .btnViewData:focus {
+        outline: none;
+    }
+
+#userSubscriptionData {
+    margin-top: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    margin-bottom: 45px;
+    overflow: scroll;
+}
+
+@media screen and (max-width: 1920px) {
+    #userSubscriptionData {
+        max-height: 435px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    #userSubscriptionData {
+        max-height: 210px;
+    }
+}
+
+.userSubscriptionsTable {
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+.userSubscriptionsHeader {
+    text-align: center;
+}
+
+.userSubscriptionsEntry_isActive, .userSubscriptionsEntry_Group, .userSubscriptionsEntry_GroupID, .userSubscriptionsEntry_masterGroup {
+    text-align: center;
+}
+
+.userSubscriptionsRow {
+    border-bottom: 1px solid #ADADAD;
+    height: 32px;
+}
+
+.userSubscriptionsRow_Last {
+    height: 32px;
+}
+
+.userSubscriptionsRow_Header {
+    border-bottom: 1px solid #ADADAD;
+    height: 40px;
+    background: #E5E5E5;
+}
+
+.deleteBtn {
+    border: none;
+    background: white;
+    margin-left: 1px;
+}
+
+.editBtn {
+    border: none;
+    background: white;
+    margin-left: 1px;
+}
+
+.addNewUserSubscription {
+    float: right;
+    margin-top: 50px;
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: -8px;
+}
+
+.addNewText {
+    float: left;
+    margin-right: 7px;
+    line-height: 48px;
+    color: #9E0000;
+    font-weight: 700;
+}
+
+.addNewBtn {
+    float: left;
+    border: none;
+    background: white;
+}
+
+    .addNewBtn:focus {
+        outline: none;
+        transform: rotate(45deg);
+    }
+
+.fa-plus-circle {
+    font-size: 3em;
+    color: #9E0000;
+}
+
+.btnSubmit {
+    position: absolute;
+    bottom: 75px;
+    right: 3.4%;
+    width: 100px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 5px #999;
+    background-color: #9E0000;
+    color: white;
+    font-weight: 700;
+}
+
+    .btnSubmit:active {
+        box-shadow: 0 2px #666;
+        transform: translateY(4px);
+    }
+
+    .btnSubmit:focus {
+        outline: none;
+    }
