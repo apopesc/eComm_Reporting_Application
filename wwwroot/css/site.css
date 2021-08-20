@@ -184,10 +184,16 @@ body {
     }
 }
 
-
 .first-row{
     width: 100%;
     display: inline-block;
+}
+
+.addnew-is-active {
+    width: 200px;
+    height: 38px;
+    padding: 14px 0;
+    float: left;
 }
 
 .addnew-row {
