@@ -1,8 +1,20 @@
 ﻿$(document).ready(function () {
 
-    $('#addNew_groupDropdown').multiselect();
-    $('#addNew_groupIDDropdown').multiselect();
-    $('#addNew_masterGroupDropdown').multiselect();
+    $('#addNew_groupDropdown').multiselect({
+        nonSelectedText: 'Select a group...',
+        enableCaseInsensitiveFiltering: true,
+        //buttonWidth: 250 For Changing the width of options in the dropdown - may need later
+    });
+    $('#addNew_groupIDDropdown').multiselect({
+        nonSelectedText: 'Select a group ID...',
+        enableCaseInsensitiveFiltering: true,
+        //buttonWidth: 250 For Changing the width of options in the dropdown - may need later
+    });
+    $('#addNew_masterGroupDropdown').multiselect({
+        nonSelectedText: 'Select a master group...',
+        enableCaseInsensitiveFiltering: true,
+        //buttonWidth: 250 For Changing the width of options in the dropdown - may need later
+    });
 
     function ValidateEmail(mail) {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {

@@ -3,8 +3,18 @@ const checkBoxEnum = Object.freeze({ "none": 0, "yes": 1, "no": 2, "both": 3 }) 
 
 $(document).ready(function () {
 
-    $('#groupDropdown').multiselect( { includeSelectAllOption:true } );
-    $('#masterGroupDropdown').multiselect( { includeSelectAllOption:true } );
+    $('#groupDropdown').multiselect({
+        nonSelectedText: 'Select a group...',
+        includeSelectAllOption: true,
+        enableCaseInsensitiveFiltering: true,
+        //buttonWidth: 250 For Changing the width of options in the dropdown - may need later
+    });
+    $('#masterGroupDropdown').multiselect({
+        nonSelectedText: 'Select a master group...',
+        includeSelectAllOption: true,
+        enableCaseInsensitiveFiltering: true,
+        //buttonWidth: 250 For Changing the width of options in the dropdown - may need later
+    });
 
     $('#btnSubmit').prop('disabled', true);
     $('#btnSubmit').css('cursor', 'not-allowed');
