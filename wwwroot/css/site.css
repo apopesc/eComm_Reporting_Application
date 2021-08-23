@@ -188,14 +188,14 @@ body {
 
 @media screen and (max-width: 1920px) {
     .multiselect-container {
-        overflow: scroll;
+        overflow-y: scroll;
         max-height: 300px;
     }
 }
 
 @media screen and (max-width: 1280px) {
     .multiselect-container {
-        overflow: scroll;
+        overflow-y: scroll;
         max-height: 250px;
     }
 }
