@@ -150,3 +150,7 @@
     .btnSubmit:focus {
         outline: none;
     }
+
+.fa-trash {
+    color: #9E0000;
+}

@@ -111,12 +111,14 @@ $(document).ready(function () {
                         let deleteLink = $('<i>').addClass('fa fa-trash');
                         deleteIcon.append(deleteLink);
                         tableEntry_Icons.append(deleteIcon);
+                        row.append(tableEntry_Icons); //This line needs to get deleted if edit is back
 
-                        let editIcon = $('<button>').addClass('editBtn');
-                        let editLink = $('<i>').addClass('fas fa-pencil-alt');
-                        editIcon.append(editLink);
-                        tableEntry_Icons.append(editIcon);
-                        row.append(tableEntry_Icons);
+                        //TEMPORARILY COMMENTING OUT EDIT - GOING TO DO TABLE INLINE EDITS
+                        //let editIcon = $('<button>').addClass('editBtn'); 
+                        //let editLink = $('<i>').addClass('fas fa-pencil-alt');
+                        //editIcon.append(editLink);
+                        //tableEntry_Icons.append(editIcon);
+                        //row.append(tableEntry_Icons);
                         //-----------------------------------------------------------------------------------------
 
                         let tableEntry1 = $('<td>').addClass('userSubscriptionsEntry_Email').text(tableData[i].userEmail);
@@ -170,30 +172,30 @@ $(document).ready(function () {
     });
 
 
-    $('#userSubscriptionData').on('click', '.editBtn', function () { //Need to use on click for a dynamically generated element
+    //$('#userSubscriptionData').on('click', '.editBtn', function () { //Need to use on click for a dynamically generated element
 
-        let selectedEmail = $(this).closest("tr")
-            .find(".userSubscriptionsEntry_Email")
-            .text();
+    //    let selectedEmail = $(this).closest("tr")
+    //        .find(".userSubscriptionsEntry_Email")
+    //        .text();
 
-        let selectedActive = $(this).closest("tr")
-            .find(".userSubscriptionsEntry_isActive")
-            .text();
+    //    let selectedActive = $(this).closest("tr")
+    //        .find(".userSubscriptionsEntry_isActive")
+    //        .text();
 
-        let selectedGroup = $(this).closest("tr")
-            .find(".userSubscriptionsEntry_Group")
-            .text();
+    //    let selectedGroup = $(this).closest("tr")
+    //        .find(".userSubscriptionsEntry_Group")
+    //        .text();
 
-        let selectedGroupID = $(this).closest("tr")
-            .find(".userSubscriptionsEntry_GroupID")
-            .text();
+    //    let selectedGroupID = $(this).closest("tr")
+    //        .find(".userSubscriptionsEntry_GroupID")
+    //        .text();
 
-        let selectedMasterGroup = $(this).closest("tr")
-            .find(".userSubscriptionsEntry_masterGroup")
-            .text();
+    //    let selectedMasterGroup = $(this).closest("tr")
+    //        .find(".userSubscriptionsEntry_masterGroup")
+    //        .text();
 
-        alert("Selected Item to be Edited - Email: " + selectedEmail + ", Active: "
-            + selectedActive + ", Group: " + selectedGroup + ", Group ID: " + selectedGroupID + ", Master Group: " + selectedMasterGroup);
-    });
+    //    alert("Selected Item to be Edited - Email: " + selectedEmail + ", Active: "
+    //        + selectedActive + ", Group: " + selectedGroup + ", Group ID: " + selectedGroupID + ", Master Group: " + selectedMasterGroup);
+    //});
 
 });

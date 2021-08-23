@@ -1,18 +1,15 @@
 ﻿$(document).ready(function () {
 
     $('#addNew_groupDropdown').multiselect({
-        nonSelectedText: 'Select a group...',
-        enableCaseInsensitiveFiltering: true,
+        enableCaseInsensitiveFiltering: true
         //buttonWidth: 250 For Changing the width of options in the dropdown - may need later
     });
     $('#addNew_groupIDDropdown').multiselect({
-        nonSelectedText: 'Select a group ID...',
-        enableCaseInsensitiveFiltering: true,
+        enableCaseInsensitiveFiltering: true
         //buttonWidth: 250 For Changing the width of options in the dropdown - may need later
     });
     $('#addNew_masterGroupDropdown').multiselect({
-        nonSelectedText: 'Select a master group...',
-        enableCaseInsensitiveFiltering: true,
+        enableCaseInsensitiveFiltering: true
         //buttonWidth: 250 For Changing the width of options in the dropdown - may need later
     });
 
@@ -69,6 +66,10 @@
 
             function successFunc(returnedData) {
                 alert(returnedData);
+                //Need to clear dropdowns too
+                $('#addNew_checkYes').prop('checked', false);
+                $('#addNew_checkNo').prop('checked', false);
+                $("#addNew_UserEmail").val('');
             }
             function errorFunc(error) {
                 alert("Error Sending Filter Data to the Subscriptions Controller: " + error);
