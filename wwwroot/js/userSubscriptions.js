@@ -3,8 +3,9 @@ const checkBoxEnum = Object.freeze({ "none": 0, "yes": 1, "no": 2, "both": 3 }) 
 
 $(document).ready(function () {
 
-    $('#groupDropdown').multiselect();
-    $('#masterGroupDropdown').multiselect();
+    $('#groupDropdown').multiselect( { includeSelectAllOption:true } );
+    $('#masterGroupDropdown').multiselect( { includeSelectAllOption:true } );
+
     $('#btnSubmit').prop('disabled', true);
     $('#btnSubmit').css('cursor', 'not-allowed');
 
