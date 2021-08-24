@@ -14,6 +14,7 @@ namespace eComm_Reporting_Application.Controllers
     {
 
         private readonly IConfiguration configuration;
+        public static List<SubscriptionGroupsTableModel> tableData;
 
         public SubscriptionGroupsController(IConfiguration config)
         {
@@ -99,7 +100,7 @@ namespace eComm_Reporting_Application.Controllers
                 filterData.masterGroupsList = selectedMasterGroups;
 
                 //Calling the function to get the table data
-                List<SubscriptionGroupsTableModel> tableData = GetTableData(filterData);
+                tableData = GetTableData(filterData);
 
                 //Returning the table data to the front end
                 return Json(tableData);
@@ -115,7 +116,7 @@ namespace eComm_Reporting_Application.Controllers
         private List<SubscriptionGroupsTableModel> GetTableData(SubscriptionGroupsModel filterData)
         {
             //A list of objects (each object property maps to a column - userEmail, isActive, etc...)
-            List<SubscriptionGroupsTableModel> tableData = new List<SubscriptionGroupsTableModel>();
+            List<SubscriptionGroupsTableModel> dbTableData = new List<SubscriptionGroupsTableModel>();
             
             string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
             SqlConnection connection = new SqlConnection(connectionstring);
@@ -157,13 +158,13 @@ namespace eComm_Reporting_Application.Controllers
                         entry.group = reader.GetString(2);
                         entry.groupID = reader.GetString(3);
                         entry.masterGroup = reader.GetString(4);
-                        tableData.Add(entry);
+                        dbTableData.Add(entry);
                     }
                 }
                 connection.Close();
             }
 
-            return tableData;
+            return dbTableData;
         }
 
 
@@ -195,11 +196,33 @@ namespace eComm_Reporting_Application.Controllers
                     connection.Close();
                 }
 
-                return Json(new {result = "Redirect", url = Url.Action("Index", "SubscriptionGroups", new { email = userEmail, isActive = isActive, groupID = selectedGroupID, group = selectedGroup, masterGroup = selectedMasterGroup})});
+                SubscriptionGroupsTableModel newEntry = new SubscriptionGroupsTableModel();
+                newEntry.userEmail = userEmail;
+                newEntry.isActive = isActive;
+                newEntry.groupID = selectedGroupID;
+                newEntry.group = selectedGroup;
+                newEntry.masterGroup = selectedMasterGroup;
+
+                tableData.Insert(0,newEntry); //Adding new user to start of table
+
+                return Json(new {result = "Redirect", url = Url.Action("Index", "SubscriptionGroups")});
             }
             catch (Exception e)
             {
                 return Json("Error Saving to Database: " + e);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult GetInitialTable()
+        {
+            try
+            {
+                return Json(tableData);
+            }
+            catch (Exception e)
+            {
+                return Json("Error retrieving table data: " + e);
             }
         }
     }

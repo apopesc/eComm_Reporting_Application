@@ -3,6 +3,31 @@ const checkBoxEnum = Object.freeze({ "none": 0, "yes": 1, "no": 2, "both": 3 }) 
 
 $(document).ready(function () {
 
+    //Posting collected filter data back to the SubscriptionsGroupsController
+    var controllerUrl = '/SubscriptionGroups/GetInitialTable';
+
+    $.ajax({
+        type: "POST",
+        url: controllerUrl,
+        dataType: "json",
+        success: successFunction,
+        error: errorFunction
+    });
+
+    function successFunction(tableData) {
+        if (typeof tableData === 'string') { //If there is an error saving it to the database
+            alert(tableData);
+        } else {
+            if (tableData != null) {
+                createTable(tableData);
+            }
+        }
+    }
+
+    function errorFunction(error) {
+        alert("Error Sending Filter Data to the Subscriptions Controller: " + error);
+    }
+
     $('#groupDropdown').multiselect({
         nonSelectedText: 'Select a group...',
         includeSelectAllOption: true,
@@ -75,66 +100,7 @@ $(document).ready(function () {
                 if (typeof tableData === 'string') { //If there is an error saving it to the database
                     alert(tableData);
                 } else {
-                    //Clearing table initially
-                    $('#userSubscriptionData').empty();
-
-                    var subTable = $('<table>').addClass('userSubscriptionsTable');
-
-                    //Temporarily hard coding table headers---------------------------------------------------------
-                    let Hrow = $('<tr>').addClass('userSubscriptionsRow_Header')
-                    let tableHeader_Icons = $('<th>').addClass('userSubscriptionsHeader').text(''); //Invisible header for icons
-                    Hrow.append(tableHeader_Icons);
-                    let tableHeader1 = $('<th>').addClass('userSubscriptionsHeader').text('User_Email');
-                    Hrow.append(tableHeader1); //Adding it to the row
-                    let tableHeader2 = $('<th>').addClass('userSubscriptionsHeader').text('Is_Active');
-                    Hrow.append(tableHeader2);
-                    let tableHeader3 = $('<th>').addClass('userSubscriptionsHeader').text('Group');
-                    Hrow.append(tableHeader3);
-                    let tableHeader4 = $('<th>').addClass('userSubscriptionsHeader').text('Group_ID');
-                    Hrow.append(tableHeader4);
-                    let tableHeader5 = $('<th>').addClass('userSubscriptionsHeader').text('MasterGroup');
-                    Hrow.append(tableHeader5);
-                    subTable.append(Hrow); //Adding the row to the table
-
-                    //----------------------------------------------------------------------------------------------
-                    for (i = 0; i < tableData.length; i++) {
-
-                        if (i == tableData.length - 1) { //This is so that the bottom border isn't added to the last row (it pops out of the table otherwise)
-                            var row = $('<tr>').addClass('userSubscriptionsRow_Last').attr('id', tableData[i].userEmail); //adding the class for styling and the ID for potential later use
-                        } else {
-                            var row = $('<tr>').addClass('userSubscriptionsRow').attr('id', tableData[i].userEmail);
-                        }
-
-                        //Adding the icons to each row ------------------------------------------------------------
-                        let tableEntry_Icons = $('<td>').addClass('userSubscriptionsEntry_Icons');
-                        let deleteIcon = $('<button>').addClass('deleteBtn');
-                        let deleteLink = $('<i>').addClass('fa fa-trash');
-                        deleteIcon.append(deleteLink);
-                        tableEntry_Icons.append(deleteIcon);
-                        row.append(tableEntry_Icons); //This line needs to get deleted if edit is back
-
-                        //TEMPORARILY COMMENTING OUT EDIT - GOING TO DO TABLE INLINE EDITS
-                        //let editIcon = $('<button>').addClass('editBtn'); 
-                        //let editLink = $('<i>').addClass('fas fa-pencil-alt');
-                        //editIcon.append(editLink);
-                        //tableEntry_Icons.append(editIcon);
-                        //row.append(tableEntry_Icons);
-                        //-----------------------------------------------------------------------------------------
-
-                        let tableEntry1 = $('<td>').addClass('userSubscriptionsEntry_Email').text(tableData[i].userEmail);
-                        row.append(tableEntry1); //adding element to the row
-                        let tableEntry2 = $('<td>').addClass('userSubscriptionsEntry_isActive').text(tableData[i].isActive);
-                        row.append(tableEntry2);
-                        let tableEntry3 = $('<td>').addClass('userSubscriptionsEntry_Group').text(tableData[i].group);
-                        row.append(tableEntry3);
-                        let tableEntry4 = $('<td>').addClass('userSubscriptionsEntry_GroupID').text(tableData[i].groupID);
-                        row.append(tableEntry4);
-                        let tableEntry5 = $('<td>').addClass('userSubscriptionsEntry_masterGroup').text(tableData[i].masterGroup);
-                        row.append(tableEntry5);
-
-                        subTable.append(row); //adding row to the table
-                    }
-                    $('#userSubscriptionData').append(subTable);
+                    createTable(tableData);
                 }
             }
 
@@ -171,31 +137,58 @@ $(document).ready(function () {
             + selectedActive + ", Group: " + selectedGroup + ", Group ID: " + selectedGroupID + ", Master Group: " + selectedMasterGroup);
     });
 
+    function createTable(tableData) {
+        //Clearing table initially
+        $('#userSubscriptionData').empty();
 
-    //$('#userSubscriptionData').on('click', '.editBtn', function () { //Need to use on click for a dynamically generated element
+        var subTable = $('<table>').addClass('userSubscriptionsTable');
 
-    //    let selectedEmail = $(this).closest("tr")
-    //        .find(".userSubscriptionsEntry_Email")
-    //        .text();
+        //Temporarily hard coding table headers---------------------------------------------------------
+        let Hrow = $('<tr>').addClass('userSubscriptionsRow_Header')
+        let tableHeader_Icons = $('<th>').addClass('userSubscriptionsHeader').text(''); //Invisible header for icons
+        Hrow.append(tableHeader_Icons);
+        let tableHeader1 = $('<th>').addClass('userSubscriptionsHeader').text('User Email');
+        Hrow.append(tableHeader1); //Adding it to the row
+        let tableHeader2 = $('<th>').addClass('userSubscriptionsHeader').text('Is Active');
+        Hrow.append(tableHeader2);
+        let tableHeader3 = $('<th>').addClass('userSubscriptionsHeader').text('Group');
+        Hrow.append(tableHeader3);
+        let tableHeader4 = $('<th>').addClass('userSubscriptionsHeader').text('Group ID');
+        Hrow.append(tableHeader4);
+        let tableHeader5 = $('<th>').addClass('userSubscriptionsHeader').text('Master Group');
+        Hrow.append(tableHeader5);
+        subTable.append(Hrow); //Adding the row to the table
 
-    //    let selectedActive = $(this).closest("tr")
-    //        .find(".userSubscriptionsEntry_isActive")
-    //        .text();
+        //----------------------------------------------------------------------------------------------
+        for (i = 0; i < tableData.length; i++) {
 
-    //    let selectedGroup = $(this).closest("tr")
-    //        .find(".userSubscriptionsEntry_Group")
-    //        .text();
+            if (i == tableData.length - 1) { //This is so that the bottom border isn't added to the last row (it pops out of the table otherwise)
+                var row = $('<tr>').addClass('userSubscriptionsRow_Last').attr('id', tableData[i].userEmail); //adding the class for styling and the ID for potential later use
+            } else {
+                var row = $('<tr>').addClass('userSubscriptionsRow').attr('id', tableData[i].userEmail);
+            }
 
-    //    let selectedGroupID = $(this).closest("tr")
-    //        .find(".userSubscriptionsEntry_GroupID")
-    //        .text();
+            //Adding the icons to each row ------------------------------------------------------------
+            let tableEntry_Icons = $('<td>').addClass('userSubscriptionsEntry_Icons');
+            let deleteIcon = $('<button>').addClass('deleteBtn');
+            let deleteLink = $('<i>').addClass('fa fa-trash');
+            deleteIcon.append(deleteLink);
+            tableEntry_Icons.append(deleteIcon);
+            row.append(tableEntry_Icons); //This line needs to get deleted if edit is back
 
-    //    let selectedMasterGroup = $(this).closest("tr")
-    //        .find(".userSubscriptionsEntry_masterGroup")
-    //        .text();
+            let tableEntry1 = $('<td>').addClass('userSubscriptionsEntry_Email').text(tableData[i].userEmail);
+            row.append(tableEntry1); //adding element to the row
+            let tableEntry2 = $('<td>').addClass('userSubscriptionsEntry_isActive').text(tableData[i].isActive);
+            row.append(tableEntry2);
+            let tableEntry3 = $('<td>').addClass('userSubscriptionsEntry_Group').text(tableData[i].group);
+            row.append(tableEntry3);
+            let tableEntry4 = $('<td>').addClass('userSubscriptionsEntry_GroupID').text(tableData[i].groupID);
+            row.append(tableEntry4);
+            let tableEntry5 = $('<td>').addClass('userSubscriptionsEntry_masterGroup').text(tableData[i].masterGroup);
+            row.append(tableEntry5);
 
-    //    alert("Selected Item to be Edited - Email: " + selectedEmail + ", Active: "
-    //        + selectedActive + ", Group: " + selectedGroup + ", Group ID: " + selectedGroupID + ", Master Group: " + selectedMasterGroup);
-    //});
-
+            subTable.append(row); //adding row to the table
+        }
+        $('#userSubscriptionData').append(subTable);
+    }
 });
