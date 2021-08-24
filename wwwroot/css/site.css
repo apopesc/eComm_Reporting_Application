@@ -199,3 +199,7 @@ body {
         max-height: 250px;
     }
 }
+
+.navbarOption{
+    font-weight: 500;
+}

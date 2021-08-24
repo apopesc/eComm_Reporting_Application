@@ -21,7 +21,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
 
-        public IActionResult Index()
+        public IActionResult Index(string email, string isActive, string groupID, string group, string masterGroup)
         {
             SubscriptionGroupsModel subModel = GetFilterData(); 
             
@@ -195,7 +195,7 @@ namespace eComm_Reporting_Application.Controllers
                     connection.Close();
                 }
 
-                return Json("Success saving user: " + userEmail +"!");
+                return Json(new {result = "Redirect", url = Url.Action("Index", "SubscriptionGroups", new { email = userEmail, isActive = isActive, groupID = selectedGroupID, group = selectedGroup, masterGroup = selectedMasterGroup})});
             }
             catch (Exception e)
             {

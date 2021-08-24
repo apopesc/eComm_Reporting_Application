@@ -65,11 +65,11 @@
             });
 
             function successFunc(returnedData) {
-                alert(returnedData);
-                //Need to clear dropdowns too
-                $('#addNew_checkYes').prop('checked', false);
-                $('#addNew_checkNo').prop('checked', false);
-                $("#addNew_UserEmail").val('');
+                alert("Success adding user: "+enteredEmail);
+                if (returnedData.result == 'Redirect') {
+                    window.location = returnedData.url;
+                }
+                    
             }
             function errorFunc(error) {
                 alert("Error Sending Filter Data to the Subscriptions Controller: " + error);
