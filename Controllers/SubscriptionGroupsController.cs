@@ -23,7 +23,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
 
-        public IActionResult Index(string email, string isActive, string groupID, string group, string masterGroup)
+        public IActionResult Index()
         {
             SubscriptionGroupsModel subModel = GetFilterData(); 
             

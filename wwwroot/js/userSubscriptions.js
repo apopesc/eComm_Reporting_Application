@@ -25,7 +25,7 @@ $(document).ready(function () {
     }
 
     function errorFunction(error) {
-        alert("Error Sending Filter Data to the Subscriptions Controller: " + error);
+        alert("Error Loading Previously Loaded User Table: " + error);
     }
 
     $('#groupDropdown').multiselect({
@@ -41,12 +41,7 @@ $(document).ready(function () {
         //buttonWidth: 250 For Changing the width of options in the dropdown - may need later
     });
 
-    $('#btnSubmit').prop('disabled', true);
-    $('#btnSubmit').css('cursor', 'not-allowed');
-
     $("#btnViewData").click(function () {
-        $('#btnSubmit').prop('disabled', false);
-        $('#btnSubmit').css('cursor', 'pointer');
 
         var selectedGroup = $('#groupDropdown').find(":selected").text();
         var selectedMasterGroup = $('#masterGroupDropdown').find(":selected").text();
@@ -194,13 +189,34 @@ $(document).ready(function () {
     });
 
     $('#btnSubmit').click(function () {
-        numEditedRows = 0;
-        $('.userSubscriptionsTable tr').each(function () {
-            if ($(this).closest("tr").hasClass("edited")) {
-                numEditedRows++;
+        if ($('.userSubscriptionsTable').length) { //Checking if the user table has been loaded or not
+
+            var editedUsersList = [];
+
+            $('.userSubscriptionsTable tr').each(function () {
+                $currentRow = $(this).closest("tr");
+                if ($currentRow.hasClass("edited")) { //Getting data from rows only with the 'edited' class
+                    let editedUser = {
+                        userEmail: $currentRow.find(".userSubscriptionsEntry_Email").text(),
+                        isActive: $currentRow.find(".userSubscriptionsEntry_isActive").text(),
+                        group: $currentRow.find(".userSubscriptionsEntry_Group").text(),
+                        groupID: $currentRow.find(".userSubscriptionsEntry_GroupID").text(),
+                        masterGroup: $currentRow.find(".userSubscriptionsEntry_masterGroup").text()
+                    }
+                    editedUsersList.push(editedUser);
+                }
+            });
+
+            if (editedUsersList.length > 0) {
+                //Ajax call
+            } else {
+                alert("Please make an edit to the user table before submitting.");
             }
-        });
-        alert(numEditedRows)
+
+        } else {
+            alert("Please load a table of users and make an edit before submitting.");
+        }
+        
     });
 
     function createTable(tableData) {
