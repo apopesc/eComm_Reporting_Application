@@ -16,6 +16,7 @@ namespace eComm_Reporting_Application.Controllers
         private readonly IConfiguration configuration;
         public static List<SubscriptionGroupsTableModel> tableData;
 
+
         public SubscriptionGroupsController(IConfiguration config)
         {
             this.configuration = config;
@@ -175,6 +176,7 @@ namespace eComm_Reporting_Application.Controllers
             return View(subModel);
         }
 
+
         [HttpPost]
         public IActionResult AddUserToDB(string userEmail, string isActive, string selectedGroupID, string selectedGroup, string selectedMasterGroup)
         {
@@ -212,6 +214,7 @@ namespace eComm_Reporting_Application.Controllers
                 return Json("Error Saving to Database: " + e);
             }
         }
+
 
         [HttpPost]
         public IActionResult GetInitialTable()

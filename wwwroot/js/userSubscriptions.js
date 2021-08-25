@@ -3,7 +3,7 @@ const checkBoxEnum = Object.freeze({ "none": 0, "yes": 1, "no": 2, "both": 3 }) 
 
 $(document).ready(function () {
 
-    //Posting collected filter data back to the SubscriptionsGroupsController
+    //Getting the previously loaded table if there is one
     var controllerUrl = '/SubscriptionGroups/GetInitialTable';
 
     $.ajax({
@@ -15,7 +15,7 @@ $(document).ready(function () {
     });
 
     function successFunction(tableData) {
-        if (typeof tableData === 'string') { //If there is an error saving it to the database
+        if (typeof tableData === 'string') { //If there is an error pulling it from the database
             alert(tableData);
         } else {
             if (tableData != null) {
@@ -110,7 +110,6 @@ $(document).ready(function () {
         }
     });
 
-
     $('#userSubscriptionData').on('click', '.deleteBtn', function () { //Need to use on click for a dynamically generated element
 
         let selectedEmail = $(this).closest("tr")
@@ -136,6 +135,21 @@ $(document).ready(function () {
         alert("Selected Item to be Deleted - Email: " + selectedEmail + ", Active: "
             + selectedActive + ", Group: " + selectedGroup + ", Group ID: " + selectedGroupID + ", Master Group: " + selectedMasterGroup);
     });
+
+    //Triggering change event when the table item is edited
+    $('#userSubscriptionData').on('focus', '.userSubscriptionsEntry_Email', function () {
+        before = $(this).html();
+    }).on('blur keyup paste', '.userSubscriptionsEntry_Email', function () {
+        if (before != $(this).html()) { $(this).trigger('change'); }
+    });
+    //Handling the change event for the modified table item
+    $('#userSubscriptionData').on('change', '.userSubscriptionsEntry_Email', function () {
+        let selectedEmail = $(this).closest("tr")
+            .find(".userSubscriptionsEntry_Email")
+            .text();
+        alert("Edited email: " + selectedEmail);
+    });
+
 
     function createTable(tableData) {
         //Clearing table initially
@@ -176,15 +190,15 @@ $(document).ready(function () {
             tableEntry_Icons.append(deleteIcon);
             row.append(tableEntry_Icons); //This line needs to get deleted if edit is back
 
-            let tableEntry1 = $('<td>').addClass('userSubscriptionsEntry_Email').text(tableData[i].userEmail);
+            let tableEntry1 = $('<td contenteditable = "true">').addClass('userSubscriptionsEntry_Email').text(tableData[i].userEmail);
             row.append(tableEntry1); //adding element to the row
-            let tableEntry2 = $('<td>').addClass('userSubscriptionsEntry_isActive').text(tableData[i].isActive);
+            let tableEntry2 = $('<td contenteditable = "true">').addClass('userSubscriptionsEntry_isActive').text(tableData[i].isActive);
             row.append(tableEntry2);
-            let tableEntry3 = $('<td>').addClass('userSubscriptionsEntry_Group').text(tableData[i].group);
+            let tableEntry3 = $('<td contenteditable = "true">').addClass('userSubscriptionsEntry_Group').text(tableData[i].group);
             row.append(tableEntry3);
-            let tableEntry4 = $('<td>').addClass('userSubscriptionsEntry_GroupID').text(tableData[i].groupID);
+            let tableEntry4 = $('<td contenteditable = "true">').addClass('userSubscriptionsEntry_GroupID').text(tableData[i].groupID);
             row.append(tableEntry4);
-            let tableEntry5 = $('<td>').addClass('userSubscriptionsEntry_masterGroup').text(tableData[i].masterGroup);
+            let tableEntry5 = $('<td contenteditable = "true">').addClass('userSubscriptionsEntry_masterGroup').text(tableData[i].masterGroup);
             row.append(tableEntry5);
 
             subTable.append(row); //adding row to the table

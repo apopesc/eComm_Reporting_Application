@@ -65,7 +65,7 @@
             });
 
             function successFunc(returnedData) {
-                alert("Success adding user: "+enteredEmail);
+                alert("Success adding user: " + enteredEmail);
                 if (returnedData.result == 'Redirect') {
                     window.location = returnedData.url;
                 }
