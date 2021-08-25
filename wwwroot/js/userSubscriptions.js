@@ -142,14 +142,66 @@ $(document).ready(function () {
     }).on('blur keyup paste', '.userSubscriptionsEntry_Email', function () {
         if (before != $(this).html()) { $(this).trigger('change'); }
     });
-    //Handling the change event for the modified table item
+    //Using the change event to add the edited class to the table row
     $('#userSubscriptionData').on('change', '.userSubscriptionsEntry_Email', function () {
-        let selectedEmail = $(this).closest("tr")
-            .find(".userSubscriptionsEntry_Email")
-            .text();
-        alert("Edited email: " + selectedEmail);
+        if (!($(this).closest("tr").hasClass("edited"))) {
+            $(this).closest("tr").addClass("edited");
+        }
     });
 
+    $('#userSubscriptionData').on('focus', '.userSubscriptionsEntry_isActive', function () {
+        before = $(this).html();
+    }).on('blur keyup paste', '.userSubscriptionsEntry_isActive', function () {
+        if (before != $(this).html()) { $(this).trigger('change'); }
+    });
+    $('#userSubscriptionData').on('change', '.userSubscriptionsEntry_isActive', function () {
+        if (!($(this).closest("tr").hasClass("edited"))) {
+            $(this).closest("tr").addClass("edited");
+        }
+    });
+
+    $('#userSubscriptionData').on('focus', '.userSubscriptionsEntry_Group', function () {
+        before = $(this).html();
+    }).on('blur keyup paste', '.userSubscriptionsEntry_Group', function () {
+        if (before != $(this).html()) { $(this).trigger('change'); }
+    });
+    $('#userSubscriptionData').on('change', '.userSubscriptionsEntry_Group', function () {
+        if (!($(this).closest("tr").hasClass("edited"))) {
+            $(this).closest("tr").addClass("edited");
+        }
+    });
+
+    $('#userSubscriptionData').on('focus', '.userSubscriptionsEntry_GroupID', function () {
+        before = $(this).html();
+    }).on('blur keyup paste', '.userSubscriptionsEntry_GroupID', function () {
+        if (before != $(this).html()) { $(this).trigger('change'); }
+    });
+    $('#userSubscriptionData').on('change', '.userSubscriptionsEntry_GroupID', function () {
+        if (!($(this).closest("tr").hasClass("edited"))) {
+            $(this).closest("tr").addClass("edited");
+        }
+    });
+
+    $('#userSubscriptionData').on('focus', '.userSubscriptionsEntry_masterGroup', function () {
+        before = $(this).html();
+    }).on('blur keyup paste', '.userSubscriptionsEntry_masterGroup', function () {
+        if (before != $(this).html()) { $(this).trigger('change'); }
+    });
+    $('#userSubscriptionData').on('change', '.userSubscriptionsEntry_masterGroup', function () {
+        if (!($(this).closest("tr").hasClass("edited"))) {
+            $(this).closest("tr").addClass("edited");
+        }
+    });
+
+    $('#btnSubmit').click(function () {
+        numEditedRows = 0;
+        $('.userSubscriptionsTable tr').each(function () {
+            if ($(this).closest("tr").hasClass("edited")) {
+                numEditedRows++;
+            }
+        });
+        alert(numEditedRows)
+    });
 
     function createTable(tableData) {
         //Clearing table initially
