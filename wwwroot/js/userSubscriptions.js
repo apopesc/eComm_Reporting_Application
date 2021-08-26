@@ -76,7 +76,13 @@ $(document).ready(function () {
             }
 
             //Posting collected filter data back to the SubscriptionsGroupsController
-            var controllerUrl = '/SubscriptionGroups/ReceiveFilters';
+            var controllerUrl = '/SubscriptionGroups/GetTableData';
+
+            var filterData = {
+                isActive: selectedCheckBoxVal,
+                groupsList: selectedGroup_List,
+                masterGroupsList: selectedMasterGroup_List
+            }
 
             $.ajax({
                 type: "POST",
@@ -84,11 +90,7 @@ $(document).ready(function () {
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
-                data: {
-                    isActive: selectedCheckBoxVal,
-                    selectedGroups: selectedGroup_List,
-                    selectedMasterGroups: selectedMasterGroup_List
-                }
+                data: {'filterData': filterData}
             });
 
             function successFunc(tableData) {

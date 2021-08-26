@@ -91,17 +91,58 @@ namespace eComm_Reporting_Application.Controllers
 
 
         [HttpPost]
-        public JsonResult ReceiveFilters(int isActive, List<string> selectedGroups, List<string> selectedMasterGroups)
+        public JsonResult GetTableData(SubscriptionGroupsModel filterData)
         {
             try
             {
-                SubscriptionGroupsModel filterData = new SubscriptionGroupsModel();
-                filterData.isActive = isActive;
-                filterData.groupsList = selectedGroups;
-                filterData.masterGroupsList = selectedMasterGroups;
+                tableData = new List<SubscriptionGroupsTableModel>();//Resetting the table each time we want to get new data
 
-                //Calling the function to get the table data
-                tableData = GetTableData(filterData);
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                SqlConnection connection = new SqlConnection(connectionstring);
+                SqlCommand tableQuery;
+
+                //Setting the isActive value for the query
+                string isActiveString;
+                if (filterData.isActive == 1)
+                {
+                    isActiveString = "'Y'";
+                }
+                else if (filterData.isActive == 2)
+                {
+                    isActiveString = "'N'";
+                }
+                else //If both are selected, show all data for isActive
+                {
+                    isActiveString = "'Y', 'N'";
+                }
+
+                //Converting lists to strings for the query
+                string groupsListString = String.Join("', '", filterData.groupsList.ToArray());
+                groupsListString = "'" + groupsListString + "'";
+                string masterGroupsListString = String.Join("', '", filterData.masterGroupsList.ToArray());
+                masterGroupsListString = "'" + masterGroupsListString + "'";
+
+                tableQuery = new SqlCommand("SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND User_Group IN (" + groupsListString + ") AND Master_Group IN (" + masterGroupsListString + ");", connection);
+
+                using (connection)
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = tableQuery.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            SubscriptionGroupsTableModel entry = new SubscriptionGroupsTableModel();
+                            entry.ID = reader.GetInt32(0);
+                            entry.userEmail = reader.GetString(1);
+                            entry.isActive = reader.GetString(2);
+                            entry.group = reader.GetString(3);
+                            entry.groupID = reader.GetString(4);
+                            entry.masterGroup = reader.GetString(5);
+                            tableData.Add(entry);
+                        }
+                    }
+                    connection.Close();
+                }
 
                 //Returning the table data to the front end
                 return Json(tableData);
@@ -111,62 +152,6 @@ namespace eComm_Reporting_Application.Controllers
                 return Json("Error retrieving table data: " + e);
             }
             
-        }
-
-
-        private List<SubscriptionGroupsTableModel> GetTableData(SubscriptionGroupsModel filterData)
-        {
-            //A list of objects (each object property maps to a column - userEmail, isActive, etc...)
-            List<SubscriptionGroupsTableModel> dbTableData = new List<SubscriptionGroupsTableModel>();
-            
-            string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-            SqlConnection connection = new SqlConnection(connectionstring);
-            SqlCommand tableQuery;
-
-            //Setting the isActive value for the query
-            string isActiveString;
-            if(filterData.isActive == 1)
-            {
-                isActiveString = "'Y'";
-            }
-            else if(filterData.isActive == 2)
-            {
-                isActiveString = "'N'";
-            }
-            else //If both are selected, show all data for isActive
-            {
-                isActiveString = "'Y', 'N'";
-            }
-
-            //Converting lists to strings for the query
-            string groupsListString = String.Join("', '", filterData.groupsList.ToArray());
-            groupsListString = "'" + groupsListString + "'";
-            string masterGroupsListString = String.Join("', '", filterData.masterGroupsList.ToArray());
-            masterGroupsListString = "'" + masterGroupsListString + "'";
-
-            tableQuery = new SqlCommand("SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND User_Group IN (" + groupsListString + ") AND Master_Group IN (" + masterGroupsListString + ");", connection);
-
-            using (connection)
-            {
-                connection.Open();
-                using (SqlDataReader reader = tableQuery.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        SubscriptionGroupsTableModel entry = new SubscriptionGroupsTableModel();
-                        entry.ID = reader.GetInt32(0);
-                        entry.userEmail = reader.GetString(1);
-                        entry.isActive = reader.GetString(2);
-                        entry.group = reader.GetString(3);
-                        entry.groupID = reader.GetString(4);
-                        entry.masterGroup = reader.GetString(5);
-                        dbTableData.Add(entry);
-                    }
-                }
-                connection.Close();
-            }
-
-            return dbTableData;
         }
 
 
