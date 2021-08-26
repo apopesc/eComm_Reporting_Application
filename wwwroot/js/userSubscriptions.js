@@ -246,9 +246,11 @@ $(document).ready(function () {
         for (i = 0; i < tableData.length; i++) {
 
             if (i == tableData.length - 1) { //This is so that the bottom border isn't added to the last row (it pops out of the table otherwise)
-                var row = $('<tr>').addClass('userSubscriptionsRow_Last').attr('id', tableData[i].userEmail); //adding the class for styling and the ID for potential later use
+                var row = $('<tr>').addClass('userSubscriptionsRow_Last');
+                row.prop('id', tableData[i].id);
             } else {
-                var row = $('<tr>').addClass('userSubscriptionsRow').attr('id', tableData[i].userEmail);
+                var row = $('<tr>').addClass('userSubscriptionsRow');
+                row.prop('id', tableData[i].id);
             }
 
             //Adding the icons to each row ------------------------------------------------------------
