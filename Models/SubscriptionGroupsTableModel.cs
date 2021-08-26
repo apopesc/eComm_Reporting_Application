@@ -8,6 +8,7 @@ namespace eComm_Reporting_Application.Models
     //This model will contain all the data for each entry in the subscriptions groups table
     public class SubscriptionGroupsTableModel
     {
+        public int ID { get; set; }
         public string userEmail { get; set; }
         public string isActive { get; set; }
         public string group { get; set; }

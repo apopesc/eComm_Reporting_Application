@@ -196,6 +196,7 @@ $(document).ready(function () {
             $('.userSubscriptionsTable tr').each(function () {
                 $currentRow = $(this).closest("tr");
                 if ($currentRow.hasClass("edited")) { //Getting data from rows only with the 'edited' class
+                    //Add input validation here to make sure users don't make crazy edits
                     let editedUser = {
                         userEmail: $currentRow.find(".userSubscriptionsEntry_Email").text(),
                         isActive: $currentRow.find(".userSubscriptionsEntry_isActive").text(),

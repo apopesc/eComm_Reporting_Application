@@ -14,7 +14,7 @@ namespace eComm_Reporting_Application.Controllers
     {
 
         private readonly IConfiguration configuration;
-        public static List<SubscriptionGroupsTableModel> tableData;
+        public static List<SubscriptionGroupsTableModel> tableData = new List<SubscriptionGroupsTableModel>();
 
 
         public SubscriptionGroupsController(IConfiguration config)
@@ -154,11 +154,12 @@ namespace eComm_Reporting_Application.Controllers
                     while (reader.Read())
                     {
                         SubscriptionGroupsTableModel entry = new SubscriptionGroupsTableModel();
-                        entry.userEmail = reader.GetString(0);
-                        entry.isActive = reader.GetString(1);
-                        entry.group = reader.GetString(2);
-                        entry.groupID = reader.GetString(3);
-                        entry.masterGroup = reader.GetString(4);
+                        entry.ID = reader.GetInt32(0);
+                        entry.userEmail = reader.GetString(1);
+                        entry.isActive = reader.GetString(2);
+                        entry.group = reader.GetString(3);
+                        entry.groupID = reader.GetString(4);
+                        entry.masterGroup = reader.GetString(5);
                         dbTableData.Add(entry);
                     }
                 }
@@ -189,16 +190,27 @@ namespace eComm_Reporting_Application.Controllers
                 SqlCommand addUserQuery = new SqlCommand("INSERT INTO UserSubscriptions (User_Email, Is_Active, User_Group, Group_ID, Master_Group) " +
                     "VALUES ('" + userEmail + "', '" + isActive + "', '" + selectedGroup + "', '" + selectedGroupID + "', '" + selectedMasterGroup + "');", connection);
 
+                SqlCommand getUserID = new SqlCommand("SELECT TOP 1* FROM UserSubscriptions ORDER BY ID Desc;",connection); //Getting the ID by getting the most recently added row
+                int userID = 0;
+
                 using (connection)
                 {
                     connection.Open();
-
                     SqlDataReader reader = addUserQuery.ExecuteReader();
-                    
+                    connection.Close();
+
+                    connection.Open();
+                    SqlDataReader reader_ID = getUserID.ExecuteReader();
+                    while (reader_ID.Read())
+                    {
+                        var id = reader_ID.GetInt32(0);
+                        userID = id;
+                    }
                     connection.Close();
                 }
 
                 SubscriptionGroupsTableModel newEntry = new SubscriptionGroupsTableModel();
+                newEntry.ID = userID;
                 newEntry.userEmail = userEmail;
                 newEntry.isActive = isActive;
                 newEntry.groupID = selectedGroupID;
