@@ -189,35 +189,50 @@ $(document).ready(function () {
     });
 
     $('#btnSubmit').click(function () {
-        if ($('.userSubscriptionsTable').length) { //Checking if the user table has been loaded or not
 
-            var editedUsersList = [];
+        var editedUsersList = [];
 
-            $('.userSubscriptionsTable tr').each(function () {
-                $currentRow = $(this).closest("tr");
-                if ($currentRow.hasClass("edited")) { //Getting data from rows only with the 'edited' class
-                    //Add input validation here to make sure users don't make crazy edits
-                    let editedUser = {
-                        userEmail: $currentRow.find(".userSubscriptionsEntry_Email").text(),
-                        isActive: $currentRow.find(".userSubscriptionsEntry_isActive").text(),
-                        group: $currentRow.find(".userSubscriptionsEntry_Group").text(),
-                        groupID: $currentRow.find(".userSubscriptionsEntry_GroupID").text(),
-                        masterGroup: $currentRow.find(".userSubscriptionsEntry_masterGroup").text()
-                    }
-                    editedUsersList.push(editedUser);
+        $('.userSubscriptionsTable tr').each(function () {
+            $currentRow = $(this).closest("tr");
+            if ($currentRow.hasClass("edited")) { //Getting data from rows only with the 'edited' class
+                //Add input validation here to make sure users don't make crazy edits
+                let editedUser = {
+                    ID: $currentRow.attr('id'),
+                    userEmail: $currentRow.find(".userSubscriptionsEntry_Email").text(),
+                    isActive: $currentRow.find(".userSubscriptionsEntry_isActive").text(),
+                    group: $currentRow.find(".userSubscriptionsEntry_Group").text(),
+                    groupID: $currentRow.find(".userSubscriptionsEntry_GroupID").text(),
+                    masterGroup: $currentRow.find(".userSubscriptionsEntry_masterGroup").text()
                 }
+                editedUsersList.push(editedUser);
+            }
+        });
+
+        if (editedUsersList.length > 0) {
+
+            var controllerUrl  = '/SubscriptionGroups/EditUser';
+
+            $.ajax({
+                dataType: 'json',
+                type: 'POST',
+                url: controllerUrl,
+                data: { 'editedUsersList': editedUsersList },
+                success: successFunc,
+                error: errorFunc
             });
 
-            if (editedUsersList.length > 0) {
-                //Ajax call
-            } else {
-                alert("Please make an edit to the user table before submitting.");
+            function successFunc(editedUserData) {
+                alert(editedUserData);
+            }
+
+            function errorFunc(error) {
+                alert("Error Saving Edited Users: " + error);
             }
 
         } else {
             alert("Please load a table of users and make an edit before submitting.");
         }
-        
+
     });
 
     function createTable(tableData) {

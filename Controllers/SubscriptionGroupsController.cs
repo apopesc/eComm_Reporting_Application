@@ -91,7 +91,7 @@ namespace eComm_Reporting_Application.Controllers
 
 
         [HttpPost]
-        public IActionResult ReceiveFilters(int isActive, List<string> selectedGroups, List<string> selectedMasterGroups)
+        public JsonResult ReceiveFilters(int isActive, List<string> selectedGroups, List<string> selectedMasterGroups)
         {
             try
             {
@@ -229,11 +229,25 @@ namespace eComm_Reporting_Application.Controllers
 
 
         [HttpPost]
-        public IActionResult GetInitialTable()
+        public JsonResult GetInitialTable()
         {
             try
             {
                 return Json(tableData);
+            }
+            catch (Exception e)
+            {
+                return Json("Error retrieving table data: " + e);
+            }
+        }
+
+
+        [HttpPost]
+        public JsonResult EditUser(List<SubscriptionGroupsTableModel> editedUsersList)
+        {
+            try
+            {
+                return Json(editedUsersList);
             }
             catch (Exception e)
             {
