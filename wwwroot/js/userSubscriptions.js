@@ -28,6 +28,17 @@ $(document).ready(function () {
         alert("Error Loading Previously Loaded User Table: " + error);
     }
 
+
+    var groupDropdownValues = [];
+    $("#groupDropdown option").each(function(){
+        groupDropdownValues.push($(this).val());
+    });
+    var masterGroupDropdownValues = [];
+    $("#masterGroupDropdown option").each(function () {
+        masterGroupDropdownValues.push($(this).val());
+    });
+
+
     $('#groupDropdown').multiselect({
         nonSelectedText: 'Select a group...',
         includeSelectAllOption: true,
@@ -40,6 +51,7 @@ $(document).ready(function () {
         enableCaseInsensitiveFiltering: true,
         //buttonWidth: 250 For Changing the width of options in the dropdown - may need later
     });
+
 
     $("#btnViewData").click(function () {
 
@@ -107,6 +119,7 @@ $(document).ready(function () {
         }
     });
 
+
     $('#userSubscriptionData').on('click', '.deleteBtn', function () { //Need to use on click for a dynamically generated element
 
         let selectedEmail = $(this).closest("tr")
@@ -132,6 +145,7 @@ $(document).ready(function () {
         alert("Selected Item to be Deleted - Email: " + selectedEmail + ", Active: "
             + selectedActive + ", Group: " + selectedGroup + ", Group ID: " + selectedGroupID + ", Master Group: " + selectedMasterGroup);
     });
+
 
     //Triggering change event when the table item is edited
     $('#userSubscriptionData').on('focus', '.userSubscriptionsEntry_Email', function () {
@@ -190,27 +204,59 @@ $(document).ready(function () {
         }
     });
 
+
     $('#btnSubmit').click(function () {
 
         var editedUsersList = [];
+        var isValidEdit = true;
 
         $('.userSubscriptionsTable tr').each(function () {
             $currentRow = $(this).closest("tr");
             if ($currentRow.hasClass("edited")) { //Getting data from rows only with the 'edited' class
                 //Add input validation here to make sure users don't make crazy edits
+
+                var _ID = $currentRow.attr('id');
+                var _userEmail = $currentRow.find(".userSubscriptionsEntry_Email").text();
+                var _isActive = $currentRow.find(".userSubscriptionsEntry_isActive").text();
+                var _group = $currentRow.find(".userSubscriptionsEntry_Group").text();
+                var _groupID = $currentRow.find(".userSubscriptionsEntry_GroupID").text();
+                var _masterGroup = $currentRow.find(".userSubscriptionsEntry_masterGroup").text();
+
+                //Input validation for the edited users
+                var isValidEmail = ValidateEmail(_userEmail);
+                if (isValidEmail == false) {
+                    alert(_userEmail + " is an invalid Email.");
+                    isValidEdit = false;
+                    return false;
+
+                } else if (!(_isActive == 'Y' || _isActive == 'N')) {
+                    alert(_userEmail + " has an invalid Is Active value. Please enter Y or N.");
+                    isValidEdit = false;
+                    return false;
+
+                } else if (!(groupDropdownValues.includes(_group))){
+                    alert(_userEmail + " has an invalid Group value. Please enter an existing Group.");
+                    isValidEdit = false;
+                    return false;
+                } else if (!(masterGroupDropdownValues.includes(_masterGroup))){
+                    alert(_userEmail + " has an invalid Master Group value. Please enter an existing Master Group.");
+                    isValidEdit = false;
+                    return false;
+                }
+
                 let editedUser = {
-                    ID: $currentRow.attr('id'),
-                    userEmail: $currentRow.find(".userSubscriptionsEntry_Email").text(),
-                    isActive: $currentRow.find(".userSubscriptionsEntry_isActive").text(),
-                    group: $currentRow.find(".userSubscriptionsEntry_Group").text(),
-                    groupID: $currentRow.find(".userSubscriptionsEntry_GroupID").text(),
-                    masterGroup: $currentRow.find(".userSubscriptionsEntry_masterGroup").text()
+                    ID: _ID,
+                    userEmail: _userEmail,
+                    isActive: _isActive,
+                    group: _group,
+                    groupID: _groupID,
+                    masterGroup: _masterGroup
                 }
                 editedUsersList.push(editedUser);
             }
         });
 
-        if (editedUsersList.length > 0) {
+        if (editedUsersList.length > 0 && isValidEdit == true) {
 
             var controllerUrl  = '/SubscriptionGroups/EditUser';
 
@@ -231,11 +277,12 @@ $(document).ready(function () {
                 alert("Error Saving Edited Users: " + error);
             }
 
-        } else {
+        } else  if (isValidEdit == true){
             alert("Please load a table of users and make an edit before submitting.");
         }
 
     });
+
 
     function createTable(tableData) {
         //Clearing table initially
@@ -293,4 +340,13 @@ $(document).ready(function () {
         }
         $('#userSubscriptionData').append(subTable);
     }
+
+
+    function ValidateEmail(mail) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+            return (true);
+        }
+        return (false);
+    }
+
 });
