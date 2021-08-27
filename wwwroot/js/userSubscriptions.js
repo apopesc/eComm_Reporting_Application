@@ -271,12 +271,12 @@ $(document).ready(function () {
             }
 
             //Adding the icons to each row ------------------------------------------------------------
-            let tableEntry_Icons = $('<td>').addClass('userSubscriptionsEntry_Icons');
+            let tableEntry_Icon = $('<td>').addClass('userSubscriptionsEntry_Icon');
             let deleteIcon = $('<button>').addClass('deleteBtn');
             let deleteLink = $('<i>').addClass('fa fa-trash');
             deleteIcon.append(deleteLink);
-            tableEntry_Icons.append(deleteIcon);
-            row.append(tableEntry_Icons); //This line needs to get deleted if edit is back
+            tableEntry_Icon.append(deleteIcon);
+            row.append(tableEntry_Icon); //This line needs to get deleted if edit is back
 
             let tableEntry1 = $('<td contenteditable = "true">').addClass('userSubscriptionsEntry_Email').text(tableData[i].userEmail);
             row.append(tableEntry1); //adding element to the row

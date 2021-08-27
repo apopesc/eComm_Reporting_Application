@@ -232,7 +232,28 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                return Json(editedUsersList);
+                string successString = "Success editing users: ";
+
+                for (int i = 0; i < editedUsersList.Count; i++)
+                {
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                    SqlConnection connection = new SqlConnection(connectionstring);
+
+                    SqlCommand editUserQuery = new SqlCommand("Update UserSubscriptions SET User_Email='" + editedUsersList[i].userEmail + "', Is_Active='" + editedUsersList[i].isActive + "', User_Group='" + editedUsersList[i].group +
+                        "', Group_ID='" + editedUsersList[i].groupID + "', Master_Group='" + editedUsersList[i].masterGroup + "' WHERE ID=" + editedUsersList[i].ID + ";", connection);
+                    using (connection)
+                    {
+                        connection.Open();
+                        SqlDataReader reader = editUserQuery.ExecuteReader();
+                        connection.Close();
+
+
+                    }
+                    successString = successString + editedUsersList[i].userEmail + ", ";
+                }
+
+                successString = successString.Substring(0, successString.Length - 2);
+                return Json(successString);
             }
             catch (Exception e)
             {
