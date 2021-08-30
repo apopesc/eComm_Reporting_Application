@@ -117,48 +117,22 @@ body {
 }
 .radio-btns{
     float:left;
-    margin-left:10px;
 }
 
 .multiselect {
     height: 33px;
 }
 
-.group {
-    padding: 8px 0;
-    float: left;
-}
-
-.master-group {
-    padding: 8px 0;
-    float: left;
-}
 
 @media screen and (max-width: 1920px) {
     .multiselect {
         width: 290px;
-    }
-
-    .group {
-        width: 470px;
-    }
-
-    .master-group {
-        width: 470px;
     }
 }
 
 @media screen and (max-width: 1280px) {
     .multiselect {
         width: 250px;
-    }
-
-    .group {
-        width: 407px;
-    }
-
-    .master-group {
-        width: 407px;
     }
 }
 

@@ -1,11 +1,27 @@
 ﻿.groupID {
-    width: 470px;
+    width: 400px;
     padding: 8px 0;
     float: left;
 }
 
+.group {
+    width: 400px;
+    padding: 8px 0;
+    float: left;
+}
+
+.master-group {
+    width: 400px;
+    padding: 8px 0;
+    float: left;
+}
+
+.btn-group{
+    float: right;
+}
+
 .addnew-is-active {
-    width: 200px;
+    width: 270px;
     height: 38px;
     padding: 14px 0;
     float: left;
@@ -23,20 +39,26 @@
     margin-top: 20px;
 }
 
-@media screen and (max-width: 1280px) {
-    .groupID {
-        width: 407px;
-    }
+.email-input {
+    float: right;
 }
 
 @media screen and (max-width: 1920px) {
-    .groupID {
-        width: 470px;
+    .email-input {
+        width: 290px;
+    }
+    .radio-btns {
+        margin-left: 46px;
     }
 }
 
-.email-input {
-    width: 290px;
+@media screen and (max-width: 1280px) {
+    .email-input {
+        width: 250px;
+    }
+    .radio-btns {
+        margin-left: 85px;
+    }
 }
 
 .btnAddUserPage {
@@ -64,4 +86,8 @@
     background-color: #9E0000;
     color: white;
     font-weight: 700;
+}
+
+.email{
+    width: 400px;
 }

@@ -154,3 +154,37 @@
 .fa-trash {
     color: #9E0000;
 }
+
+.group {
+    padding: 8px 0;
+    float: left;
+}
+
+.master-group {
+    padding: 8px 0;
+    float: left;
+}
+
+.radio-btns {
+    margin-left: 10px;
+}
+
+@media screen and (max-width: 1920px) {
+    .group {
+        width: 470px;
+    }
+
+    .master-group {
+        width: 470px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .group {
+        width: 407px;
+    }
+
+    .master-group {
+        width: 407px;
+    }
+}
