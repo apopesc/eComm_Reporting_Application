@@ -28,6 +28,8 @@ $(document).ready(function () {
         alert("Error Loading Previously Loaded User Table: " + error);
     }
 
+    $('#SubscriptionGroups_Link').addClass('selected-nav-option');
+
     var groupIDValues = [];
     $('.hidden-groupIDs input').each(function () {
         groupIDValues.push($(this).val());
@@ -46,13 +48,11 @@ $(document).ready(function () {
         nonSelectedText: 'Select a group...',
         includeSelectAllOption: true,
         enableCaseInsensitiveFiltering: true,
-        //buttonWidth: 250 For Changing the width of options in the dropdown - may need later
     });
     $('#masterGroupDropdown').multiselect({
         nonSelectedText: 'Select a master group...',
         includeSelectAllOption: true,
         enableCaseInsensitiveFiltering: true,
-        //buttonWidth: 250 For Changing the width of options in the dropdown - may need later
     });
 
 

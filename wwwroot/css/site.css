@@ -240,3 +240,7 @@ body {
         width: 407px;
     }
 }
+
+.selected-nav-option {
+    color: #9E0000 !important;
+}

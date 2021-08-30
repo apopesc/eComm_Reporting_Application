@@ -1,16 +1,15 @@
 ﻿$(document).ready(function () {
 
+    $('#SubscriptionGroups_Link').addClass('selected-nav-option');
+
     $('#addNew_groupDropdown').multiselect({
         enableCaseInsensitiveFiltering: true
-        //buttonWidth: 250 For Changing the width of options in the dropdown - may need later
     });
     $('#addNew_groupIDDropdown').multiselect({
         enableCaseInsensitiveFiltering: true
-        //buttonWidth: 250 For Changing the width of options in the dropdown - may need later
     });
     $('#addNew_masterGroupDropdown').multiselect({
         enableCaseInsensitiveFiltering: true
-        //buttonWidth: 250 For Changing the width of options in the dropdown - may need later
     });
 
     function ValidateEmail(mail) {
