@@ -123,7 +123,6 @@ body {
     height: 33px;
 }
 
-
 @media screen and (max-width: 1920px) {
     .multiselect {
         width: 290px;
@@ -176,4 +175,68 @@ body {
 
 .navbarOption{
     font-weight: 500;
+}
+
+.first-row {
+    width: 100%;
+    display: inline-block;
+}
+
+.btnViewData {
+    float: right;
+    margin-top: -22px;
+    margin-right: 2.5%;
+    width: 100px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 5px #999;
+    font-weight: 500;
+}
+
+    .btnViewData:active {
+        box-shadow: 0 2px #666;
+        transform: translateY(4px);
+    }
+
+    .btnViewData:focus {
+        outline: none;
+    }
+
+.btnSubmit {
+    position: absolute;
+    bottom: 75px;
+    right: 3.4%;
+    width: 100px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 5px #999;
+    background-color: #9E0000;
+    color: white;
+    font-weight: 700;
+}
+
+    .btnSubmit:active {
+        box-shadow: 0 2px #666;
+        transform: translateY(4px);
+    }
+
+    .btnSubmit:focus {
+        outline: none;
+    }
+
+.main-dropdown {
+    padding: 8px 0;
+    float: left;
+}
+
+@media screen and (max-width: 1920px) {
+    .main-dropdown {
+        width: 470px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .main-dropdown {
+        width: 407px;
+    }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace eComm_Reporting_Application.Models
 {
     //This model will contain all the data for each entry in the subscriptions groups table
-    public class SubscriptionGroupsTableModel
+    public class UserSubscriptionTableModel
     {
         public int ID { get; set; }
         public string userEmail { get; set; }

@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using eComm_Reporting_Application.Models;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
-using System.Data;
 
 namespace eComm_Reporting_Application.Controllers
 {
@@ -14,7 +11,7 @@ namespace eComm_Reporting_Application.Controllers
     {
 
         private readonly IConfiguration configuration;
-        public static List<SubscriptionGroupsTableModel> tableData = new List<SubscriptionGroupsTableModel>();
+        public static List<UserSubscriptionTableModel> tableData = new List<UserSubscriptionTableModel>();
 
 
         public SubscriptionGroupsController(IConfiguration config)
@@ -25,14 +22,14 @@ namespace eComm_Reporting_Application.Controllers
 
         public IActionResult Index()
         {
-            SubscriptionGroupsModel subModel = GetFilterData(); 
+            UserSubscriptionDropdownModel subModel = GetFilterData(); 
             
             return View(subModel);
         }
 
 
         //Getting filter data from the database
-        private SubscriptionGroupsModel GetFilterData()
+        private UserSubscriptionDropdownModel GetFilterData()
         {
             int is_active = 0;
 
@@ -78,7 +75,7 @@ namespace eComm_Reporting_Application.Controllers
                 connection.Close();
             }
 
-            SubscriptionGroupsModel filterDataModel = new SubscriptionGroupsModel()
+            UserSubscriptionDropdownModel filterDataModel = new UserSubscriptionDropdownModel()
             {
                 isActive = is_active,
                 groupsIDList = groupsID_list,
@@ -91,11 +88,11 @@ namespace eComm_Reporting_Application.Controllers
 
 
         [HttpPost]
-        public JsonResult GetTableData(SubscriptionGroupsModel filterData)
+        public JsonResult GetTableData(UserSubscriptionDropdownModel filterData)
         {
             try
             {
-                tableData = new List<SubscriptionGroupsTableModel>();//Resetting the table each time we want to get new data
+                tableData = new List<UserSubscriptionTableModel>();//Resetting the table each time we want to get new data
 
                 string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                 SqlConnection connection = new SqlConnection(connectionstring);
@@ -131,7 +128,7 @@ namespace eComm_Reporting_Application.Controllers
                     {
                         while (reader.Read())
                         {
-                            SubscriptionGroupsTableModel entry = new SubscriptionGroupsTableModel();
+                            UserSubscriptionTableModel entry = new UserSubscriptionTableModel();
                             entry.ID = reader.GetInt32(0);
                             entry.userEmail = reader.GetString(1);
                             entry.isActive = reader.GetString(2);
@@ -157,7 +154,7 @@ namespace eComm_Reporting_Application.Controllers
 
         public IActionResult AddNewUser()
         {
-            SubscriptionGroupsModel subModel = GetFilterData();
+            UserSubscriptionDropdownModel subModel = GetFilterData();
 
             return View(subModel);
         }
@@ -194,7 +191,7 @@ namespace eComm_Reporting_Application.Controllers
                     connection.Close();
                 }
 
-                SubscriptionGroupsTableModel newEntry = new SubscriptionGroupsTableModel();
+                UserSubscriptionTableModel newEntry = new UserSubscriptionTableModel();
                 newEntry.ID = userID;
                 newEntry.userEmail = userEmail;
                 newEntry.isActive = isActive;
@@ -228,7 +225,7 @@ namespace eComm_Reporting_Application.Controllers
 
 
         [HttpPost]
-        public JsonResult EditUser(List<SubscriptionGroupsTableModel> editedUsersList)
+        public JsonResult EditUser(List<UserSubscriptionTableModel> editedUsersList)
         {
             try
             {

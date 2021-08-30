@@ -56,7 +56,7 @@ $(document).ready(function () {
     });
 
 
-    $("#btnViewData").click(function () {
+    $("#btnViewUserData").click(function () {
 
         var selectedGroup = $('#groupDropdown').find(":selected").text();
         var selectedMasterGroup = $('#masterGroupDropdown').find(":selected").text();
@@ -208,7 +208,7 @@ $(document).ready(function () {
     });
 
 
-    $('#btnSubmit').click(function () {
+    $('#btnSubmitUser').click(function () {
 
         var editedUsersList = [];
         var isValidEdit = true;

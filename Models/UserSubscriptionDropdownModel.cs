@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace eComm_Reporting_Application.Models
 {
-    public class SubscriptionGroupsModel
+    public class UserSubscriptionDropdownModel
     {
         public int isActive { get; set; }
         public List<string> groupsIDList { get; set; }

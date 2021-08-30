@@ -1,9 +1,44 @@
-﻿@{
+﻿@model eComm_Reporting_Application.Models.ReportPageDropdownModel
+
+@{
     ViewData["Title"] = "MarMaxx Reports Subscriptions";
 }
+
+@section Scripts{
+    <script src="~/js/marMaxxReports.js"></script>
+}
+<link rel="stylesheet" href="~/css/marMaxxReports.css" />
+
 
 <div class="page-header">
     <div class="page-title">
         <h1 class="title-text">MarMaxx Reports Subscriptions</h1>
     </div>
 </div>
+
+<div class="filter-data">
+    
+    <div class="first-row">
+        <div class="main-dropdown">
+            <label class="filter-label" for="marMaxxFolderDropdown">Filter:</label>
+            <select id="marMaxxFolderDropdown" name="marMaxxFolderDropdown" multiple>
+                @foreach (var folder in @Model.folderList)
+                {
+                    <option value=@folder> @folder </option>
+                }
+            </select>
+        </div>
+        <div class="main-dropdown">
+            <label class="filter-label" for="marMaxxReportDropdown">Report Name:</label>
+            <select id="marMaxxReportDropdown" name="marMaxxReportDropdown" multiple>
+            </select>
+        </div>
+    </div>
+    
+    <button id="btnViewMarmaxxData" class="btnViewData" type="button">View Data</button>
+</div>
+
+<div class="separator-line">
+</div>
+
+<button id="btnSubmitUser" class="btnSubmit" type="button">Submit</button>

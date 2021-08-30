@@ -1,4 +1,4 @@
-﻿@model eComm_Reporting_Application.Models.SubscriptionGroupsModel
+﻿@model eComm_Reporting_Application.Models.UserSubscriptionDropdownModel
 
 @{
     ViewData["Title"] = "User Subscriptions Groups";
@@ -25,7 +25,7 @@
 
 <div class="filter-data">
     <div class="first-row">
-        <div class="master-group">
+        <div class="main-dropdown">
             <label class="filter-label" for="masterGroupDropdown">Master Group:</label>
             <select id="masterGroupDropdown" name="masterGroupDropdown" multiple>
                 @foreach (var master_group in @Model.masterGroupsList)
@@ -34,7 +34,7 @@
                 }
             </select>
         </div>
-        <div class="group">
+        <div class="main-dropdown">
             <label class="filter-label" for="groupDropdown">Group:</label>
             <select id="groupDropdown" name="groupDropdown" multiple>
                 @foreach (var group in @Model.groupsList)
@@ -54,7 +54,7 @@
         </div>
     </div>
     
-    <button id="btnViewData" class="btnViewData" type="button">View Data</button>
+    <button id="btnViewUserData" class="btnViewData" type="button">View Data</button>
 </div>
 
 <div class="separator-line">
@@ -68,4 +68,4 @@
 <div id="userSubscriptionData">
 </div>
 
-<button id="btnSubmit" class="btnSubmit" type="button">Submit</button>
+<button id="btnSubmitUser" class="btnSubmit" type="button">Submit</button>

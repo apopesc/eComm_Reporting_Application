@@ -6,31 +6,6 @@
     margin-left: -45px;
 }
 
-.first-row {
-    width: 100%;
-    display: inline-block;
-}
-
-.btnViewData {
-    float: right;
-    margin-top: -22px;
-    margin-right: 2.5%;
-    width: 100px;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 5px #999;
-    font-weight: 500;
-}
-
-    .btnViewData:active {
-        box-shadow: 0 2px #666;
-        transform: translateY(4px);
-    }
-
-    .btnViewData:focus {
-        outline: none;
-    }
-
 #userSubscriptionData {
     margin-top: 100px;
     display: block;
@@ -91,12 +66,6 @@
     margin-left: 1px;
 }
 
-.editBtn {
-    border: none;
-    background: white;
-    margin-left: 1px;
-}
-
 .addNewUserSubscription {
     float: right;
     margin-top: 50px;
@@ -129,62 +98,14 @@
     color: #9E0000;
 }
 
-.btnSubmit {
-    position: absolute;
-    bottom: 75px;
-    right: 3.4%;
-    width: 100px;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 5px #999;
-    background-color: #9E0000;
-    color: white;
-    font-weight: 700;
-}
-
-    .btnSubmit:active {
-        box-shadow: 0 2px #666;
-        transform: translateY(4px);
-    }
-
-    .btnSubmit:focus {
-        outline: none;
-    }
-
 .fa-trash {
     color: #9E0000;
-}
-
-.group {
-    padding: 8px 0;
-    float: left;
-}
-
-.master-group {
-    padding: 8px 0;
-    float: left;
 }
 
 .radio-btns {
     margin-left: 10px;
 }
 
-@media screen and (max-width: 1920px) {
-    .group {
-        width: 470px;
-    }
-
-    .master-group {
-        width: 470px;
-    }
-}
-
-@media screen and (max-width: 1280px) {
-    .group {
-        width: 407px;
-    }
-
-    .master-group {
-        width: 407px;
-    }
+.userSubscriptionsEntry_Email{
+    width: 350px;
 }
