@@ -28,7 +28,10 @@ $(document).ready(function () {
         alert("Error Loading Previously Loaded User Table: " + error);
     }
 
-
+    var groupIDValues = [];
+    $('.hidden-groupIDs input').each(function () {
+        groupIDValues.push($(this).val());
+    });
     var groupDropdownValues = [];
     $("#groupDropdown option").each(function(){
         groupDropdownValues.push($(this).val());
@@ -238,11 +241,18 @@ $(document).ready(function () {
                     alert(_userEmail + " has an invalid Group value. Please enter an existing Group.");
                     isValidEdit = false;
                     return false;
+
                 } else if (!(masterGroupDropdownValues.includes(_masterGroup))){
                     alert(_userEmail + " has an invalid Master Group value. Please enter an existing Master Group.");
                     isValidEdit = false;
                     return false;
+
+                } else if (!(groupIDValues.includes(_groupID))) {
+                    alert(_userEmail + " has an invalid Group ID value. Please enter an existing Group ID.");
+                    isValidEdit = false;
+                    return false;
                 }
+
 
                 let editedUser = {
                     ID: _ID,
