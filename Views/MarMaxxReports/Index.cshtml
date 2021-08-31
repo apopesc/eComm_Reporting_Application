@@ -20,8 +20,8 @@
     
     <div class="first-row">
         <div class="main-dropdown">
-            <label class="filter-label" for="marMaxxFolderDropdown">Filter:</label>
-            <select id="marMaxxFolderDropdown" name="marMaxxFolderDropdown" multiple>
+            <label class="filter-label" for="marMaxxFolderDropdown">Folder:</label>
+            <select id="marMaxxFolderDropdown" name="marMaxxFolderDropdown" onchange="selectedFolder();" multiple>
                 @foreach (var folder in @Model.folderList)
                 {
                     <option value=@folder> @folder </option>
