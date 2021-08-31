@@ -253,7 +253,6 @@ $(document).ready(function () {
                     return false;
                 }
 
-
                 let editedUser = {
                     ID: _ID,
                     userEmail: _userEmail,

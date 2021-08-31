@@ -244,3 +244,7 @@ body {
 .selected-nav-option {
     color: #9E0000 !important;
 }
+
+.nav-item a:hover {
+    color: #9E0000 !important;
+}
