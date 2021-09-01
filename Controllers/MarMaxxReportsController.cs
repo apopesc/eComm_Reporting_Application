@@ -28,7 +28,16 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                return Json(folderList);
+                List<string> reportNameList = new List<string>();
+                //sql query to find report names using the folderlist
+                //--------------------------------------------------------------
+                reportNameList.Add("Test report 1");
+                reportNameList.Add("Test report 2");
+                reportNameList.Add("Test report 3");
+                reportNameList.Add("Test report 4");
+                //---------------------------------------------------------------
+
+                return Json(reportNameList);
             }
             catch (Exception e)
             {
