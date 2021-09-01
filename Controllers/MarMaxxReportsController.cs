@@ -43,7 +43,11 @@ namespace eComm_Reporting_Application.Controllers
             {
                 return Json("Error retrieving table data: " + e);
             }
+        }
 
+        public IActionResult AddNewReportSub()
+        {
+            return View();
         }
     }
 

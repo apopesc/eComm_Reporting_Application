@@ -152,7 +152,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
 
-        public IActionResult AddNewUser()
+        public IActionResult AddNewUserSub()
         {
             UserSubscriptionDropdownModel subModel = GetFilterData();
 
@@ -161,7 +161,7 @@ namespace eComm_Reporting_Application.Controllers
 
 
         [HttpPost]
-        public IActionResult AddUserToDB(string userEmail, string isActive, string selectedGroupID, string selectedGroup, string selectedMasterGroup)
+        public IActionResult AddUserSubToDB(string userEmail, string isActive, string selectedGroupID, string selectedGroup, string selectedMasterGroup)
         {
             try
             {
@@ -225,7 +225,7 @@ namespace eComm_Reporting_Application.Controllers
 
 
         [HttpPost]
-        public JsonResult EditUser(List<UserSubscriptionTableModel> editedUsersList)
+        public JsonResult EditUserSub(List<UserSubscriptionTableModel> editedUsersList)
         {
             try
             {

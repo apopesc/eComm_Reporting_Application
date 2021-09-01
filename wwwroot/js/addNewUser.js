@@ -46,7 +46,7 @@
         } else {
 
             //Posting the collected data to the SubscriptionsGroupsController
-            var controllerUrl = '/SubscriptionGroups/AddUserToDB';
+            var controllerUrl = '/SubscriptionGroups/AddUserSubToDB';
 
             $.ajax({
                 type: "POST",

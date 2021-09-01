@@ -267,7 +267,7 @@ $(document).ready(function () {
 
         if (editedUsersList.length > 0 && isValidEdit == true) {
 
-            var controllerUrl  = '/SubscriptionGroups/EditUser';
+            var controllerUrl  = '/SubscriptionGroups/EditUserSub';
 
             $.ajax({
                 dataType: 'json',
