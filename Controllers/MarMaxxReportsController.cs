@@ -39,7 +39,7 @@ namespace eComm_Reporting_Application.Controllers
                         folders.Add(folder);
                     }
                 }
-                
+                connection.Close();
             }
             marMaxxDropdownModel.folders = folders;
             
@@ -72,6 +72,7 @@ namespace eComm_Reporting_Application.Controllers
                             reportNameList.Add(reportName);
                         }
                     }
+                    connection.Close();
                 }
 
                 return Json(reportNameList);

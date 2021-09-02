@@ -13,6 +13,17 @@
     });
 
     $('#marMaxxReportDropdown').multiselect('disable');
+
+    $('#btnViewMarmaxxData').click(function(){
+        var selectedFolders = $('#marMaxxFolderDropdown').val();
+        var selectedReports = $('#marMaxxReportDropdown').val();
+
+        if (selectedFolders.length == 0 || selectedReports.length == 0) {
+            alert("Please select value(s) for Folder and Report Name");
+        } else {
+            //Generate table
+        }
+    });
 });
 
 function selectedFolder() {
