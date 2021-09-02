@@ -29,14 +29,17 @@ namespace eComm_Reporting_Application.Controllers
             using (connection)
             {
                 connection.Open();
-                using SqlDataReader reader = getFolderList.ExecuteReader();
-                while (reader.Read())
+                using (SqlDataReader reader = getFolderList.ExecuteReader())
                 {
-                    ReportFolderModel folder = new ReportFolderModel();
-                    folder.folderName = reader.GetString(0);
-                    folder.folderPath = reader.GetString(1);
-                    folders.Add(folder);
+                    while (reader.Read())
+                    {
+                        ReportFolderModel folder = new ReportFolderModel();
+                        folder.folderName = reader.GetString(0);
+                        folder.folderPath = reader.GetString(1);
+                        folders.Add(folder);
+                    }
                 }
+                
             }
             marMaxxDropdownModel.folders = folders;
             
@@ -47,15 +50,30 @@ namespace eComm_Reporting_Application.Controllers
         public JsonResult GetReportNameValues(List<string> folderPathList)
         {
             try
-            { 
+            {
+                string folderListString = String.Join("', '", folderPathList.ToArray());
+                folderListString = "'" + folderListString + "'";
                 List<string> reportNameList = new List<string>();
-                //sql query to find report names using the folderlist
-                //--------------------------------------------------------------
-                reportNameList.Add("Test report 1");
-                reportNameList.Add("Test report 2");
-                reportNameList.Add("Test report 3");
-                reportNameList.Add("Test report 4");
-                //---------------------------------------------------------------
+
+                string connectionstring = configuration.GetConnectionString("ReportServer");
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                SqlCommand getFolderList = new SqlCommand("DROP TABLE IF EXISTS #TempReportPathTable SELECT Name, LEFT(Path, Len(Path)-Len(Name)-1) Path, Path as FullPath " +
+                    "INTO #TempReportPathTable FROM dbo.Catalog WHERE Path NOT LIKE '%SubReports%' AND Path NOT LIKE '%Data Sources%' AND TYPE = 2 " +
+                    "SELECT * FROM #TempReportPathTable WHERE Path IN ("+folderListString+");", connection);
+                using (connection)
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = getFolderList.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var reportName = reader.GetString(0);
+                            reportNameList.Add(reportName);
+                        }
+                    }
+                }
+
                 return Json(reportNameList);
             }
             catch (Exception e)
