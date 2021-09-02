@@ -123,17 +123,19 @@ namespace eComm_Reporting_Application.Controllers
                 using (connection)
                 {
                     connection.Open();
-                    using SqlDataReader reader = tableQuery.ExecuteReader();
-                    while (reader.Read())
+                    using (SqlDataReader reader = tableQuery.ExecuteReader())
                     {
-                        UserSubscriptionTableModel entry = new UserSubscriptionTableModel();
-                        entry.ID = reader.GetInt32(0);
-                        entry.userEmail = reader.GetString(1);
-                        entry.isActive = reader.GetString(2);
-                        entry.group = reader.GetString(3);
-                        entry.groupID = reader.GetString(4);
-                        entry.masterGroup = reader.GetString(5);
-                        tableData.Add(entry);
+                        while (reader.Read())
+                        {
+                            UserSubscriptionTableModel entry = new UserSubscriptionTableModel();
+                            entry.ID = reader.GetInt32(0);
+                            entry.userEmail = reader.GetString(1);
+                            entry.isActive = reader.GetString(2);
+                            entry.group = reader.GetString(3);
+                            entry.groupID = reader.GetString(4);
+                            entry.masterGroup = reader.GetString(5);
+                            tableData.Add(entry);
+                        }
                     }
                     connection.Close();
                 }
@@ -179,12 +181,15 @@ namespace eComm_Reporting_Application.Controllers
                     connection.Close();
 
                     connection.Open();
-                    using SqlDataReader reader_ID = getUserID.ExecuteReader();
-                    while (reader_ID.Read())
+                    using (SqlDataReader reader_ID = getUserID.ExecuteReader())
                     {
-                        var id = reader_ID.GetInt32(0);
-                        userID = id;
+                        while (reader_ID.Read())
+                        {
+                            var id = reader_ID.GetInt32(0);
+                            userID = id;
+                        }
                     }
+                    
                     connection.Close();
                 }
 

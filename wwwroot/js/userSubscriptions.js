@@ -58,8 +58,8 @@ $(document).ready(function () {
 
     $("#btnViewUserData").click(function () {
 
-        var selectedGroup = $('#groupDropdown').find(":selected").text();
-        var selectedMasterGroup = $('#masterGroupDropdown').find(":selected").text();
+        var selectedGroups = $('#groupDropdown').val();
+        var selectedMasterGroups = $('#masterGroupDropdown').val();
 
         var selectedCheckBoxVal = 0;
 
@@ -73,30 +73,19 @@ $(document).ready(function () {
             selectedCheckBoxVal = checkBoxEnum.none; //0
         }
 
-        if (selectedMasterGroup == "" || selectedGroup == "" || selectedCheckBoxVal == 0) {
+        if (selectedMasterGroups.length == 0 || selectedGroups.length == 0 || selectedCheckBoxVal == 0) {
 
             alert("Please enter a value for Master Group, Group, and Is Active");
 
         } else {
-
-            //Turning the dropdown selected values into lists, removing whitespace
-            var selectedGroup_List = selectedGroup.split('  ');
-            for (let i = 0; i < selectedGroup_List.length; i++) {
-                selectedGroup_List[i] = selectedGroup_List[i].trim();
-            }
-
-            var selectedMasterGroup_List = selectedMasterGroup.split('  ');
-            for (let i = 0; i < selectedMasterGroup_List.length; i++) {
-                selectedMasterGroup_List[i] = selectedMasterGroup_List[i].trim();
-            }
 
             //Posting collected filter data back to the SubscriptionsGroupsController
             var controllerUrl = '/SubscriptionGroups/GetTableData';
 
             var filterData = {
                 isActive: selectedCheckBoxVal,
-                groupsList: selectedGroup_List,
-                masterGroupsList: selectedMasterGroup_List
+                groupsList: selectedGroups,
+                masterGroupsList: selectedMasterGroups
             }
 
             $.ajax({

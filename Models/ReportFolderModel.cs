@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace eComm_Reporting_Application.Models
 {
-    public class ReportPageDropdownModel
+    public class ReportFolderModel
     {
-        public List<ReportFolderModel> folders { get; set; }
+        public string folderName { get; set; }
+        public string folderPath { get; set; }
     }
 }

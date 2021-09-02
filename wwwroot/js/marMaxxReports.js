@@ -23,11 +23,7 @@ function selectedFolder() {
     } else { //Something is selected in the dropdown
         var controllerUrl = '/MarMaxxReports/GetReportNameValues';
 
-        var selectedFolders = $('#marMaxxFolderDropdown').find(":selected").text();
-        var folderList = selectedFolders.split('  ');
-        for (let i = 0; i < folderList.length; i++) {
-            folderList[i] = folderList[i].trim();
-        }
+        var folderPathList = $('#marMaxxFolderDropdown').val();
 
         $.ajax({
             type: "POST",
@@ -35,7 +31,7 @@ function selectedFolder() {
             dataType: "json",
             success: successFunc,
             error: errorFunc,
-            data: { 'folderList': folderList }
+            data: { 'folderPathList': folderPathList }
         });
 
         function successFunc(dropdownData) {

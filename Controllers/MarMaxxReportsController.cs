@@ -18,7 +18,7 @@ namespace eComm_Reporting_Application.Controllers
         public IActionResult Index()
         {
             ReportPageDropdownModel marMaxxDropdownModel = new ReportPageDropdownModel();
-            List<string> folder_list = new List<string>();
+            List<ReportFolderModel> folders = new List<ReportFolderModel>();
 
             string connectionstring = configuration.GetConnectionString("ReportServer");
             SqlConnection connection = new SqlConnection(connectionstring);
@@ -32,20 +32,22 @@ namespace eComm_Reporting_Application.Controllers
                 using SqlDataReader reader = getFolderList.ExecuteReader();
                 while (reader.Read())
                 {
-                    var folder = reader.GetString(0);
-                    folder_list.Add(folder);
+                    ReportFolderModel folder = new ReportFolderModel();
+                    folder.folderName = reader.GetString(0);
+                    folder.folderPath = reader.GetString(1);
+                    folders.Add(folder);
                 }
             }
-
-            marMaxxDropdownModel.folderList = folder_list;
+            marMaxxDropdownModel.folders = folders;
+            
             return View(marMaxxDropdownModel);
         }
 
         [HttpPost]
-        public JsonResult GetReportNameValues(List<string> folderList)
+        public JsonResult GetReportNameValues(List<string> folderPathList)
         {
             try
-            {
+            { 
                 List<string> reportNameList = new List<string>();
                 //sql query to find report names using the folderlist
                 //--------------------------------------------------------------
@@ -54,7 +56,6 @@ namespace eComm_Reporting_Application.Controllers
                 reportNameList.Add("Test report 3");
                 reportNameList.Add("Test report 4");
                 //---------------------------------------------------------------
-
                 return Json(reportNameList);
             }
             catch (Exception e)
