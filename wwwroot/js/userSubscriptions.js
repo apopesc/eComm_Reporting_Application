@@ -74,9 +74,7 @@ $(document).ready(function () {
         }
 
         if (selectedMasterGroups.length == 0 || selectedGroups.length == 0 || selectedCheckBoxVal == 0) {
-
             alert("Please enter a value for Master Group, Group, and Is Active");
-
         } else {
 
             //Posting collected filter data back to the SubscriptionsGroupsController

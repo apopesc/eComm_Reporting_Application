@@ -17,7 +17,14 @@ namespace eComm_Reporting_Application.Controllers
 
         public IActionResult Index()
         {
-            ReportPageDropdownModel marMaxxDropdownModel = new ReportPageDropdownModel();
+            ReportPageDropdownModel marMaxxDropdownModel = getFoldersForDropdown();
+            
+            return View(marMaxxDropdownModel);
+        }
+
+        public ReportPageDropdownModel getFoldersForDropdown()
+        {
+            ReportPageDropdownModel dropdownModel = new ReportPageDropdownModel();
             List<ReportFolderModel> folders = new List<ReportFolderModel>();
 
             string connectionstring = configuration.GetConnectionString("ReportServer");
@@ -41,9 +48,8 @@ namespace eComm_Reporting_Application.Controllers
                 }
                 connection.Close();
             }
-            marMaxxDropdownModel.folders = folders;
-            
-            return View(marMaxxDropdownModel);
+            dropdownModel.folders = folders;
+            return dropdownModel;
         }
 
         [HttpPost]
@@ -85,7 +91,9 @@ namespace eComm_Reporting_Application.Controllers
 
         public IActionResult AddNewReportSub()
         {
-            return View();
+            ReportPageDropdownModel addNewDropdownModel = getFoldersForDropdown();
+
+            return View(addNewDropdownModel);
         }
     }
 

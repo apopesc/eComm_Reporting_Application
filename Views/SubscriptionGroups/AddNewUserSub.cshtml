@@ -38,7 +38,7 @@
     </div>
 
     <div class="addnew-row">
-        <div class="groupID">
+        <div class="addnew-dropdown">
             <label class="filter-label" for="groupIDDropdown">Group ID:</label>
             <select id="addNew_groupIDDropdown" name="groupIDDropdown" class="add-new-dropdown">
                 <option value="" disabled selected>Select a group ID...</option>
@@ -51,7 +51,7 @@
     </div>
 
     <div class="addnew-row">
-        <div class="group">
+        <div class="addnew-dropdown">
             <label class="filter-label" for="groupDropdown">Group:</label>
             <select id="addNew_groupDropdown" name="groupDropdown" class="add-new-dropdown">
                 <option value="" disabled selected>Select a group...</option>
@@ -64,7 +64,7 @@
     </div>
 
     <div class="addnew-row">
-        <div class="master-group">
+        <div class="addnew-dropdown">
             <label class="filter-label" for="masterGroupDropdown">Master Group:</label>
             <select id="addNew_masterGroupDropdown" name="masterGroupDropdown" class="add-new-dropdown">
                 <option value="" disabled selected>Select a master group...</option>
@@ -76,8 +76,8 @@
         </div>
     </div>
     <div class="addnew-row-last">
-        <button id="backToUsers" class="btnAddUserPage" type="button" onclick="location.href='@Url.Action("Index", "SubscriptionGroups")'">Back</button>
-        <button id="addUserSubmit" class="btnAddUserPage" type="button">Submit User</button>
+        <button id="backToUsers" class="btnAddPage" type="button" onclick="location.href='@Url.Action("Index", "SubscriptionGroups")'">Back</button>
+        <button id="addUserSubmit" class="btnAddPage" type="button">Submit User</button>
     </div>
 
 </div>

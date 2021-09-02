@@ -1,9 +1,41 @@
-﻿@{
+﻿@model eComm_Reporting_Application.Models.ReportPageDropdownModel
+@{
     ViewData["Title"] = "Add New Report Subscription";
 }
+
+@section Scripts{
+    <script src="~/js/addNewMarMaxxReport.js"></script>
+}
+<link rel="stylesheet" href="~/css/addNewMarMaxxReport.css" />
 
 <div class="page-header">
     <div class="page-title">
         <h1 class="title-text">Add New MarMaxx Report Subscription</h1>
+    </div>
+</div>
+
+<div class="filter-data">
+    <div class="addnew-row">
+        <div class="addnew-dropdown">
+            <label class="filter-label" for="marMaxxFolderDropdown">Folder:</label>
+            <select id="marMaxxFolderDropdown" name="marMaxxFolderDropdown" onchange="selectedFolder();" multiple>
+                @foreach (var folder in @Model.folders)
+                {
+                    <option value=@folder.folderPath> @folder.folderName </option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="addnew-row">
+        <div class="addnew-dropdown">
+            <label class="filter-label" for="marMaxxReportDropdown">Report Name:</label>
+            <select id="marMaxxReportDropdown" name="marMaxxReportDropdown" multiple>
+            </select>
+        </div>
+    </div>
+
+    <div class="addnew-row-last">
+        <button id="backToMarMaxx" class="btnAddPage" type="button" onclick="location.href='@Url.Action("Index", "MarMaxxReports")'">Back</button>
     </div>
 </div>
