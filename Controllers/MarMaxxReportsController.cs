@@ -1,23 +1,41 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using eComm_Reporting_Application.Models;
+using Microsoft.Extensions.Configuration;
+using System.Data.SqlClient;
 
 namespace eComm_Reporting_Application.Controllers
 {
     public class MarMaxxReportsController : Controller
     {
+        private readonly IConfiguration configuration;
+        public MarMaxxReportsController(IConfiguration config)
+        {
+            this.configuration = config;
+        }
+
         public IActionResult Index()
         {
             ReportPageDropdownModel marMaxxDropdownModel = new ReportPageDropdownModel();
             List<string> folder_list = new List<string>();
-            
-            folder_list.Add("Test folder 1");
-            folder_list.Add("Test folder 2");
-            folder_list.Add("Test folder 3");
-            folder_list.Add("Test folder 4");
+
+            string connectionstring = configuration.GetConnectionString("ReportServer");
+            SqlConnection connection = new SqlConnection(connectionstring);
+
+            SqlCommand getFolderList = new SqlCommand("SELECT Right(Path, Len(Path)-1) Folders, Path FROM dbo.Catalog WHERE Path NOT LIKE '%SubReports%' " +
+                "AND Path NOT LIKE '%Data Sources%' AND TYPE=1 AND ParentID IS NOT NULL;", connection);
+
+            using (connection)
+            {
+                connection.Open();
+                using SqlDataReader reader = getFolderList.ExecuteReader();
+                while (reader.Read())
+                {
+                    var folder = reader.GetString(0);
+                    folder_list.Add(folder);
+                }
+            }
 
             marMaxxDropdownModel.folderList = folder_list;
             return View(marMaxxDropdownModel);

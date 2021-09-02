@@ -34,7 +34,6 @@ namespace eComm_Reporting_Application.Controllers
             int is_active = 0;
 
             string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-
             SqlConnection connection = new SqlConnection(connectionstring);
 
             SqlCommand groupsQuery = new SqlCommand("SELECT DISTINCT User_Group FROM UserSubscriptionFilters WHERE User_Group IS NOT NULL", connection);
@@ -124,19 +123,17 @@ namespace eComm_Reporting_Application.Controllers
                 using (connection)
                 {
                     connection.Open();
-                    using (SqlDataReader reader = tableQuery.ExecuteReader())
+                    using SqlDataReader reader = tableQuery.ExecuteReader();
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            UserSubscriptionTableModel entry = new UserSubscriptionTableModel();
-                            entry.ID = reader.GetInt32(0);
-                            entry.userEmail = reader.GetString(1);
-                            entry.isActive = reader.GetString(2);
-                            entry.group = reader.GetString(3);
-                            entry.groupID = reader.GetString(4);
-                            entry.masterGroup = reader.GetString(5);
-                            tableData.Add(entry);
-                        }
+                        UserSubscriptionTableModel entry = new UserSubscriptionTableModel();
+                        entry.ID = reader.GetInt32(0);
+                        entry.userEmail = reader.GetString(1);
+                        entry.isActive = reader.GetString(2);
+                        entry.group = reader.GetString(3);
+                        entry.groupID = reader.GetString(4);
+                        entry.masterGroup = reader.GetString(5);
+                        tableData.Add(entry);
                     }
                     connection.Close();
                 }
@@ -178,11 +175,11 @@ namespace eComm_Reporting_Application.Controllers
                 using (connection)
                 {
                     connection.Open();
-                    SqlDataReader reader = addUserQuery.ExecuteReader();
+                    using SqlDataReader reader = addUserQuery.ExecuteReader();
                     connection.Close();
 
                     connection.Open();
-                    SqlDataReader reader_ID = getUserID.ExecuteReader();
+                    using SqlDataReader reader_ID = getUserID.ExecuteReader();
                     while (reader_ID.Read())
                     {
                         var id = reader_ID.GetInt32(0);
