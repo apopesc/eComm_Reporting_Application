@@ -15,13 +15,58 @@
     $('#marMaxxReportDropdown').multiselect('disable');
 
     $('#btnViewMarmaxxData').click(function(){
-        var selectedFolders = $('#marMaxxFolderDropdown').val();
+        var selectedFolderPaths = $('#marMaxxFolderDropdown').val();
         var selectedReports = $('#marMaxxReportDropdown').val();
 
-        if (selectedFolders.length == 0 || selectedReports.length == 0) {
+        if (selectedFolderPaths.length == 0 || selectedReports.length == 0) {
             alert("Please select value(s) for Folder and Report Name");
         } else {
+
             //Generate table
+            var selectedFolders = [];
+
+            var selectedFolderNames_Text = $('#marMaxxFolderDropdown').find(":selected").text();
+            var selectedFolderNames = selectedFolderNames_Text.split('  ');
+
+            for (let i = 0; i < selectedFolderNames.length; i++) {
+                selectedFolderNames[i] = selectedFolderNames[i].trim();
+
+                //Using the name and the path to create a selected folder object and adding it to the list
+                var selectedFolder = {
+                    folderName: selectedFolderNames[i],
+                    folderPath: selectedFolderPaths[i]
+                };
+                selectedFolders.push(selectedFolder);
+            }
+
+            var controllerUrl = '/MarMaxxReports/GetMarMaxxTableData';
+
+            var filterData = {
+                folders: selectedFolders,
+                reportNames: selectedReports
+            };
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc,
+                data: { 'filterData': filterData }
+            });
+
+            function successFunc(tableData) {
+                if (typeof tableData === 'string') { //If there is an error saving it to the database
+                    alert(tableData);
+                } else {
+                    //createTable(tableData);
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Sending Filter Data to the Subscriptions Controller: " + error);
+            }
+
         }
     });
 });

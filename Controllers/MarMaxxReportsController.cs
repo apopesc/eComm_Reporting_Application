@@ -26,29 +26,35 @@ namespace eComm_Reporting_Application.Controllers
         {
             ReportPageDropdownModel dropdownModel = new ReportPageDropdownModel();
             List<ReportFolderModel> folders = new List<ReportFolderModel>();
-
-            string connectionstring = configuration.GetConnectionString("ReportServer");
-            SqlConnection connection = new SqlConnection(connectionstring);
-
-            SqlCommand getFolderList = new SqlCommand("SELECT Right(Path, Len(Path)-1) Folders, Path FROM dbo.Catalog WHERE Path NOT LIKE '%SubReports%' " +
-                "AND Path NOT LIKE '%Data Sources%' AND TYPE=1 AND ParentID IS NOT NULL;", connection);
-
-            using (connection)
+            try
             {
-                connection.Open();
-                using (SqlDataReader reader = getFolderList.ExecuteReader())
+                string connectionstring = configuration.GetConnectionString("ReportServer");
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                SqlCommand getFolderList = new SqlCommand("SELECT Right(Path, Len(Path)-1) Folders, Path FROM dbo.Catalog WHERE Path NOT LIKE '%SubReports%' " +
+                    "AND Path NOT LIKE '%Data Sources%' AND TYPE=1 AND ParentID IS NOT NULL;", connection);
+
+                using (connection)
                 {
-                    while (reader.Read())
+                    connection.Open();
+                    using (SqlDataReader reader = getFolderList.ExecuteReader())
                     {
-                        ReportFolderModel folder = new ReportFolderModel();
-                        folder.folderName = reader.GetString(0);
-                        folder.folderPath = reader.GetString(1);
-                        folders.Add(folder);
+                        while (reader.Read())
+                        {
+                            ReportFolderModel folder = new ReportFolderModel();
+                            folder.folderName = reader.GetString(0);
+                            folder.folderPath = reader.GetString(1);
+                            folders.Add(folder);
+                        }
                     }
+                    connection.Close();
                 }
-                connection.Close();
+                dropdownModel.folders = folders;
             }
-            dropdownModel.folders = folders;
+            catch (Exception e)
+            {
+                //Redirect to error page and pass forward exception e once error page is set up.
+            }
             return dropdownModel;
         }
 
@@ -94,6 +100,20 @@ namespace eComm_Reporting_Application.Controllers
             ReportPageDropdownModel addNewDropdownModel = getFoldersForDropdown();
 
             return View(addNewDropdownModel);
+        }
+
+
+        [HttpPost]
+        public JsonResult GetMarMaxxTableData (ReportPageDropdownModel filterData)
+        {
+            try
+            {
+                return Json("Controller function reached");
+            }
+            catch (Exception e)
+            {
+                return Json("Error retrieving table data: " + e);
+            }
         }
     }
 

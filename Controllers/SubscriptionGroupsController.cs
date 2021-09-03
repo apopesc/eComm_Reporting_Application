@@ -32,46 +32,53 @@ namespace eComm_Reporting_Application.Controllers
         private UserSubscriptionDropdownModel GetFilterData()
         {
             int is_active = 0;
-
-            string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-            SqlConnection connection = new SqlConnection(connectionstring);
-
-            SqlCommand groupsQuery = new SqlCommand("SELECT DISTINCT User_Group FROM UserSubscriptionFilters WHERE User_Group IS NOT NULL", connection);
-            SqlCommand groupIDsQuery = new SqlCommand("SELECT DISTINCT Group_ID FROM UserSubscriptionFilters WHERE Group_ID IS NOT NULL", connection);
-            SqlCommand masterGroupsQuery = new SqlCommand("SELECT DISTINCT Master_Group FROM UserSubscriptionFilters WHERE Master_Group IS NOT NULL", connection);
-
             List<string> groups_list = new List<string>();
             List<string> groupsID_list = new List<string>();
             List<string> master_groups_list = new List<string>();
 
-            using (connection)
+            try
             {
-                connection.Open();
-                using (SqlDataReader reader = groupsQuery.ExecuteReader())
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                SqlCommand groupsQuery = new SqlCommand("SELECT DISTINCT User_Group FROM UserSubscriptionFilters WHERE User_Group IS NOT NULL", connection);
+                SqlCommand groupIDsQuery = new SqlCommand("SELECT DISTINCT Group_ID FROM UserSubscriptionFilters WHERE Group_ID IS NOT NULL", connection);
+                SqlCommand masterGroupsQuery = new SqlCommand("SELECT DISTINCT Master_Group FROM UserSubscriptionFilters WHERE Master_Group IS NOT NULL", connection);
+
+                using (connection)
                 {
-                    while (reader.Read())
+                    connection.Open();
+                    using (SqlDataReader reader = groupsQuery.ExecuteReader())
                     {
-                        var groupString = reader.GetString(0);
-                        groups_list.Add(groupString);
+                        while (reader.Read())
+                        {
+                            var groupString = reader.GetString(0);
+                            groups_list.Add(groupString);
+                        }
                     }
-                }
-                using (SqlDataReader reader = groupIDsQuery.ExecuteReader())
-                {
-                    while (reader.Read())
+                    using (SqlDataReader reader = groupIDsQuery.ExecuteReader())
                     {
-                        var groupIDString = reader.GetString(0);
-                        groupsID_list.Add(groupIDString);
+                        while (reader.Read())
+                        {
+                            var groupIDString = reader.GetString(0);
+                            groupsID_list.Add(groupIDString);
+                        }
                     }
-                }
-                using (SqlDataReader reader = masterGroupsQuery.ExecuteReader())
-                {
-                    while (reader.Read())
+                    using (SqlDataReader reader = masterGroupsQuery.ExecuteReader())
                     {
-                        var masterGroupString = reader.GetString(0);
-                        master_groups_list.Add(masterGroupString);
+                        while (reader.Read())
+                        {
+                            var masterGroupString = reader.GetString(0);
+                            master_groups_list.Add(masterGroupString);
+                        }
                     }
+                    connection.Close();
                 }
-                connection.Close();
+
+            }
+            catch(Exception e)
+            {
+                //Redirect to error page and pass forward exception e once error page is set up.
             }
 
             UserSubscriptionDropdownModel filterDataModel = new UserSubscriptionDropdownModel()
