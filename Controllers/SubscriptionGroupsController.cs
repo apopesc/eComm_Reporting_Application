@@ -27,71 +27,69 @@ namespace eComm_Reporting_Application.Controllers
             return View(subModel);
         }
 
-
-        //Getting filter data from the database
-        private UserSubscriptionDropdownModel GetFilterData()
+        public IActionResult AddNewUserSub()
         {
-            int is_active = 0;
-            List<string> groups_list = new List<string>();
-            List<string> groupsID_list = new List<string>();
-            List<string> master_groups_list = new List<string>();
+            UserSubscriptionDropdownModel subModel = GetFilterData();
 
+            return View(subModel);
+        }
+
+        [HttpPost]
+        public IActionResult AddUserSubToDB(string userEmail, string isActive, string selectedGroupID, string selectedGroup, string selectedMasterGroup)
+        {
             try
             {
+                int userID = 0;
+
                 string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+
                 SqlConnection connection = new SqlConnection(connectionstring);
 
-                SqlCommand groupsQuery = new SqlCommand("SELECT DISTINCT User_Group FROM UserSubscriptionFilters WHERE User_Group IS NOT NULL", connection);
-                SqlCommand groupIDsQuery = new SqlCommand("SELECT DISTINCT Group_ID FROM UserSubscriptionFilters WHERE Group_ID IS NOT NULL", connection);
-                SqlCommand masterGroupsQuery = new SqlCommand("SELECT DISTINCT Master_Group FROM UserSubscriptionFilters WHERE Master_Group IS NOT NULL", connection);
+                string addUserQueryString = "INSERT INTO UserSubscriptions (User_Email, Is_Active, User_Group, Group_ID, Master_Group) " +
+                    "VALUES ('" + userEmail + "', '" + isActive + "', '" + selectedGroup + "', '" + selectedGroupID + "', '" + selectedMasterGroup + "');";
+
+                SqlCommand addUserQuery = new SqlCommand(addUserQueryString, connection);
+
+                string getUserIDString = "SELECT TOP 1* FROM UserSubscriptions ORDER BY ID Desc;"; //Getting the ID by getting the most recently added row
+
+                SqlCommand getUserID = new SqlCommand(getUserIDString, connection);
 
                 using (connection)
                 {
                     connection.Open();
-                    using (SqlDataReader reader = groupsQuery.ExecuteReader())
+                    using SqlDataReader reader = addUserQuery.ExecuteReader();
+                    connection.Close();
+
+                    connection.Open();
+                    using (SqlDataReader reader_ID = getUserID.ExecuteReader())
                     {
-                        while (reader.Read())
+                        while (reader_ID.Read())
                         {
-                            var groupString = reader.GetString(0);
-                            groups_list.Add(groupString);
+                            var id = reader_ID.GetInt32(0);
+                            userID = id;
                         }
                     }
-                    using (SqlDataReader reader = groupIDsQuery.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var groupIDString = reader.GetString(0);
-                            groupsID_list.Add(groupIDString);
-                        }
-                    }
-                    using (SqlDataReader reader = masterGroupsQuery.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var masterGroupString = reader.GetString(0);
-                            master_groups_list.Add(masterGroupString);
-                        }
-                    }
+
                     connection.Close();
                 }
 
-            }
-            catch(Exception e)
-            {
-                //Redirect to error page and pass forward exception e once error page is set up.
-            }
+                UserSubscriptionTableModel newEntry = new UserSubscriptionTableModel();
+                newEntry.ID = userID;
+                newEntry.userEmail = userEmail;
+                newEntry.isActive = isActive;
+                newEntry.groupID = selectedGroupID;
+                newEntry.group = selectedGroup;
+                newEntry.masterGroup = selectedMasterGroup;
 
-            UserSubscriptionDropdownModel filterDataModel = new UserSubscriptionDropdownModel()
-            {
-                isActive = is_active,
-                groupsIDList = groupsID_list,
-                groupsList = groups_list,
-                masterGroupsList = master_groups_list
-            };
+                tableData.Insert(0, newEntry); //Adding new user to start of table
 
-            return filterDataModel;
+                return Json(new { result = "Redirect", url = Url.Action("Index", "SubscriptionGroups") });
+            }
+            catch (Exception e)
+            {
+                return Json("Error Saving to Database: " + e);
+            }
         }
-
 
         [HttpPost]
         public JsonResult GetTableData(UserSubscriptionDropdownModel filterData)
@@ -125,8 +123,9 @@ namespace eComm_Reporting_Application.Controllers
                 string masterGroupsListString = String.Join("', '", filterData.masterGroupsList.ToArray());
                 masterGroupsListString = "'" + masterGroupsListString + "'";
 
-                tableQuery = new SqlCommand("SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND User_Group IN (" + groupsListString + ") AND Master_Group IN (" + masterGroupsListString + ");", connection);
+                string queryString = "SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND User_Group IN (" + groupsListString + ") AND Master_Group IN (" + masterGroupsListString + ");";
 
+                tableQuery = new SqlCommand(queryString, connection);
                 using (connection)
                 {
                     connection.Open();
@@ -157,72 +156,6 @@ namespace eComm_Reporting_Application.Controllers
             
         }
 
-
-        public IActionResult AddNewUserSub()
-        {
-            UserSubscriptionDropdownModel subModel = GetFilterData();
-
-            return View(subModel);
-        }
-
-
-        [HttpPost]
-        public IActionResult AddUserSubToDB(string userEmail, string isActive, string selectedGroupID, string selectedGroup, string selectedMasterGroup)
-        {
-            try
-            {
-                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-
-                SqlConnection connection = new SqlConnection(connectionstring);
-
-                string addUserQueryString = "INSERT INTO UserSubscriptions (User_Email, Is_Active, User_Group, Group_ID, Master_Group) " +
-                    "VALUES ('" + userEmail + "', '" + isActive + "', '" + selectedGroup + "', '" + selectedGroupID + "', '" + selectedMasterGroup + "');";
-
-                SqlCommand addUserQuery = new SqlCommand(addUserQueryString, connection);
-
-                string getUserIDString = "SELECT TOP 1* FROM UserSubscriptions ORDER BY ID Desc;"; //Getting the ID by getting the most recently added row
-
-                SqlCommand getUserID = new SqlCommand(getUserIDString, connection);
-                int userID = 0;
-
-                using (connection)
-                {
-                    connection.Open();
-                    using SqlDataReader reader = addUserQuery.ExecuteReader();
-                    connection.Close();
-
-                    connection.Open();
-                    using (SqlDataReader reader_ID = getUserID.ExecuteReader())
-                    {
-                        while (reader_ID.Read())
-                        {
-                            var id = reader_ID.GetInt32(0);
-                            userID = id;
-                        }
-                    }
-                    
-                    connection.Close();
-                }
-
-                UserSubscriptionTableModel newEntry = new UserSubscriptionTableModel();
-                newEntry.ID = userID;
-                newEntry.userEmail = userEmail;
-                newEntry.isActive = isActive;
-                newEntry.groupID = selectedGroupID;
-                newEntry.group = selectedGroup;
-                newEntry.masterGroup = selectedMasterGroup;
-
-                tableData.Insert(0,newEntry); //Adding new user to start of table
-
-                return Json(new {result = "Redirect", url = Url.Action("Index", "SubscriptionGroups")});
-            }
-            catch (Exception e)
-            {
-                return Json("Error Saving to Database: " + e);
-            }
-        }
-
-
         [HttpPost]
         public JsonResult GetInitialTable()
         {
@@ -235,7 +168,6 @@ namespace eComm_Reporting_Application.Controllers
                 return Json("Error retrieving table data: " + e);
             }
         }
-
 
         [HttpPost]
         public JsonResult EditUserSub(List<UserSubscriptionTableModel> editedUsersList)
@@ -258,8 +190,6 @@ namespace eComm_Reporting_Application.Controllers
                         connection.Open();
                         SqlDataReader reader = editUserQuery.ExecuteReader();
                         connection.Close();
-
-
                     }
                     successString = successString + editedUsersList[i].userEmail + ", ";
                 }
@@ -271,6 +201,74 @@ namespace eComm_Reporting_Application.Controllers
             {
                 return Json("Error retrieving table data: " + e);
             }
+        }
+
+        //Getting filter data from the database
+        private UserSubscriptionDropdownModel GetFilterData()
+        {
+            int is_active = 0;
+            List<string> groups_list = new List<string>();
+            List<string> groupsID_list = new List<string>();
+            List<string> master_groups_list = new List<string>();
+
+            try
+            {
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                string groupsQueryString = "SELECT DISTINCT User_Group FROM UserSubscriptionFilters WHERE User_Group IS NOT NULL";
+                string groupIDsQueryString = "SELECT DISTINCT Group_ID FROM UserSubscriptionFilters WHERE Group_ID IS NOT NULL";
+                string masterGroupsQueryString = "SELECT DISTINCT Master_Group FROM UserSubscriptionFilters WHERE Master_Group IS NOT NULL";
+
+                SqlCommand groupsQuery = new SqlCommand(groupsQueryString, connection);
+                SqlCommand groupIDsQuery = new SqlCommand(groupIDsQueryString, connection);
+                SqlCommand masterGroupsQuery = new SqlCommand(masterGroupsQueryString, connection);
+
+                using (connection)
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = groupsQuery.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var groupString = reader.GetString(0);
+                            groups_list.Add(groupString);
+                        }
+                    }
+                    using (SqlDataReader reader = groupIDsQuery.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var groupIDString = reader.GetString(0);
+                            groupsID_list.Add(groupIDString);
+                        }
+                    }
+                    using (SqlDataReader reader = masterGroupsQuery.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var masterGroupString = reader.GetString(0);
+                            master_groups_list.Add(masterGroupString);
+                        }
+                    }
+                    connection.Close();
+                }
+
+            }
+            catch (Exception e)
+            {
+                //Redirect to error page and pass forward exception e once error page is set up.
+            }
+
+            UserSubscriptionDropdownModel filterDataModel = new UserSubscriptionDropdownModel()
+            {
+                isActive = is_active,
+                groupsIDList = groupsID_list,
+                groupsList = groups_list,
+                masterGroupsList = master_groups_list
+            };
+
+            return filterDataModel;
         }
     }
 }

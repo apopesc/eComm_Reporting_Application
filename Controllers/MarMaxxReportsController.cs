@@ -22,40 +22,11 @@ namespace eComm_Reporting_Application.Controllers
             return View(marMaxxDropdownModel);
         }
 
-        public ReportPageDropdownModel getFoldersForDropdown()
+        public IActionResult AddNewReportSub()
         {
-            ReportPageDropdownModel dropdownModel = new ReportPageDropdownModel();
-            List<ReportFolderModel> folders = new List<ReportFolderModel>();
-            try
-            {
-                string connectionstring = configuration.GetConnectionString("ReportServer");
-                SqlConnection connection = new SqlConnection(connectionstring);
+            ReportPageDropdownModel addNewDropdownModel = getFoldersForDropdown();
 
-                SqlCommand getFolderList = new SqlCommand("SELECT Right(Path, Len(Path)-1) Folders, Path FROM dbo.Catalog WHERE Path NOT LIKE '%SubReports%' " +
-                    "AND Path NOT LIKE '%Data Sources%' AND TYPE=1 AND ParentID IS NOT NULL;", connection);
-
-                using (connection)
-                {
-                    connection.Open();
-                    using (SqlDataReader reader = getFolderList.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            ReportFolderModel folder = new ReportFolderModel();
-                            folder.folderName = reader.GetString(0);
-                            folder.folderPath = reader.GetString(1);
-                            folders.Add(folder);
-                        }
-                    }
-                    connection.Close();
-                }
-                dropdownModel.folders = folders;
-            }
-            catch (Exception e)
-            {
-                //Redirect to error page and pass forward exception e once error page is set up.
-            }
-            return dropdownModel;
+            return View(addNewDropdownModel);
         }
 
         [HttpPost]
@@ -63,12 +34,14 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
+                List<string> reportNameList = new List<string>();
+
                 string folderListString = String.Join("', '", folderPathList.ToArray());
                 folderListString = "'" + folderListString + "'";
-                List<string> reportNameList = new List<string>();
 
                 string connectionstring = configuration.GetConnectionString("ReportServer");
                 SqlConnection connection = new SqlConnection(connectionstring);
+
                 string queryString = "DROP TABLE IF EXISTS #TempReportPathTable SELECT Name, LEFT(Path, Len(Path)-Len(Name)-1) Path, Path as FullPath " +
                     "INTO #TempReportPathTable FROM dbo.Catalog WHERE Path NOT LIKE '%SubReports%' AND Path NOT LIKE '%Data Sources%' AND TYPE = 2 " +
                     "SELECT * FROM #TempReportPathTable WHERE Path IN (" + folderListString + ");";
@@ -94,13 +67,6 @@ namespace eComm_Reporting_Application.Controllers
             {
                 return Json("Error retrieving report dropdown data: " + e);
             }
-        }
-
-        public IActionResult AddNewReportSub()
-        {
-            ReportPageDropdownModel addNewDropdownModel = getFoldersForDropdown();
-
-            return View(addNewDropdownModel);
         }
 
 
@@ -169,7 +135,43 @@ namespace eComm_Reporting_Application.Controllers
                 return Json("Error retrieving table data: " + e);
             }
         }
-    }
 
-    
+        public ReportPageDropdownModel getFoldersForDropdown()
+        {
+            ReportPageDropdownModel dropdownModel = new ReportPageDropdownModel();
+            List<ReportFolderModel> folders = new List<ReportFolderModel>();
+            try
+            {
+                string connectionstring = configuration.GetConnectionString("ReportServer");
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                string queryString = "SELECT Right(Path, Len(Path)-1) Folders, Path FROM dbo.Catalog WHERE Path NOT LIKE '%SubReports%' " +
+                    "AND Path NOT LIKE '%Data Sources%' AND TYPE=1 AND ParentID IS NOT NULL;";
+
+                SqlCommand getFolderList = new SqlCommand(queryString, connection);
+                using (connection)
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = getFolderList.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ReportFolderModel folder = new ReportFolderModel();
+                            folder.folderName = reader.GetString(0);
+                            folder.folderPath = reader.GetString(1);
+                            folders.Add(folder);
+                        }
+                    }
+                    connection.Close();
+                }
+                dropdownModel.folders = folders;
+            }
+            catch (Exception e)
+            {
+                //Redirect to error page and pass forward exception e once error page is set up.
+            }
+            return dropdownModel;
+        }
+
+    }  
 }

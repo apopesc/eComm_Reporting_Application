@@ -60,6 +60,7 @@
                     alert(tableData);
                 } else {
                     //createTable(tableData);
+                    alert("Success Grabbing Parameters");
                 }
             }
 
