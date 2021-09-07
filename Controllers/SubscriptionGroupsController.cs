@@ -175,10 +175,14 @@ namespace eComm_Reporting_Application.Controllers
 
                 SqlConnection connection = new SqlConnection(connectionstring);
 
-                SqlCommand addUserQuery = new SqlCommand("INSERT INTO UserSubscriptions (User_Email, Is_Active, User_Group, Group_ID, Master_Group) " +
-                    "VALUES ('" + userEmail + "', '" + isActive + "', '" + selectedGroup + "', '" + selectedGroupID + "', '" + selectedMasterGroup + "');", connection);
+                string addUserQueryString = "INSERT INTO UserSubscriptions (User_Email, Is_Active, User_Group, Group_ID, Master_Group) " +
+                    "VALUES ('" + userEmail + "', '" + isActive + "', '" + selectedGroup + "', '" + selectedGroupID + "', '" + selectedMasterGroup + "');";
 
-                SqlCommand getUserID = new SqlCommand("SELECT TOP 1* FROM UserSubscriptions ORDER BY ID Desc;",connection); //Getting the ID by getting the most recently added row
+                SqlCommand addUserQuery = new SqlCommand(addUserQueryString, connection);
+
+                string getUserIDString = "SELECT TOP 1* FROM UserSubscriptions ORDER BY ID Desc;"; //Getting the ID by getting the most recently added row
+
+                SqlCommand getUserID = new SqlCommand(getUserIDString, connection);
                 int userID = 0;
 
                 using (connection)
@@ -245,8 +249,10 @@ namespace eComm_Reporting_Application.Controllers
                     string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                     SqlConnection connection = new SqlConnection(connectionstring);
 
-                    SqlCommand editUserQuery = new SqlCommand("Update UserSubscriptions SET User_Email='" + editedUsersList[i].userEmail + "', Is_Active='" + editedUsersList[i].isActive + "', User_Group='" + editedUsersList[i].group +
-                        "', Group_ID='" + editedUsersList[i].groupID + "', Master_Group='" + editedUsersList[i].masterGroup + "' WHERE ID=" + editedUsersList[i].ID + ";", connection);
+                    string queryString = "Update UserSubscriptions SET User_Email='" + editedUsersList[i].userEmail + "', Is_Active='" + editedUsersList[i].isActive + "', User_Group='" + editedUsersList[i].group +
+                        "', Group_ID='" + editedUsersList[i].groupID + "', Master_Group='" + editedUsersList[i].masterGroup + "' WHERE ID=" + editedUsersList[i].ID + ";";
+
+                    SqlCommand editUserQuery = new SqlCommand(queryString, connection);
                     using (connection)
                     {
                         connection.Open();
