@@ -199,7 +199,34 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
-                return Json("Error retrieving table data: " + e);
+                return Json("Error editing user: " + e);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult DeleteUserSub(int ID)
+        {
+            try
+            {
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                string queryString = "DELETE FROM UserSubscriptions WHERE ID="+ID;
+
+                SqlCommand deleteUserQuery = new SqlCommand(queryString, connection);
+                using (connection)
+                {
+                    connection.Open();
+                    SqlDataReader reader = deleteUserQuery.ExecuteReader();
+                    connection.Close();
+                }
+                tableData.RemoveAll(x => x.ID == ID);
+
+                return Json("Success Deleting User: " );
+            }
+            catch (Exception e)
+            {
+                return Json("Error deleting user: " + e);
             }
         }
 

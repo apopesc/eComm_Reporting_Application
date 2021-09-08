@@ -112,28 +112,36 @@ $(document).ready(function () {
 
     $('#userSubscriptionData').on('click', '.deleteBtn', function () { //Need to use on click for a dynamically generated element
 
-        let selectedEmail = $(this).closest("tr")
+        var $selectedRow = $(this).closest("tr");
+        var _ID = $selectedRow.attr('id');
+
+        let selectedEmail = $selectedRow
             .find(".userSubscriptionsEntry_Email")
             .text();
 
-        let selectedActive = $(this).closest("tr")
-            .find(".userSubscriptionsEntry_isActive")
-            .text();
+        if (confirm('Are you sure you want to delete user: ' + selectedEmail + '?')) {
+            var controllerUrl = '/SubscriptionGroups/DeleteUserSub';
 
-        let selectedGroup = $(this).closest("tr")
-            .find(".userSubscriptionsEntry_Group")
-            .text();
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc,
+                data: { 'ID': _ID }
+            });
 
-        let selectedGroupID = $(this).closest("tr")
-            .find(".userSubscriptionsEntry_GroupID")
-            .text();
+            function successFunc(response) {
+                $selectedRow.remove();
+                alert(response + selectedEmail);
+            }
 
-        let selectedMasterGroup = $(this).closest("tr")
-            .find(".userSubscriptionsEntry_masterGroup")
-            .text();
+            function errorFunc(error) {
+                alert (error);
+            }
+        } else { //User clicks no
 
-        alert("Selected Item to be Deleted - Email: " + selectedEmail + ", Active: "
-            + selectedActive + ", Group: " + selectedGroup + ", Group ID: " + selectedGroupID + ", Master Group: " + selectedMasterGroup);
+        }
     });
 
 
