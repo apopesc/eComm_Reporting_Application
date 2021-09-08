@@ -14,36 +14,13 @@
     $('#marMaxxReportDropdown').multiselect('disable');
 
     $('#btnViewMarmaxxData').click(function(){
-        var selectedFolderPaths = $('#marMaxxFolderDropdown').val();
         var selectedReport = $('#marMaxxReportDropdown').val();
 
-        if (selectedFolderPaths.length == 0 || selectedReport == null) {
-            alert("Please select value(s) for Folder and Report Name");
+        if (selectedReport == null) {
+            alert("Please select a report to view subscription data");
         } else {
 
-            //Generate table
-            var selectedFolders = [];
-
-            var selectedFolderNames_Text = $('#marMaxxFolderDropdown').find(":selected").text();
-            var selectedFolderNames = selectedFolderNames_Text.split('  ');
-
-            for (let i = 0; i < selectedFolderNames.length; i++) {
-                selectedFolderNames[i] = selectedFolderNames[i].trim();
-
-                //Using the name and the path to create a selected folder object and adding it to the list
-                var selectedFolder = {
-                    folderName: selectedFolderNames[i],
-                    folderPath: selectedFolderPaths[i]
-                };
-                selectedFolders.push(selectedFolder);
-            }
-
             var controllerUrl = '/MarMaxxReports/GetMarMaxxTableData';
-
-            var filterData = {
-                folders: selectedFolders,
-                reportName: selectedReport
-            };
 
             $.ajax({
                 type: "POST",
@@ -51,7 +28,7 @@
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
-                data: { 'filterData': filterData }
+                data: { 'reportName': selectedReport }
             });
 
             function successFunc(tableData) {
@@ -73,7 +50,9 @@
 
 function selectedFolder() {
     if ($('#marMaxxFolderDropdown :selected').length == 0) { //Nothing is selected in the dropdown (last value is deselected)
-        $('#marMaxxReportDropdown').multiselect("deselectAll", false).multiselect("refresh");
+
+        var data = [{ label: 'Select a report name...', value: '', disabled: true, selected: true }];
+        $("#marMaxxReportDropdown").multiselect('dataprovider', data);
         $('#marMaxxReportDropdown').multiselect('disable');
 
     } else { //Something is selected in the dropdown
