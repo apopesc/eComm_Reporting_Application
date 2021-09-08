@@ -8,6 +8,6 @@ namespace eComm_Reporting_Application.Models
     public class ReportPageDropdownModel
     {
         public List<ReportFolderModel> folders { get; set; }
-        public List<string> reportNames { get; set; }
+        public string reportName { get; set; }
     }
 }

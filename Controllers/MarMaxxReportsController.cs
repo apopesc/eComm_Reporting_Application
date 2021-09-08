@@ -77,9 +77,6 @@ namespace eComm_Reporting_Application.Controllers
             {
                 List<ReportParameterModel> tableParameters = new List<ReportParameterModel>();
 
-                string reportNameListString = String.Join("', '", filterData.reportNames.ToArray());
-                reportNameListString = "'" + reportNameListString + "'";
-
                 string connectionstring = configuration.GetConnectionString("ReportServer");
                 SqlConnection connection = new SqlConnection(connectionstring);
 
@@ -96,7 +93,7 @@ namespace eComm_Reporting_Application.Controllers
                     "STUFF((SELECT ', '+ISNULL(Parameter,'') FROM #Parameters P WHERE C.Name = P.Report_Name FOR XML PATH ('')),1, 1, '') AS Parameters_WithHidden " +
                     "INTO #TempReportParameterTable " +
                     "FROM ReportServer.dbo.Catalog C WITH(NOLOCK) WHERE TYPE = 2 AND Left(Path, Len(Path)-Len(Name)-1) NOT IN ('/DevTest Reports','/PreProdTestReports') ORDER BY 1,2 " +
-                    "SELECT * FROM #TempReportParameterTable WHERE Name IN (" + reportNameListString + ");";
+                    "SELECT * FROM #TempReportParameterTable WHERE Name IN ('" + filterData.reportName + "');";
 
                 SqlCommand getFolderList = new SqlCommand(queryString, connection);
                 using (connection)

@@ -8,7 +8,6 @@
     });
     $('#marMaxxReportDropdown').multiselect({
         nonSelectedText: 'Select a report name...',
-        includeSelectAllOption: true,
         enableCaseInsensitiveFiltering: true
     });
 
@@ -16,9 +15,9 @@
 
     $('#btnViewMarmaxxData').click(function(){
         var selectedFolderPaths = $('#marMaxxFolderDropdown').val();
-        var selectedReports = $('#marMaxxReportDropdown').val();
+        var selectedReport = $('#marMaxxReportDropdown').val();
 
-        if (selectedFolderPaths.length == 0 || selectedReports.length == 0) {
+        if (selectedFolderPaths.length == 0 || selectedReport == null) {
             alert("Please select value(s) for Folder and Report Name");
         } else {
 
@@ -43,7 +42,7 @@
 
             var filterData = {
                 folders: selectedFolders,
-                reportNames: selectedReports
+                reportName: selectedReport
             };
 
             $.ajax({
@@ -60,7 +59,7 @@
                     alert(tableData);
                 } else {
                     //createTable(tableData);
-                    alert("Success Grabbing Parameters");
+                    alert(tableData);
                 }
             }
 
@@ -93,7 +92,7 @@ function selectedFolder() {
 
         function successFunc(dropdownData) {
             //manage the list of dropdown values in the front end -> just use controller to get the dropdown values for each selected folder
-            var data = [];
+            var data = [{label: 'Select a report name...', value:'', disabled:true, selected:true}];
             for (i = 0; i < dropdownData.length; i++) {
                 data.push({ label: dropdownData[i], value: dropdownData[i] });
             }
