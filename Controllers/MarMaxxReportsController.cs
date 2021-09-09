@@ -61,7 +61,16 @@ namespace eComm_Reporting_Application.Controllers
                     connection.Close();
                 }
 
-                return Json(reportNameList);
+                List<string> filteredReportNameList = new List<string>();
+                foreach(string reportName in reportNameList)
+                {
+                    if (!filteredReportNameList.Contains(reportName))
+                    {
+                        filteredReportNameList.Add(reportName);
+                    }
+                }
+
+                return Json(filteredReportNameList);
             }
             catch (Exception e)
             {
@@ -134,9 +143,10 @@ namespace eComm_Reporting_Application.Controllers
                 {
                     foreach(string parameter in paramModel.parameters)
                     {
-                        if (!parameters.Contains(parameter))
+                        string trimmed_param = parameter.Trim(' ');
+                        if (!parameters.Contains(trimmed_param))
                         {
-                            parameters.Add(parameter);
+                            parameters.Add(trimmed_param);
                         }
                     }
                 }
