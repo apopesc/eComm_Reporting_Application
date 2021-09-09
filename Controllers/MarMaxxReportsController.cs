@@ -75,7 +75,7 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                List<ReportParameterModel> tableParameters = new List<ReportParameterModel>();
+                List<ReportParameterModel> reportParameters = new List<ReportParameterModel>();
 
                 string connectionstring = configuration.GetConnectionString("ReportServer");
                 SqlConnection connection = new SqlConnection(connectionstring);
@@ -119,12 +119,30 @@ namespace eComm_Reporting_Application.Controllers
                                 reportParams.reportName = report_name;
                                 reportParams.parameters = report_params_list;
 
-                                tableParameters.Add(reportParams);
+                                reportParameters.Add(reportParams);
                             }
                         }
                     }
                     connection.Close();
                 }
+
+                //Filtering duplicate parameter data
+                ReportParameterModel tableParameters = new ReportParameterModel();
+                List<string> parameters = new List<string>();
+
+                foreach(ReportParameterModel paramModel in reportParameters)
+                {
+                    foreach(string parameter in paramModel.parameters)
+                    {
+                        if (!parameters.Contains(parameter))
+                        {
+                            parameters.Add(parameter);
+                        }
+                    }
+                }
+                tableParameters.reportName = reportParameters[0].reportName;
+                tableParameters.parameters = parameters;
+
                 return Json(tableParameters);
             }
             catch (Exception e)
