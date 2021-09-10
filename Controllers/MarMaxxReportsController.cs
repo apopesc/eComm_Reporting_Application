@@ -92,7 +92,14 @@ namespace eComm_Reporting_Application.Controllers
                 }
                 else
                 {
-                    return Json(tableParameters);
+                    //Adding the static columns to the table (these will appear for every report)
+                    tableParameters.parameters.Insert(0, "Group ID");
+                    tableParameters.parameters.Insert(0, "Group Name");
+                    tableParameters.parameters.Insert(0, "Report Name");
+                    tableParameters.parameters.Insert(0, "Subscription Name");
+                    tableParameters.parameters.Insert(0, "Subscription ID");
+
+                    return Json(new { tableParams = tableParameters.parameters });
                 }
                 
             }

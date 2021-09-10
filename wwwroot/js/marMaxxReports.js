@@ -36,7 +36,7 @@
                     alert(tableData);
                 } else {
                     //createTable(tableData);
-                    alert(tableData);
+                    alert(tableData.tableParams);
                 }
             }
 
