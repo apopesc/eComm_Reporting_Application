@@ -294,7 +294,7 @@ $(document).ready(function () {
 
         var subTable = $('<table>').addClass('userSubscriptionsTable');
 
-        //Temporarily hard coding table headers---------------------------------------------------------
+        //TTable headers -------------------------------------------------------------------------------
         let Hrow = $('<tr>').addClass('userSubscriptionsRow_Header')
         let tableHeader_Icons = $('<th>').addClass('userSubscriptionsHeader').text(''); //Invisible header for icons
         Hrow.append(tableHeader_Icons);
@@ -311,7 +311,7 @@ $(document).ready(function () {
         subTable.append(Hrow); //Adding the row to the table
 
         //----------------------------------------------------------------------------------------------
-        for (i = 0; i < tableData.length; i++) {
+        for (let i = 0; i < tableData.length; i++) {
 
             if (i == tableData.length - 1) { //This is so that the bottom border isn't added to the last row (it pops out of the table otherwise)
                 var row = $('<tr>').addClass('userSubscriptionsRow_Last');

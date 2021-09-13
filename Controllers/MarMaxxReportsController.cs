@@ -85,6 +85,7 @@ namespace eComm_Reporting_Application.Controllers
             try
             {
                 ReportParameterModel tableParameters = getReportParameters(reportName);
+                List<ReportTableModel> tableData = new List<ReportTableModel>();
 
                 if(tableParameters.parameters == null)
                 {
@@ -93,13 +94,38 @@ namespace eComm_Reporting_Application.Controllers
                 else
                 {
                     //Adding the static columns to the table (these will appear for every report)
-                    tableParameters.parameters.Insert(0, "Group ID");
-                    tableParameters.parameters.Insert(0, "Group Name");
-                    tableParameters.parameters.Insert(0, "Report Name");
-                    tableParameters.parameters.Insert(0, "Subscription Name");
-                    tableParameters.parameters.Insert(0, "Subscription ID");
+                    tableParameters.parameters.Insert(0, "Group_ID");
+                    tableParameters.parameters.Insert(0, "Group_Name");
+                    tableParameters.parameters.Insert(0, "Report_Name");
+                    tableParameters.parameters.Insert(0, "Subscription_Name");
+                    tableParameters.parameters.Insert(0, "Subscription_ID");
 
-                    return Json(new { tableParams = tableParameters.parameters });
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                    SqlConnection connection = new SqlConnection(connectionstring);
+
+                    string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Report_Name='"+reportName+"'";
+
+                    SqlCommand getTableData = new SqlCommand(queryString, connection);
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = getTableData.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ReportTableModel tableRow = new ReportTableModel();
+                                tableRow.subscriptionID = reader.GetInt32(0);
+                                tableRow.subscriptionName = reader.GetString(1);
+                                tableRow.reportName = reader.GetString(2);
+                                tableRow.groupName = reader.GetString(3);
+                                tableRow.groupID = reader.GetString(4);
+                                tableData.Add(tableRow);
+                            }
+                        }
+                        connection.Close();
+                    }
+
+                    return Json(new { tableParams = tableParameters.parameters, rowData = tableData });
                 }
                 
             }

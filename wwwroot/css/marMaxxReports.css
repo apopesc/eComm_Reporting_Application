@@ -1,2 +1,54 @@
-﻿body {
+﻿#marMaxxSubscriptionData {
+    margin-top: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    margin-bottom: 45px;
+    overflow: scroll;
+}
+
+@media screen and (max-width: 1920px) {
+    #marMaxxSubscriptionData {
+        max-height: 445px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    #marMaxxSubscriptionData {
+        max-height: 210px;
+    }
+}
+
+.marMaxxSubscriptionsTable {
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+.marMaxxSubscriptionsHeader {
+    text-align: center;
+    padding-inline: 20px;
+}
+
+.marMaxxSubscriptionsRow {
+    border-bottom: 1px solid #ADADAD;
+    height: 32px;
+}
+
+.marMaxxSubscriptionsRow_Last {
+    height: 32px;
+}
+
+.marMaxxSubscriptionsRow_Header {
+    box-shadow: 0 0 0 1px black;
+    height: 40px;
+    background: #E5E5E5;
+    position: sticky;
+    top: 0px;
+    z-index: 10;
+}
+
+.marMaxxSubscriptionsEntry_SubscriptionID, .marMaxxSubscriptionsEntry_SubscriptionName, .marMaxxSubscriptionsEntry_ReportName, .marMaxxSubscriptionsEntry_GroupName, .marMaxxSubscriptionsEntry_GroupID {
+    text-align: center;
 }

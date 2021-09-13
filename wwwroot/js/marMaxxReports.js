@@ -35,8 +35,7 @@
                 if (typeof tableData === 'string') { //If there is an error saving it to the database
                     alert(tableData);
                 } else {
-                    //createTable(tableData);
-                    alert(tableData.tableParams);
+                    createTable(tableData);
                 }
             }
 
@@ -84,4 +83,44 @@ function selectedFolder() {
             alert("Error Retrieving Report Names: " + error);
         }
     }
+}
+
+function createTable(tableData) {
+    //Clearing table initially
+    $('#marMaxxSubscriptionData').empty();
+
+    var subTable = $('<table>').addClass('marMaxxSubscriptionsTable');
+
+    //Adding the headers to the table
+    let Hrow = $('<tr>').addClass('marMaxxSubscriptionsRow_Header');
+    for (let i = 0; i < tableData.tableParams.length; i++) {
+        let tableHeader = $('<th>').addClass('marMaxxSubscriptionsHeader').text(tableData.tableParams[i]);
+        Hrow.append(tableHeader);
+    }
+    subTable.append(Hrow);
+
+    //Adding the data under the headers
+    for (let j = 0; j < tableData.rowData.length; j++) {
+
+        if (j == tableData.length - 1) { //This is so that the bottom border isn't added to the last row (it pops out of the table otherwise)
+            var row = $('<tr>').addClass('marMaxxSubscriptionsRow_Last');
+        } else {
+            var row = $('<tr>').addClass('marMaxxSubscriptionsRow');
+        }
+        row.prop('id', tableData.rowData[j].subscriptionID);
+
+        let tableEntry1 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_SubscriptionID').text(tableData.rowData[j].subscriptionID);
+        row.append(tableEntry1); //adding element to the row
+        let tableEntry2 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_SubscriptionName').text(tableData.rowData[j].subscriptionName);
+        row.append(tableEntry2);
+        let tableEntry3 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_ReportName').text(tableData.rowData[j].reportName);
+        row.append(tableEntry3);
+        let tableEntry4 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_GroupName').text(tableData.rowData[j].groupName);
+        row.append(tableEntry4);
+        let tableEntry5 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_GroupID').text(tableData.rowData[j].groupID);
+        row.append(tableEntry5);
+
+        subTable.append(row); //adding row to the table
+    }
+    $('#marMaxxSubscriptionData').append(subTable);
 }
