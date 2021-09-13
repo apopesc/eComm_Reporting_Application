@@ -40,7 +40,7 @@
             }
 
             function errorFunc(error) {
-                alert("Error Sending Filter Data to the Subscriptions Controller: " + error);
+                alert("Error Getting Report Subscription Data: " + error);
             }
 
         }

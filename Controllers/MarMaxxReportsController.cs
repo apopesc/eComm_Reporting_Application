@@ -87,47 +87,40 @@ namespace eComm_Reporting_Application.Controllers
                 ReportParameterModel tableParameters = getReportParameters(reportName);
                 List<ReportTableModel> tableData = new List<ReportTableModel>();
 
-                if(tableParameters.parameters == null)
+                //Adding the static columns to the table (these will appear for every report)
+                tableParameters.parameters.Insert(0, "Group_ID");
+                tableParameters.parameters.Insert(0, "Group_Name");
+                tableParameters.parameters.Insert(0, "Report_Name");
+                tableParameters.parameters.Insert(0, "Subscription_Name");
+                tableParameters.parameters.Insert(0, "Subscription_ID");
+
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Report_Name='" + reportName + "'";
+
+                SqlCommand getTableData = new SqlCommand(queryString, connection);
+                using (connection)
                 {
-                    return Json(reportName + " has no parameters, please select a report with parameters");
-                }
-                else
-                {
-                    //Adding the static columns to the table (these will appear for every report)
-                    tableParameters.parameters.Insert(0, "Group_ID");
-                    tableParameters.parameters.Insert(0, "Group_Name");
-                    tableParameters.parameters.Insert(0, "Report_Name");
-                    tableParameters.parameters.Insert(0, "Subscription_Name");
-                    tableParameters.parameters.Insert(0, "Subscription_ID");
-
-                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-                    SqlConnection connection = new SqlConnection(connectionstring);
-
-                    string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Report_Name='"+reportName+"'";
-
-                    SqlCommand getTableData = new SqlCommand(queryString, connection);
-                    using (connection)
+                    connection.Open();
+                    using (SqlDataReader reader = getTableData.ExecuteReader())
                     {
-                        connection.Open();
-                        using (SqlDataReader reader = getTableData.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                ReportTableModel tableRow = new ReportTableModel();
-                                tableRow.subscriptionID = reader.GetInt32(0);
-                                tableRow.subscriptionName = reader.GetString(1);
-                                tableRow.reportName = reader.GetString(2);
-                                tableRow.groupName = reader.GetString(3);
-                                tableRow.groupID = reader.GetString(4);
-                                tableData.Add(tableRow);
-                            }
+                            ReportTableModel tableRow = new ReportTableModel();
+                            tableRow.subscriptionID = reader.GetInt32(0);
+                            tableRow.subscriptionName = reader.GetString(1);
+                            tableRow.reportName = reader.GetString(2);
+                            tableRow.groupName = reader.GetString(3);
+                            tableRow.groupID = reader.GetString(4);
+                            tableData.Add(tableRow);
                         }
-                        connection.Close();
                     }
-
-                    return Json(new { tableParams = tableParameters.parameters, rowData = tableData });
+                    connection.Close();
                 }
-                
+
+                return Json(new { tableParams = tableParameters.parameters, rowData = tableData });
+
             }
             catch (Exception e)
             {
@@ -135,7 +128,14 @@ namespace eComm_Reporting_Application.Controllers
             }
         }
 
-        public ReportPageDropdownModel getFoldersForDropdown()
+
+        [HttpPost]
+        public JsonResult GetMarMaxxReportParameters(string reportName)
+        {
+            return Json(reportName);
+        }
+
+            public ReportPageDropdownModel getFoldersForDropdown()
         {
             ReportPageDropdownModel dropdownModel = new ReportPageDropdownModel();
             List<ReportFolderModel> folders = new List<ReportFolderModel>();
