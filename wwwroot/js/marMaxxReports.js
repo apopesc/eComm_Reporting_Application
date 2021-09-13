@@ -35,7 +35,7 @@
                 if (typeof tableData === 'string') { //If there is an error saving it to the database
                     alert(tableData);
                 } else {
-                    createTable(tableData);
+                    createTable(tableData); //Creating the dynamic table and displaying it on the screen
                 }
             }
 
@@ -102,7 +102,7 @@ function createTable(tableData) {
     //Adding the data under the headers
     for (let j = 0; j < tableData.rowData.length; j++) {
 
-        if (j == tableData.length - 1) { //This is so that the bottom border isn't added to the last row (it pops out of the table otherwise)
+        if (j == tableData.rowData.length - 1) { //This is so that the bottom border isn't added to the last row (it pops out of the table otherwise)
             var row = $('<tr>').addClass('marMaxxSubscriptionsRow_Last');
         } else {
             var row = $('<tr>').addClass('marMaxxSubscriptionsRow');
