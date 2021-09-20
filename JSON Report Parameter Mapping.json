@@ -1,0 +1,115 @@
+{
+    "folders":{
+        "Accounting":{
+            "reports":{
+                "Return Reserve":{
+                    "data_source": "eCom_ReportDB",
+                    "data_sets":{
+                        "ReportDataset":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_Returns_Reserve_Report"
+                        },
+                        "Banner":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner"
+                        }
+                    },
+                    "parameters":{
+                        "Banner":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner",
+                            "value": "Banner_Number",
+                            "label": "Banner_Name"
+                        },
+                        "Start_Date":{
+                            "type": "DateTime",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "End_Date":{
+                            "type": "DateTime",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        }
+                    }
+                }
+            }
+        },
+        "Administration":{
+            "reports":{
+                "DDS Validation":{
+                    "data_source": "ReportDataSource",
+                    "data_sets":{
+                        "ReportDataset":{
+                            "query_type": "In Line",
+                            "query": "BEGIN SELECT S.[Report_Name], COUNT(DISTINCT S.Subscription_Id) AS Subscription_Count, COUNT(DISTINCT E.ExecutionId) AS Execution_Count FROM [dbo].[BCF_Subscriptions_DD] S WITH(NOLOCK) LEFT OUTER JOIN [ReportServer].dbo.ExecutionLog3 E WITH(NOLOCK) ON S.Report_Name collate SQL_Latin1_General_CP1_CI_AS  = SUBSTRING(E.ItemPath, CHARINDEX('/', E.ItemPath,CHARINDEX('/',E.ItemPath)+1)+1, LEN(ItemPath)) AND E.UserName = 'CORP\\TJXASVC-DBSG-SVC-SS' AND Convert(varchar(10),E.TimeStart,111) = DATEADD(wk, DATEDIFF(wk,0,GETDATE()), 0) AND E.ItemPath LIKE '%BCF%' GROUP BY [Report_Name] UNION ALL SELECT S.[Report_Name], COUNT(DISTINCT S.Subscription_Id) AS Subscription_Count, COUNT(DISTINCT E.ExecutionId) AS Execution_Count FROM [dbo].[VPP_Subscriptions_DD] S WITH(NOLOCK) LEFT OUTER JOIN [ReportServer].dbo.ExecutionLog3 E WITH(NOLOCK) --ON S.Report_Name collate SQL_Latin1_General_CP1_CI_AS  = SUBSTRING(E.ItemPath, CHARINDEX('/', E.ItemPath,CHARINDEX('/',E.ItemPath)+1)+1, LEN(ItemPath)) ON (CASE WHEN S.Report_Name = 'VPP by Buy Type' THEN 'Vendor Performance Profitability By BuyType' WHEN S.Report_Name = 'VPP Summary' THEN 'Vendor Performance Profitability Summary' ELSE S.Report_Name END) collate SQL_Latin1_General_CP1_CI_AS  = SUBSTRING(E.ItemPath, CHARINDEX('/', E.ItemPath,CHARINDEX('/',E.ItemPath)+1)+1, LEN(ItemPath)) AND E.UserName = 'CORP\\TJXASVC-DBSG-SVC-SS' AND Convert(varchar(10),E.TimeStart,111) = DATEADD(wk, DATEDIFF(wk,0,GETDATE()), 0) AND E.ItemPath LIKE '%Vendor Performance Profitability%' GROUP BY [Report_Name] UNION ALL SELECT S.[Report_Name], COUNT(DISTINCT S.Subscription_Id) AS Subscription_Count, COUNT(DISTINCT E.ExecutionId) AS Execution_Count FROM [eCom_ReportDB].[dbo].[eComReport_Subscriptions_DD] S WITH(NOLOCK) LEFT OUTER JOIN [ReportServer].dbo.ExecutionLog3 E WITH(NOLOCK) ON CASE WHEN S.Report_Name = 'On Order' THEN 'On Order Report' ELSE S.Report_Name END collate SQL_Latin1_General_CP1_CI_AS  = SUBSTRING(E.ItemPath, CHARINDEX('/', E.ItemPath,CHARINDEX('/',E.ItemPath)+1)+1, LEN(ItemPath)) AND E.UserName = 'CORP\\TJXASVC-DBSG-SVC-SS' AND Convert(varchar(10),E.TimeStart,111) = DATEADD(wk, DATEDIFF(wk,0,GETDATE()), 0) WHERE S.Schedule = 'Weekly' AND S.Is_Active = 'Y' GROUP BY [Report_Name] ORDER BY 1 END ELSE BEGIN SELECT S.[Report_Name], COUNT(DISTINCT S.Subscription_Id) AS Subscription_Count, COUNT(DISTINCT E.ExecutionId) AS Execution_Count FROM [dbo].[BCF_Subscriptions_DD] S WITH(NOLOCK) LEFT OUTER JOIN [ReportServer].dbo.ExecutionLog3 E WITH(NOLOCK) ON S.Report_Name collate SQL_Latin1_General_CP1_CI_AS  = SUBSTRING(E.ItemPath, CHARINDEX('/', E.ItemPath,CHARINDEX('/',E.ItemPath)+1)+1, LEN(ItemPath)) AND E.UserName = 'CORP\\TJXASVC-DBSG-SVC-SS' AND Convert(varchar(10),E.TimeStart,111) = DATEADD(wk, DATEDIFF(wk,0,GETDATE()), 0) AND E.ItemPath LIKE '%BCF%' WHERE S.Schedule = 'Weekly' GROUP BY [Report_Name] UNION ALL SELECT S.[Report_Name], COUNT(DISTINCT S.Subscription_Id) AS Subscription_Count, COUNT(DISTINCT E.ExecutionId) AS Execution_Count FROM [dbo].[VPP_Subscriptions_DD] S WITH(NOLOCK) LEFT OUTER JOIN [ReportServer].dbo.ExecutionLog3 E WITH(NOLOCK) --ON S.Report_Name collate SQL_Latin1_General_CP1_CI_AS  = SUBSTRING(E.ItemPath, CHARINDEX('/', E.ItemPath,CHARINDEX('/',E.ItemPath)+1)+1, LEN(ItemPath)) ON (CASE WHEN S.Report_Name = 'VPP by Buy Type' THEN 'Vendor Performance Profitability By BuyType' WHEN S.Report_Name = 'VPP Summary' THEN 'Vendor Performance Profitability Summary' ELSE S.Report_Name END) collate SQL_Latin1_General_CP1_CI_AS  = SUBSTRING(E.ItemPath, CHARINDEX('/', E.ItemPath,CHARINDEX('/',E.ItemPath)+1)+1, LEN(ItemPath)) AND E.UserName = 'CORP\\TJXASVC-DBSG-SVC-SS' AND Convert(varchar(10),E.TimeStart,111) = DATEADD(wk, DATEDIFF(wk,0,GETDATE()), 0) AND E.ItemPath LIKE '%Vendor Performance Profitability%' WHERE S.Schedule = 'Weekly' GROUP BY [Report_Name] UNION ALL SELECT S.[Report_Name], COUNT(DISTINCT S.Subscription_Id) AS Subscription_Count, COUNT(DISTINCT E.ExecutionId) AS Execution_Count FROM [eCom_ReportDB].[dbo].[eComReport_Subscriptions_DD] S WITH(NOLOCK) LEFT OUTER JOIN [ReportServer].dbo.ExecutionLog3 E WITH(NOLOCK) ON CASE WHEN S.Report_Name = 'On Order' THEN 'On Order Report' ELSE S.Report_Name END collate SQL_Latin1_General_CP1_CI_AS  = SUBSTRING(E.ItemPath, CHARINDEX('/', E.ItemPath,CHARINDEX('/',E.ItemPath)+1)+1, LEN(ItemPath)) AND E.UserName = 'CORP\\TJXASVC-DBSG-SVC-SS' AND Convert(varchar(10),E.TimeStart,111) = DATEADD(wk, DATEDIFF(wk,0,GETDATE()), 0) WHERE S.Schedule = 'Weekly' AND S.Is_Active = 'Y' GROUP BY [Report_Name] ORDER BY 1 END"
+                        }
+                    },
+                    "parameters":{}
+                },
+                "In Progress Reports":{
+                    "data_source": "ReportServerDB",
+                    "data_sets":{
+                        "RunningJobsDS":{
+                            "query_type": "In Line",
+                            "query": "SELECT RunningJobs.RequestPath ,RunningJobs.StartDate ,Users.UserName ,RunningJobs.ComputerName ,CASE WHEN RunningJobs.JobType = 0 THEN 'Interactive' WHEN RunningJobs.JobType = 1 THEN 'Subscription' ELSE ' ' END AS ReportType ,RunningJobs.Description FROM RunningJobs INNER JOIN Users ON  Users.UserID = RunningJobs.UserId ORDER BY RunningJobs.StartDate DESC"
+                        }
+                    },
+                    "parameters":{}
+                },
+                "Report Analysis":{
+                    "data_source": "ReportServerDB",
+                    "data_sets":{
+                        "SubscriptionDataSet":{
+                            "query_type": "In Line",
+                            "query": "SELECT ExecutionLog3.ItemPath ,ExecutionLog3.UserName ,COUNT(ExecutionLog3.TimeStart) AS Counts, ROW_NUMBER() OVER(PARTITION BY ExecutionLog3.ItemPath ORDER BY ExecutionLog3.ItemPath,COUNT(ExecutionLog3.TimeStart) DESC) AS [Rank] FROM ExecutionLog3 WHERE CONVERT(varchar(10),ExecutionLog3.TimeStart,111) >= (CASE WHEN @FromDate IS NULL THEN CONVERT(varchar(10),ExecutionLog3.TimeStart,111) ELSE @FromDate END) AND CONVERT(varchar(10),ExecutionLog3.TimeEnd,111) <= (CASE WHEN @ToDate IS NULL THEN CONVERT(varchar(10),ExecutionLog3.TimeEnd,111) ELSE @ToDate END) GROUP BY  ExecutionLog3.ItemPath ,ExecutionLog3.UserName"
+                        },
+                        "ReportListDataSet":{
+                            "query_type": "In Line",
+                            "query": "Select Name, Left(Path, Len(Path)-Len(Name)-1) Path, Path as FullPath from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 2"
+                        },
+                        "FolderListDataSet":{
+                            "query_type": "In Line",
+                            "query": "Select Right(Path, Len(Path)-1) Folders, Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 1 and ParentID is not NULL"
+                        }
+                    },
+                    "parameters":{
+                        "FolderList":{
+                            "type": "Dropdown",
+                            "query_type": "In Line",
+                            "query": "Select Right(Path, Len(Path)-1) Folders, Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 1 and ParentID is not NULL",
+                            "value": "Path",
+                            "label": "Folders"
+                        },
+                        "ReportList":{
+                            "type": "Dropdown",
+                            "query_type": "In Line",
+                            "query": "Select Name, Left(Path, Len(Path)-Len(Name)-1) Path, Path as FullPath from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 2",
+                            "value": "FullPath",
+                            "label": "Name"
+                        },
+                        "FromDate":{
+                            "type": "DateTime",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "ToDate":{
+                            "type": "DateTime",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
