@@ -387,12 +387,117 @@
                             "label": "Category"
                         },
                         "Fiscal_Year":{
-                            "type": "Textbox",
+                            "type": "Dropdown",
                             "query_type": "Shared",
                             "query": "/SharedDataSets/FiscalYear",
                             "value": "FISCAL_YEAR",
                             "label": "FISCAL_YEAR"
                         },
+                        "Brand":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Brands",
+                            "value": "Brand_ID",
+                            "label": "Brand"
+                        },
+                        "FW_Start":{
+                            "type": "Textbox",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault",
+                            "value": "Fiscal_Week_Default",
+                            "label": "Fiscal_Week_Default"
+                        },
+                        "Trend":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Trend",
+                            "value": "TREND_NAME",
+                            "label": "TREND_NAME"
+                        },
+                        "FW_End":{
+                            "type": "Textbox",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault",
+                            "value": "Fiscal_Week_Default",
+                            "label": "Fiscal_Week_Default"
+                        },
+                        "ExpandOrCollapse":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Expand,Collapse",
+                            "label": "Expand,Collapse"
+                        },
+                        "NoMonths":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Job_Type":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Interactive,Subscription",
+                            "label": "Interactive,Subscription"
+                        },
+                        "Department_No_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Class_Number_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Category_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Vendor_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Brand_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Trend_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Combine_Banners":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Yes,No",
+                            "label": "Yes,No"
+                        },
+                        "Banner_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        }
                     }
                 },
             }
