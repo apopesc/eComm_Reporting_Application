@@ -108,8 +108,193 @@
                             "label": ""
                         }
                     }
+                },
+                "Report Failures":{
+                    "data_source": "ReportServerDB",
+                    "data_sets":{
+                        "SubscriptionDataSet":{
+                            "query_type": "In Line",
+                            "query": "DECLARE @PreviousDateFrom datetime; DECLARE @PreviousDateTo datetime; DECLARE @Today datetime; SET @Today = CONVERT(varchar(10),GETDATE(),111); SET @PreviousDateFrom = @Today; SET @PreviousDateTo = GETDATE(); IF @RunToday = 'Y' BEGIN SELECT ExecutionLog3.ItemPath AS ReportName ,ExecutionLog3.TimeStart ,ExecutionLog3.TimeEnd ,ExecutionLog3.UserName ,dbo.fn_ParseParameters(ExecutionLog3.[Parameters]) Parameters ,ExecutionLog3.Format ,ExecutionLog3.Status ,ExecutionLog3.RequestType ,ExecutionLog3.InstanceName ,CONVERT(varchar(8),(TimeEnd - TimeStart),108) as Duration FROM [dbo].[ExecutionLog3] WHERE ExecutionLog3.Status <> 'rsSuccess' AND ExecutionLog3.TimeStart >= @PreviousDateFrom AND ExecutionLog3.TimeEnd <= @PreviousDateTo AND ExecutionLog3.RequestType IN (SELECT Item FROM dbo.FN_Split_Char (@RequestType, ',')) ORDER BY [dbo].[ExecutionLog3].[TimeStart] desc END ELSE BEGIN SELECT ExecutionLog3.ItemPath AS ReportName ,ExecutionLog3.TimeStart ,ExecutionLog3.TimeEnd ,ExecutionLog3.UserName ,dbo.fn_ParseParameters(ExecutionLog3.[Parameters]) Parameters ,ExecutionLog3.Format ,ExecutionLog3.Status ,ExecutionLog3.RequestType ,ExecutionLog3.InstanceName ,CONVERT(varchar(8),(TimeEnd - TimeStart),108) as Duration FROM [dbo].[ExecutionLog3] WHERE ExecutionLog3.Status <> 'rsSuccess' AND CONVERT(varchar(10),ExecutionLog3.TimeStart,111) >= (CASE WHEN @StartDate IS NULL THEN CONVERT(varchar(10),ExecutionLog3.TimeStart,111) ELSE @StartDate END) AND CONVERT(varchar(10),ExecutionLog3.TimeEnd,111) <= (CASE WHEN @EndDate IS NULL THEN CONVERT(varchar(10),ExecutionLog3.TimeEnd,111) ELSE @EndDate END) AND ExecutionLog3.RequestType IN (SELECT Item FROM dbo.FN_Split_Char (@RequestType, ',')) ORDER BY [dbo].[ExecutionLog3].[TimeStart] desc END"
+                        },
+                        "ReportListDataSet":{
+                            "query_type": "In Line",
+                            "query": "Select Name, Left(Path, Len(Path)-Len(Name)-1) Path, Path as FullPath from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 2"
+                        },
+                        "FolderListDataSet":{
+                            "query_type": "In Line",
+                            "query": "Select Right(Path, Len(Path)-1) Folders, Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 1 and ParentID is not NULL"
+                        }
+                    },
+                    "parameters":{
+                        "FolderList":{
+                            "type": "Dropdown",
+                            "query_type": "In Line",
+                            "query": "Select Right(Path, Len(Path)-1) Folders, Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 1 and ParentID is not NULL",
+                            "value": "Path",
+                            "label": "Folders"
+                        },
+                        "ReportList":{
+                            "type": "Dropdown",
+                            "query_type": "In Line",
+                            "query": "Select Name, Left(Path, Len(Path)-Len(Name)-1) Path, Path as FullPath from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 2",
+                            "value": "FullPath",
+                            "label": "Name"
+                        },
+                        "StartDate":{
+                            "type": "DateTime",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "EndDate":{
+                            "type": "DateTime",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "RunToday":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Y,N",
+                            "label": "Y,N"
+                        },
+                        "RequestType":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Interactive,Subscription",
+                            "label": "Interactive,Subscription"
+                        }
+                    }
+                },
+                "Report History (with Status Filter)":{
+                    "data_source": "ReportServerDB",
+                    "data_sets":{
+                        "ReportHistoryDataSet":{
+                            "query_type": "Stored Procedure",
+                            "query": "GetReportHistory"
+                        },
+                        "ReportListDataSet":{
+                            "query_type": "In Line",
+                            "query": "SELECT NULL as Name, NULL as Path, NULL as FullPath UNION Select Name, Left(Path, Len(Path)-Len(Name)-1) Path, Path as FullPath from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 2"
+                        },
+                        "FolderListDataSet":{
+                            "query_type": "In Line",
+                            "query": "SELECT NULL as Folders, NULL as Path UNION Select Right(Path, Len(Path)-1) Folders, Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 1 and ParentID is not NULL"
+                        }
+                    },
+                    "parameters":{
+                        "FolderList":{
+                            "type": "Dropdown",
+                            "query_type": "In Line",
+                            "query": "SELECT NULL as Folders, NULL as Path UNION Select Right(Path, Len(Path)-1) Folders, Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 1 and ParentID is not NULL",
+                            "value": "Path",
+                            "label": "Folders"
+                        },
+                        "ReportList":{
+                            "type": "Dropdown",
+                            "query_type": "In Line",
+                            "query": "SELECT NULL as Name, NULL as Path, NULL as FullPath UNION Select Name, Left(Path, Len(Path)-Len(Name)-1) Path, Path as FullPath from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 2",
+                            "value": "FullPath",
+                            "label": "Name"
+                        },
+                        "Status":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "1,0",
+                            "label": "Success,Failed"
+                        },
+                        "FromDate":{
+                            "type": "DateTime",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "ToDate":{
+                            "type": "DateTime",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        }
+                    }
+                },
+                "Subscription Details":{
+                    "data_source": "ReportServerDB",
+                    "data_sets":{
+                        "SubscriptionDataSet":{
+                            "query_type": "In Line",
+                            "query": "IF @Subject IS NULL BEGIN SELECT Catalog.Name as ReportName ,U1.UserName as CreatedBy , Case DeliveryExtension WHEN 'Report Server Email' THEN CASE WHEN LEN(Cast(Subscriptions.ExtensionSettings AS NVARCHAR(Max))) > 3500 THEN NULL ELSE Replace(Replace(SubString(ExtensionSettings,CHARINDEX('Subject</Name><Value>',ExtensionSettings)+21,CHARINDEX('<Name>IncludeLink',ExtensionSettings)-CHARINDEX('Subject</Name><Value>',ExtensionSettings)-62) , '@ReportName',Catalog.Name),'@ExecutionTime',IsNULL(LastRunTime,'')) END ELSE NULL End AS Subject ,Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Cast(Subscriptions.ExtensionSettings AS NVARCHAR(Max)),'<ParameterValues>',''), '<ParameterValue>',''), '</ParameterValue>',''), '<Name>',''), '</Name>',': '), '<Value>',''), '</Value>',' -- '),'</ParameterValues>',''), '@ReportName',Catalog.Name), '@ExecutionTime',IsNULL(LastRunTime,'')) AS ExtensionSettings ,Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Cast(Subscriptions.Parameters AS NVARCHAR(Max)),'<ParameterValues>',''), '<ParameterValue>',''), '</ParameterValue>',''), '<Name>',''), '</Name>',': '), '<Value>',''), '</Value>',' -- '),'</ParameterValues>',''), '<ParameterValues />',''), '<Value />','') Parameters ,Subscriptions.LastStatus ,convert(VARCHAR,Subscriptions.LastRunTime,101) + ' ' + convert(VARCHAR,Subscriptions.LastRunTime,108) LastRunTime ,U2.UserName as ModifiedBy ,convert(VARCHAR,Subscriptions.ModifiedDate,101) + ' ' + convert(VARCHAR,Subscriptions.ModifiedDate,108) ModifiedDate ,Subscriptions.Description ,Subscriptions.DeliveryExtension FROM Subscriptions INNER JOIN dbo.Users U1 ON U1.UserID = OwnerID INNER JOIN dbo.Users U2 ON U2.UserID = ModifiedByID INNER JOIN dbo.Catalog ON ItemID = Report_OID WHERE DataSettings is NULL and DeliveryExtension is not NULL END ELSE BEGIN SELECT Catalog.Name as ReportName ,U1.UserName as CreatedBy , Case DeliveryExtension WHEN 'Report Server Email' THEN CASE WHEN LEN(Cast(Subscriptions.ExtensionSettings AS NVARCHAR(Max))) > 3500 THEN NULL ELSE Replace(Replace(SubString(ExtensionSettings,CHARINDEX('Subject</Name><Value>',ExtensionSettings)+21,CHARINDEX('<Name>IncludeLink',ExtensionSettings)-CHARINDEX('Subject</Name><Value>',ExtensionSettings)-62) , '@ReportName',Catalog.Name),'@ExecutionTime',IsNULL(LastRunTime,'')) END ELSE NULL End AS Subject ,Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Cast(Subscriptions.ExtensionSettings AS NVARCHAR(Max)),'<ParameterValues>',''), '<ParameterValue>',''), '</ParameterValue>',''), '<Name>',''), '</Name>',': '), '<Value>',''), '</Value>',' -- '),'</ParameterValues>',''), '@ReportName',Catalog.Name), '@ExecutionTime',IsNULL(LastRunTime,'')) AS ExtensionSettings ,Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Cast(Subscriptions.Parameters AS NVARCHAR(Max)),'<ParameterValues>',''), '<ParameterValue>',''), '</ParameterValue>',''), '<Name>',''), '</Name>',': '), '<Value>',''), '</Value>',' -- '),'</ParameterValues>',''), '<ParameterValues />',''), '<Value />','') Parameters ,Subscriptions.LastStatus ,convert(VARCHAR,Subscriptions.LastRunTime,101) + ' ' + convert(VARCHAR,Subscriptions.LastRunTime,108) LastRunTime ,U2.UserName as ModifiedBy ,convert(VARCHAR,Subscriptions.ModifiedDate,101) + ' ' + convert(VARCHAR,Subscriptions.ModifiedDate,108) ModifiedDate ,Subscriptions.Description ,Subscriptions.DeliveryExtension FROM Subscriptions INNER JOIN dbo.Users U1 ON U1.UserID = OwnerID INNER JOIN dbo.Users U2 ON U2.UserID = ModifiedByID INNER JOIN dbo.Catalog ON ItemID = Report_OID WHERE DataSettings is NULL and DeliveryExtension is not NULL and (Case DeliveryExtension WHEN 'Report Server Email' THEN Replace(Replace(SubString(ExtensionSettings,CHARINDEX('Subject</Name><Value>',ExtensionSettings)+21,CHARINDEX('<Name>IncludeLink',ExtensionSettings)-CHARINDEX('Subject</Name><Value>',ExtensionSettings)-62) , '@ReportName',Catalog.Name),'@ExecutionTime',IsNULL(LastRunTime,'')) ELSE NULL End) LIKE '%'+@Subject+'%' END"
+                        },
+                        "ReportListDataSet":{
+                            "query_type": "In Line",
+                            "query": "Select Name, Left(Path, Len(Path)-Len(Name)-1) Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 2"
+                        },
+                        "FolderListDataSet":{
+                            "query_type": "In Line",
+                            "query": "Select Right(Path, Len(Path)-1) Folders, Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 1 and ParentID is not NULL"
+                        }
+                    },
+                    "parameters":{
+                        "FolderList":{
+                            "type": "Dropdown",
+                            "query_type": "In Line",
+                            "query": "Select Right(Path, Len(Path)-1) Folders, Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 1 and ParentID is not NULL",
+                            "value": "Path",
+                            "label": "Folders"
+                        },
+                        "ReportList":{
+                            "type": "Dropdown",
+                            "query_type": "In Line",
+                            "query": "Select Name, Left(Path, Len(Path)-Len(Name)-1) Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 2",
+                            "value": "FullPath",
+                            "label": "Name"
+                        },
+                        "Subject":{
+                            "type": "Textbox",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        }
+                    }
                 }
             }
-        }
+        }, 
+        "Buyer Reports":{
+            "reports":{
+                "BCF Child SKU By Color":{
+                    "data_source": "ReportDataSource",
+                    "data_sets":{
+                        "ReportDataSet":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_BCF_Child_SKU_By_Color_Report"
+                        },
+                        "Departments":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Departments"
+                        },
+                        "Classes":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Classes"
+                        },
+                        "Categories":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Categories"
+                        },
+                        "Fiscal_Year":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalYear"
+                        },
+                    },
+                    "parameters":{}
+                },
+            }
+        },
     }
 }
