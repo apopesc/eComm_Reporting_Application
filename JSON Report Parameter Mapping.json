@@ -325,7 +325,7 @@
                         },
                         "CategoryHeaders":{
                             "query_type": "Shared",
-                            "query": "/SharedDataSets/Category"
+                            "query": "/SharedDataSets/CategoryHeaders"
                         },
                         "Trend":{
                             "query_type": "Shared",
@@ -492,6 +492,1131 @@
                             "label": "Yes,No"
                         },
                         "Banner_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        }
+                    }
+                },
+                "BCF Detail By Style":{
+                    "data_source": "ReportDataSource",
+                    "data_sets":{
+                        "ReportDataSet":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_BCF_Detail_By_Style_Report"
+                        },
+                        "Departments":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Departments_CrossDept"
+                        },
+                        "Classes":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Classes_CrossDept"
+                        },
+                        "Categories":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Categories_CrossDept"
+                        },
+                        "Fiscal_Year":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalYear"
+                        },
+                        "FiscalYearDefault":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalYearDefault"
+                        },
+                        "FiscalWeekDefault":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault"
+                        },
+                        "DepartmentHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/DepartmentHeaders"
+                        },
+                        "ClassHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/ClassHeaders_CrossDept"
+                        },
+                        "CategoryHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/CategoryHeaders_CrossDept"
+                        },
+                        "Vendors":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Vendors"
+                        },
+                        "Brands":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Brands"
+                        },
+                        "VendorHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/VendorHeaders"
+                        },
+                        "BrandHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/BrandHeaders"
+                        },
+                        "Trend":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Trend"
+                        }
+                    },
+                    "parameters":{
+                        "Department_No":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Departments_CrossDept",
+                            "value": "Department_Number",
+                            "label": "Department"
+                        },
+                        "InterMed":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Classes_CrossDept",
+                            "value": "Class_Number",
+                            "label": "Class"
+                        },
+                        "Vendor_Pattern":{
+                            "type": "Text",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Class_Number":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Classes_CrossDept",
+                            "value": "Class_Number",
+                            "label": "Class"
+                        },
+                        "Vendor":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Vendors",
+                            "value": "Vendor_ID",
+                            "label": "Vendor"
+                        },
+                        "Category":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Categories_CrossDept",
+                            "value": "Category_Number",
+                            "label": "Category"
+                        },
+                        "Brand_Pattern":{
+                            "type": "Text",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Fiscal_Year":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalYear",
+                            "value": "FISCAL_YEAR",
+                            "label": "FISCAL_YEAR"
+                        },
+                        "Brand":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Brands",
+                            "value": "Brand_ID",
+                            "label": "Brand"
+                        },
+                        "FW_Start":{
+                            "type": "Textbox",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault",
+                            "value": "Fiscal_Week_Default",
+                            "label": "Fiscal_Week_Default"
+                        },
+                        "Trend":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Trend",
+                            "value": "TREND_NAME",
+                            "label": "TREND_NAME"
+                        },
+                        "FW_End":{
+                            "type": "Textbox",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault",
+                            "value": "Fiscal_Week_Default",
+                            "label": "Fiscal_Week_Default"
+                        },
+                        "ExpandOrCollapse":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Expand,Collapse",
+                            "label": "Expand,Collapse"
+                        },
+                        "NoMonths":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Job_Type":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Interactive,Subscription",
+                            "label": "Interactive,Subscription"
+                        },
+                        "Department_No_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Class_Number_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Category_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Vendor_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Brand_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Trend_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        }
+                    }
+                },
+                "BCF Detail By Style Multi Week":{
+                    "data_source": "ReportDataSource",
+                    "data_sets":{
+                        "ReportDataSet":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_BCF_Detail_By_Style_Multi_Week_Report"
+                        },
+                        "Departments":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Departments"
+                        },
+                        "Classes":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Classes"
+                        },
+                        "Categories":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Categories"
+                        },
+                        "Fiscal_Year":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalYear"
+                        },
+                        "FiscalYearDefault":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalYearDefault"
+                        },
+                        "FiscalWeekDefault":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault"
+                        },
+                        "DepartmentHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/DepartmentHeaders"
+                        },
+                        "ClassHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/ClassHeaders"
+                        },
+                        "CategoryHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/CategoryHeaders"
+                        },
+                        "Vendors":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Vendors"
+                        },
+                        "Brands":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Brands"
+                        },
+                        "VendorHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/VendorHeaders"
+                        },
+                        "BrandHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/BrandHeaders"
+                        },
+                        "Trend":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Trend"
+                        }
+                    },
+                    "parameters":{
+                        "Department_No":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Departments",
+                            "value": "Department_Number",
+                            "label": "Department"
+                        },
+                        "InterMed":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Classes",
+                            "value": "Class_Number",
+                            "label": "Class"
+                        },
+                        "Vendor_Pattern":{
+                            "type": "Text",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Class_Number":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Classes",
+                            "value": "Class_Number",
+                            "label": "Class"
+                        },
+                        "Vendor":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Vendors",
+                            "value": "Vendor_ID",
+                            "label": "Vendor"
+                        },
+                        "Category":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Categories",
+                            "value": "Category_Number",
+                            "label": "Category"
+                        },
+                        "Brand_Pattern":{
+                            "type": "Text",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Fiscal_Year":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalYear",
+                            "value": "FISCAL_YEAR",
+                            "label": "FISCAL_YEAR"
+                        },
+                        "Brand":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Brands",
+                            "value": "Brand_ID",
+                            "label": "Brand"
+                        },
+                        "FW_Start":{
+                            "type": "Textbox",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault",
+                            "value": "Fiscal_Week_Default",
+                            "label": "Fiscal_Week_Default"
+                        },
+                        "Trend":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Trend",
+                            "value": "TREND_NAME",
+                            "label": "TREND_NAME"
+                        },
+                        "FW_End":{
+                            "type": "Textbox",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault",
+                            "value": "Fiscal_Week_Default",
+                            "label": "Fiscal_Week_Default"
+                        },
+                        "ExpandOrCollapse":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Expand,Collapse",
+                            "label": "Expand,Collapse"
+                        },
+                        "NoMonths":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Job_Type":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Interactive,Subscription",
+                            "label": "Interactive,Subscription"
+                        },
+                        "Department_No_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Class_Number_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Category_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Vendor_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Brand_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Trend_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        }
+                    }
+                },
+                "BCF Dollars and Units By Department":{
+                    "data_source": "ReportDataSource",
+                    "data_sets":{
+                        "Departments":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Departments"
+                        },
+                        "ReportDataSet":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_BCF_Dollars_Units_By_Department"
+                        },
+                        "Fiscal_Year":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalYear"
+                        },
+                        "FiscalYearDefault":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalYearDefault"
+                        },
+                        "FiscalWeekDefault":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault"
+                        },
+                        "DepartmentHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/DepartmentHeaders"
+                        },
+                        "Trend":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Trend"
+                        },
+                        "Banner":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner"
+                        }
+                    },
+                    "parameters":{
+                        "Banner":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner",
+                            "value": "Banner_Number",
+                            "label": "Banner_Name"
+                        },
+                        "Department_No":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Departments",
+                            "value": "Department_Number",
+                            "label": "Department"
+                        },
+                        "Fiscal_Year":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalYear",
+                            "value": "FISCAL_YEAR",
+                            "label": "FISCAL_YEAR"
+                        },
+                        "Trend":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Trend",
+                            "value": "TREND_NAME",
+                            "label": "TREND_NAME"
+                        },
+                        "FW_Start":{
+                            "type": "Textbox",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault",
+                            "value": "Fiscal_Week_Default",
+                            "label": "Fiscal_Week_Default"
+                        },
+                        "Display_PY_Data":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Yes,No",
+                            "label": "Yes,No"
+                        },
+                        "FW_End":{
+                            "type": "Textbox",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault",
+                            "value": "Fiscal_Week_Default",
+                            "label": "Fiscal_Week_Default"
+                        },
+                        "NoMonths":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Job_Type":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Interactive,Subscription",
+                            "label": "Interactive,Subscription"
+                        },
+                        "Department_No_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Trend_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Combine_Banners":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Yes,No",
+                            "label": "Yes,No"
+                        },
+                        "Banner_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        }
+                    }
+                },
+                "BCF for Market Travel":{
+                    "data_source": "ReportDataSource",
+                    "data_sets":{
+                        "ReportDataSet":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_BCF_for_Market_Travel"
+                        },
+                        "Departments":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Departments"
+                        },
+                        "Classes":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Classes"
+                        },
+                        "Categories":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Categories"
+                        },
+                        "Fiscal_Year":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalYear"
+                        },
+                        "FiscalYearDefault":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalYearDefault"
+                        },
+                        "FiscalWeekDefault":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault"
+                        },
+                        "DepartmentHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/DepartmentHeaders"
+                        },
+                        "ClassHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/ClassHeaders"
+                        },
+                        "Vendors":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Vendors"
+                        },
+                        "Brands":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Brands"
+                        },
+                        "VendorHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/VendorHeaders"
+                        },
+                        "BrandHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/BrandHeaders"
+                        },
+                        "CategoryHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Category"
+                        },
+                        "Trend":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Trend"
+                        },
+                        "Buy_Type":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/BuyTypes"
+                        },
+                        "Season":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Season"
+                        },
+                        "Banner":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner"
+                        }
+                    },
+                    "parameters":{
+                        "Banner":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner",
+                            "value": "Banner_Number",
+                            "label": "Banner_Name"
+                        },
+                        "Department_No":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Departments",
+                            "value": "Department_Number",
+                            "label": "Department"
+                        },
+                        "InterMed":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Classes",
+                            "value": "Class_Number",
+                            "label": "Class"
+                        },
+                        "Vendor_Pattern":{
+                            "type": "Text",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Class_Number":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Classes",
+                            "value": "Class_Number",
+                            "label": "Class"
+                        },
+                        "Vendor":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Vendors",
+                            "value": "Vendor_ID",
+                            "label": "Vendor"
+                        },
+                        "Category":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Categories",
+                            "value": "Category_Number",
+                            "label": "Category"
+                        },
+                        "Brand_Pattern":{
+                            "type": "Text",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Fiscal_Year":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalYear",
+                            "value": "FISCAL_YEAR",
+                            "label": "FISCAL_YEAR"
+                        },
+                        "Brand":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Brands",
+                            "value": "Brand_ID",
+                            "label": "Brand"
+                        },
+                        "FW_Start":{
+                            "type": "Textbox",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault",
+                            "value": "Fiscal_Week_Default",
+                            "label": "Fiscal_Week_Default"
+                        },
+                        "Season":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Season",
+                            "value": "Season",
+                            "label": "Season"
+                        },
+                        "FW_End":{
+                            "type": "Textbox",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault",
+                            "value": "Fiscal_Week_Default",
+                            "label": "Fiscal_Week_Default"
+                        },
+                        "Trend":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Trend",
+                            "value": "TREND_NAME",
+                            "label": "TREND_NAME"
+                        },
+                        "Buy_Type":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/BuyTypes",
+                            "value": "Buy_Type_Number",
+                            "label": "Buy_Type"
+                        },
+                        "NoMonths":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Job_Type":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Interactive,Subscription",
+                            "label": "Interactive,Subscription"
+                        },
+                        "Department_No_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Class_Number_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Category_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Vendor_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Brand_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Season_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Trend_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Buy_Type_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Combine_Banners":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Yes,No",
+                            "label": "Yes,No"
+                        },
+                        "Banner_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        }
+                    }
+                },
+                "BCF Mix Master":{
+                    "data_source": "ReportDataSource",
+                    "data_sets":{
+                        "Departments":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Departments_CrossDept"
+                        },
+                        "ReportDataSet_ByBrand":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_BCF_Dollars_Units_by_Brand"
+                        },
+                        "Fiscal_Year":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalYear"
+                        },
+                        "FiscalYearDefault":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalYearDefault"
+                        },
+                        "FiscalWeekDefault":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault"
+                        },
+                        "Classes":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Classes_CrossDept"
+                        },
+                        "DepartmentHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/DepartmentHeaders"
+                        },
+                        "Categories":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Categories_CrossDept"
+                        },
+                        "CategoryHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/CategoryHeaders_CrossDept"
+                        },
+                        "ClassHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/ClassHeaders_CrossDept"
+                        },
+                        "ReportDataset_ByRetailPrice":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_BCF_Dollars_Units_by_RetailPrice"
+                        },
+                        "ReportDataset_ByClass":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_BCF_Dollars_Units_by_Class"
+                        },
+                        "ReportDataset_ByColor":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_BCF_Dollars_Units_by_Color"
+                        },
+                        "ReportDataset_ByCategory":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_BCF_Dollars_Units_by_Category"
+                        },
+                        "Brands":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Brands"
+                        },
+                        "BrandHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/BrandHeaders"
+                        },
+                        "Season":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Season"
+                        },
+                        "Trend":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Trend"
+                        },
+                        "ReportDataset_ByTrend":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_BCF_Dollars_Units_by_Trend"
+                        },
+                        "ReportDataSet_ByBuyType":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_BCF_Dollars_Units_by_Buy_Type"
+                        },
+                        "Buy_Type":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/BuyTypes"
+                        },
+                        "ReportDataset_BySeason":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_BCF_Dollars_Units_by_Season"
+                        },
+                        "Vendors":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Vendors"
+                        },
+                        "VendorHeaders":{
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/VendorHeaders"
+                        }
+                    },
+                    "parameters":{
+                        "Department_No":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Departments_CrossDept",
+                            "value": "Department_Number",
+                            "label": "Department"
+                        },
+                        "InterMed":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Classes_CrossDept",
+                            "value": "Class_Number",
+                            "label": "Class"
+                        },
+                        "Brand_Pattern":{
+                            "type": "Text",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Class_Number":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Classes_CrossDept",
+                            "value": "Class_Number",
+                            "label": "Class"
+                        },
+                        "Brand":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Brands",
+                            "value": "Brand_ID",
+                            "label": "Brand"
+                        },
+                        "Category":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Categories_CrossDept",
+                            "value": "Category_Number",
+                            "label": "Category"
+                        },
+                        "Vendor_Pattern":{
+                            "type": "Text",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Season":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Season",
+                            "value": "Season",
+                            "label": "Season"
+                        },
+                        "Vendor":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Vendors",
+                            "value": "Vendor_ID",
+                            "label": "Vendor"
+                        },
+                        "Fiscal_Year":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalYear",
+                            "value": "FISCAL_YEAR",
+                            "label": "FISCAL_YEAR"
+                        },
+                        "RetailPrice_Min":{
+                            "type": "Text",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "FW_Start":{
+                            "type": "Textbox",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault",
+                            "value": "Fiscal_Week_Default",
+                            "label": "Fiscal_Week_Default"
+                        },
+                        "RetailPrice_Max":{
+                            "type": "Text",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "FW_End":{
+                            "type": "Textbox",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/FiscalWeekDefault",
+                            "value": "Fiscal_Week_Default",
+                            "label": "Fiscal_Week_Default"
+                        },
+                        "DisplaySummary":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Y,N",
+                            "label": "Yes,No"
+                        },
+                        "Trend":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/Trend",
+                            "value": "TREND_NAME",
+                            "label": "TREND_NAME"
+                        },
+                        "Display_PY_Data":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Y,N",
+                            "label": "Yes,No"
+                        },
+                        "Buy_Type":{
+                            "type": "Dropdown",
+                            "query_type": "Shared",
+                            "query": "/SharedDataSets/BuyTypes",
+                            "value": "Buy_Type_Number",
+                            "label": "Buy_Type"
+                        },
+                        "NoMonths":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Job_Type":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Interactive,Subscription",
+                            "label": "Interactive,Subscription"
+                        },
+                        "Department_No_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Class_Number_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Category_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Brand_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Season_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Trend_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Buy_Type_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Vendor_Hidden":{
                             "type": "Hidden",
                             "query_type": "Fixed",
                             "query": "",
