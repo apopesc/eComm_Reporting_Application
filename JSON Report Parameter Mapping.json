@@ -4512,6 +4512,246 @@
                         }
                     }
                 },
+                "In Yard to Putaway":{
+                    "data_source": "eCom_ReportDB",
+                    "data_sets":{
+                        "ReportDataset":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_Operations_Putaway"
+                        },
+                        "Departments":{
+                            "query_type": "Stored Procedure",
+                            "query": "Par_rpt_Departments_by_Banner"
+                        },
+                        "LPMonth":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_rpt_LPMonth"
+                        },
+                        "ChartDataset":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_Operations_Putaway"
+                        },
+                        "Banner":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner"
+                        }
+                    },
+                    "parameters":{
+                        "Banner":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner",
+                            "value": "Banner_Number",
+                            "label": "Banner_Name"
+                        },
+                        "Department_No":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "Par_rpt_Departments_by_Banner",
+                            "value": "Dept_Number",
+                            "label": "Dept_FullName"
+                        },
+                        "Report_Type":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Summary,Division,Department,Processing Type,Photo Type",
+                            "label": "Summary,Division,Department,Processing Type,Photo Type"
+                        },
+                        "UOM":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "U,D,P,B",
+                            "label": "Units,Dollars,Parents,Both Units and Dollars"
+                        },
+                        "Ladder_Plan_Date":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_rpt_LPMonth",
+                            "value": "LP_Month",
+                            "label": "LP_Month"
+                        },
+                        "Division":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Processing_Type":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Photo_Type":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Class":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Category":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        }
+                    }
+                },
+                "Inbound Detail":{
+                    "data_source": "eCom_ReportDB",
+                    "data_sets":{
+                        "ReportDataset":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_Operations_Inbound_Detail"
+                        },
+                        "Departments":{
+                            "query_type": "Stored Procedure",
+                            "query": "Par_rpt_Departments_by_Banner"
+                        },
+                        "ChartDataset":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_Operations_Inbound_Detail"
+                        },
+                        "LPMonth":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_rpt_LPMonth"
+                        },
+                        "Banner":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner"
+                        }
+                    },
+                    "parameters":{
+                        "Banner":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner",
+                            "value": "Banner_Number",
+                            "label": "Banner_Name"
+                        },
+                        "Report_Type":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Summary,Division,Department,Processing Type,Photo Type",
+                            "label": "Summary,Division,Department,Processing Type,Photo Type"
+                        },
+                        "Department_No":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "Par_rpt_Departments_by_Banner",
+                            "value": "Dept_Number",
+                            "label": "Dept_FullName"
+                        },
+                        "UOM":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "U,D,P,B",
+                            "label": "Units,Dollars,Parents,Both Units and Dollars"
+                        },
+                        "Ladder_Plan_Date":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_rpt_LPMonth",
+                            "value": "LP_Month",
+                            "label": "LP_Month"
+                        },
+                        "Division":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Processing_Type":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Photo_Type":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        }
+                    }
+                },
+                "Inventory Details by DC":{
+                    "data_source": "eCom_WMSDB",
+                    "data_sets":{
+                        "Inventory_by_DC":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_Inventory_by_DC"
+                        }
+                    },
+                    "parameters":{}
+                },
+                "Keytrol ID Report":{
+                    "data_source": "NetSuite_ODS",
+                    "data_sets":{
+                        "Inventory_by_DC":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_Keytrol_ID"
+                        },
+                        "Banner":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner"
+                        }
+                    },
+                    "parameters":{
+                        "Banner":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner",
+                            "value": "Banner_Number",
+                            "label": "Banner_Name"
+                        },
+                        "KeytrolNum":{
+                            "type": "Textbox",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Job_Type":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Interactive,Subscription",
+                            "label": "Interactive,Subscription"
+                        },
+                        "Combine_Banners":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Yes,No",
+                            "label": "Yes,No"
+                        },
+                        "Banner_Hidden":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        }
+                    }
+                },
             }
         },
     }
