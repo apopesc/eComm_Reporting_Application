@@ -4752,6 +4752,50 @@
                         }
                     }
                 },
+                "Keytrol Tracking Details":{
+                    "data_source": "eCom_ReportDB",
+                    "data_sets":{
+                        "Inventory_by_DC":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_Keytrol_Tracking_Details"
+                        },
+                        "Today":{
+                            "query_type": "In Line",
+                            "query": "SELECT CONVERT(varchar(20),GETDATE(),111) AS Today"
+                        },
+                        "Department":{
+                            "query_type": "Stored Procedure",
+                            "query": "Par_rpt_Departments_by_Banner"
+                        },
+                        "Banner":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner"
+                        }
+                    },
+                    "parameters":{
+                        "Selected_Date":{
+                            "type": "Textbox",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Banner":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner",
+                            "value": "Banner_Number",
+                            "label": "Banner_Name"
+                        },
+                        "Dept_Number":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "Par_rpt_Departments_by_Banner",
+                            "value": "Dept_Number",
+                            "label": "Dept_FullName"
+                        }   
+                    }
+                },
             }
         },
     }
