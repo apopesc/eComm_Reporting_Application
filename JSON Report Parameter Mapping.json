@@ -4250,5 +4250,269 @@
                 }
             }
         },
+        "Executive Reports":{
+            "reports":{
+                "Homegoods Executive Summary":{
+                    "data_source": "eCom_ReportDB",
+                    "data_sets":{
+                        "rpt_HomegoodsExecutiveSummaryMTDDetailPage":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_HomegoodsExecutiveSummaryMTDDetailPage"
+                        },
+                        "rpt_HomegoodsExecutiveSummary_Daily":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_HomegoodsExecutiveSummary"
+                        },
+                        "rpt_HomegoodsExecutiveSummary_WTD":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_HomegoodsExecutiveSummary"
+                        },
+                        "rpt_HomegoodsExecutiveSummary_MTD":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_HomegoodsExecutiveSummary"
+                        },
+                        "rpt_HomegoodsExecutiveSummary_YTD":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_HomegoodsExecutiveSummary"
+                        },
+                        "rpt_HomegoodsExecutiveSummary_QTD":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_HomegoodsExecutiveSummary"
+                        }
+                    },
+                    "parameters":{}
+                },
+                "Order Capacity Report":{
+                    "data_source": "eCom_ReportDB",
+                    "data_sets":{
+                        "ReportDataset":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_Order_Capacity"
+                        }
+                    },
+                    "parameters":{
+                        "ForecastDays":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        }
+                    }
+                }
+            }
+        },
+        "Operations":{
+            "reports":{
+                "Age of Units on Floor":{
+                    "data_source": "eCom_ReportDB",
+                    "data_sets":{
+                        "ReportDataset":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_Aging_of_Units_on_Floor"
+                        },
+                        "Banner":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner"
+                        }
+                    },
+                    "parameters":{
+                        "Banner":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner",
+                            "value": "Banner_Number",
+                            "label": "Banner_Name"
+                        },
+                        "Display_LP":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Yes,No",
+                            "label": "Yes,No"
+                        },
+                        "Combine_Banners":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Yes,No",
+                            "label": "Yes,No"
+                        }
+                    }
+                },
+                "Age of Units on Floor Detail":{
+                    "data_source": "eCom_ReportDB",
+                    "data_sets":{
+                        "ReportDataset":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_Aging_of_Units_on_Floor_Detail"
+                        },
+                        "ProcessingType":{
+                            "query_type": "In Line",
+                            "query": "SELECT DISTINCT Dept_ProcessingType AS Processing_Type FROM Dim_Departments WITH(NOLOCK) WHERE Dept_ProcessingType IS NOT NULL ORDER BY 1"
+                        },
+                        "Today":{
+                            "query_type": "In Line",
+                            "query": "SELECT CONVERT(varchar(20),GETDATE(),111) AS Today"
+                        },
+                        "Banner":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner"
+                        }
+                    },
+                    "parameters":{
+                        "Banner":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner",
+                            "value": "Banner_Number",
+                            "label": "Banner_Name"
+                        },
+                        "Selected_Date":{
+                            "type": "Textbox",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Processing_Type":{
+                            "type": "Dropdown",
+                            "query_type": "In Line",
+                            "query": "SELECT DISTINCT Dept_ProcessingType AS Processing_Type FROM Dim_Departments WITH(NOLOCK) WHERE Dept_ProcessingType IS NOT NULL ORDER BY 1",
+                            "value": "Processing_Type",
+                            "label": "Processing_Type"
+                        },
+                        "LP Month":{
+                            "type": "Textbox",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        }
+                    }
+                },
+                "Cubiscan Exception Report":{
+                    "data_source": "eCom_WMSDB",
+                    "data_sets":{
+                        "Report_Dataset":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_Cubiscan_Exception_Report"
+                        },
+                        "Banner":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner"
+                        }
+                    },
+                    "parameters":{}
+                },
+                "DC Scheduling Report":{
+                    "data_source": "eCom_ReportDB",
+                    "data_sets":{
+                        "Report_Dataset":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_DC_Scheduling_Report"
+                        }
+                    },
+                    "parameters":{}
+                },
+                "Deployable":{
+                    "data_source": "eCom_ReportDB",
+                    "data_sets":{
+                        "ReportDataset":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_Operations_Deployable"
+                        },
+                        "Departments":{
+                            "query_type": "Stored Procedure",
+                            "query": "Par_rpt_Departments_by_Banner"
+                        },
+                        "LPMonth":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_rpt_LPMonth"
+                        },
+                        "ChartDataset":{
+                            "query_type": "Stored Procedure",
+                            "query": "rpt_Operations_Deployable"
+                        },
+                        "Banner":{
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner"
+                        }
+                    },
+                    "parameters":{
+                        "Banner":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_Banner",
+                            "value": "Banner_Number",
+                            "label": "Banner_Name"
+                        },
+                        "Department_No":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "Par_rpt_Departments_by_Banner",
+                            "value": "Dept_Number",
+                            "label": "Dept_FullName"
+                        },
+                        "Report_Type":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "Summary,Division,Department,Processing Type,Photo Type",
+                            "label": "Summary,Division,Department,Processing Type,Photo Type"
+                        },
+                        "UOM":{
+                            "type": "Dropdown",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "U,D,P,B",
+                            "label": "Units,Dollars,Parents,Both Units and Dollars"
+                        },
+                        "Ladder_Plan_Date":{
+                            "type": "Dropdown",
+                            "query_type": "Stored Procedure",
+                            "query": "par_rpt_LPMonth",
+                            "value": "LP_Month",
+                            "label": "LP_Month"
+                        },
+                        "Division":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Processing_Type":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Photo_Type":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Class":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        },
+                        "Category":{
+                            "type": "Hidden",
+                            "query_type": "Fixed",
+                            "query": "",
+                            "value": "",
+                            "label": ""
+                        }
+                    }
+                },
+            }
+        },
     }
 }
