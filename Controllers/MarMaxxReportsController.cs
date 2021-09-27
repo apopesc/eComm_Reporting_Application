@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using eComm_Reporting_Application.Models;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
+using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace eComm_Reporting_Application.Controllers
 {
@@ -132,6 +134,15 @@ namespace eComm_Reporting_Application.Controllers
         [HttpPost]
         public JsonResult GetMarMaxxReportParameters(string reportName)
         {
+            var myJsonString = System.IO.File.ReadAllText("JSON Report Parameter Mapping.json");
+            var jsonObject = JObject.Parse(myJsonString);
+            var folders = jsonObject["folders"];
+            foreach(JProperty x in jsonObject["folders"])
+            {
+                string name = x.Name;
+                JToken value = x.Value;
+            }
+
             return Json(reportName);
         }
 
