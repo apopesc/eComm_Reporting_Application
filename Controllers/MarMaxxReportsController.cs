@@ -135,7 +135,9 @@ namespace eComm_Reporting_Application.Controllers
             return Json(reportName);
         }
 
-            public ReportPageDropdownModel getFoldersForDropdown()
+
+
+       public ReportPageDropdownModel getFoldersForDropdown()
         {
             ReportPageDropdownModel dropdownModel = new ReportPageDropdownModel();
             List<ReportFolderModel> folders = new List<ReportFolderModel>();
