@@ -12,6 +12,9 @@ namespace eComm_Reporting_Application.Controllers
     public class MarMaxxReportsController : Controller
     {
         private readonly IConfiguration configuration;
+        private static string myJsonString = System.IO.File.ReadAllText("JSON Report Parameter Mapping.json");
+        private static JObject jsonObject = JObject.Parse(myJsonString);
+
         public MarMaxxReportsController(IConfiguration config)
         {
             this.configuration = config;
@@ -37,42 +40,20 @@ namespace eComm_Reporting_Application.Controllers
             try
             {
                 List<string> reportNameList = new List<string>();
+                var json_folders = jsonObject["folders"];
 
-                string folderListString = String.Join("', '", folderPathList.ToArray());
-                folderListString = "'" + folderListString + "'";
-
-                string connectionstring = configuration.GetConnectionString("ReportServer");
-                SqlConnection connection = new SqlConnection(connectionstring);
-
-                string queryString = "DROP TABLE IF EXISTS #TempReportPathTable SELECT Name, LEFT(Path, Len(Path)-Len(Name)-1) Path, Path as FullPath " +
-                    "INTO #TempReportPathTable FROM dbo.Catalog WHERE Path NOT LIKE '%SubReports%' AND Path NOT LIKE '%Data Sources%' AND TYPE = 2 " +
-                    "SELECT * FROM #TempReportPathTable WHERE Path IN (" + folderListString + ");";
-
-                SqlCommand getFolderList = new SqlCommand(queryString, connection);
-                using (connection)
+                foreach (string folder in folderPathList)
                 {
-                    connection.Open();
-                    using (SqlDataReader reader = getFolderList.ExecuteReader())
+                    var reportFolder = json_folders[folder];
+                    var reports = reportFolder["reports"];
+                    foreach (JProperty x in reports)
                     {
-                        while (reader.Read())
-                        {
-                            var reportName = reader.GetString(0);
-                            reportNameList.Add(reportName);
-                        }
-                    }
-                    connection.Close();
-                }
-
-                List<string> filteredReportNameList = new List<string>();
-                foreach(string reportName in reportNameList)
-                {
-                    if (!filteredReportNameList.Contains(reportName))
-                    {
-                        filteredReportNameList.Add(reportName);
+                        string report_name = x.Name;
+                        reportNameList.Add(report_name);
                     }
                 }
-
-                return Json(filteredReportNameList);
+                
+                return Json(reportNameList);
             }
             catch (Exception e)
             {
@@ -136,17 +117,32 @@ namespace eComm_Reporting_Application.Controllers
         {
             var myJsonString = System.IO.File.ReadAllText("JSON Report Parameter Mapping.json");
             var jsonObject = JObject.Parse(myJsonString);
+            
+
+            //selecting folders object from json
             var folders = jsonObject["folders"];
-            foreach(JProperty x in jsonObject["folders"])
+            foreach(JProperty x in folders)
+            {
+                //grabs folder name
+                string name = x.Name;
+                //grabs the json associated with the folder name
+                JToken value = x.Value;
+            }
+
+            var reportFolder = folders["Buyer Reports"];
+            var reports = reportFolder["reports"];
+
+            var testReport = reports["BCF Mix Master"];
+            foreach (JProperty x in testReport)
             {
                 string name = x.Name;
                 JToken value = x.Value;
             }
 
+
+
             return Json(reportName);
         }
-
-
 
        public ReportPageDropdownModel getFoldersForDropdown()
         {
@@ -154,27 +150,14 @@ namespace eComm_Reporting_Application.Controllers
             List<ReportFolderModel> folders = new List<ReportFolderModel>();
             try
             {
-                string connectionstring = configuration.GetConnectionString("ReportServer");
-                SqlConnection connection = new SqlConnection(connectionstring);
-
-                string queryString = "SELECT Right(Path, Len(Path)-1) Folders, Path FROM dbo.Catalog WHERE Path NOT LIKE '%SubReports%' " +
-                    "AND Path NOT LIKE '%Data Sources%' AND TYPE=1 AND ParentID IS NOT NULL;";
-
-                SqlCommand getFolderList = new SqlCommand(queryString, connection);
-                using (connection)
+                //selecting folders object from json
+                var json_folders = jsonObject["folders"];
+                foreach (JProperty x in json_folders)
                 {
-                    connection.Open();
-                    using (SqlDataReader reader = getFolderList.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            ReportFolderModel folder = new ReportFolderModel();
-                            folder.folderName = reader.GetString(0);
-                            folder.folderPath = reader.GetString(1);
-                            folders.Add(folder);
-                        }
-                    }
-                    connection.Close();
+                    ReportFolderModel folder = new ReportFolderModel();
+                    folder.folderName = x.Name;
+                    //folder.folderPath currently not used
+                    folders.Add(folder);
                 }
                 dropdownModel.folders = folders;
             }

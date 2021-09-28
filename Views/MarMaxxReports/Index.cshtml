@@ -24,7 +24,7 @@
             <select id="marMaxxFolderDropdown" name="marMaxxFolderDropdown" onchange="selectedFolder();" multiple>
                 @foreach (var folder in @Model.folders)
                 {
-                    <option value=@folder.folderPath> @folder.folderName </option>
+                    <option value=@folder.folderName> @folder.folderName </option>
                 }
             </select>
         </div>
