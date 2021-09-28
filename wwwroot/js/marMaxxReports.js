@@ -15,6 +15,7 @@
 
     $('#btnViewMarmaxxData').click(function(){
         var selectedReport = $('#marMaxxReportDropdown').val();
+        var selectedReportFolder = $('#marMaxxReportDropdown option:selected').prop('title');
 
         if (selectedReport == null) {
             alert("Please select a report to view subscription data");
@@ -22,13 +23,18 @@
 
             var controllerUrl = '/MarMaxxReports/GetMarMaxxTableData';
 
+            var reportData = {
+                reportName: selectedReport,
+                reportFolder: selectedReportFolder
+            }
+
             $.ajax({
                 type: "POST",
                 url: controllerUrl,
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
-                data: { 'reportName': selectedReport }
+                data: { 'reportData': reportData }
             });
 
             function successFunc(tableData) {
@@ -72,7 +78,7 @@ function selectedFolder() {
             //manage the list of dropdown values in the front end -> just use controller to get the dropdown values for each selected folder
             var data = [{label: 'Select a report name...', value:'', disabled:true, selected:true}];
             for (i = 0; i < dropdownData.length; i++) {
-                data.push({ label: dropdownData[i], value: dropdownData[i] });
+                data.push({ label: dropdownData[i].reportName, value: dropdownData[i].reportName, title: dropdownData[i].reportFolder });
             }
 
             $("#marMaxxReportDropdown").multiselect('dataprovider', data);
@@ -94,7 +100,7 @@ function createTable(tableData) {
     //Adding the headers to the table
     let Hrow = $('<tr>').addClass('marMaxxSubscriptionsRow_Header');
     for (let i = 0; i < tableData.tableParams.length; i++) {
-        let tableHeader = $('<th>').addClass('marMaxxSubscriptionsHeader').text(tableData.tableParams[i]);
+        let tableHeader = $('<th>').addClass('marMaxxSubscriptionsHeader').text(tableData.tableParams[i].name);
         Hrow.append(tableHeader);
     }
     subTable.append(Hrow);

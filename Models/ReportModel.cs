@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace eComm_Reporting_Application.Models
 {
-    public class ReportParameterModel
+    public class ReportModel
     {
         public string reportName { get; set; }
-        public string dataSource { get; set; }
-        //public List<DataSet> dataSets {get; set;}
-        public List<Parameter> parameters { get; set; }
+        public string reportFolder { get; set; }
     }
 }

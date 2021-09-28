@@ -39,7 +39,7 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                List<string> reportNameList = new List<string>();
+                List<ReportModel> reportNameList = new List<ReportModel>();
                 var json_folders = jsonObject["folders"];
 
                 foreach (string folder in folderPathList)
@@ -48,8 +48,10 @@ namespace eComm_Reporting_Application.Controllers
                     var reports = reportFolder["reports"];
                     foreach (JProperty x in reports)
                     {
-                        string report_name = x.Name;
-                        reportNameList.Add(report_name);
+                        ReportModel report = new ReportModel();
+                        report.reportName = x.Name;
+                        report.reportFolder = folder;
+                        reportNameList.Add(report);
                     }
                 }
                 
@@ -63,24 +65,34 @@ namespace eComm_Reporting_Application.Controllers
 
 
         [HttpPost]
-        public JsonResult GetMarMaxxTableData(string reportName)
+        public JsonResult GetMarMaxxTableData(ReportModel reportData)
         {
             try
             {
-                ReportParameterModel tableParameters = getReportParameters(reportName);
+                ReportParameterModel tableParameters = getReportParameters(reportData);
                 List<ReportTableModel> tableData = new List<ReportTableModel>();
 
                 //Adding the static columns to the table (these will appear for every report)
-                tableParameters.parameters.Insert(0, "Group_ID");
-                tableParameters.parameters.Insert(0, "Group_Name");
-                tableParameters.parameters.Insert(0, "Report_Name");
-                tableParameters.parameters.Insert(0, "Subscription_Name");
-                tableParameters.parameters.Insert(0, "Subscription_ID");
+                Parameter groupID = new Parameter();
+                groupID.name = "Group_ID";
+                tableParameters.parameters.Insert(0, groupID);
+                Parameter groupName = new Parameter();
+                groupName.name = "Group_Name";
+                tableParameters.parameters.Insert(0, groupName);
+                Parameter reportName = new Parameter();
+                reportName.name = "Report_Name";
+                tableParameters.parameters.Insert(0, reportName);
+                Parameter subscriptionName = new Parameter();
+                subscriptionName.name = "Subscription_Name";
+                tableParameters.parameters.Insert(0, subscriptionName);
+                Parameter subscriptionID = new Parameter();
+                subscriptionID.name = "Subscription_ID";
+                tableParameters.parameters.Insert(0, subscriptionID);
 
                 string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                 SqlConnection connection = new SqlConnection(connectionstring);
 
-                string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Report_Name='" + reportName + "'";
+                string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Report_Name='" + reportData.reportName + "'";
 
                 SqlCommand getTableData = new SqlCommand(queryString, connection);
                 using (connection)
@@ -168,83 +180,81 @@ namespace eComm_Reporting_Application.Controllers
             return dropdownModel;
         }
 
-        public ReportParameterModel getReportParameters(string reportName)
+        public ReportParameterModel getReportParameters(ReportModel reportData)
         {
-            List<ReportParameterModel> reportParameterModelList = new List<ReportParameterModel>();
-            ReportParameterModel filteredReportParameters = new ReportParameterModel();
+
+            ReportParameterModel ReportParameters = new ReportParameterModel();
             try
             {
-                string connectionstring = configuration.GetConnectionString("ReportServer");
-                SqlConnection connection = new SqlConnection(connectionstring);
+                var json_folders = jsonObject["folders"];
+                var reportFolder = json_folders[reportData.reportFolder];
+                var json_reports = reportFolder["reports"];
+                var report = json_reports[reportData.reportName];
 
-                string queryString = "DROP TABLE IF EXISTS #Parameters DROP TABLE IF EXISTS #TempReportParameterTable " +
-                    "SELECT Folder,Report_Name,Full_Path,Parameter = Paravalue.value('Name[1]', 'VARCHAR(250)'),Type = Paravalue.value('Type[1]', 'VARCHAR(250)')," +
-                    "Nullable = Paravalue.value('Nullable[1]', 'VARCHAR(250)'),AllowBlank = Paravalue.value('AllowBlank[1]', 'VARCHAR(250)'),MultiValue = Paravalue.value('MultiValue[1]', 'VARCHAR(250)')," +
-                    "UsedInQuery = Paravalue.value('UsedInQuery[1]', 'VARCHAR(250)'),Prompt = Paravalue.value('Prompt[1]', 'VARCHAR(250)'),DynamicPrompt = Paravalue.value('DynamicPrompt[1]', 'VARCHAR(250)')," +
-                    "PromptUser = Paravalue.value('PromptUser[1]', 'VARCHAR(250)'),State = Paravalue.value('State[1]', 'VARCHAR(250)') " +
-                    "INTO #Parameters " +
-                    "FROM (SELECT LEFT(Path, Len(Path)-Len(Name)-1) AS Folder,Name AS Report_Name,Path as Full_Path,CONVERT(XML,C.Parameter) AS ParameterXML FROM ReportServer.dbo.Catalog C WHERE C.Content IS NOT NULL AND C.Type = 2) a " +
-                    "CROSS APPLY ParameterXML.nodes('//Parameters/Parameter') p ( Paravalue ) " +
-                    "SELECT LEFT(Path, Len(Path)-Len(Name)-1) AS Folder,Name,Path as FullPath," +
-                    "STUFF((SELECT ', '+ISNULL(Parameter,'') FROM #Parameters P WHERE C.Name = P.Report_Name AND PromptUser = 'True' AND Parameter NOT LIKE '%hidden%' AND Parameter NOT IN ('NoMonths','Job_Type') FOR XML PATH ('')),1, 1, '') AS [Parameters]," +
-                    "STUFF((SELECT ', '+ISNULL(Parameter,'') FROM #Parameters P WHERE C.Name = P.Report_Name FOR XML PATH ('')),1, 1, '') AS Parameters_WithHidden " +
-                    "INTO #TempReportParameterTable " +
-                    "FROM ReportServer.dbo.Catalog C WITH(NOLOCK) WHERE TYPE = 2 AND Left(Path, Len(Path)-Len(Name)-1) NOT IN ('/DevTest Reports','/PreProdTestReports') ORDER BY 1,2 " +
-                    "SELECT * FROM #TempReportParameterTable WHERE Name IN ('" + reportName + "');";
+                ReportParameters.reportName = reportData.reportName;
+                List<Parameter> parameters = new List<Parameter>();
 
-                SqlCommand getReportParams = new SqlCommand(queryString, connection);
-                using (connection)
+                foreach (JProperty x in report)
                 {
-                    connection.Open();
-                    using (SqlDataReader reader = getReportParams.ExecuteReader())
+                    string param_name = x.Name;
+                    if(param_name == "data_source")
                     {
-                        while (reader.Read())
-                        {
-                            ReportParameterModel reportParams = new ReportParameterModel();
+                        JToken param_json = x.Value;
+                        string data_source = param_json.Value<string>();
+                        ReportParameters.dataSource = data_source;
 
-                            //There is other data returned by this query that can be used - such as folder, fullpath, and hidden parameters.
-                            //Currently only using report name and parameters
-                            var report_name = reader.GetString(1);
-                            if (reader.IsDBNull(3))
-                            {
-                                return filteredReportParameters; //Returning empty list of parameters if the report has no parameters
-                            }
-                            else
-                            {
-                                var report_params_string = reader.GetString(3);
-                                List<string> report_params_list = new List<string>(report_params_string.Split(", "));
-                                reportParams.reportName = report_name;
-                                reportParams.parameters = report_params_list;
-
-                                reportParameterModelList.Add(reportParams);
-                            }
-                        }
-                    }
-                    connection.Close();
-                }
-
-                //Filtering duplicate parameter data
-                List<string> parameters = new List<string>();
-
-                foreach (ReportParameterModel paramModel in reportParameterModelList)
-                {
-                    foreach (string parameter in paramModel.parameters)
+                    } 
+                    else if(param_name == "parameters")
                     {
-                        string trimmed_param = parameter.Trim(' ');
-                        if (!parameters.Contains(trimmed_param))
+                        var json_params = report["parameters"];
+
+                        //iterating through the parameters in the list
+                        foreach(JProperty t in json_params)
                         {
-                            parameters.Add(trimmed_param);
-                        }
+                            Parameter reportParam = new Parameter();
+                            reportParam.name = t.Name;
+                            var param = json_params[reportParam.name];
+                            
+                            foreach(JProperty z in param)
+                            {
+                                var name = z.Name;
+                                JToken param_json = z.Value;
+                                string param_value = param_json.Value<string>();
+
+                                switch (name)
+                                {
+                                    case "type":
+                                        reportParam.type = param_value;
+                                        break;
+                                    case "query_type":
+                                        reportParam.queryType = param_value;
+                                        break;
+                                    case "query":
+                                        reportParam.query = param_value;
+                                        break;
+                                    case "value":
+                                        string[] val_array = param_value.Split(",");
+                                        List<string> val_list = new List<string>(val_array);
+                                        reportParam.values = val_list;
+                                        break;
+                                    case "label":
+                                        string[] lab_array = param_value.Split(",");
+                                        List<string> lab_list = new List<string>(lab_array);
+                                        reportParam.labels = lab_list;
+                                        break;
+                                }
+                            }
+                            parameters.Add(reportParam);
+                        } 
                     }
                 }
-                filteredReportParameters.reportName = reportParameterModelList[0].reportName;
-                filteredReportParameters.parameters = parameters;
+                ReportParameters.parameters = parameters;
             }
             catch (Exception e)
             {
                 //Redirect to error page and pass forward exception e once error page is set up.
             }
-            return filteredReportParameters;
+            return ReportParameters;
         }
-    }  
+    }
 }
