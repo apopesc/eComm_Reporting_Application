@@ -8,15 +8,36 @@
     color: white;
     font-weight: 700;
 }
+.addnew-dropdown{
+    width: 440px;
+}
+
+.subscription-name {
+    float: right;
+}
 
 @media screen and (max-width: 1920px) {
+    .subscription-name {
+        width: 290px;
+    }
     #viewReportParams {
         margin-left: 78px;
     }
 }
 
 @media screen and (max-width: 1280px) {
+    .subscription-name {
+        width: 250px;
+    }
     #viewReportParams {
         margin-left: 94px;
     }
+}
+
+.sub-name{
+    width: 440px;
+}
+
+.textbox{
+    margin-bottom:10px;
 }

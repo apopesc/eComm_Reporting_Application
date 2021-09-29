@@ -22,14 +22,20 @@ namespace eComm_Reporting_Application.Controllers
 
         public IActionResult Index()
         {
-            ReportPageDropdownModel marMaxxDropdownModel = getFoldersForDropdown();
+            ReportPageDropdownModel marMaxxDropdownModel = GetFoldersForDropdown();
             
             return View(marMaxxDropdownModel);
         }
 
         public IActionResult AddNewReportSub()
         {
-            ReportPageDropdownModel addNewDropdownModel = getFoldersForDropdown();
+            ReportPageDropdownModel folderModel = GetFoldersForDropdown();
+            UserSubscriptionDropdownModel groupModel = GetGroups();
+
+            AddNewReportSubDropdownModel addNewDropdownModel = new AddNewReportSubDropdownModel();
+            addNewDropdownModel.folders = folderModel.folders;
+            addNewDropdownModel.groupIDs = groupModel.groupsIDList;
+            addNewDropdownModel.groupNames = groupModel.groupsList;
 
             return View(addNewDropdownModel);
         }
@@ -69,7 +75,7 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                ReportParameterModel tableParameters = getReportParameters(reportData);
+                ReportParameterModel tableParameters = GetReportParameters(reportData);
                 List<ReportTableModel> tableData = new List<ReportTableModel>();
 
                 //Adding the static columns to the table (these will appear for every report)
@@ -156,7 +162,7 @@ namespace eComm_Reporting_Application.Controllers
             return Json(reportName);
         }
 
-       public ReportPageDropdownModel getFoldersForDropdown()
+       public ReportPageDropdownModel GetFoldersForDropdown()
         {
             ReportPageDropdownModel dropdownModel = new ReportPageDropdownModel();
             List<ReportFolderModel> folders = new List<ReportFolderModel>();
@@ -180,7 +186,7 @@ namespace eComm_Reporting_Application.Controllers
             return dropdownModel;
         }
 
-        public ReportParameterModel getReportParameters(ReportModel reportData)
+        public ReportParameterModel GetReportParameters(ReportModel reportData)
         {
 
             ReportParameterModel ReportParameters = new ReportParameterModel();
@@ -255,6 +261,59 @@ namespace eComm_Reporting_Application.Controllers
                 //Redirect to error page and pass forward exception e once error page is set up.
             }
             return ReportParameters;
+        }
+
+        private UserSubscriptionDropdownModel GetGroups()
+        {
+            List<string> groups_list = new List<string>();
+            List<string> groupsID_list = new List<string>();
+
+            try
+            {
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                string groupsQueryString = "SELECT DISTINCT User_Group FROM UserSubscriptionFilters WHERE User_Group IS NOT NULL";
+                string groupIDsQueryString = "SELECT DISTINCT Group_ID FROM UserSubscriptionFilters WHERE Group_ID IS NOT NULL";
+
+                SqlCommand groupsQuery = new SqlCommand(groupsQueryString, connection);
+                SqlCommand groupIDsQuery = new SqlCommand(groupIDsQueryString, connection);
+
+                using (connection)
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = groupsQuery.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var groupString = reader.GetString(0);
+                            groups_list.Add(groupString);
+                        }
+                    }
+                    using (SqlDataReader reader = groupIDsQuery.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var groupIDString = reader.GetString(0);
+                            groupsID_list.Add(groupIDString);
+                        }
+                    }
+                    connection.Close();
+                }
+
+            }
+            catch (Exception e)
+            {
+                //Redirect to error page and pass forward exception e once error page is set up.
+            }
+
+            UserSubscriptionDropdownModel groupModel = new UserSubscriptionDropdownModel()
+            {
+                groupsIDList = groupsID_list,
+                groupsList = groups_list
+            };
+
+            return groupModel;
         }
     }
 }

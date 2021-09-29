@@ -428,75 +428,12 @@
               "value": "Expand,Collapse",
               "label": "Expand,Collapse"
             },
-            "NoMonths": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Number_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Vendor_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Brand_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Trend_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
               "label": "Yes,No"
-            },
-            "Banner_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -655,62 +592,6 @@
               "query": "",
               "value": "Expand,Collapse",
               "label": "Expand,Collapse"
-            },
-            "NoMonths": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Number_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Vendor_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Brand_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Trend_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -869,62 +750,6 @@
               "query": "",
               "value": "Expand,Collapse",
               "label": "Expand,Collapse"
-            },
-            "NoMonths": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Number_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Vendor_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Brand_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Trend_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -1014,47 +839,12 @@
               "value": "Fiscal_Week_Default",
               "label": "Fiscal_Week_Default"
             },
-            "NoMonths": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Trend_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
               "label": "Yes,No"
-            },
-            "Banner_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -1240,89 +1030,12 @@
               "value": "Buy_Type_Number",
               "label": "Buy_Type"
             },
-            "NoMonths": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Number_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Vendor_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Brand_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Season_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Trend_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Buy_Type_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
               "label": "Yes,No"
-            },
-            "Banner_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -1552,76 +1265,6 @@
               "query": "/SharedDataSets/BuyTypes",
               "value": "Buy_Type_Number",
               "label": "Buy_Type"
-            },
-            "NoMonths": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Number_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Brand_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Season_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Trend_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Buy_Type_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Vendor_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -1778,68 +1421,12 @@
               "value": "Expand,Collapse",
               "label": "Expand,Collapse"
             },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Number_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Vendor_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Brand_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Trend_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
               "label": "Yes,No"
-            },
-            "Banner_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -2009,76 +1596,13 @@
               "query": "",
               "value": "Y,N",
               "label": "Yes,No"
-            },
-            "NoMonths": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Number_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Vendor_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Brand_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Trend_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
+            },         
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
               "label": "Yes,No"
-            },
-            "Banner_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -2255,69 +1779,6 @@
               "query": "/SharedDataSets/Trend",
               "value": "TREND_NAME",
               "label": "TREND_NAME"
-            },
-            "NoMonths": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Number_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Vendor_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Brand_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Buy_Type_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Trend_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -2483,76 +1944,6 @@
               "query": "",
               "value": "Summary,Detail",
               "label": "Summary,Detail"
-            },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Vendor_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Brand_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Buyer_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Season_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Trend_Flag_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Ladder_Plan_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -2762,111 +2153,6 @@
               "query": "/SharedDataSets/LPMonth",
               "value": "LP_Month",
               "label": "LP_Month"
-            },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Banner_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Vendor_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Brand_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Buyer_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Buy_Type_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Season_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Trend_Flag_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Ladder_Plan_Date_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Status_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "PO_Status_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Rush_Flag_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -3073,104 +2359,6 @@
               "value": "LP_Month",
               "label": "LP_Month"
             },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Vendor_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Brand_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Buyer_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Buy_Type_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Season_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Trend_Flag_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Ladder_Plan_Date_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Status_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "PO_Status_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Rush_Flag_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
             "DisplayBy": {
               "type": "Dropdown",
               "query_type": "Fixed",
@@ -3312,62 +2500,6 @@
               "query": "",
               "value": "Yes,No",
               "label": "Yes,No"
-            },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Division_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "DC_Cancel_Month_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Merch_Manager_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Buyer_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -3532,69 +2664,6 @@
               "query": "",
               "value": "Yes,No",
               "label": "Yes,No"
-            },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Banner_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Division_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "DC_Cancel_Month_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Merch_Manager_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Buyer_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -3730,62 +2799,6 @@
               "query": "",
               "value": "Yes,No",
               "label": "Yes,No"
-            },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Division_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "DC_Cancel_Month_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Merch_Manager_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Buyer_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -3922,62 +2935,6 @@
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
               "label": "Brand"
-            },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Vendor_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Brand_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Buyer_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Ladder_Plan_Date_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -4001,26 +2958,12 @@
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
               "label": "Yes,No"
-            },
-            "Banner_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -4175,76 +3118,6 @@
               "query": "/SharedDataSets/LPMonth",
               "value": "LP_Month",
               "label": "LP_Month"
-            },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Vendor_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Brand_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Ladder_Plan_Date_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Season_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Rush_Flag_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Parent_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         }
@@ -4290,15 +3163,7 @@
               "query": "rpt_Order_Capacity"
             }
           },
-          "parameters": {
-            "ForecastDays": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            }
-          }
+          "parameters": {}
         }
       }
     },
@@ -4474,41 +3339,6 @@
               "query": "par_rpt_LPMonth",
               "value": "LP_Month",
               "label": "LP_Month"
-            },
-            "Division": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Processing_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Photo_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -4571,41 +3401,6 @@
               "query": "par_rpt_LPMonth",
               "value": "LP_Month",
               "label": "LP_Month"
-            },
-            "Division": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Processing_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Photo_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -4668,27 +3463,6 @@
               "query": "par_rpt_LPMonth",
               "value": "LP_Month",
               "label": "LP_Month"
-            },
-            "Division": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Processing_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Photo_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -4724,27 +3498,6 @@
             },
             "KeytrolNum": {
               "type": "Textbox",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Job_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
-            },
-            "Combine_Banners": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Yes,No",
-              "label": "Yes,No"
-            },
-            "Banner_Hidden": {
-              "type": "Hidden",
               "query_type": "Fixed",
               "query": "",
               "value": "",
@@ -5005,41 +3758,6 @@
               "query": "par_rpt_LPMonth",
               "value": "LP_Month",
               "label": "LP_Month"
-            },
-            "Division": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Processing_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Photo_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         },
@@ -5087,62 +3805,6 @@
             },
             "Parent_No": {
               "type": "Textbox",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Division": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Processing_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Photo_Type": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Status": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Est_Days_Start": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Est_Days_End": {
-              "type": "Hidden",
               "query_type": "Fixed",
               "query": "",
               "value": "",
@@ -5278,41 +3940,6 @@
               "query": "",
               "value": "Interactive,Subscription",
               "label": "Interactive,Subscription"
-            },
-            "Department_No_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Class_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Category_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Vendor_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
-            },
-            "Ladder_Plan_Date_Hidden": {
-              "type": "Hidden",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             }
           }
         }

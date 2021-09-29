@@ -1,6 +1,15 @@
 ﻿$(document).ready(function () {
     $('#MarMaxxReports_Link').addClass('selected-nav-option');
 
+
+    $('#marMaxxGroupID').multiselect({
+        nonSelectedText: 'Select a Group ID...',
+        enableCaseInsensitiveFiltering: true
+    });
+    $('#marMaxxGroupName').multiselect({
+        nonSelectedText: 'Select a Group Name...',
+        enableCaseInsensitiveFiltering: true
+    });
     $('#marMaxxFolderDropdown').multiselect({
         nonSelectedText: 'Select a folder...',
         includeSelectAllOption: true,
@@ -72,7 +81,7 @@ function selectedFolder() {
             //manage the list of dropdown values in the front end -> just use controller to get the dropdown values for each selected folder
             var data = [{ label: 'Select a report name...', value: '', disabled: true, selected: true }];
             for (i = 0; i < dropdownData.length; i++) {
-                data.push({ label: dropdownData[i], value: dropdownData[i] });
+                data.push({ label: dropdownData[i].reportName, value: dropdownData[i].reportName, title: dropdownData[i].reportFolder });
             }
 
             $("#marMaxxReportDropdown").multiselect('dataprovider', data);
