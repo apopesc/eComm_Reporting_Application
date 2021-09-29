@@ -757,32 +757,32 @@
           "data_source": "ReportDataSource",
           "data_sets": {
             "Departments": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Departments"
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
             },
             "ReportDataSet": {
               "query_type": "Stored Procedure",
               "query": "rpt_BCF_Dollars_Units_By_Department"
             },
             "Fiscal_Year": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYear"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year"
             },
             "FiscalYearDefault": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYearDefault"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year_Default"
             },
             "FiscalWeekDefault": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default"
             },
             "DepartmentHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/DepartmentHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_DepartmentHeaders_by_Banner"
             },
             "Trend": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Trend"
+              "query_type": "Stored Procedure",
+              "query": "par_Trend"
             },
             "Banner": {
               "query_type": "Stored Procedure",
@@ -799,15 +799,15 @@
             },
             "Department_No": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Departments",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
               "value": "Department_Number",
               "label": "Department"
             },
             "Fiscal_Year": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYear",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year_Default",
               "value": "FISCAL_YEAR",
               "label": "FISCAL_YEAR"
             },
@@ -820,8 +820,8 @@
             },
             "FW_Start": {
               "type": "Textbox",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
               "value": "Fiscal_Week_Default",
               "label": "Fiscal_Week_Default"
             },
@@ -834,8 +834,8 @@
             },
             "FW_End": {
               "type": "Textbox",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
               "value": "Fiscal_Week_Default",
               "label": "Fiscal_Week_Default"
             },

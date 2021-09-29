@@ -24,6 +24,7 @@
 
     $('#viewReportParams').click(function () {
         var selectedReport = $('#marMaxxReportDropdown').val();
+        var selectedReportFolder = $('#marMaxxReportDropdown option:selected').prop('title');
 
         if (selectedReport == null) {
             alert("Please select a report to view it's parameters.");
@@ -31,13 +32,18 @@
 
             var controllerUrl = '/MarMaxxReports/GetMarMaxxReportParameters';
 
+            var reportData = {
+                reportName: selectedReport,
+                reportFolder: selectedReportFolder
+            }
+
             $.ajax({
                 type: "POST",
                 url: controllerUrl,
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
-                data: { 'reportName': selectedReport }
+                data: { 'reportData': reportData }
             });
 
             function successFunc(filterData) {

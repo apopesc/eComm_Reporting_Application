@@ -129,40 +129,56 @@ namespace eComm_Reporting_Application.Controllers
             }
         }
 
-
         [HttpPost]
-        public JsonResult GetMarMaxxReportParameters(string reportName)
+        public JsonResult GetMarMaxxReportParameters(ReportModel reportData)
         {
-            var myJsonString = System.IO.File.ReadAllText("JSON Report Parameter Mapping.json");
-            var jsonObject = JObject.Parse(myJsonString);
-            
-
-            //selecting folders object from json
-            var folders = jsonObject["folders"];
-            foreach(JProperty x in folders)
+            //ReportDataSource = Netsuite_ODS
+            //eCom_ReportDB = eCom_ReportDB
+            try
             {
-                //grabs folder name
-                string name = x.Name;
-                //grabs the json associated with the folder name
-                JToken value = x.Value;
+                ReportParameterModel reportParams = GetReportParameters(reportData);
+                string connectionstring = "";
+
+                if (reportParams.dataSource == "ReportDataSource")
+                {
+                    connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                }
+                else if (reportParams.dataSource == "eCom_ReportDB")
+                {
+                    connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                }
+
+
+                for (int i = 0; i < reportParams.parameters.Count; i++)
+                {
+                    if (reportParams.parameters[i].type == "Dropdown" && reportParams.parameters[i].queryType == "Stored Procedure")
+                    {
+
+                    }
+                    else if (reportParams.parameters[i].type == "Dropdown" && reportParams.parameters[i].queryType == "In Line")
+                    {
+
+                    }
+                    else if (reportParams.parameters[i].type == "Textbox" && reportParams.parameters[i].queryType == "Stored Procedure")
+                    {
+
+                    }
+                    else if (reportParams.parameters[i].type == "Textbox" && reportParams.parameters[i].queryType == "In Line")
+                    {
+
+                    }
+                }
+
+                return Json(reportParams);
+            }
+            catch (Exception e)
+            {
+                return Json("Error retrieving report parameters: " + e);
             }
 
-            var reportFolder = folders["Buyer Reports"];
-            var reports = reportFolder["reports"];
-
-            var testReport = reports["BCF Mix Master"];
-            foreach (JProperty x in testReport)
-            {
-                string name = x.Name;
-                JToken value = x.Value;
-            }
-
-
-
-            return Json(reportName);
         }
 
-       public ReportPageDropdownModel GetFoldersForDropdown()
+        public ReportPageDropdownModel GetFoldersForDropdown()
         {
             ReportPageDropdownModel dropdownModel = new ReportPageDropdownModel();
             List<ReportFolderModel> folders = new List<ReportFolderModel>();
