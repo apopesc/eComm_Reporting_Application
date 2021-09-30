@@ -813,8 +813,8 @@
             },
             "Trend": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Trend",
+              "query_type": "Stored Procedure",
+              "query": "par_Trend",
               "value": "TREND_NAME",
               "label": "TREND_NAME"
             },

@@ -21,7 +21,7 @@
         width: 290px;
     }
     #viewReportParams {
-        margin-left: 98px;
+        margin-left: 120px;
     }
 }
 
@@ -30,7 +30,7 @@
         width: 250px;
     }
     #viewReportParams {
-        margin-left: 111px;
+        margin-left: 126px;
     }
 }
 
@@ -40,4 +40,8 @@
 
 .textbox{
     margin-bottom:10px;
+}
+
+.filter-data{
+    width: 45%;
 }

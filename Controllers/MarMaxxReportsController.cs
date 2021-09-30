@@ -139,6 +139,7 @@ namespace eComm_Reporting_Application.Controllers
                 ReportParameterModel reportParams = GetReportParameters(reportData);
                 string connectionstring = "";
 
+                //There are other data sources that need to be mapped here
                 if (reportParams.dataSource == "ReportDataSource")
                 {
                     connectionstring = configuration.GetConnectionString("NetSuite_DB");
@@ -150,7 +151,7 @@ namespace eComm_Reporting_Application.Controllers
 
                 for (int i = 0; i < reportParams.parameters.Count; i++)
                 {
-                    if (reportParams.parameters[i].type == "Dropdown" && reportParams.parameters[i].queryType == "Stored Procedure")
+                    if ( (reportParams.parameters[i].type == "Dropdown" || reportParams.parameters[i].type == "Textbox") && reportParams.parameters[i].queryType == "Stored Procedure")
                     {
                         SqlConnection connection = new SqlConnection(connectionstring);
                         SqlCommand storedProcQuery = new SqlCommand(reportParams.parameters[i].query, connection);
@@ -204,17 +205,9 @@ namespace eComm_Reporting_Application.Controllers
                             reportParams.parameters[i].labels = dropdownLabels; 
                         }
                     }
-                    else if (reportParams.parameters[i].type == "Dropdown" && reportParams.parameters[i].queryType == "In Line")
+                    else if ( (reportParams.parameters[i].type == "Dropdown" || reportParams.parameters[i].type == "Textbox") && reportParams.parameters[i].queryType == "In Line")
                     {
-
-                    }
-                    else if (reportParams.parameters[i].type == "Textbox" && reportParams.parameters[i].queryType == "Stored Procedure")
-                    {
-
-                    }
-                    else if (reportParams.parameters[i].type == "Textbox" && reportParams.parameters[i].queryType == "In Line")
-                    {
-
+                        //Need to test code for inline queries
                     }
                 }
 
