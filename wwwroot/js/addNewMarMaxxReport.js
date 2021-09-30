@@ -46,12 +46,11 @@
                 data: { 'reportData': reportData }
             });
 
-            function successFunc(filterData) {
-                if (typeof filterData === 'string') { //If there is an error saving it to the database
-                    alert(filterData);
+            function successFunc(paramData) {
+                if (typeof paramData === 'string') { //If there is an error saving it to the database
+                    alert(paramData);
                 } else {
-                    //This is where filters would populate on the screen with report viewer
-                    alert(filterData);
+                    createParams(paramData);
                 }
             }
 
@@ -97,5 +96,56 @@ function selectedFolder() {
         function errorFunc(error) {
             alert("Error Retrieving Report Names: " + error);
         }
+    }
+}
+
+function createParams(paramData) {
+    $('#dynamicParams').empty();
+
+    for (let i = 0; i < paramData.parameters.length; i++) {
+        var row = $('<div>').addClass('addnew-row');
+
+        if (paramData.parameters[i].type == "Dropdown") {
+            var dropdownLabel = $('<label>').addClass('filter-label').text(paramData.parameters[i].name);
+            dropdownLabel.prop('for', paramData.parameters[i].name);
+
+            var dropdown = $('<select>').addClass('dynamic-dropdown');
+            dropdown.prop('id', paramData.parameters[i].name);
+            dropdown.prop('name', paramData.parameters[i].name);
+
+            //This is to prevent errors in case there is an instance where values and labels are diff length. (avoiding out of index)
+            var length = 0;
+            if (paramData.parameters[i].values.length > paramData.parameters[i].labels.length) {
+                length = paramData.parameters[i].labels.length;
+            } else {
+                length = paramData.parameters[i].values.length;
+            }
+
+            var defaultDropdownOption = $('<option disabled selected>').text("Select a Value...");
+            dropdown.append(defaultDropdownOption);
+
+            for (let j = 0; j < length; j++) {
+                var dropdownOption = $('<option>').text(paramData.parameters[i].labels[j]);
+                dropdownOption.prop('value', paramData.parameters[i].values[j]);
+
+                dropdown.append(dropdownOption);
+            }
+
+            row.append(dropdownLabel);
+            row.append(dropdown);
+
+        } else if (paramData.parameters[i].type == "Textbox") {
+
+        } else if (paramData.parameters[i].type == "DateTime") {
+
+        }
+
+
+        $('#dynamicParams').append(row);
+
+        $('.dynamic-dropdown').multiselect({
+            nonSelectedText: 'None Selected',
+            enableCaseInsensitiveFiltering: true
+        });
     }
 }

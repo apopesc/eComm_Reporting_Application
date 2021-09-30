@@ -44,4 +44,11 @@
 
 .filter-data{
     width: 45%;
+    float: left;
+}
+
+.dynamic-params {
+    width: 45%;
+    margin-top: 12px;
+    display: inline-block;
 }
