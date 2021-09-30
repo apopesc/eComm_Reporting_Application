@@ -148,12 +148,61 @@ namespace eComm_Reporting_Application.Controllers
                     connectionstring = configuration.GetConnectionString("eCom_ReportDB");
                 }
 
-
                 for (int i = 0; i < reportParams.parameters.Count; i++)
                 {
                     if (reportParams.parameters[i].type == "Dropdown" && reportParams.parameters[i].queryType == "Stored Procedure")
                     {
+                        SqlConnection connection = new SqlConnection(connectionstring);
+                        SqlCommand storedProcQuery = new SqlCommand(reportParams.parameters[i].query, connection);
+                        using (connection)
+                        {
+                            List<string> dropdownValues = new List<string>();
+                            List<string> dropdownLabels = new List<string>();
 
+                            connection.Open();
+                            using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                            {
+                                while (stored_proc_reader.Read())
+                                {
+                                    var proc_data_length = stored_proc_reader.FieldCount;
+
+                                    if (proc_data_length > 1)
+                                    {
+                                        for(int j = 0; j < proc_data_length; j++)
+                                        {
+                                            var proc_data_name = stored_proc_reader.GetName(j);
+                                            if (proc_data_name == reportParams.parameters[i].values[0])
+                                            {
+                                                var proc_val = stored_proc_reader.GetValue(j);
+
+                                                string dropdownVal = proc_val.ToString();
+                                                dropdownValues.Add(dropdownVal);
+                                            }
+
+                                            if (proc_data_name == reportParams.parameters[i].labels[0])
+                                            {
+                                                var proc_label = stored_proc_reader.GetValue(j);
+
+                                                string dropdownLab = proc_label.ToString();
+                                                dropdownLabels.Add(dropdownLab);
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        var proc_val = stored_proc_reader.GetValue(0);
+
+                                        string dropdownEntry = proc_val.ToString();
+                                        dropdownValues.Add(dropdownEntry);
+                                        dropdownLabels.Add(dropdownEntry);
+                                    }
+                                }
+                            }
+                            connection.Close();
+
+                            reportParams.parameters[i].values = dropdownValues;
+                            reportParams.parameters[i].labels = dropdownLabels; 
+                        }
                     }
                     else if (reportParams.parameters[i].type == "Dropdown" && reportParams.parameters[i].queryType == "In Line")
                     {

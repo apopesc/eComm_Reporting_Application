@@ -807,7 +807,7 @@
             "Fiscal_Year": {
               "type": "Dropdown",
               "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default",
+              "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
               "label": "FISCAL_YEAR"
             },
