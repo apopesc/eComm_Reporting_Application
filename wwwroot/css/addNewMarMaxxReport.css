@@ -12,29 +12,46 @@
     width: 440px;
 }
 
-.subscription-name {
+.subscription-textbox {
     float: right;
 }
 
 @media screen and (max-width: 1920px) {
-    .subscription-name {
+    .subscription-textbox {
         width: 290px;
     }
     #viewReportParams {
-        margin-left: 120px;
+        margin-left: 124px;
+    }
+    .dynamic-params {
+        max-height: 600px;
+        width: 32%;
+    }
+    .filter-data {
+        width: 35%;
     }
 }
 
 @media screen and (max-width: 1280px) {
-    .subscription-name {
+    .subscription-textbox {
         width: 250px;
     }
     #viewReportParams {
         margin-left: 126px;
     }
+    .dynamic-params {
+        max-height: 297px;
+        width: 45%;
+    }
+    .filter-data {
+        width: 45%;
+    }
+    .addnew-row-last{
+        margin-top: 16px;
+    }
 }
 
-.sub-name{
+.addnew-textbox{
     width: 440px;
 }
 
@@ -43,12 +60,19 @@
 }
 
 .filter-data{
-    width: 45%;
     float: left;
 }
 
 .dynamic-params {
-    width: 45%;
     margin-top: 12px;
     display: inline-block;
+    overflow-y: scroll;
+}
+
+.addnew-row-first{
+    margin:0px;
+}
+
+.separator-vertical {
+    border-right: 6px solid gray;
 }

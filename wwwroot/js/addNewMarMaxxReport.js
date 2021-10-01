@@ -103,9 +103,17 @@ function createParams(paramData) {
     $('#dynamicParams').empty();
 
     for (let i = 0; i < paramData.parameters.length; i++) {
-        var row = $('<div>').addClass('addnew-row');
+
+        if (i == 0) {
+            var row = $('<div>').addClass('addnew-row-first');
+        } else {
+            var row = $('<div>').addClass('addnew-row');
+        }
 
         if (paramData.parameters[i].type == "Dropdown") {
+
+            var sub_row = $('<div>').addClass('addnew-dropdown');
+
             var dropdownLabel = $('<label>').addClass('filter-label').text(paramData.parameters[i].name);
             dropdownLabel.prop('for', paramData.parameters[i].name);
 
@@ -131,21 +139,34 @@ function createParams(paramData) {
                 dropdown.append(dropdownOption);
             }
 
-            row.append(dropdownLabel);
-            row.append(dropdown);
+            sub_row.append(dropdownLabel);
+            sub_row.append(dropdown);
+            row.append(sub_row);
 
         } else if (paramData.parameters[i].type == "Textbox") {
+            row.addClass("textbox");
+
+            var sub_row = $('<div>').addClass('addnew-textbox');
+            var textboxLabel = $('<label>').addClass('filter-label').text(paramData.parameters[i].name);
+            textboxLabel.prop('for', paramData.parameters[i].name);
+
+            //values at 0 because textboxes will have a list only with one val in it.
+            var textbox = $('<input type=text>').addClass('subscription-textbox').val(paramData.parameters[i].values[0]); 
+            textbox.prop('id', paramData.parameters[i].name);
+            textbox.prop('name', paramData.parameters[i].name);
+
+            sub_row.append(textboxLabel);
+            sub_row.append(textbox);
+            row.append(sub_row);
 
         } else if (paramData.parameters[i].type == "DateTime") {
 
         }
-
-
         $('#dynamicParams').append(row);
-
-        $('.dynamic-dropdown').multiselect({
-            nonSelectedText: 'None Selected',
-            enableCaseInsensitiveFiltering: true
-        });
     }
+
+    $('.dynamic-dropdown').multiselect({
+        nonSelectedText: 'None Selected',
+        enableCaseInsensitiveFiltering: true
+    });
 }
