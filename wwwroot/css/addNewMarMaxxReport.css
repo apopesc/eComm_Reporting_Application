@@ -25,6 +25,7 @@
     }
     .dynamic-params {
         max-height: 600px;
+        
         width: 32%;
     }
     .filter-data {
@@ -67,10 +68,11 @@
     margin-top: 12px;
     display: inline-block;
     overflow-y: scroll;
+    min-height: 240px;
 }
 
-.addnew-row-first{
-    margin:0px;
+.first-row-dropdown {
+    margin-top: 0px;
 }
 
 .separator-vertical {

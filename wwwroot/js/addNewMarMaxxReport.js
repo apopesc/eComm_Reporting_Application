@@ -104,13 +104,15 @@ function createParams(paramData) {
 
     for (let i = 0; i < paramData.parameters.length; i++) {
 
-        if (i == 0) {
-            var row = $('<div>').addClass('addnew-row-first');
-        } else {
-            var row = $('<div>').addClass('addnew-row');
-        }
+        
+        var row = $('<div>').addClass('addnew-row');
+        
 
         if (paramData.parameters[i].type == "Dropdown") {
+
+            if (i == 0) {
+                row.addClass('first-row-dropdown');
+            }
 
             var sub_row = $('<div>').addClass('addnew-dropdown');
 
