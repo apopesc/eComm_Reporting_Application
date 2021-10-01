@@ -27,7 +27,7 @@
         var selectedReportFolder = $('#marMaxxReportDropdown option:selected').prop('title');
 
         if (selectedReport == null) {
-            alert("Please select a report to view it's parameters.");
+            alert("Please select a folder, then a report to view it's parameters.");
         } else {
 
             var controllerUrl = '/MarMaxxReports/GetMarMaxxReportParameters';
@@ -103,10 +103,8 @@ function createParams(paramData) {
     $('#dynamicParams').empty();
 
     for (let i = 0; i < paramData.parameters.length; i++) {
-
         
         var row = $('<div>').addClass('addnew-row');
-        
 
         if (paramData.parameters[i].type == "Dropdown") {
 
@@ -162,10 +160,15 @@ function createParams(paramData) {
             row.append(sub_row);
 
         } else if (paramData.parameters[i].type == "DateTime") {
-
+            //need to program datetimes
         }
         $('#dynamicParams').append(row);
     }
+
+    var saveSubscriptionBtn = $('<button>').addClass('btnAddPage').text("Save MarMaxx Report Subscription");
+    saveSubscriptionBtn.prop('id', 'saveMarmaxxSubscription');
+
+    $('#saveSubscription').append(saveSubscriptionBtn);
 
     $('.dynamic-dropdown').multiselect({
         nonSelectedText: 'None Selected',

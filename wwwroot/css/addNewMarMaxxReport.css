@@ -8,7 +8,17 @@
     color: white;
     font-weight: 700;
 }
-.addnew-dropdown{
+
+#saveMarmaxxSubscription {
+    background-color: #9E0000;
+    color: white;
+    font-weight: 700;
+    float: right;
+    
+    margin-right: 0px;
+}
+
+.addnew-dropdown {
     width: 440px;
 }
 
@@ -24,12 +34,17 @@
         margin-left: 124px;
     }
     .dynamic-params {
-        max-height: 600px;
-        
-        width: 32%;
+        max-height: 630px;  
+    }
+    .dynamic-div {
+        width: 610px;
     }
     .filter-data {
         width: 35%;
+    }
+    #saveMarmaxxSubscription {
+        margin-top: 25px;
+        width: 230px;
     }
 }
 
@@ -42,13 +57,19 @@
     }
     .dynamic-params {
         max-height: 297px;
-        width: 45%;
+    }
+    .dynamic-div {
+        width: 555px;
     }
     .filter-data {
         width: 45%;
     }
     .addnew-row-last{
-        margin-top: 16px;
+        margin-top: 11px;
+    }
+    #saveMarmaxxSubscription {
+        margin-top: 22px;
+        width: 305px;
     }
 }
 
@@ -65,16 +86,20 @@
 }
 
 .dynamic-params {
-    margin-top: 12px;
-    display: inline-block;
     overflow-y: scroll;
     min-height: 240px;
+    width: 100%;
+}
+
+.dynamic-div {
+    margin-top: 12px;
+    display: inline-block;
 }
 
 .first-row-dropdown {
     margin-top: 0px;
 }
 
-.separator-vertical {
-    border-right: 6px solid gray;
+.multiselect-container{
+    max-height:225px;
 }
