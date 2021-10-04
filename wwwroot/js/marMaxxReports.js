@@ -26,7 +26,7 @@
             var reportData = {
                 reportName: selectedReport,
                 reportFolder: selectedReportFolder
-            }
+            };
 
             $.ajax({
                 type: "POST",

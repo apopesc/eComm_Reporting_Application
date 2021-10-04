@@ -69,7 +69,6 @@ namespace eComm_Reporting_Application.Controllers
             }
         }
 
-
         [HttpPost]
         public JsonResult GetMarMaxxTableData(ReportModel reportData)
         {
@@ -189,7 +188,7 @@ namespace eComm_Reporting_Application.Controllers
                                             }
                                         }
                                     }
-                                    else
+                                    else //if only one column is returned from the stored procedure, put in both labels and values
                                     {
                                         var proc_val = stored_proc_reader.GetValue(0);
 
@@ -218,6 +217,19 @@ namespace eComm_Reporting_Application.Controllers
                 return Json("Error retrieving report parameters: " + e);
             }
 
+        }
+
+        [HttpPost]
+        public JsonResult SaveMarmaxxReportSubscription(ReportTableModel savedReportSub)
+        {
+            try
+            {
+                return Json(savedReportSub);
+            }
+            catch (Exception e)
+            {
+                return Json("Error Saving Marmaxx Report Subscription: " + e);
+            }
         }
 
         public ReportPageDropdownModel GetFoldersForDropdown()

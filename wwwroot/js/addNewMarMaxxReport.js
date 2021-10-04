@@ -60,6 +60,58 @@
         }
     });
 
+    $('#saveSubscription').on('click', '#saveMarmaxxSubscription', function () {
+        var subscriptionName = $('#subscriptionName').val();
+        var groupID = $('#marMaxxGroupID').val();
+        var groupName = $('#marMaxxGroupName').val();
+        var reportName = $('#marMaxxReportDropdown').val();
+        var dynamicParams = {};
+
+        if (subscriptionName == '') {
+            alert("Please enter a value for Subscription Name");
+        } else if (groupID == null) {
+            alert("Please select a value for Group ID");
+        } else if (groupName == null) {
+            alert("Please select a value for Group Name");
+        } else if (reportName == null) {
+            alert("Please select a value for Report Name");
+        } else {
+            $('#hiddenParamNames > input').each(function () {
+                var inputID = this.value;
+                var dynamicParamVal = $('#' + inputID).val();
+                dynamicParams[inputID] = dynamicParamVal;
+            });
+
+            var controllerUrl = '/MarMaxxReports/SaveMarmaxxReportSubscription';
+
+            var savedReportSubModel = {
+                subscriptionID: 0,
+                subscriptionName: subscriptionName,
+                reportName: reportName,
+                groupName: groupName,
+                groupID: groupID,
+                dynamicParams: dynamicParams
+            };
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc,
+                data: { 'savedReportSub': savedReportSubModel }
+            });
+
+            function successFunc(savedData) {
+                alert(savedData);
+            }
+
+            function errorFunc(error) {
+                alert("Error Getting Report Subscription Data: " + error);
+            }
+        }
+        
+    });
 });
 
 function selectedFolder() {
@@ -101,9 +153,15 @@ function selectedFolder() {
 
 function createParams(paramData) {
     $('#dynamicParams').empty();
+    $('#saveSubscription').empty();
 
     for (let i = 0; i < paramData.parameters.length; i++) {
-        
+
+        //adding parameter name to hidden list on the page (used for input validation on save)
+        var hiddenParam = $('<input type="hidden">').prop('value', paramData.parameters[i].name);
+        $('#hiddenParamNames').append(hiddenParam);
+
+        //Building out the dynamic dropdowns
         var row = $('<div>').addClass('addnew-row');
 
         if (paramData.parameters[i].type == "Dropdown") {

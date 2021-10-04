@@ -13,6 +13,6 @@ namespace eComm_Reporting_Application.Models
         public string groupName { get; set; }
         public string groupID { get; set; }
 
-        //something with report parameters will go in here
+        public Dictionary<string,string> dynamicParams { get; set; }
     }
 }
