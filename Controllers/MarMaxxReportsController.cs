@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace eComm_Reporting_Application.Controllers
 {
@@ -224,6 +225,9 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
+                string paramJson = JsonConvert.SerializeObject(savedReportSub.dynamicParams);
+                //Add query here to store in database, store group ID in their respective columns, and paramJSon in the last column
+                
                 return Json(savedReportSub);
             }
             catch (Exception e)
