@@ -102,8 +102,11 @@
                 data: { 'savedReportSub': savedReportSubModel }
             });
 
-            function successFunc(savedData) {
-                alert(savedData);
+            function successFunc(returnedData) {
+                alert("Success adding subscription: " + subscriptionName);
+                if (returnedData.result == 'Redirect') {
+                    window.location = returnedData.url;
+                }
             }
 
             function errorFunc(error) {

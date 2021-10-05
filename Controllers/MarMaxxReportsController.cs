@@ -249,7 +249,7 @@ namespace eComm_Reporting_Application.Controllers
                     connection.Close();
                 }
 
-                return Json("Success saving report subscription: " + savedReportSub.subscriptionName);
+                return Json(new { result = "Redirect", url = Url.Action("Index", "MarMaxxReports") });
             }
             catch (Exception e)
             {

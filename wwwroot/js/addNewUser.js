@@ -68,8 +68,8 @@
                 if (returnedData.result == 'Redirect') {
                     window.location = returnedData.url;
                 }
-                    
             }
+
             function errorFunc(error) {
                 alert("Error Sending Filter Data to the Subscriptions Controller: " + error);
             }
