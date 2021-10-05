@@ -114,6 +114,11 @@ namespace eComm_Reporting_Application.Controllers
                             tableRow.reportName = reader.GetString(2);
                             tableRow.groupName = reader.GetString(3);
                             tableRow.groupID = reader.GetString(4);
+
+                            string reportParamsJson = reader.GetString(5);
+                            Dictionary<string, string> reportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(reportParamsJson);
+                            tableRow.dynamicParams = reportParams;
+
                             tableData.Add(tableRow);
                         }
                     }

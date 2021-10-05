@@ -126,6 +126,17 @@ function createTable(tableData) {
         let tableEntry5 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_GroupID').text(tableData.rowData[j].groupID);
         row.append(tableEntry5);
 
+        for (i = 5; i < tableData.tableParams.length; i++) {
+            for (var paramName in tableData.rowData[j].dynamicParams) {
+
+                if (paramName == tableData.tableParams[i].name) {
+                    let tableEntry = $('<td>').addClass('marMaxxSubscriptionEntry_Dynamic').text(tableData.rowData[j].dynamicParams[paramName]);
+                    row.append(tableEntry);
+                }
+
+            }
+        }
+
         subTable.append(row); //adding row to the table
     }
     $('#marMaxxSubscriptionData').append(subTable);

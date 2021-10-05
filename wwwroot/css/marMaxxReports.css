@@ -49,6 +49,6 @@
     z-index: 10;
 }
 
-.marMaxxSubscriptionsEntry_SubscriptionID, .marMaxxSubscriptionsEntry_SubscriptionName, .marMaxxSubscriptionsEntry_ReportName, .marMaxxSubscriptionsEntry_GroupName, .marMaxxSubscriptionsEntry_GroupID {
+.marMaxxSubscriptionsEntry_SubscriptionID, .marMaxxSubscriptionsEntry_SubscriptionName, .marMaxxSubscriptionsEntry_ReportName, .marMaxxSubscriptionsEntry_GroupName, .marMaxxSubscriptionsEntry_GroupID, .marMaxxSubscriptionEntry_Dynamic {
     text-align: center;
 }
