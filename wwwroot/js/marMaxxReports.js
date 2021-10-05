@@ -99,6 +99,10 @@ function createTable(tableData) {
 
     //Adding the headers to the table
     let Hrow = $('<tr>').addClass('marMaxxSubscriptionsRow_Header');
+
+    let tableHeader_Icons = $('<th>').addClass('marMaxxSubscriptionsHeader').text(''); //Invisible header for icons
+    Hrow.append(tableHeader_Icons);
+
     for (let i = 0; i < tableData.tableParams.length; i++) {
         let tableHeader = $('<th>').addClass('marMaxxSubscriptionsHeader').text(tableData.tableParams[i].name);
         Hrow.append(tableHeader);
@@ -114,6 +118,13 @@ function createTable(tableData) {
             var row = $('<tr>').addClass('marMaxxSubscriptionsRow');
         }
         row.prop('id', tableData.rowData[j].subscriptionID);
+
+        let tableEntry_Icon = $('<td>').addClass('marMaxxSubscriptionsEntry_Icon');
+        let deleteIcon = $('<button>').addClass('deleteBtn');
+        let deleteLink = $('<i>').addClass('fa fa-trash');
+        deleteIcon.append(deleteLink);
+        tableEntry_Icon.append(deleteIcon);
+        row.append(tableEntry_Icon); //This line needs to get deleted if edit is back
 
         let tableEntry1 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_SubscriptionID').text(tableData.rowData[j].subscriptionID);
         row.append(tableEntry1); //adding element to the row

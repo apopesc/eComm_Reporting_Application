@@ -60,15 +60,6 @@
     z-index: 10;
 }
 
-.deleteBtn {
-    border: none;
-    background: white;
-    margin-left: 1px;
-}
-
-.fa-trash {
-    color: #9E0000;
-}
 
 .radio-btns {
     margin-left: 10px;
