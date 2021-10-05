@@ -226,9 +226,25 @@ namespace eComm_Reporting_Application.Controllers
             try
             {
                 string paramJson = JsonConvert.SerializeObject(savedReportSub.dynamicParams);
-                //Add query here to store in database, store group ID in their respective columns, and paramJSon in the last column
-                
-                return Json(savedReportSub);
+                //Add query here to store in database, store group ID in their respective columns, and paramJson in the last column
+
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                string addUserQueryString = "INSERT INTO MarMaxxReportSubscriptions (Subscription_Name, Report_Name, Group_Name, Group_ID, Report_Params) " +
+                    "VALUES ('" + savedReportSub.subscriptionName + "', '" + savedReportSub.reportName + "', '" + savedReportSub.groupName + "', '" + savedReportSub.groupID + "', '" + paramJson + "');";
+
+                SqlCommand addUserQuery = new SqlCommand(addUserQueryString, connection);
+
+                using (connection)
+                {
+                    connection.Open();
+                    using SqlDataReader reader = addUserQuery.ExecuteReader();
+                    connection.Close();
+                }
+
+                return Json("Success saving report subscription: " + savedReportSub.subscriptionName);
             }
             catch (Exception e)
             {
