@@ -124,7 +124,7 @@ function createTable(tableData) {
         let deleteLink = $('<i>').addClass('fa fa-trash');
         deleteIcon.append(deleteLink);
         tableEntry_Icon.append(deleteIcon);
-        row.append(tableEntry_Icon); //This line needs to get deleted if edit is back
+        row.append(tableEntry_Icon); 
 
         let tableEntry1 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_SubscriptionID').text(tableData.rowData[j].subscriptionID);
         row.append(tableEntry1); //adding element to the row
