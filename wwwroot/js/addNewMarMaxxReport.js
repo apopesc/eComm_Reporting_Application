@@ -217,7 +217,20 @@ function createParams(paramData) {
             row.append(sub_row);
 
         } else if (paramData.parameters[i].type == "DateTime") {
-            //need to program datetimes
+            row.addClass("textbox");
+            row.addClass("date-input");
+
+            var sub_row = $('<div>').addClass('addnew-textbox');
+            var dateTimeLabel = $('<label>').addClass('filter-label').text(paramData.parameters[i].name);
+            dateTimeLabel.prop('for', paramData.parameters[i].name);
+
+            var dateTime = $('<input type="date">').addClass('subscription-textbox');
+            dateTime.prop('id', paramData.parameters[i].name);
+            dateTime.prop('name', paramData.parameters[i].name);
+
+            sub_row.append(dateTimeLabel);
+            sub_row.append(dateTime);
+            row.append(sub_row);
         }
         $('#dynamicParams').append(row);
     }

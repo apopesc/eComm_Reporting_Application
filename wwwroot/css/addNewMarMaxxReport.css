@@ -85,6 +85,10 @@
     float: left;
 }
 
+.date-input{
+    padding-top:5px;
+}
+
 .dynamic-params-div {
     overflow-y: scroll;
     width: 100%;
