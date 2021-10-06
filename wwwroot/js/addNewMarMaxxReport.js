@@ -169,10 +169,6 @@ function createParams(paramData) {
 
         if (paramData.parameters[i].type == "Dropdown") {
 
-            if (i == 0) {
-                row.addClass('first-row-dropdown');
-            }
-
             var sub_row = $('<div>').addClass('addnew-dropdown');
 
             var dropdownLabel = $('<label>').addClass('filter-label').text(paramData.parameters[i].name);
