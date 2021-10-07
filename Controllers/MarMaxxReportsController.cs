@@ -257,6 +257,32 @@ namespace eComm_Reporting_Application.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult DeleteMarmaxxReportSubscription(int ID)
+        {
+            try
+            {
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                string queryString = "DELETE FROM MarMaxxReportSubscriptions WHERE Subscription_ID=" + ID;
+
+                SqlCommand deleteUserQuery = new SqlCommand(queryString, connection);
+                using (connection)
+                {
+                    connection.Open();
+                    SqlDataReader reader = deleteUserQuery.ExecuteReader();
+                    connection.Close();
+                }
+
+                return Json("Success Deleting Subscription: ");
+            }
+            catch (Exception e)
+            {
+                return Json("Error Deleting Subscription: " + e);
+            }
+        }
+
         public ReportPageDropdownModel GetFoldersForDropdown()
         {
             ReportPageDropdownModel dropdownModel = new ReportPageDropdownModel();

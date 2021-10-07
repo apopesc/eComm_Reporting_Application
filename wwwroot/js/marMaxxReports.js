@@ -51,6 +51,40 @@
 
         }
     });
+
+    $('#marMaxxSubscriptionData').on('click', '.deleteBtn', function () {
+        var $selectedRow = $(this).closest("tr");
+        var _ID = $selectedRow.attr('id');
+
+        let selectedSubscription = $selectedRow
+            .find(".marMaxxSubscriptionsEntry_SubscriptionName")
+            .text();
+
+        if (confirm('Are you sure you want to delete subscription: ' + selectedSubscription + '?')) {
+            var controllerUrl = '/MarMaxxReports/DeleteMarmaxxReportSubscription';
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc,
+                data: { 'ID': _ID }
+            });
+
+            function successFunc(response) {
+                $selectedRow.remove();
+                alert(response + selectedSubscription);
+            }
+
+            function errorFunc(error) {
+                alert(error);
+            }
+        } else { //User clicks no
+
+        }
+    });
+
 });
 
 function selectedFolder() {
