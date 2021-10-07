@@ -156,7 +156,7 @@ namespace eComm_Reporting_Application.Controllers
 
                 for (int i = 0; i < reportParams.parameters.Count; i++)
                 {
-                    if ( (reportParams.parameters[i].type == "Dropdown" || reportParams.parameters[i].type == "Textbox") && reportParams.parameters[i].queryType == "Stored Procedure")
+                    if ( (reportParams.parameters[i].type == "Dropdown" || reportParams.parameters[i].type == "Textbox" || reportParams.parameters[i].type == "MultiDropdown") && reportParams.parameters[i].queryType == "Stored Procedure")
                     {
                         SqlConnection connection = new SqlConnection(connectionstring);
                         SqlCommand storedProcQuery = new SqlCommand(reportParams.parameters[i].query, connection);

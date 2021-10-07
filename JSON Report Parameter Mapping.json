@@ -16,7 +16,7 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
@@ -338,7 +338,7 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
@@ -352,21 +352,14 @@
               "label": ""
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Department_Number",
               "label": "Department"
             },
-            "InterMed": {
-              "type": "Dropdown",
-              "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner",
-              "value": "Class_Number",
-              "label": "Class"
-            },
             "Class_Number": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Class_Details_by_Banner",
               "value": "Class_Number",
@@ -380,7 +373,7 @@
               "label": "Vendor"
             },
             "Category": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Category_by_Banner",
               "value": "Category_Number",
@@ -394,7 +387,7 @@
               "label": "FISCAL_YEAR"
             },
             "Brand": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
@@ -408,7 +401,7 @@
               "label": "Fiscal_Week_Default"
             },
             "Trend": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
@@ -510,19 +503,19 @@
             }
           },
           "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Department_Number",
               "label": "Department"
-            },
-            "InterMed": {
-              "type": "Dropdown",
-              "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner",
-              "value": "Class_Number",
-              "label": "Class"
             },
             "Vendor_Pattern": {
               "type": "Textbox",
@@ -532,21 +525,21 @@
               "label": ""
             },
             "Class_Number": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Class_Details_by_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
             "Vendor": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor"
             },
             "Category": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Category_by_Banner",
               "value": "Category_Number",
@@ -567,7 +560,7 @@
               "label": "FISCAL_YEAR"
             },
             "Brand": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
@@ -581,7 +574,7 @@
               "label": "Fiscal_Week_Default"
             },
             "Trend": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
@@ -799,14 +792,14 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Department_Number",
@@ -820,7 +813,7 @@
               "label": "FISCAL_YEAR"
             },
             "Trend": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",

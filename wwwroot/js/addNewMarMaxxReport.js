@@ -79,7 +79,12 @@
             $('#hiddenParamNames > input').each(function () {
                 var inputID = this.value;
                 var dynamicParamVal = $('#' + inputID).val();
-                dynamicParams[inputID] = dynamicParamVal;
+                if (dynamicParamVal !== null) {
+                    dynamicParams[inputID] = dynamicParamVal.toString();
+                } else {
+                    dynamicParams[inputID] = dynamicParamVal
+                }
+                
             });
 
             var groupNames_String = groupNames.toString();
@@ -160,6 +165,7 @@ function selectedFolder() {
 function createParams(paramData) {
     $('#dynamicParams').empty();
     $('#saveSubscription').empty();
+    $('#hiddenParamNames').empty();
 
     for (let i = 0; i < paramData.parameters.length; i++) {
 
@@ -170,14 +176,20 @@ function createParams(paramData) {
         //Building out the dynamic dropdowns
         var row = $('<div>').addClass('addnew-row');
 
-        if (paramData.parameters[i].type == "Dropdown") {
+        if (paramData.parameters[i].type == "Dropdown" || paramData.parameters[i].type == "MultiDropdown") {
 
             var sub_row = $('<div>').addClass('addnew-dropdown');
 
             var dropdownLabel = $('<label>').addClass('filter-label').text(paramData.parameters[i].name);
             dropdownLabel.prop('for', paramData.parameters[i].name);
 
-            var dropdown = $('<select>').addClass('dynamic-dropdown');
+            var dropdown;
+            if (paramData.parameters[i].type == "MultiDropdown") {
+                dropdown = $('<select multiple>').addClass('dynamic-dropdown');
+            } else {
+                dropdown = $('<select>').addClass('dynamic-dropdown');
+            }
+            
             dropdown.prop('id', paramData.parameters[i].name);
             dropdown.prop('name', paramData.parameters[i].name);
 
@@ -189,9 +201,11 @@ function createParams(paramData) {
                 length = paramData.parameters[i].values.length;
             }
 
-            var defaultDropdownOption = $('<option disabled selected>').text("Select a Value...");
-            dropdown.append(defaultDropdownOption);
-
+            if (paramData.parameters[i].type == "Dropdown") {
+                var defaultDropdownOption = $('<option disabled selected>').text("Select a Value...");
+                dropdown.append(defaultDropdownOption);
+            }
+            
             for (let j = 0; j < length; j++) {
                 var dropdownOption = $('<option>').text(paramData.parameters[i].labels[j]);
                 dropdownOption.prop('value', paramData.parameters[i].values[j]);
@@ -244,7 +258,7 @@ function createParams(paramData) {
     $('#saveSubscription').append(saveSubscriptionBtn);
 
     $('.dynamic-dropdown').multiselect({
-        nonSelectedText: 'None Selected',
+        nonSelectedText: 'Select a Value...',
         enableCaseInsensitiveFiltering: true
     });
 }
