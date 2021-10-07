@@ -80,10 +80,10 @@ namespace eComm_Reporting_Application.Controllers
 
                 //Adding the static columns to the table (these will appear for every report)
                 Parameter groupID = new Parameter();
-                groupID.name = "Group_IDs";
+                groupID.name = "Group_ID";
                 tableParameters.parameters.Insert(0, groupID);
                 Parameter groupName = new Parameter();
-                groupName.name = "Group_Names";
+                groupName.name = "Group_Name";
                 tableParameters.parameters.Insert(0, groupName);
                 Parameter reportName = new Parameter();
                 reportName.name = "Report_Name";
