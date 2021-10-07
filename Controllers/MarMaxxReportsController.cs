@@ -80,10 +80,10 @@ namespace eComm_Reporting_Application.Controllers
 
                 //Adding the static columns to the table (these will appear for every report)
                 Parameter groupID = new Parameter();
-                groupID.name = "Group_ID";
+                groupID.name = "Group_IDs";
                 tableParameters.parameters.Insert(0, groupID);
                 Parameter groupName = new Parameter();
-                groupName.name = "Group_Name";
+                groupName.name = "Group_Names";
                 tableParameters.parameters.Insert(0, groupName);
                 Parameter reportName = new Parameter();
                 reportName.name = "Report_Name";
@@ -112,8 +112,8 @@ namespace eComm_Reporting_Application.Controllers
                             tableRow.subscriptionID = reader.GetInt32(0);
                             tableRow.subscriptionName = reader.GetString(1);
                             tableRow.reportName = reader.GetString(2);
-                            tableRow.groupName = reader.GetString(3);
-                            tableRow.groupID = reader.GetString(4);
+                            tableRow.groupNames = reader.GetString(3);
+                            tableRow.groupIDs = reader.GetString(4);
 
                             string reportParamsJson = reader.GetString(5);
                             Dictionary<string, string> reportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(reportParamsJson);
@@ -238,7 +238,7 @@ namespace eComm_Reporting_Application.Controllers
                 SqlConnection connection = new SqlConnection(connectionstring);
 
                 string addUserQueryString = "INSERT INTO MarMaxxReportSubscriptions (Subscription_Name, Report_Name, Group_Name, Group_ID, Report_Params) " +
-                    "VALUES ('" + savedReportSub.subscriptionName + "', '" + savedReportSub.reportName + "', '" + savedReportSub.groupName + "', '" + savedReportSub.groupID + "', '" + paramJson + "');";
+                    "VALUES ('" + savedReportSub.subscriptionName + "', '" + savedReportSub.reportName + "', '" + savedReportSub.groupNames + "', '" + savedReportSub.groupIDs + "', '" + paramJson + "');";
 
                 SqlCommand addUserQuery = new SqlCommand(addUserQueryString, connection);
 

@@ -132,9 +132,9 @@ function createTable(tableData) {
         row.append(tableEntry2);
         let tableEntry3 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_ReportName').text(tableData.rowData[j].reportName);
         row.append(tableEntry3);
-        let tableEntry4 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_GroupName').text(tableData.rowData[j].groupName);
+        let tableEntry4 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_GroupName').text(tableData.rowData[j].groupNames);
         row.append(tableEntry4);
-        let tableEntry5 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_GroupID').text(tableData.rowData[j].groupID);
+        let tableEntry5 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_GroupID').text(tableData.rowData[j].groupIDs);
         row.append(tableEntry5);
 
         for (i = 5; i < tableData.tableParams.length; i++) {

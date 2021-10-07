@@ -3,11 +3,11 @@
 
 
     $('#marMaxxGroupID').multiselect({
-        nonSelectedText: 'Select a Group ID...',
+        nonSelectedText: 'Select a group ID...',
         enableCaseInsensitiveFiltering: true
     });
     $('#marMaxxGroupName').multiselect({
-        nonSelectedText: 'Select a Group Name...',
+        nonSelectedText: 'Select a group name...',
         enableCaseInsensitiveFiltering: true
     });
     $('#marMaxxFolderDropdown').multiselect({
@@ -62,18 +62,18 @@
 
     $('#saveSubscription').on('click', '#saveMarmaxxSubscription', function () {
         var subscriptionName = $('#subscriptionName').val();
-        var groupID = $('#marMaxxGroupID').val();
-        var groupName = $('#marMaxxGroupName').val();
+        var groupIDs = $('#marMaxxGroupID').val();
+        var groupNames = $('#marMaxxGroupName').val();
         var reportName = $('#marMaxxReportDropdown').val();
         var dynamicParams = {};
 
         if (subscriptionName == '') {
             alert("Please enter a value for Subscription Name");
-        } else if (groupID == null) {
+        } else if (groupIDs.length == 0) {
             alert("Please select a value for Group ID");
-        } else if (groupName == null) {
+        } else if (groupNames.length == 0) {
             alert("Please select a value for Group Name");
-        } else if (reportName == null) {
+        } else if (reportName.length == 0) {
             alert("Please select a value for Report Name");
         } else {
             $('#hiddenParamNames > input').each(function () {
@@ -82,14 +82,17 @@
                 dynamicParams[inputID] = dynamicParamVal;
             });
 
+            var groupNames_String = groupNames.toString();
+            var groupIDs_String = groupIDs.toString();
+            
             var controllerUrl = '/MarMaxxReports/SaveMarmaxxReportSubscription';
 
             var savedReportSubModel = {
                 subscriptionID: 0,
                 subscriptionName: subscriptionName,
                 reportName: reportName,
-                groupName: groupName,
-                groupID: groupID,
+                groupNames: groupNames_String,
+                groupIDs: groupIDs_String,
                 dynamicParams: dynamicParams
             };
 

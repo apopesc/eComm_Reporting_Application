@@ -10,8 +10,8 @@ namespace eComm_Reporting_Application.Models
         public int subscriptionID { get; set; }
         public string subscriptionName { get; set; }
         public string reportName { get; set; }
-        public string groupName { get; set; }
-        public string groupID { get; set; }
+        public string groupNames { get; set; }
+        public string groupIDs { get; set; }
 
         public Dictionary<string,string> dynamicParams { get; set; }
     }
