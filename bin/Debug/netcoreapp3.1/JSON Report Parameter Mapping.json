@@ -604,40 +604,40 @@
               "query": "rpt_BCF_Detail_By_Style_Multi_Week_Report"
             },
             "Departments": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Departments"
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
             },
             "Classes": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes"
+              "query_type": "Stored Procedure",
+              "query": "par_Class_Details_by_Banner"
             },
             "Categories": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Categories"
+              "query_type": "Stored Procedure",
+              "query": "par_Category_by_Banner"
             },
             "Fiscal_Year": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYear"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year"
             },
             "FiscalYearDefault": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYearDefault"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year_Default"
             },
             "FiscalWeekDefault": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default"
             },
             "DepartmentHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/DepartmentHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_DepartmentHeaders_by_Banner"
             },
             "ClassHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/ClassHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_ClassHeaders_by_Banner"
             },
             "CategoryHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/CategoryHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_CategoryHeaders_by_Banner"
             },
             "Vendors": {
               "query_type": "Stored Procedure",
@@ -648,46 +648,43 @@
               "query": "par_Brands"
             },
             "VendorHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/VendorHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_VendorHeaders"
             },
             "BrandHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/BrandHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_BrandHeaders"
             },
             "Trend": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Trend"
+              "query_type": "Stored Procedure",
+              "query": "par_Trend"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
             }
           },
           "parameters": {
-            "Department_No": {
+            "Banner": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Departments",
-              "value": "Department_Number",
-              "label": "Department"
-            },
-            "InterMed": {
-              "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes",
-              "value": "Class_Number",
-              "label": "Class"
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
             },
             "Vendor_Pattern": {
-              "type": "Text",
+              "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
               "value": "",
               "label": ""
             },
-            "Class_Number": {
+            "Department_No": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes",
-              "value": "Class_Number",
-              "label": "Class"
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
+              "value": "Department_Number",
+              "label": "Department"
             },
             "Vendor": {
               "type": "Dropdown",
@@ -696,26 +693,26 @@
               "value": "Vendor_ID",
               "label": "Vendor"
             },
-            "Category": {
+            "Class_Number": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Categories",
-              "value": "Category_Number",
-              "label": "Category"
+              "query_type": "Stored Procedure",
+              "query": "par_Class_Details_by_Banner",
+              "value": "Class_Number",
+              "label": "Class"
             },
             "Brand_Pattern": {
-              "type": "Text",
+              "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
               "value": "",
               "label": ""
             },
-            "Fiscal_Year": {
+            "Category": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYear",
-              "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "query_type": "Stored Procedure",
+              "query": "par_Category_by_Banner",
+              "value": "Category_Number",
+              "label": "Category"
             },
             "Brand": {
               "type": "Dropdown",
@@ -724,24 +721,24 @@
               "value": "Brand_ID",
               "label": "Brand"
             },
-            "FW_Start": {
-              "type": "Textbox",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault",
-              "value": "Fiscal_Week_Default",
-              "label": "Fiscal_Week_Default"
+            "Fiscal_Year": {
+              "type": "Dropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year",
+              "value": "FISCAL_YEAR",
+              "label": "FISCAL_YEAR"
             },
             "Trend": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Trend",
+              "query_type": "Stored Procedure",
+              "query": "par_Trend",
               "value": "TREND_NAME",
               "label": "TREND_NAME"
             },
-            "FW_End": {
+            "FW_Start": {
               "type": "Textbox",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
               "value": "Fiscal_Week_Default",
               "label": "Fiscal_Week_Default"
             },
@@ -751,7 +748,14 @@
               "query": "",
               "value": "Expand,Collapse",
               "label": "Expand,Collapse"
-            }
+            },
+            "FW_End": {
+              "type": "Textbox",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
+              "value": "Fiscal_Week_Default",
+              "label": "Fiscal_Week_Default"
+            }           
           }
         },
         "BCF Dollars and Units By Department": {
@@ -857,36 +861,36 @@
               "query": "rpt_BCF_for_Market_Travel"
             },
             "Departments": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Departments"
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
             },
             "Classes": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes"
+              "query_type": "Stored Procedure",
+              "query": "par_Class_Details_by_Banner"
             },
             "Categories": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Categories"
+              "query_type": "Stored Procedure",
+              "query": "par_Category_by_Banner"
             },
             "Fiscal_Year": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYear"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year"
             },
             "FiscalYearDefault": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYearDefault"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year_Default"
             },
             "FiscalWeekDefault": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default"
             },
             "DepartmentHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/DepartmentHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_DepartmentHeaders_by_Banner"
             },
             "ClassHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/ClassHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_ClassHeaders_by_Banner"
             },
             "Vendors": {
               "query_type": "Stored Procedure",
@@ -897,24 +901,24 @@
               "query": "par_Brands"
             },
             "VendorHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/VendorHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_VendorHeaders"
             },
             "BrandHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/BrandHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_BrandHeaders"
             },
             "CategoryHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Category"
+              "query_type": "Stored Procedure",
+              "query": "par_CategoryHeaders_by_Banner"
             },
             "Trend": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Trend"
+              "query_type": "Stored Procedure",
+              "query": "par_Trend"
             },
             "Buy_Type": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/BuyTypes"
+              "query_type": "Stored Procedure",
+              "query": "par_BuyTypes"
             },
             "Season": {
               "query_type": "Stored Procedure",
@@ -935,20 +939,13 @@
             },
             "Department_No": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Departments",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
               "value": "Department_Number",
               "label": "Department"
             },
-            "InterMed": {
-              "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes",
-              "value": "Class_Number",
-              "label": "Class"
-            },
             "Vendor_Pattern": {
-              "type": "Text",
+              "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
               "value": "",
@@ -956,8 +953,8 @@
             },
             "Class_Number": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes",
+              "query_type": "Stored Procedure",
+              "query": "par_Class_Details_by_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
@@ -970,13 +967,13 @@
             },
             "Category": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Categories",
+              "query_type": "Stored Procedure",
+              "query": "par_Category_by_Banner",
               "value": "Category_Number",
               "label": "Category"
             },
             "Brand_Pattern": {
-              "type": "Text",
+              "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
               "value": "",
@@ -984,8 +981,8 @@
             },
             "Fiscal_Year": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYear",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
               "label": "FISCAL_YEAR"
             },
@@ -998,8 +995,8 @@
             },
             "FW_Start": {
               "type": "Textbox",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
               "value": "Fiscal_Week_Default",
               "label": "Fiscal_Week_Default"
             },
@@ -1012,22 +1009,22 @@
             },
             "FW_End": {
               "type": "Textbox",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
               "value": "Fiscal_Week_Default",
               "label": "Fiscal_Week_Default"
             },
             "Trend": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Trend",
+              "query_type": "Stored Procedure",
+              "query": "par_Trend",
               "value": "TREND_NAME",
               "label": "TREND_NAME"
             },
             "Buy_Type": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/BuyTypes",
+              "query_type": "Stored Procedure",
+              "query": "par_BuyTypes",
               "value": "Buy_Type_Number",
               "label": "Buy_Type"
             },
@@ -1044,44 +1041,44 @@
           "data_source": "ReportDataSource",
           "data_sets": {
             "Departments": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Departments_CrossDept"
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_MatrixOrMechandisingDepartments_By_Banner"
             },
             "ReportDataSet_ByBrand": {
               "query_type": "Stored Procedure",
               "query": "rpt_BCF_Dollars_Units_by_Brand"
             },
             "Fiscal_Year": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYear"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year"
             },
             "FiscalYearDefault": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYearDefault"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year_Default"
             },
             "FiscalWeekDefault": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default"
             },
             "Classes": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes_CrossDept"
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_MatrixOrMechandisingClass_by_Banner"
             },
             "DepartmentHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/DepartmentHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_MatrixOrMechandisingDepartmentHeaders_by_Banners"
             },
             "Categories": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Categories_CrossDept"
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_MatrixOrMechandisingCategory_by_Banner"
             },
             "CategoryHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/CategoryHeaders_CrossDept"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_MatrixOrMechandisingCategoryHeaders_by_Banner"
             },
             "ClassHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/ClassHeaders_CrossDept"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_MatrixOrMechandisingClassHeaders_by_Banner"
             },
             "ReportDataset_ByRetailPrice": {
               "query_type": "Stored Procedure",
@@ -1104,16 +1101,16 @@
               "query": "par_Brands"
             },
             "BrandHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/BrandHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_BrandHeaders"
             },
             "Season": {
               "query_type": "Stored Procedure",
               "query": "par_Season"
             },
             "Trend": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Trend"
+              "query_type": "Stored Procedure",
+              "query": "par_Trend"
             },
             "ReportDataset_ByTrend": {
               "query_type": "Stored Procedure",
@@ -1124,8 +1121,8 @@
               "query": "rpt_BCF_Dollars_Units_by_Buy_Type"
             },
             "Buy_Type": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/BuyTypes"
+              "query_type": "Stored Procedure",
+              "query": "par_BuyTypes"
             },
             "ReportDataset_BySeason": {
               "query_type": "Stored Procedure",
@@ -1136,24 +1133,28 @@
               "query": "par_Vendors"
             },
             "VendorHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/VendorHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_VendorHeaders"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
             }
           },
           "parameters": {
+            "Banner": {
+              "type": "Dropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
             "Department_No": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Departments_CrossDept",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_MatrixOrMechandisingDepartments_By_Banner",
               "value": "Department_Number",
               "label": "Department"
-            },
-            "InterMed": {
-              "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes_CrossDept",
-              "value": "Class_Number",
-              "label": "Class"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -1164,8 +1165,8 @@
             },
             "Class_Number": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes_CrossDept",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_MatrixOrMechandisingClass_by_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
@@ -1178,8 +1179,8 @@
             },
             "Category": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Categories_CrossDept",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_MatrixOrMechandisingCategory_by_Banner",
               "value": "Category_Number",
               "label": "Category"
             },
@@ -1206,13 +1207,13 @@
             },
             "Fiscal_Year": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYear",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
               "label": "FISCAL_YEAR"
             },
             "RetailPrice_Min": {
-              "type": "Text",
+              "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
               "value": "",
@@ -1220,8 +1221,8 @@
             },
             "FW_Start": {
               "type": "Textbox",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
               "value": "Fiscal_Week_Default",
               "label": "Fiscal_Week_Default"
             },
@@ -1234,8 +1235,8 @@
             },
             "FW_End": {
               "type": "Textbox",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
               "value": "Fiscal_Week_Default",
               "label": "Fiscal_Week_Default"
             },
@@ -1248,8 +1249,8 @@
             },
             "Trend": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Trend",
+              "query_type": "Stored Procedure",
+              "query": "par_Trend",
               "value": "TREND_NAME",
               "label": "TREND_NAME"
             },
@@ -1262,8 +1263,8 @@
             },
             "Buy_Type": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/BuyTypes",
+              "query_type": "Stored Procedure",
+              "query": "par_BuyTypes",
               "value": "Buy_Type_Number",
               "label": "Buy_Type"
             }
@@ -1277,40 +1278,40 @@
               "query": "rpt_BCF_Parent_History"
             },
             "Departments": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Departments"
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
             },
             "Classes": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes"
+              "query_type": "Stored Procedure",
+              "query": "par_Class_Details_by_Banner"
             },
             "Categories": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Categories"
+              "query_type": "Stored Procedure",
+              "query": "par_Category_by_Banner"
             },
             "Fiscal_Year": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYear"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year"
             },
             "FiscalYearDefault": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYearDefault"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year_Default"
             },
             "FiscalWeekDefault": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default"
             },
             "DepartmentHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/DepartmentHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_DepartmentHeaders_by_Banner"
             },
             "ClassHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/ClassHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_ClassHeaders_by_Banner"
             },
             "CategoryHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/CategoryHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_CategoryHeaders_by_Banner"
             },
             "Vendors": {
               "query_type": "Stored Procedure",
@@ -1321,16 +1322,16 @@
               "query": "par_Brands"
             },
             "VendorHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/VendorHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_VendorHeaders"
             },
             "BrandHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/BrandHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_BrandHeaders"
             },
             "Trend": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Trend"
+              "query_type": "Stored Procedure",
+              "query": "par_Trend"
             },
             "Banner": {
               "query_type": "Stored Procedure",
@@ -1347,20 +1348,13 @@
             },
             "Department_No": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Departments",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
               "value": "Department_Number",
               "label": "Department"
             },
-            "InterMed": {
-              "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes",
-              "value": "Class_Number",
-              "label": "Class"
-            },
             "Vendor_Pattern": {
-              "type": "Text",
+              "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
               "value": "",
@@ -1368,8 +1362,8 @@
             },
             "Class_Number": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes",
+              "query_type": "Stored Procedure",
+              "query": "par_Class_Details_by_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
@@ -1382,13 +1376,13 @@
             },
             "Category": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Categories",
+              "query_type": "Stored Procedure",
+              "query": "par_Category_by_Banner",
               "value": "Category_Number",
               "label": "Category"
             },
             "Brand_Pattern": {
-              "type": "Text",
+              "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
               "value": "",
@@ -1396,8 +1390,8 @@
             },
             "Fiscal_Year": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYear",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
               "label": "FISCAL_YEAR"
             },
@@ -1410,8 +1404,8 @@
             },
             "Trend": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Trend",
+              "query_type": "Stored Procedure",
+              "query": "par_Trend",
               "value": "TREND_NAME",
               "label": "TREND_NAME"
             },
@@ -1436,43 +1430,43 @@
           "data_sets": {
             "ReportDataSet": {
               "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Child_SKU_By_Color_Report"
+              "query": "rpt_BCF_Summary_Report"
             },
             "Departments": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Departments"
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
             },
             "Classes": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes"
+              "query_type": "Stored Procedure",
+              "query": "par_Class_Details_by_Banner"
             },
             "Categories": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Categories"
+              "query_type": "Stored Procedure",
+              "query": "par_Category_by_Banner"
             },
             "Fiscal_Year": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYear"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year"
             },
             "FiscalYearDefault": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYearDefault"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year_Default"
             },
             "FiscalWeekDefault": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default"
             },
             "DepartmentHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/DepartmentHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_DepartmentHeaders_by_Banner"
             },
             "ClassHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/ClassHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_ClassHeaders_by_Banner"
             },
             "CategoryHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/CategoryHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_CategoryHeaders_by_Banner"
             },
             "Vendors": {
               "query_type": "Stored Procedure",
@@ -1483,16 +1477,16 @@
               "query": "par_Brands"
             },
             "VendorHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/VendorHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_VendorHeaders"
             },
             "BrandHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/BrandHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_BrandHeaders"
             },
             "Trend": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Trend"
+              "query_type": "Stored Procedure",
+              "query": "par_Trend"
             },
             "Banner": {
               "query_type": "Stored Procedure",
@@ -1509,20 +1503,13 @@
             },
             "Department_No": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Departments",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
               "value": "Department_Number",
               "label": "Department"
             },
-            "InterMed": {
-              "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes",
-              "value": "Class_Number",
-              "label": "Class"
-            },
             "Vendor_Pattern": {
-              "type": "Text",
+              "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
               "value": "",
@@ -1530,8 +1517,8 @@
             },
             "Class_Number": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes",
+              "query_type": "Stored Procedure",
+              "query": "par_Class_Details_by_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
@@ -1544,13 +1531,13 @@
             },
             "Category": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Categories",
+              "query_type": "Stored Procedure",
+              "query": "par_Category_by_Banner",
               "value": "Category_Number",
               "label": "Category"
             },
             "Brand_Pattern": {
-              "type": "Text",
+              "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
               "value": "",
@@ -1558,8 +1545,8 @@
             },
             "Fiscal_Year": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYear",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
               "label": "FISCAL_YEAR"
             },
@@ -1572,22 +1559,22 @@
             },
             "FW_Start": {
               "type": "Textbox",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
               "value": "Fiscal_Week_Default",
               "label": "Fiscal_Week_Default"
             },
             "Trend": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Trend",
+              "query_type": "Stored Procedure",
+              "query": "par_Trend",
               "value": "TREND_NAME",
               "label": "TREND_NAME"
             },
             "FW_End": {
               "type": "Textbox",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
               "value": "Fiscal_Week_Default",
               "label": "Fiscal_Week_Default"
             },
@@ -1611,44 +1598,44 @@
           "data_source": "ReportDataSource",
           "data_sets": {
             "Departments": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Departments"
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
             },
             "Classes": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes"
+              "query_type": "Stored Procedure",
+              "query": "par_Class_Details_by_Banner"
             },
             "Categories": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Categories"
+              "query_type": "Stored Procedure",
+              "query": "par_Category_by_Banner"
             },
             "Fiscal_Year": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYear"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year"
             },
             "FiscalYearDefault": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYearDefault"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year_Default"
             },
             "FiscalWeekDefault": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault"
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default"
             },
             "ReportDataSet": {
               "query_type": "Stored Procedure",
               "query": "rpt_BCF_Top_N_ParentSKU_Report"
             },
             "DepartmentHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/DepartmentHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_DepartmentHeaders_by_Banner"
             },
             "ClassHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/ClassHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_ClassHeaders_by_Banner"
             },
             "CategoryHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/CategoryHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_CategoryHeaders_by_Banner"
             },
             "Vendors": {
               "query_type": "Stored Procedure",
@@ -1659,69 +1646,66 @@
               "query": "par_Brands"
             },
             "VendorHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/VendorHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_VendorHeaders"
             },
             "BrandHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/BrandHeaders"
+              "query_type": "Stored Procedure",
+              "query": "par_BrandHeaders"
             },
             "Buy_Types": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/BuyTypes"
+              "query_type": "Stored Procedure",
+              "query": "par_BuyTypes"
             },
             "Trend": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Trend"
+              "query_type": "Stored Procedure",
+              "query": "par_Trend"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
             }
           },
           "parameters": {
             "Department_No": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Departments",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
               "value": "Department_Number",
               "label": "Department"
             },
-            "InterMed": {
-              "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes",
-              "value": "Class_Number",
-              "label": "Class"
-            },
             "Fiscal_Year": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalYear",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
               "label": "FISCAL_YEAR"
             },
             "Class_Number": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Classes",
+              "query_type": "Stored Procedure",
+              "query": "par_Class_Details_by_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
             "FW_Start": {
               "type": "Textbox",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
               "value": "Fiscal_Week_Default",
               "label": "Fiscal_Week_Default"
             },
             "Category": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Categories",
+              "query_type": "Stored Procedure",
+              "query": "par_Category_by_Banner",
               "value": "Category_Number",
               "label": "Category"
             },
             "FW_End": {
               "type": "Textbox",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/FiscalWeekDefault",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
               "value": "Fiscal_Week_Default",
               "label": "Fiscal_Week_Default"
             },
@@ -1740,14 +1724,14 @@
               "label": "Top 10,Top 15,Top 20,Top 25,Bottom 10,Bottom 15,Bottom 20,Bottom 25"
             },
             "Vendor_Pattern": {
-              "type": "Text",
+              "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
               "value": "",
               "label": ""
             },
             "Brand_Pattern": {
-              "type": "Text",
+              "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
               "value": "",
@@ -1769,15 +1753,15 @@
             },
             "Buy_Type": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/BuyTypes",
+              "query_type": "Stored Procedure",
+              "query": "par_BuyTypes",
               "value": "Buy_Type_Number",
               "label": "Buy_Type"
             },
             "Trend": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/Trend",
+              "query_type": "Stored Procedure",
+              "query": "par_Trend",
               "value": "TREND_NAME",
               "label": "TREND_NAME"
             }
