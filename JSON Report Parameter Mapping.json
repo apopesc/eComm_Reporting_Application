@@ -1775,60 +1775,64 @@
               "query": "rpt_Mix_Master"
             },
             "Departments": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Departments_CrossDept"
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
             },
             "LPMonth": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/LPMonth"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth"
             },
             "Vendor": {
               "query_type": "Stored Procedure",
               "query": "par_rpt_Vendors"
             },
             "DepartmentHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_DepartmentHeader"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_DepartmentHeaders_by_Banner"
             },
             "VendorHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_VendorHeader"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_VendorHeaders"
             },
             "BrandHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_BrandHeader"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_BrandHeaders"
             },
             "Buyers": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Buyer"
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Buyers"
             },
             "Brands": {
               "query_type": "Stored Procedure",
               "query": "par_rpt_Brands"
             },
             "Class": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Class_CrossDept"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_Class_by_Banner"
             },
             "Category": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Category_CrossDept"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_Category_by_Banner"
             },
             "ClassHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_ClassHeader_CrossDept"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_ClassHeaders_by_Banner"
             },
             "CategoryHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_CategoryHeader_CrossDept"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_CategoryHeaders_by_Banner"
             },
             "Seasons": {
               "query_type": "Stored Procedure",
               "query": "par_rpt_Season"
             },
             "Trends": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Trend"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_Trend"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
             }
           },
           "parameters": {
@@ -1841,34 +1845,27 @@
             },
             "Department_No": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Departments_CrossDept",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
               "value": "Department_Number",
               "label": "Department"
             },
-            "InterMed": {
-              "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Class_CrossDept",
-              "value": "Class_Number",
-              "label": "Class"
-            },
             "Buyer": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Buyer",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Buyers",
               "value": "Buyer",
               "label": "Buyer"
             },
             "Class": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Class_CrossDept",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_Class_by_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
             "Vendor_Pattern": {
-              "type": "Text",
+              "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
               "value": "",
@@ -1876,8 +1873,8 @@
             },
             "Category": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Category_CrossDept",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_Category_by_Banner",
               "value": "Category_Number",
               "label": "Category"
             },
@@ -1889,7 +1886,7 @@
               "label": "Vendor"
             },
             "Brand_Pattern": {
-              "type": "Text",
+              "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
               "value": "",
@@ -1911,15 +1908,15 @@
             },
             "Trend_Flag": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Trend",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_Trend",
               "value": "Trend",
               "label": "Trend"
             },
             "Ladder_Plan_Date": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/LPMonth",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth",
               "value": "LP_Month",
               "label": "LP_Month"
             },
@@ -1941,11 +1938,11 @@
             },
             "Departments": {
               "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingDepartments_CrossDept"
+              "query": "Par_rpt_MatrixOrMechandisingDepartments_By_Banner"
             },
             "LPMonth": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/LPMonth"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth"
             },
             "Vendor": {
               "query_type": "Stored Procedure",
@@ -1956,16 +1953,16 @@
               "query": "par_rpt_MatrixOrMechandisingDepartmentHeaders"
             },
             "VendorHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_VendorHeader"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_VendorHeaders"
             },
             "BrandHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_BrandHeader"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_BrandHeaders"
             },
             "Buyers": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Buyer"
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Buyers"
             },
             "Brands": {
               "query_type": "Stored Procedure",
@@ -1973,31 +1970,31 @@
             },
             "Class": {
               "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingClass_CrossDept"
+              "query": "Par_rpt_MatrixOrMechandisingClass_by_Banner"
             },
             "Category": {
               "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingCategory_CrossDept"
+              "query": "Par_rpt_MatrixOrMechandisingCategory_by_Banner"
             },
             "ClassHeaders": {
               "query_type": "Stored Procedure",
-              "query": "par_rpt_MatrixOrMechandisingClassHeaders_CrossDept"
+              "query": "par_rpt_MatrixOrMechandisingClassHeaders_by_Banner"
             },
             "CategoryHeaders": {
               "query_type": "Stored Procedure",
-              "query": "par_rpt_MatrixOrMechandisingCategoryHeaders_CrossDept"
+              "query": "par_rpt_MatrixOrMechandisingCategoryHeaders_by_Banner"
             },
             "BuyType": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_BuyType"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_BuyType"
             },
             "Seasons": {
               "query_type": "Stored Procedure",
               "query": "par_rpt_Season"
             },
             "Trends": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Trend"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_Trend"
             },
             "Status": {
               "query_type": "In Line",
@@ -2022,8 +2019,8 @@
             },
             "Buyer": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Buyer",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Buyers",
               "value": "Buyer",
               "label": "Buyer"
             },
@@ -2035,7 +2032,7 @@
               "label": "Matrix Dept,Merchandising Dept"
             },
             "Vendor_Pattern": {
-              "type": "Text",
+              "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
               "value": "",
@@ -2044,16 +2041,9 @@
             "Department_No": {
               "type": "Dropdown",
               "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingDepartments_CrossDept",
+              "query": "Par_rpt_MatrixOrMechandisingDepartments_By_Banner",
               "value": "Department_Number",
               "label": "Department"
-            },
-            "InterMed": {
-              "type": "Dropdown",
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingClass_CrossDept",
-              "value": "Class_Number",
-              "label": "Class"
             },
             "Vendor": {
               "type": "Dropdown",
@@ -2065,12 +2055,12 @@
             "Class": {
               "type": "Dropdown",
               "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingClass_CrossDept",
+              "query": "Par_rpt_MatrixOrMechandisingClass_by_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
             "Brand_Pattern": {
-              "type": "Text",
+              "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
               "value": "",
@@ -2079,7 +2069,7 @@
             "Category": {
               "type": "Dropdown",
               "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingCategory_CrossDept",
+              "query": "Par_rpt_MatrixOrMechandisingCategory_by_Banner",
               "value": "Category_Number",
               "label": "Category"
             },
@@ -2092,8 +2082,8 @@
             },
             "Buy_Type": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_BuyType",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_BuyType",
               "value": "Buy_TypeNum",
               "label": "Buy_Type"
             },
@@ -2106,8 +2096,8 @@
             },
             "Trend_Flag": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Trend",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_Trend",
               "value": "Trend",
               "label": "Trend"
             },
@@ -2134,8 +2124,8 @@
             },
             "Ladder_Plan_Date": {
               "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/LPMonth",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth",
               "value": "LP_Month",
               "label": "LP_Month"
             }
