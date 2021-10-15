@@ -80,14 +80,14 @@
           },
           "parameters": {
             "FolderList": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "In Line",
               "query": "Select Right(Path, Len(Path)-1) Folders, Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 1 and ParentID is not NULL",
               "value": "Path",
               "label": "Folders"
             },
             "ReportList": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "In Line",
               "query": "Select Name, Left(Path, Len(Path)-Len(Name)-1) Path, Path as FullPath from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 2",
               "value": "FullPath",
@@ -127,14 +127,14 @@
           },
           "parameters": {
             "FolderList": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "In Line",
               "query": "Select Right(Path, Len(Path)-1) Folders, Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 1 and ParentID is not NULL",
               "value": "Path",
               "label": "Folders"
             },
             "ReportList": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "In Line",
               "query": "Select Name, Left(Path, Len(Path)-Len(Name)-1) Path, Path as FullPath from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 2",
               "value": "FullPath",
@@ -202,7 +202,7 @@
               "label": "Name"
             },
             "Status": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "1,0",
@@ -242,14 +242,14 @@
           },
           "parameters": {
             "FolderList": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "In Line",
               "query": "Select Right(Path, Len(Path)-1) Folders, Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 1 and ParentID is not NULL",
               "value": "Path",
               "label": "Folders"
             },
             "ReportList": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "In Line",
               "query": "Select Name, Left(Path, Len(Path)-Len(Name)-1) Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 2",
               "value": "FullPath",
@@ -666,7 +666,7 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
@@ -680,7 +680,7 @@
               "label": ""
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Department_Number",
@@ -694,7 +694,7 @@
               "label": "Vendor"
             },
             "Class_Number": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Class_Details_by_Banner",
               "value": "Class_Number",
@@ -708,14 +708,14 @@
               "label": ""
             },
             "Category": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Category_by_Banner",
               "value": "Category_Number",
               "label": "Category"
             },
             "Brand": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
@@ -729,7 +729,7 @@
               "label": "FISCAL_YEAR"
             },
             "Trend": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
@@ -931,14 +931,14 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Department_Number",
@@ -952,21 +952,21 @@
               "label": ""
             },
             "Class_Number": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Class_Details_by_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
             "Vendor": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor"
             },
             "Category": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Category_by_Banner",
               "value": "Category_Number",
@@ -987,7 +987,7 @@
               "label": "FISCAL_YEAR"
             },
             "Brand": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
@@ -1001,7 +1001,7 @@
               "label": "Fiscal_Week_Default"
             },
             "Season": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Season",
               "value": "Season",
@@ -1015,14 +1015,14 @@
               "label": "Fiscal_Week_Default"
             },
             "Trend": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
               "label": "TREND_NAME"
             },
             "Buy_Type": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_BuyTypes",
               "value": "Buy_Type_Number",
@@ -1143,14 +1143,14 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MatrixOrMechandisingDepartments_By_Banner",
               "value": "Department_Number",
@@ -1164,21 +1164,21 @@
               "label": ""
             },
             "Class_Number": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MatrixOrMechandisingClass_by_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
             "Brand": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
               "label": "Brand"
             },
             "Category": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MatrixOrMechandisingCategory_by_Banner",
               "value": "Category_Number",
@@ -1192,14 +1192,14 @@
               "label": ""
             },
             "Season": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Season",
               "value": "Season",
               "label": "Season"
             },
             "Vendor": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
@@ -1248,7 +1248,7 @@
               "label": "Yes,No"
             },
             "Trend": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
@@ -1262,7 +1262,7 @@
               "label": "Yes,No"
             },
             "Buy_Type": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_BuyTypes",
               "value": "Buy_Type_Number",
@@ -1340,14 +1340,14 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Department_Number",
@@ -1361,21 +1361,21 @@
               "label": ""
             },
             "Class_Number": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Class_Details_by_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
             "Vendor": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor"
             },
             "Category": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Category_by_Banner",
               "value": "Category_Number",
@@ -1396,14 +1396,14 @@
               "label": "FISCAL_YEAR"
             },
             "Brand": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
               "label": "Brand"
             },
             "Trend": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
@@ -1495,14 +1495,14 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Department_Number",
@@ -1516,21 +1516,21 @@
               "label": ""
             },
             "Class_Number": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Class_Details_by_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
             "Vendor": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor"
             },
             "Category": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Category_by_Banner",
               "value": "Category_Number",
@@ -1551,7 +1551,7 @@
               "label": "FISCAL_YEAR"
             },
             "Brand": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
@@ -1565,7 +1565,7 @@
               "label": "Fiscal_Week_Default"
             },
             "Trend": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
@@ -1667,8 +1667,15 @@
             }
           },
           "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Department_Number",
@@ -1682,7 +1689,7 @@
               "label": "FISCAL_YEAR"
             },
             "Class_Number": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Class_Details_by_Banner",
               "value": "Class_Number",
@@ -1696,7 +1703,7 @@
               "label": "Fiscal_Week_Default"
             },
             "Category": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Category_by_Banner",
               "value": "Category_Number",
@@ -1738,28 +1745,28 @@
               "label": ""
             },
             "Vendor": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor"
             },
             "Brand": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
               "label": "Brand"
             },
             "Buy_Type": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_BuyTypes",
               "value": "Buy_Type_Number",
               "label": "Buy_Type"
             },
             "Trend": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
@@ -1837,28 +1844,28 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Department_Number",
               "label": "Department"
             },
             "Buyer": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Buyers",
               "value": "Buyer",
               "label": "Buyer"
             },
             "Class": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Class_by_Banner",
               "value": "Class_Number",
@@ -1872,14 +1879,14 @@
               "label": ""
             },
             "Category": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Category_by_Banner",
               "value": "Category_Number",
               "label": "Category"
             },
             "Vendor": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
@@ -1893,28 +1900,28 @@
               "label": ""
             },
             "Season": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Season",
               "value": "Season",
               "label": "Season"
             },
             "Brand": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
-              "query": "par_Brands",
+              "query": "par_rpt_Brands",
               "value": "Brand_ID",
               "label": "Brand"
             },
             "Trend_Flag": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Trend",
               "value": "Trend",
               "label": "Trend"
             },
             "Ladder_Plan_Date": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_LPMonth",
               "value": "LP_Month",
@@ -2011,14 +2018,14 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Buyer": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Buyers",
               "value": "Buyer",
@@ -2039,21 +2046,21 @@
               "label": ""
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MatrixOrMechandisingDepartments_By_Banner",
               "value": "Department_Number",
               "label": "Department"
             },
             "Vendor": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor"
             },
             "Class": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MatrixOrMechandisingClass_by_Banner",
               "value": "Class_Number",
@@ -2067,42 +2074,42 @@
               "label": ""
             },
             "Category": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MatrixOrMechandisingCategory_by_Banner",
               "value": "Category_Number",
               "label": "Category"
             },
             "Brand": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
               "label": "Brand"
             },
             "Buy_Type": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_BuyType",
               "value": "Buy_TypeNum",
               "label": "Buy_Type"
             },
             "Season": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Season",
               "value": "Season",
               "label": "Season"
             },
             "Trend_Flag": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Trend",
               "value": "Trend",
               "label": "Trend"
             },
             "Status": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "In Line",
               "query": "SELECT DISTINCT ISNULL(H.Status,'No Status') AS Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER By 1",
               "value": "Trend",
@@ -2116,14 +2123,14 @@
               "label": "Yes,No"
             },
             "PO_Status": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "In Line",
               "query": "SELECT DISTINCT ISNULL(H.PO_Status ,'No Status') AS PO_Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER BY 1",
               "value": "Trend",
               "label": "Trend"
             },
             "Ladder_Plan_Date": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_LPMonth",
               "value": "LP_Month",
@@ -2213,7 +2220,7 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
@@ -2227,14 +2234,14 @@
               "label": "Matrix Dept,Merchandising Dept"
             },
             "Buyer": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Shared",
               "query": "/SharedDataSets/eComReportDB_Buyer",
               "value": "Buyer",
               "label": "Buyer"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MatrixOrMechandisingDepartments_By_Banner",
               "value": "Department_Number",
@@ -2248,21 +2255,21 @@
               "label": ""
             },
             "Class": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MatrixOrMechandisingClass_by_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
             "Vendor": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor"
             },
             "Category": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MatrixOrMechandisingCategory_by_Banner",
               "value": "Category_Number",
@@ -2276,35 +2283,35 @@
               "label": ""
             },
             "Buy_Type": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_BuyType",
               "value": "Buy_TypeNum",
               "label": "Buy_Type"
             },
             "Brand": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
               "label": "Brand"
             },
             "Season": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Season",
               "value": "Season",
               "label": "Season"
             },
             "Trend_Flag": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Trend",
               "value": "Trend",
               "label": "Trend"
             },
             "Status": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "In Line",
               "query": "SELECT DISTINCT ISNULL(H.Status,'No Status') AS Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER By 1",
               "value": "Trend",
@@ -2325,7 +2332,7 @@
               "label": "Trend"
             },
             "Ladder_Plan_Date": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_LPMonth",
               "value": "LP_Month",
@@ -2394,70 +2401,70 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Division": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Divisions",
               "value": "Division",
               "label": "Division"
             },
             "Merch_Manager": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MerchMgr",
               "value": "MM",
               "label": "MM"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Dept_Number",
               "label": "Dept_FullName"
             },
             "Buyer": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Buyers",
               "value": "Buyer",
               "label": "Buyer"
             },
             "Class": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Class_By_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
             "DC_Cancel_Month": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_CalMonth",
               "value": "Display",
               "label": "Display"
             },
             "Category": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Category_by_Banner",
               "value": "Category_Number",
               "label": "Category"
             },
             "Live_On_Web_Flag": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
               "label": "Yes,No"
             },
             "On_Order_Flag": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
@@ -2530,70 +2537,70 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Division": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Divisions",
               "value": "Division",
               "label": "Division"
             },
             "Merch_Manager": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MerchMgr",
               "value": "MM",
               "label": "MM"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Dept_Number",
               "label": "Dept_FullName"
             },
             "Buyer": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Buyers",
               "value": "Buyer",
               "label": "Buyer"
             },
             "Class": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Class_By_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
             "DC_Cancel_Month": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_CalMonth",
               "value": "Display",
               "label": "Display"
             },
             "Category": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Category_by_Banner",
               "value": "Category_Number",
               "label": "Category"
             },
             "Live_On_Web_Flag": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
               "label": "Yes,No"
             },
             "On_Order_Flag": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
@@ -2683,63 +2690,63 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Division": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Divisions",
               "value": "Division",
               "label": "Division"
             },
             "Merch_Manager": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MerchMgr",
               "value": "MM",
               "label": "MM"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Dept_Number",
               "label": "Dept_FullName"
             },
             "Buyer": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Buyers",
               "value": "Buyer",
               "label": "Buyer"
             },
             "Class": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Class_By_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
             "DC_Cancel_Month": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_CalMonth",
               "value": "Display",
               "label": "Display"
             },
             "Category": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Category_by_Banner",
               "value": "Category_Number",
               "label": "Category"
             },
             "Live_On_Web_Flag": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
@@ -2823,28 +2830,28 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Dept_Number",
               "label": "Dept_FullName"
             },
             "Buyer": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Buyers",
               "value": "Buyer",
               "label": "Buyer"
             },
             "Class": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Class_By_Banner",
               "value": "Class_Number",
@@ -2858,14 +2865,14 @@
               "label": ""
             },
             "Category": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Category_by_Banner",
               "value": "Category_Number",
               "label": "Category"
             },
             "Vendor": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Vendors",
               "value": "Category_Number",
@@ -2886,7 +2893,7 @@
               "label": "Category"
             },
             "Brand": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
@@ -2908,7 +2915,7 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
@@ -2985,14 +2992,14 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Department_Number",
@@ -3006,21 +3013,21 @@
               "label": ""
             },
             "Class": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Class_By_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
             "Vendor": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor"
             },
             "Category": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Category_by_Banner",
               "value": "Category_Number",
@@ -3034,21 +3041,21 @@
               "label": ""
             },
             "Season": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Season",
               "value": "Season",
               "label": "Season"
             },
             "Brand": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
               "label": "Brand"
             },
             "Rush_Flag": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
@@ -3062,7 +3069,7 @@
               "label": ""
             },
             "Ladder_Plan_Date": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_LPMonth",
               "value": "LP_Month",
@@ -3132,7 +3139,7 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
@@ -3176,7 +3183,7 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
@@ -3255,14 +3262,14 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Dept_Number",
@@ -3283,7 +3290,7 @@
               "label": "Units,Dollars,Parents,Both Units and Dollars"
             },
             "Ladder_Plan_Date": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_LPMonth",
               "value": "LP_Month",
@@ -3317,14 +3324,14 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Dept_Number",
@@ -3345,7 +3352,7 @@
               "label": "Units,Dollars,Parents,Both Units and Dollars"
             },
             "Ladder_Plan_Date": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_LPMonth",
               "value": "LP_Month",
@@ -3379,7 +3386,7 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
@@ -3393,7 +3400,7 @@
               "label": "Summary,Division,Department,Processing Type,Photo Type"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Dept_Number",
@@ -3407,7 +3414,7 @@
               "label": "Units,Dollars,Parents,Both Units and Dollars"
             },
             "Ladder_Plan_Date": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_LPMonth",
               "value": "LP_Month",
@@ -3439,7 +3446,7 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
@@ -3483,14 +3490,14 @@
               "label": ""
             },
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Dept_Number": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Dept_Number",
@@ -3526,16 +3533,16 @@
               "query": "rpt_Operations_High_Level_View"
             },
             "Departments": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Departments"
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
             },
             "ChartDataset": {
               "query_type": "Stored Procedure",
               "query": "rpt_Operations_High_Level_View"
             },
             "LPMonth": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/LPMonth"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth"
             },
             "Banner": {
               "query_type": "Stored Procedure",
@@ -3544,16 +3551,16 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Department_ID": {
-              "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Departments",
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
               "value": "Dept_Number",
               "label": "Dept_FullName"
             },
@@ -3572,9 +3579,9 @@
               "label": "Units,Dollars,Parents,Both Units and Dollars"
             },
             "Ladder_Plan_Date": {
-              "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/LPMonth",
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth",
               "value": "LP_Month",
               "label": "LP_Month"
             }
@@ -3613,31 +3620,31 @@
               "query": "rpt_Outstanding_Report"
             },
             "LPMonth": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/LPMonth"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth"
             }
           },
           "parameters": {
-            "Banner": {
-              "type": "Dropdown",
-              "query_type": "Stored Procedure",
-              "query": "par_Banner",
-              "value": "Banner_Number",
-              "label": "Banner_Name"
-            },
             "Ladder_Plan_Date": {
-              "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/LPMonth",
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth",
               "value": "LP_Month",
               "label": "LP_Month"
             },
-            "Department_ID": {
+            "View_Type": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "WH,VM",
               "label": "Outstanding WHS Items,Outstanding VM Proofing"
+            },
+            "Ignore_LP": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
             },
             "Delivery_Date": {
               "type": "DateTime",
@@ -3674,14 +3681,14 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Dept_Number",
@@ -3702,7 +3709,7 @@
               "label": "Units,Dollars,Parents,Both Units and Dollars"
             },
             "Ladder_Plan_Date": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_LPMonth",
               "value": "LP_Month",
@@ -3732,21 +3739,21 @@
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Department_No": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Dept_Number",
               "label": "Dept_FullName"
             },
             "Ladder_Plan_Date": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_LPMonth",
               "value": "LP_Month",
@@ -3769,64 +3776,61 @@
               "query": "rpt_PO_Status_Detail"
             },
             "Departments": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Departments"
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
             },
             "LPMonth": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/LPMonth"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth"
             },
             "Class": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Class"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_Class_By_Banner"
             },
             "Category": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Category"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_Category_by_Banner"
             },
             "Vendor": {
               "query_type": "Stored Procedure",
               "query": "par_rpt_Vendors"
             },
             "DepartmentHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/DepartmentHeader"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_DepartmentHeaders_by_Banner"
             },
             "ClassHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/ClassHeader"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_ClassHeaders_by_Banner"
             },
             "CategoryHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/CategoryHeader"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_CategoryHeaders_by_Banner"
             },
             "VendorHeaders": {
-              "query_type": "Shared",
-              "query": "/SharedDataSets/VendorHeader"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_VendorHeaders"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
             }
           },
           "parameters": {
             "Banner": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
             "Department_No": {
-              "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Departments",
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
               "value": "Dept_Number",
               "label": "Dept_FullName"
-            },
-            "InterMed": {
-              "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Class",
-              "value": "Class_Number",
-              "label": "Class"
-            },
+            }, 
             "MasterPO": {
               "type": "Textbox",
               "query_type": "Fixed",
@@ -3835,23 +3839,23 @@
               "label": ""
             },
             "Class": {
-              "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Class",
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_Class_By_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
             "Ladder_Plan_Date": {
-              "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/LPMonth",
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth",
               "value": "LP_Month",
               "label": "LP_Month"
             },
             "Category": {
-              "type": "Dropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Category",
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_Category_by_Banner",
               "value": "Category_Number",
               "label": "Category"
             },
@@ -3870,7 +3874,7 @@
               "label": ""
             },
             "Vendor": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
