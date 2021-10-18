@@ -315,60 +315,149 @@ namespace eComm_Reporting_Application.Controllers
 
                 string selectedBannersString = string.Join(",", selectedBanners.ToArray());
                 storedProcQuery.Parameters.AddWithValue("@Banner", selectedBannersString);
+
+                Parameter populatedParam = getCascadingDropdownValues(departmentParameter, storedProcQuery, connection);
                 
-                List<string> dropdownValues = new List<string>();
-                List<string> dropdownLabels = new List<string>();
-
-                using (connection)
-                {
-                    connection.Open();
-                    using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
-                    {
-                        while (stored_proc_reader.Read())
-                        {
-                            var proc_data_length = stored_proc_reader.FieldCount;
-
-                            if (proc_data_length > 1)
-                            {
-                                for (int j = 0; j < proc_data_length; j++)
-                                {
-                                    var proc_data_name = stored_proc_reader.GetName(j);
-                                    if (proc_data_name == departmentParameter.values[0])
-                                    {
-                                        var proc_val = stored_proc_reader.GetValue(j);
-
-                                        string dropdownVal = proc_val.ToString();
-                                        dropdownValues.Add(dropdownVal);
-                                    }
-
-                                    if (proc_data_name == departmentParameter.labels[0])
-                                    {
-                                        var proc_label = stored_proc_reader.GetValue(j);
-
-                                        string dropdownLab = proc_label.ToString();
-                                        dropdownLabels.Add(dropdownLab);
-                                    }
-                                }
-                            }
-                            else //if only one column is returned from the stored procedure, put in both labels and values
-                            {
-                                var proc_val = stored_proc_reader.GetValue(0);
-
-                                string dropdownEntry = proc_val.ToString();
-                                dropdownValues.Add(dropdownEntry);
-                                dropdownLabels.Add(dropdownEntry);
-                            }
-                        }
-                    }
-                    connection.Close();
-                }
-
-                return Json(new { dropdownValues = dropdownValues, dropdownLabels = dropdownLabels });
+                return Json(populatedParam);
             }
             catch (Exception e)
             {
                 return Json("Error Deleting Subscription: " + e);
             }
+        }
+
+        [HttpPost]
+        public JsonResult GetClassData(ReportModel reportData, List<string> selectedDepartments)
+        {
+            try
+            {
+                ReportParameterModel reportParams = GetReportParameters(reportData);
+                string connectionstring = "";
+
+                //There are other data sources that need to be mapped here
+                if (reportParams.dataSource == "ReportDataSource")
+                {
+                    connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                }
+                else if (reportParams.dataSource == "eCom_ReportDB")
+                {
+                    connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                }
+
+                Parameter classParameter = reportParams.parameters.Find(x => x.name == "Class_Number");
+
+                SqlConnection connection = new SqlConnection(connectionstring);
+                SqlCommand storedProcQuery = new SqlCommand(classParameter.query, connection);
+                storedProcQuery.CommandType = CommandType.StoredProcedure;
+
+                string selectedDepartmentsString = string.Join(",", selectedDepartments.ToArray());
+                storedProcQuery.Parameters.AddWithValue("@Department_No", selectedDepartmentsString);
+
+                Parameter populatedParam = getCascadingDropdownValues(classParameter, storedProcQuery, connection);
+
+                return Json(populatedParam);
+            }
+            catch (Exception e)
+            {
+                return Json("Error Deleting Subscription: " + e);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetCategoryData(ReportModel reportData, List<string> selectedDepartments, List<string> selectedClasses)
+        {
+            try
+            {
+                ReportParameterModel reportParams = GetReportParameters(reportData);
+                string connectionstring = "";
+
+                //There are other data sources that need to be mapped here
+                if (reportParams.dataSource == "ReportDataSource")
+                {
+                    connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                }
+                else if (reportParams.dataSource == "eCom_ReportDB")
+                {
+                    connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                }
+
+                Parameter categoryParameter = reportParams.parameters.Find(x => x.name == "Category");
+
+                SqlConnection connection = new SqlConnection(connectionstring);
+                SqlCommand storedProcQuery = new SqlCommand(categoryParameter.query, connection);
+                storedProcQuery.CommandType = CommandType.StoredProcedure;
+
+                string selectedDepartmentsString = string.Join(",", selectedDepartments.ToArray());
+                storedProcQuery.Parameters.AddWithValue("@Department_No", selectedDepartmentsString);
+
+                string selectedClassesString = string.Join(",", selectedClasses.ToArray());
+                storedProcQuery.Parameters.AddWithValue("@Class_Number", selectedClassesString);
+
+                Parameter populatedParam = getCascadingDropdownValues(categoryParameter, storedProcQuery, connection);
+
+                return Json(populatedParam);
+            }
+            catch (Exception e)
+            {
+                return Json("Error Deleting Subscription: " + e);
+            }
+        }
+
+        public Parameter getCascadingDropdownValues(Parameter cascadingParam , SqlCommand storedProcQuery, SqlConnection connection)
+        {
+            List<string> dropdownValues = new List<string>();
+            List<string> dropdownLabels = new List<string>();
+
+            Parameter populatedParam = cascadingParam;
+
+            using (connection)
+            {
+                connection.Open();
+                using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                {
+                    while (stored_proc_reader.Read())
+                    {
+                        var proc_data_length = stored_proc_reader.FieldCount;
+
+                        if (proc_data_length > 1)
+                        {
+                            for (int j = 0; j < proc_data_length; j++)
+                            {
+                                var proc_data_name = stored_proc_reader.GetName(j);
+                                if (proc_data_name == cascadingParam.values[0])
+                                {
+                                    var proc_val = stored_proc_reader.GetValue(j);
+
+                                    string dropdownVal = proc_val.ToString();
+                                    dropdownValues.Add(dropdownVal);
+                                }
+
+                                if (proc_data_name == cascadingParam.labels[0])
+                                {
+                                    var proc_label = stored_proc_reader.GetValue(j);
+
+                                    string dropdownLab = proc_label.ToString();
+                                    dropdownLabels.Add(dropdownLab);
+                                }
+                            }
+                        }
+                        else //if only one column is returned from the stored procedure, put in both labels and values
+                        {
+                            var proc_val = stored_proc_reader.GetValue(0);
+
+                            string dropdownEntry = proc_val.ToString();
+                            dropdownValues.Add(dropdownEntry);
+                            dropdownLabels.Add(dropdownEntry);
+                        }
+                    }
+                }
+                connection.Close();
+            }
+
+            populatedParam.values = dropdownValues;
+            populatedParam.labels = dropdownLabels;
+
+            return populatedParam;
         }
 
         public ReportPageDropdownModel GetFoldersForDropdown()

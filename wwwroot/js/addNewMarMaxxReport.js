@@ -129,47 +129,163 @@
     });
 
     $('#dynamicParams').on('change', '#Banner', function () {
-        if ($('#Banner :selected').length == 0) {
-            $('#Department_No').multiselect('disable');
-            $('#Class_Number').multiselect('disable');
-            $('#Category').multiselect('disable');
+        if ($('#Department_No').length) {
+            if ($('#Banner :selected').length == 0) {
 
-        } else {
+                $('#Department_No').multiselect('deselectAll', false);
+                $('#Department_No').multiselect('updateButtonText');
 
-            var selectedReport = $('#hiddenSelectedReportName').attr('name');
-            var selectedBannerValues = $('#Banner').val();
+                $('#Class_Number').multiselect('deselectAll', false);
+                $('#Class_Number').multiselect('updateButtonText');
 
-            var controllerUrl = '/MarMaxxReports/GetDepartmentData';
+                $('#Category').multiselect('deselectAll', false);
+                $('#Category').multiselect('updateButtonText');
 
-            var reportData = {
-                reportName: $('#hiddenSelectedReport').attr('name'),
-                reportFolder: $('#hiddenSelectedReport').attr('folder')
-            }
+                $('#Department_No').multiselect('disable');
+                $('#Class_Number').multiselect('disable');
+                $('#Category').multiselect('disable');
 
-            $.ajax({
-                type: "POST",
-                url: controllerUrl,
-                dataType: "json",
-                success: successFunc,
-                error: errorFunc,
-                data: {
-                    'reportData': reportData,
-                    'selectedBanners': selectedBannerValues
+            } else {
+                var selectedBannerValues = $('#Banner').val();
+
+                var controllerUrl = '/MarMaxxReports/GetDepartmentData';
+
+                var reportData = {
+                    reportName: $('#hiddenSelectedReport').attr('name'),
+                    reportFolder: $('#hiddenSelectedReport').attr('folder')
                 }
-            });
 
-            function successFunc(dropdownData) {
-                //populate dropdown with dynamic values
-                alert(dropdownData);
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: {
+                        'reportData': reportData,
+                        'selectedBanners': selectedBannerValues
+                    }
+                });
+
+                function successFunc(dropdownData) {
+                    var data = [];
+
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Department_No").multiselect('dataprovider', data);
+                    $('#Department_No').multiselect('enable');
+                }
+
+                function errorFunc(error) {
+                    alert("Error Retrieving Department Numbers: " + error);
+                }
             }
+        }
+    });
 
-            function errorFunc(error) {
-                alert("Error Retrieving Report Names: " + error);
+    $('#dynamicParams').on('change', '#Department_No', function () {
+        if ($('#Class_Number').length) {
+            if ($('#Department_No :selected').length == 0) {
+
+                $('#Class_Number').multiselect('deselectAll', false);
+                $('#Class_Number').multiselect('updateButtonText');
+
+                $('#Category').multiselect('deselectAll', false);
+                $('#Category').multiselect('updateButtonText');
+
+                $('#Class_Number').multiselect('disable');
+                $('#Category').multiselect('disable');
+
+            } else {
+                var selectedDepartmentValues = $('#Department_No').val();
+
+                var controllerUrl = '/MarMaxxReports/GetClassData';
+
+                var reportData = {
+                    reportName: $('#hiddenSelectedReport').attr('name'),
+                    reportFolder: $('#hiddenSelectedReport').attr('folder')
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: {
+                        'reportData': reportData,
+                        'selectedDepartments': selectedDepartmentValues
+                    }
+                });
+
+                function successFunc(dropdownData) {
+                    var data = [];
+
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Class_Number").multiselect('dataprovider', data);
+                    $('#Class_Number').multiselect('enable');
+                }
+
+                function errorFunc(error) {
+                    alert("Error Retrieving Classes: " + error);
+                }
             }
+        }      
+    });
 
-            $('#Department_No').multiselect('enable');
-            //$('#Class_Number').multiselect('enable');
-            //$('#Category').multiselect('enable');
+    $('#dynamicParams').on('change', '#Class_Number', function () {
+        if ($('#Category').length) {
+            if ($('#Class_Number :selected').length == 0) {
+
+                $('#Category').multiselect('deselectAll', false);
+                $('#Category').multiselect('updateButtonText');
+
+                $('#Category').multiselect('disable');
+
+            } else {
+                var selectedDepartmentValues = $('#Department_No').val();
+                var selectedClassValues = $('#Class_Number').val();
+
+                var controllerUrl = '/MarMaxxReports/GetCategoryData';
+
+                var reportData = {
+                    reportName: $('#hiddenSelectedReport').attr('name'),
+                    reportFolder: $('#hiddenSelectedReport').attr('folder')
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: {
+                        'reportData': reportData,
+                        'selectedDepartments': selectedDepartmentValues,
+                        'selectedClasses': selectedClassValues
+                    }
+                });
+
+                function successFunc(dropdownData) {
+                    var data = [];
+
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Category").multiselect('dataprovider', data);
+                    $('#Category').multiselect('enable');
+                }
+
+                function errorFunc(error) {
+                    alert("Error Retrieving Categories: " + error);
+                }
+            }
         }
     });
 });
