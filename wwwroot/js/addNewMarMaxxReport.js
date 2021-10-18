@@ -26,6 +26,10 @@
         var selectedReport = $('#marMaxxReportDropdown').val();
         var selectedReportFolder = $('#marMaxxReportDropdown option:selected').prop('title');
 
+        //adding the selected report name
+        $('#hiddenSelectedReport').attr('name', selectedReport); 
+        $('#hiddenSelectedReport').attr('folder', selectedReportFolder);
+
         if (selectedReport == null) {
             alert("Please select a folder, then a report to view it's parameters.");
         } else {
@@ -122,6 +126,51 @@
             }
         }
         
+    });
+
+    $('#dynamicParams').on('change', '#Banner', function () {
+        if ($('#Banner :selected').length == 0) {
+            $('#Department_No').multiselect('disable');
+            $('#Class_Number').multiselect('disable');
+            $('#Category').multiselect('disable');
+
+        } else {
+
+            var selectedReport = $('#hiddenSelectedReportName').attr('name');
+            var selectedBannerValues = $('#Banner').val();
+
+            var controllerUrl = '/MarMaxxReports/GetDepartmentData';
+
+            var reportData = {
+                reportName: $('#hiddenSelectedReport').attr('name'),
+                reportFolder: $('#hiddenSelectedReport').attr('folder')
+            }
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc,
+                data: {
+                    'reportData': reportData,
+                    'selectedBanners': selectedBannerValues
+                }
+            });
+
+            function successFunc(dropdownData) {
+                //populate dropdown with dynamic values
+                alert(dropdownData);
+            }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Report Names: " + error);
+            }
+
+            $('#Department_No').multiselect('enable');
+            //$('#Class_Number').multiselect('enable');
+            //$('#Category').multiselect('enable');
+        }
     });
 });
 
@@ -250,6 +299,10 @@ function createParams(paramData) {
             row.append(sub_row);
         }
         $('#dynamicParams').append(row);
+
+        if (paramData.parameters[i].name == "Department_No" || paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category") {
+            $('#' + paramData.parameters[i].name).multiselect('disable');
+        }
     }
 
     var saveSubscriptionBtn = $('<button>').addClass('btnAddPage').text("Save MarMaxx Report Subscription");

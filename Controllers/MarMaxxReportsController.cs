@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using Newtonsoft.Json;
+using System.Data;
 
 namespace eComm_Reporting_Application.Controllers
 {
@@ -160,51 +161,56 @@ namespace eComm_Reporting_Application.Controllers
                     {
                         SqlConnection connection = new SqlConnection(connectionstring);
                         SqlCommand storedProcQuery = new SqlCommand(reportParams.parameters[i].query, connection);
+                        storedProcQuery.CommandType = CommandType.StoredProcedure;
+
                         using (connection)
                         {
                             List<string> dropdownValues = new List<string>();
                             List<string> dropdownLabels = new List<string>();
 
-                            connection.Open();
-                            using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                            if(reportParams.parameters[i].name != "Department_No" && reportParams.parameters[i].name != "Class_Number" && reportParams.parameters[i].name != "Category") //these parameters take values from banner and each other to return data.
                             {
-                                while (stored_proc_reader.Read())
+                                connection.Open();
+                                using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
                                 {
-                                    var proc_data_length = stored_proc_reader.FieldCount;
-
-                                    if (proc_data_length > 1)
+                                    while (stored_proc_reader.Read())
                                     {
-                                        for(int j = 0; j < proc_data_length; j++)
+                                        var proc_data_length = stored_proc_reader.FieldCount;
+
+                                        if (proc_data_length > 1)
                                         {
-                                            var proc_data_name = stored_proc_reader.GetName(j);
-                                            if (proc_data_name == reportParams.parameters[i].values[0])
+                                            for (int j = 0; j < proc_data_length; j++)
                                             {
-                                                var proc_val = stored_proc_reader.GetValue(j);
+                                                var proc_data_name = stored_proc_reader.GetName(j);
+                                                if (proc_data_name == reportParams.parameters[i].values[0])
+                                                {
+                                                    var proc_val = stored_proc_reader.GetValue(j);
 
-                                                string dropdownVal = proc_val.ToString();
-                                                dropdownValues.Add(dropdownVal);
-                                            }
+                                                    string dropdownVal = proc_val.ToString();
+                                                    dropdownValues.Add(dropdownVal);
+                                                }
 
-                                            if (proc_data_name == reportParams.parameters[i].labels[0])
-                                            {
-                                                var proc_label = stored_proc_reader.GetValue(j);
+                                                if (proc_data_name == reportParams.parameters[i].labels[0])
+                                                {
+                                                    var proc_label = stored_proc_reader.GetValue(j);
 
-                                                string dropdownLab = proc_label.ToString();
-                                                dropdownLabels.Add(dropdownLab);
+                                                    string dropdownLab = proc_label.ToString();
+                                                    dropdownLabels.Add(dropdownLab);
+                                                }
                                             }
                                         }
-                                    }
-                                    else //if only one column is returned from the stored procedure, put in both labels and values
-                                    {
-                                        var proc_val = stored_proc_reader.GetValue(0);
+                                        else //if only one column is returned from the stored procedure, put in both labels and values
+                                        {
+                                            var proc_val = stored_proc_reader.GetValue(0);
 
-                                        string dropdownEntry = proc_val.ToString();
-                                        dropdownValues.Add(dropdownEntry);
-                                        dropdownLabels.Add(dropdownEntry);
+                                            string dropdownEntry = proc_val.ToString();
+                                            dropdownValues.Add(dropdownEntry);
+                                            dropdownLabels.Add(dropdownEntry);
+                                        }
                                     }
                                 }
+                                connection.Close();
                             }
-                            connection.Close();
 
                             reportParams.parameters[i].values = dropdownValues;
                             reportParams.parameters[i].labels = dropdownLabels; 
@@ -276,6 +282,88 @@ namespace eComm_Reporting_Application.Controllers
                 }
 
                 return Json("Success Deleting Subscription: ");
+            }
+            catch (Exception e)
+            {
+                return Json("Error Deleting Subscription: " + e);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetDepartmentData(ReportModel reportData, List<string> selectedBanners)
+        {
+            try
+            {
+                ReportParameterModel reportParams = GetReportParameters(reportData);
+                string connectionstring = "";
+
+                //There are other data sources that need to be mapped here
+                if (reportParams.dataSource == "ReportDataSource")
+                {
+                    connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                }
+                else if (reportParams.dataSource == "eCom_ReportDB")
+                {
+                    connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                }
+
+                Parameter departmentParameter = reportParams.parameters.Find(x => x.name == "Department_No");
+
+                SqlConnection connection = new SqlConnection(connectionstring);
+                SqlCommand storedProcQuery = new SqlCommand(departmentParameter.query, connection);
+                storedProcQuery.CommandType = CommandType.StoredProcedure;
+
+                string selectedBannersString = string.Join(",", selectedBanners.ToArray());
+                storedProcQuery.Parameters.AddWithValue("@Banner", selectedBannersString);
+                
+                List<string> dropdownValues = new List<string>();
+                List<string> dropdownLabels = new List<string>();
+
+                using (connection)
+                {
+                    connection.Open();
+                    using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                    {
+                        while (stored_proc_reader.Read())
+                        {
+                            var proc_data_length = stored_proc_reader.FieldCount;
+
+                            if (proc_data_length > 1)
+                            {
+                                for (int j = 0; j < proc_data_length; j++)
+                                {
+                                    var proc_data_name = stored_proc_reader.GetName(j);
+                                    if (proc_data_name == departmentParameter.values[0])
+                                    {
+                                        var proc_val = stored_proc_reader.GetValue(j);
+
+                                        string dropdownVal = proc_val.ToString();
+                                        dropdownValues.Add(dropdownVal);
+                                    }
+
+                                    if (proc_data_name == departmentParameter.labels[0])
+                                    {
+                                        var proc_label = stored_proc_reader.GetValue(j);
+
+                                        string dropdownLab = proc_label.ToString();
+                                        dropdownLabels.Add(dropdownLab);
+                                    }
+                                }
+                            }
+                            else //if only one column is returned from the stored procedure, put in both labels and values
+                            {
+                                var proc_val = stored_proc_reader.GetValue(0);
+
+                                string dropdownEntry = proc_val.ToString();
+                                dropdownValues.Add(dropdownEntry);
+                                dropdownLabels.Add(dropdownEntry);
+                            }
+                        }
+                    }
+                    connection.Close();
+                }
+
+                return Json(new { dropdownValues = dropdownValues, dropdownLabels = dropdownLabels });
             }
             catch (Exception e)
             {
