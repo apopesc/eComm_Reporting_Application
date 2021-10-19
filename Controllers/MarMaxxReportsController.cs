@@ -140,6 +140,7 @@ namespace eComm_Reporting_Application.Controllers
         {
             //ReportDataSource = Netsuite_ODS
             //eCom_ReportDB = eCom_ReportDB
+            //ReportServerDB = ReportDatabase
             try
             {
                 ReportParameterModel reportParams = GetReportParameters(reportData);
@@ -154,15 +155,23 @@ namespace eComm_Reporting_Application.Controllers
                 {
                     connectionstring = configuration.GetConnectionString("eCom_ReportDB");
                 }
+                else if (reportParams.dataSource == "ReportServerDB")
+                {
+                    connectionstring = configuration.GetConnectionString("ReportServer");
+                }
 
                 for (int i = 0; i < reportParams.parameters.Count; i++)
                 {
-                    if ( (reportParams.parameters[i].type == "Dropdown" || reportParams.parameters[i].type == "Textbox" || reportParams.parameters[i].type == "MultiDropdown") && reportParams.parameters[i].queryType == "Stored Procedure")
+                    if ( (reportParams.parameters[i].type == "Dropdown" || reportParams.parameters[i].type == "Textbox" || reportParams.parameters[i].type == "MultiDropdown") && (reportParams.parameters[i].queryType == "Stored Procedure" || reportParams.parameters[i].queryType == "In Line"))
                     {
                         SqlConnection connection = new SqlConnection(connectionstring);
                         SqlCommand storedProcQuery = new SqlCommand(reportParams.parameters[i].query, connection);
-                        storedProcQuery.CommandType = CommandType.StoredProcedure;
 
+                        if (reportParams.parameters[i].queryType == "Stored Procedure")
+                        {
+                            storedProcQuery.CommandType = CommandType.StoredProcedure;
+                        }
+                        
                         using (connection)
                         {
                             List<string> dropdownValues = new List<string>();
@@ -215,10 +224,6 @@ namespace eComm_Reporting_Application.Controllers
                             reportParams.parameters[i].values = dropdownValues;
                             reportParams.parameters[i].labels = dropdownLabels; 
                         }
-                    }
-                    else if ( (reportParams.parameters[i].type == "Dropdown" || reportParams.parameters[i].type == "Textbox") && reportParams.parameters[i].queryType == "In Line")
-                    {
-                        //Need to test code for inline queries
                     }
                 }
 

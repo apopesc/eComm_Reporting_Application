@@ -48,7 +48,6 @@
             function errorFunc(error) {
                 alert("Error Getting Report Subscription Data: " + error);
             }
-
         }
     });
 
@@ -84,7 +83,6 @@
 
         }
     });
-
 });
 
 function selectedFolder() {

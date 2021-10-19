@@ -1882,8 +1882,8 @@
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
-              "value": "Department_Number",
-              "label": "Department"
+              "value": "Dept_Number",
+              "label": "Dept_FullName"
             },
             "Class_Number": {
               "type": "MultiDropdown",
@@ -2063,8 +2063,8 @@
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MatrixOrMechandisingDepartments_By_Banner",
-              "value": "Department_Number",
-              "label": "Department"
+              "value": "Dept_Number",
+              "label": "Dept_FullName"
             },
             "Class_Number": {
               "type": "MultiDropdown",
@@ -2265,8 +2265,8 @@
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MatrixOrMechandisingDepartments_By_Banner",
-              "value": "Department_Number",
-              "label": "Department"
+              "value": "Dept_Number",
+              "label": "Dept_FullName"
             },
             "Class_Number": {
               "type": "MultiDropdown",
@@ -2340,8 +2340,8 @@
             },
             "Buyer": {
               "type": "MultiDropdown",
-              "query_type": "Shared",
-              "query": "/SharedDataSets/eComReportDB_Buyer",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Buyers",
               "value": "Buyer",
               "label": "Buyer"
             },
@@ -3030,8 +3030,8 @@
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
-              "value": "Department_Number",
-              "label": "Department"
+              "value": "Dept_Number",
+              "label": "Dept_FullName"
             },
             "Class_Number": {
               "type": "MultiDropdown",
