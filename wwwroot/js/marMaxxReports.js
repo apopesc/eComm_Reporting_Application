@@ -83,6 +83,20 @@
 
         }
     });
+
+    $('#marMaxxSubscriptionData').on('click', '.editBtn', function () {
+        var $selectedRow = $(this).closest("tr");
+        var _ID = $selectedRow.attr('id');
+
+        let selectedSubscription = $selectedRow
+            .find(".marMaxxSubscriptionsEntry_SubscriptionID")
+            .text();
+
+        //Need to redirect to edit/details page
+
+        alert(_ID);
+
+    });
 });
 
 function selectedFolder() {
@@ -151,22 +165,28 @@ function createTable(tableData) {
         }
         row.prop('id', tableData.rowData[j].subscriptionID);
 
-        let tableEntry_Icon = $('<td>').addClass('marMaxxSubscriptionsEntry_Icon');
+        let tableEntry_Icons = $('<td>').addClass('marMaxxSubscriptionsEntry_Icon');
         let deleteIcon = $('<button>').addClass('deleteBtn');
         let deleteLink = $('<i>').addClass('fa fa-trash');
         deleteIcon.append(deleteLink);
-        tableEntry_Icon.append(deleteIcon);
-        row.append(tableEntry_Icon); 
+        tableEntry_Icons.append(deleteIcon);
 
-        let tableEntry1 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_SubscriptionID').text(tableData.rowData[j].subscriptionID);
+        let editIcon = $('<button>').addClass('editBtn');
+        let editLink = $('<i>').addClass('fas fa-pencil-alt');
+        editIcon.append(editLink);
+        tableEntry_Icons.append(editIcon);
+
+        row.append(tableEntry_Icons); 
+
+        let tableEntry1 = $('<td>').addClass('marMaxxSubscriptionsEntry_SubscriptionID').text(tableData.rowData[j].subscriptionID);
         row.append(tableEntry1); //adding element to the row
-        let tableEntry2 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_SubscriptionName').text(tableData.rowData[j].subscriptionName);
+        let tableEntry2 = $('<td>').addClass('marMaxxSubscriptionsEntry_SubscriptionName').text(tableData.rowData[j].subscriptionName);
         row.append(tableEntry2);
-        let tableEntry3 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_ReportName').text(tableData.rowData[j].reportName);
+        let tableEntry3 = $('<td>').addClass('marMaxxSubscriptionsEntry_ReportName').text(tableData.rowData[j].reportName);
         row.append(tableEntry3);
-        let tableEntry4 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_GroupName').text(tableData.rowData[j].groupNames);
+        let tableEntry4 = $('<td>').addClass('marMaxxSubscriptionsEntry_GroupName').text(tableData.rowData[j].groupNames);
         row.append(tableEntry4);
-        let tableEntry5 = $('<td contenteditable = "true">').addClass('marMaxxSubscriptionsEntry_GroupID').text(tableData.rowData[j].groupIDs);
+        let tableEntry5 = $('<td>').addClass('marMaxxSubscriptionsEntry_GroupID').text(tableData.rowData[j].groupIDs);
         row.append(tableEntry5);
 
         for (i = 5; i < tableData.tableParams.length; i++) {
