@@ -88,14 +88,9 @@
         var $selectedRow = $(this).closest("tr");
         var _ID = $selectedRow.attr('id');
 
-        let selectedSubscription = $selectedRow
-            .find(".marMaxxSubscriptionsEntry_SubscriptionID")
-            .text();
-
         //Need to redirect to edit/details page
 
-        alert(_ID);
-
+        window.location = "/MarMaxxReports/EditReportSub?ID="+_ID;
     });
 });
 

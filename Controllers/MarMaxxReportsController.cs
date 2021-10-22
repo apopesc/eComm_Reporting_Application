@@ -42,6 +42,11 @@ namespace eComm_Reporting_Application.Controllers
             return View(addNewDropdownModel);
         }
 
+        public IActionResult EditReportSub(int ID)
+        {
+            return View();
+        }
+
         [HttpPost]
         public JsonResult GetReportNameValues(List<string> folderPathList)
         {
