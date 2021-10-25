@@ -88,8 +88,6 @@
         var $selectedRow = $(this).closest("tr");
         var _ID = $selectedRow.attr('id');
 
-        //Need to redirect to edit/details page
-
         window.location = "/MarMaxxReports/EditReportSub?ID="+_ID;
     });
 });

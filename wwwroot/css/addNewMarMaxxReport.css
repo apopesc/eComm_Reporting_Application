@@ -22,14 +22,8 @@
     width: 440px;
 }
 
-.subscription-textbox {
-    float: right;
-}
 
 @media screen and (max-width: 1920px) {
-    .subscription-textbox {
-        width: 290px;
-    }
     #viewReportParams {
         margin-left: 124px;
     }
@@ -49,9 +43,6 @@
 }
 
 @media screen and (max-width: 1280px) {
-    .subscription-textbox {
-        width: 250px;
-    }
     #viewReportParams {
         margin-left: 126px;
     }
@@ -71,14 +62,6 @@
         margin-top: 22px;
         width: 305px;
     }
-}
-
-.addnew-textbox{
-    width: 440px;
-}
-
-.textbox{
-    margin-bottom:10px;
 }
 
 .filter-data{

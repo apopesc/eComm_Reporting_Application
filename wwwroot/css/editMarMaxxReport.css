@@ -1,1 +1,23 @@
-﻿
+﻿.filter-data {
+    float: left;
+}
+
+.addnew-dropdown {
+    width: 440px;
+}
+
+.btn-group {
+    float: right;
+}
+
+@media screen and (max-width: 1920px) {
+    .filter-data {
+        width: 35%;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .filter-data {
+        width: 45%;
+    }
+}

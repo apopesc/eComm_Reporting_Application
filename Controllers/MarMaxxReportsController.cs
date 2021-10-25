@@ -44,7 +44,39 @@ namespace eComm_Reporting_Application.Controllers
 
         public IActionResult EditReportSub(int ID)
         {
-            return View();
+            EditReportSubscriptionModel reportSubModel = new EditReportSubscriptionModel();
+
+            string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Subscription_ID='" + ID + "'";
+
+            string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+            SqlConnection connection = new SqlConnection(connectionstring);
+            SqlCommand getSubscriptionData = new SqlCommand(queryString, connection);
+            using (connection)
+            {
+                connection.Open();
+                using (SqlDataReader reader = getSubscriptionData.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        reportSubModel.subscriptionID = reader.GetInt32(0);
+                        reportSubModel.subscriptionName = reader.GetString(1);
+                        reportSubModel.reportName = reader.GetString(2);
+                        reportSubModel.selectedGroupNames = reader.GetString(3);
+                        reportSubModel.selectedGroupIDs = reader.GetString(4);
+
+                        string report_params_json = reader.GetString(5);
+                        Dictionary<string, string> reportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(report_params_json);
+                        reportSubModel.dynamicParams = reportParams;
+                    }
+                }
+                connection.Close();
+            }
+
+            UserSubscriptionDropdownModel dropdownData = GetGroups();
+            reportSubModel.groupNames = dropdownData.groupsList;
+            reportSubModel.groupIDs = dropdownData.groupsIDList;
+
+            return View(reportSubModel);
         }
 
         [HttpPost]
