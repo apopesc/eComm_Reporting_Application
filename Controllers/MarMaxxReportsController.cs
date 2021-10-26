@@ -445,6 +445,29 @@ namespace eComm_Reporting_Application.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult getReportFolder(string reportName)
+        {
+            var json_folders = jsonObject["folders"];
+            foreach (JProperty x in json_folders)
+            {
+                string folderName = x.Name;
+
+                var reportFolder = json_folders[folderName];
+                var json_reports = reportFolder["reports"];
+                foreach(JProperty y in json_reports)
+                {
+                    string temp_report_name = y.Name;
+                    if(temp_report_name == reportName)
+                    {
+                        return Json(folderName);
+                    }
+                }
+            }
+
+            return Json("Report folder not found");
+        }
+
         public Parameter getCascadingDropdownValues(Parameter cascadingParam , SqlCommand storedProcQuery, SqlConnection connection)
         {
             List<string> dropdownValues = new List<string>();

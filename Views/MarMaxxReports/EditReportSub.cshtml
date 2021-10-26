@@ -14,6 +14,21 @@
     </div>
 </div>
 
+<div class="hidden-selected-groups">
+    @Html.HiddenFor(selectedGroupNames => Model.selectedGroupNames)
+    @Html.HiddenFor(selectedGroupIDs => Model.selectedGroupIDs)
+</div>
+
+<div class="hidden-dynamic-params">
+    @if (Model.dynamicParams != null)
+    {
+        @foreach (var parameter in Model.dynamicParams)
+        {
+            @Html.Hidden(parameter.Key, parameter.Value);
+        }
+    }
+</div>
+
 <div class="filter-data">
     <div class="addnew-row textbox">
         <div class="addnew-textbox">
@@ -31,7 +46,7 @@
 
     <div class="addnew-row">
         <div class="addnew-dropdown">
-            <label class="filter-label" for="marMaxxReportName">Report Name:</label>
+            <label class="filter-label" for="marMaxxReportName">Report Name: </label>
             <select id="marMaxxReportName" name="marMaxxReportName" disabled>
                 <option value="@Model.reportName" disabled selected>@Model.reportName</option>
             </select>
@@ -40,7 +55,7 @@
 
     <div class="addnew-row">
         <div class="addnew-dropdown">
-            <label class="filter-label" for="marMaxxGroupName">Group Name:</label>
+            <label class="filter-label" for="marMaxxGroupName">Group Name: </label>
             <select id="marMaxxGroupName" name="marMaxxReportName" multiple>
                 @foreach (var groupName in @Model.groupNames)
                 {
