@@ -55,7 +55,6 @@
 
     //Getting report folder name first before getting all dynamic parameter dropdown data
     var controllerUrl = '/MarMaxxReports/getReportFolder';
-    var reportFolderName = "";
     var selectedReportName = $('#marMaxxReportName option[disabled]:selected').val();
 
     $.ajax({
@@ -72,7 +71,7 @@
         if (folderName == "Report folder not found") {
             alert("Report folder not found. Please delete this Subscription record and re-create it to use updated data.");
         } else {
-            reportFolderName = folderName;
+            getDynamicReportParams(selectedReportName, folderName);
         }
     }
 
@@ -81,5 +80,35 @@
     }
 
     //Getting the report parameters now
+    
 });
 
+function getDynamicReportParams(selectedReportName, selectedFolderName) {
+    var controllerUrl = '/MarMaxxReports/GetMarMaxxReportParameters';
+
+    var reportData = {
+        reportName: selectedReportName,
+        reportFolder: selectedFolderName
+    }
+
+    $.ajax({
+        type: "POST",
+        url: controllerUrl,
+        dataType: "json",
+        success: successFunc,
+        error: errorFunc,
+        data: { 'reportData': reportData }
+    });
+
+    function successFunc(paramData) {
+        if (typeof paramData === 'string') { //If there is an error saving it to the database
+            alert(paramData);
+        } else {
+            //need to create dynamic parameters now
+        }
+    }
+
+    function errorFunc(error) {
+        alert("Error Getting Report Parameters: " + error);
+    }
+}
