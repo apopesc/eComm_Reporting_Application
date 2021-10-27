@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿
+
+$(document).ready(function () {
     $('#MarMaxxReports_Link').addClass('selected-nav-option');
 
     $('#marMaxxGroupID').multiselect({
@@ -30,25 +32,11 @@
     var selectedGroupNames = selectedGroupNamesString.split(",");
     var selectedGroupIDs = selectedGroupIDsString.split(",");
 
-    for (let i = 0; i < selectedGroupNames.length; i++) {
-        jquerySelector = 'option[value="' + selectedGroupNames[i] + '"]';
-        $(jquerySelector, $('#marMaxxGroupName')).prop('selected', true);
-    }
+    $('#marMaxxGroupName').val(selectedGroupNames);
     $('#marMaxxGroupName').multiselect('refresh');
 
-    for (let i = 0; i < selectedGroupIDs.length; i++) {
-        jquerySelector = 'option[value="' + selectedGroupIDs[i] + '"]';
-        $(jquerySelector, $('#marMaxxGroupID')).prop('selected', true);
-    }
+    $('#marMaxxGroupID').val(selectedGroupIDs);
     $('#marMaxxGroupID').multiselect('refresh');
-
-    //Getting the selected dynamic parameter values from hidden
-    var selectedDynamicParamVals = {};
-    $('.hidden-dynamic-params input').each(function () {
-        var paramName = $(this).attr("name");
-        var paramValue = $(this).val();
-        selectedDynamicParamVals[paramName] = paramValue;
-    });
 
     //Getting report folder name first before getting all dynamic parameter dropdown data
     var selectedReportName = $('#marMaxxReportName option[disabled]:selected').val();
@@ -244,6 +232,9 @@ function getDynamicReportParams(selectedReportName, selectedFolderName) {
             alert(paramData);
         } else {
             createParams(paramData);
+            if (paramData.parameters.length > 0) {
+                selectDynamicParams();
+            }
         }
     }
 
@@ -308,8 +299,7 @@ function createParams(paramData) {
             var textboxLabel = $('<label>').addClass('filter-label').text(paramData.parameters[i].name);
             textboxLabel.prop('for', paramData.parameters[i].name);
 
-            //values at 0 because textboxes will have a list only with one val in it.
-            var textbox = $('<input type=text>').addClass('subscription-textbox').val(paramData.parameters[i].values[0]);
+            var textbox = $('<input type=text>').addClass('subscription-textbox');
             textbox.prop('id', paramData.parameters[i].name);
             textbox.prop('name', paramData.parameters[i].name);
 
@@ -344,4 +334,48 @@ function createParams(paramData) {
         nonSelectedText: 'Select a Value...',
         enableCaseInsensitiveFiltering: true
     });
+}
+
+function selectDynamicParams() {
+    var selectedDynamicParamVals = {};
+
+    //Getting the selected dynamic parameter values from hidden
+    $('.hidden-dynamic-params input').each(function () {
+        var paramName = $(this).attr("name");
+        var paramValue = $(this).val();
+        selectedDynamicParamVals[paramName] = paramValue;
+    });
+
+    for (var paramName in selectedDynamicParamVals) {
+
+        if ($("#" + paramName).length) {
+            if ($("#" + paramName).is("select")) {
+
+                if ($("#" + paramName).prop("multiple")) { // Multi Select Box
+                    var selectedValues = selectedDynamicParamVals[paramName].split(',');
+
+                    if ($("#" + paramName).prop("disabled")) { //If it is a disabled multi-select (such as Dept, Class, Etc..)
+                        var data = [
+                            { label: selectedDynamicParamVals[paramName], value: selectedDynamicParamVals[paramName]}
+                        ];
+                        $("#" + paramName).multiselect('dataprovider', data);
+                        $("#" + paramName).val(selectedDynamicParamVals[paramName]);
+                        $("#" + paramName).multiselect("refresh");
+                        $("#" + paramName).multiselect('disable');
+
+                    } else { //Not disabled multi-select
+                        $("#" + paramName).val(selectedValues);
+                        $("#" + paramName).multiselect('refresh');
+                    }
+
+                } else { // Single Select Box
+                    $("#" + paramName).val(selectedDynamicParamVals[paramName]);
+                    $("#" + paramName).multiselect('refresh');
+                }
+
+            } else if ($("#" + paramName).is("input")) { //Text box or date box
+                $("#" + paramName).val(selectedDynamicParamVals[paramName]);
+            }
+        }
+    }
 }
