@@ -24,9 +24,13 @@
     {
         @foreach (var parameter in Model.dynamicParams)
         {
-            @Html.Hidden(parameter.Key, parameter.Value);
+            @Html.Hidden(parameter.Key, parameter.Value, new { @id = "selectedParamVal" });
         }
     }
+</div>
+
+<div class="hidden-folder-name">
+    @Html.HiddenFor(selectedFolderName => Model.folderName)
 </div>
 
 <div class="filter-data">
@@ -76,13 +80,13 @@
             </select>
         </div>
     </div>
+</div>
 
-
-
-    <div id="dynamicParams">
+<div id="addNewDynamic" class="dynamic-div">
+    <div class="dynamic-params-div">
+        <div id="dynamicParams">
+        </div>
     </div>
 </div>
 
-<div id="hiddenParamNames">
-</div>
 

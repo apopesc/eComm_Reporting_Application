@@ -45,42 +45,181 @@
     //Getting the selected dynamic parameter values from hidden
     var selectedDynamicParamVals = {};
     $('.hidden-dynamic-params input').each(function () {
-        if ($(this).attr("id") == "selectedGroupNames") {
-            selectedGroupNamesString = $(this).val();
-        }
         var paramName = $(this).attr("name");
         var paramValue = $(this).val();
         selectedDynamicParamVals[paramName] = paramValue;
     });
 
     //Getting report folder name first before getting all dynamic parameter dropdown data
-    var controllerUrl = '/MarMaxxReports/getReportFolder';
     var selectedReportName = $('#marMaxxReportName option[disabled]:selected').val();
 
-    $.ajax({
-        type: "POST",
-        url: controllerUrl,
-        dataType: "json",
-        success: successFunc,
-        error: errorFunc,
-        data: { 'reportName': selectedReportName}
+    if ($('#folderName').length) { //If the folder name has been pulled successfully
+        var selectedFolderName = $('#folderName').val();
+        getDynamicReportParams(selectedReportName, selectedFolderName);
+    } else {
+        alert("Can't find report/folder. Please delete this report subscription record and create a new one to use updated report data.");
+    }
+
+    $('#dynamicParams').on('change', '#Banner', function () {
+        if ($('#Department_No').length) {
+            if ($('#Banner :selected').length == 0) {
+
+                $('#Department_No').multiselect('deselectAll', false);
+                $('#Department_No').multiselect('updateButtonText');
+
+                $('#Class_Number').multiselect('deselectAll', false);
+                $('#Class_Number').multiselect('updateButtonText');
+
+                $('#Category').multiselect('deselectAll', false);
+                $('#Category').multiselect('updateButtonText');
+
+                $('#Department_No').multiselect('disable');
+                $('#Class_Number').multiselect('disable');
+                $('#Category').multiselect('disable');
+
+            } else {
+                var selectedBannerValues = $('#Banner').val();
+
+                var controllerUrl = '/MarMaxxReports/GetDepartmentData';
+
+                var reportData = {
+                    reportName: selectedReportName,
+                    reportFolder: selectedFolderName
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: {
+                        'reportData': reportData,
+                        'selectedBanners': selectedBannerValues
+                    }
+                });
+
+                function successFunc(dropdownData) {
+                    var data = [];
+
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Department_No").multiselect('dataprovider', data);
+                    $('#Department_No').multiselect('enable');
+                }
+
+                function errorFunc(error) {
+                    alert("Error Retrieving Department Numbers: " + error);
+                }
+            }
+        }
     });
 
-    function successFunc(folderName) {
-        //manage the list of dropdown values in the front end -> just use controller to get the dropdown values for each selected folder
-        if (folderName == "Report folder not found") {
-            alert("Report folder not found. Please delete this Subscription record and re-create it to use updated data.");
-        } else {
-            getDynamicReportParams(selectedReportName, folderName);
+    $('#dynamicParams').on('change', '#Department_No', function () {
+        if ($('#Class_Number').length) {
+            if ($('#Department_No :selected').length == 0) {
+
+                $('#Class_Number').multiselect('deselectAll', false);
+                $('#Class_Number').multiselect('updateButtonText');
+
+                $('#Category').multiselect('deselectAll', false);
+                $('#Category').multiselect('updateButtonText');
+
+                $('#Class_Number').multiselect('disable');
+                $('#Category').multiselect('disable');
+
+            } else {
+                var selectedDepartmentValues = $('#Department_No').val();
+
+                var controllerUrl = '/MarMaxxReports/GetClassData';
+
+                var reportData = {
+                    reportName: selectedReportName,
+                    reportFolder: selectedFolderName
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: {
+                        'reportData': reportData,
+                        'selectedDepartments': selectedDepartmentValues
+                    }
+                });
+
+                function successFunc(dropdownData) {
+                    var data = [];
+
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Class_Number").multiselect('dataprovider', data);
+                    $('#Class_Number').multiselect('enable');
+                }
+
+                function errorFunc(error) {
+                    alert("Error Retrieving Classes: " + error);
+                }
+            }
         }
-    }
+    });
 
-    function errorFunc(error) {
-        alert("Error Retrieving Report Folder: " + error);
-    }
+    $('#dynamicParams').on('change', '#Class_Number', function () {
+        if ($('#Category').length) {
+            if ($('#Class_Number :selected').length == 0) {
 
-    //Getting the report parameters now
-    
+                $('#Category').multiselect('deselectAll', false);
+                $('#Category').multiselect('updateButtonText');
+
+                $('#Category').multiselect('disable');
+
+            } else {
+                var selectedDepartmentValues = $('#Department_No').val();
+                var selectedClassValues = $('#Class_Number').val();
+
+                var controllerUrl = '/MarMaxxReports/GetCategoryData';
+
+                var reportData = {
+                    reportName: selectedReportName,
+                    reportFolder: selectedFolderName
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: {
+                        'reportData': reportData,
+                        'selectedDepartments': selectedDepartmentValues,
+                        'selectedClasses': selectedClassValues
+                    }
+                });
+
+                function successFunc(dropdownData) {
+                    var data = [];
+
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Category").multiselect('dataprovider', data);
+                    $('#Category').multiselect('enable');
+                }
+
+                function errorFunc(error) {
+                    alert("Error Retrieving Categories: " + error);
+                }
+            }
+        }
+    });
 });
 
 function getDynamicReportParams(selectedReportName, selectedFolderName) {
@@ -104,11 +243,105 @@ function getDynamicReportParams(selectedReportName, selectedFolderName) {
         if (typeof paramData === 'string') { //If there is an error saving it to the database
             alert(paramData);
         } else {
-            //need to create dynamic parameters now
+            createParams(paramData);
         }
     }
 
     function errorFunc(error) {
         alert("Error Getting Report Parameters: " + error);
     }
+}
+
+function createParams(paramData) {
+    $('#dynamicParams').empty();
+
+    for (let i = 0; i < paramData.parameters.length; i++) {
+
+        //Building out the dynamic dropdowns
+        var row = $('<div>').addClass('addnew-row');
+
+        if (paramData.parameters[i].type == "Dropdown" || paramData.parameters[i].type == "MultiDropdown") {
+
+            var sub_row = $('<div>').addClass('addnew-dropdown');
+
+            var dropdownLabel = $('<label>').addClass('filter-label').text(paramData.parameters[i].name);
+            dropdownLabel.prop('for', paramData.parameters[i].name);
+
+            var dropdown;
+            if (paramData.parameters[i].type == "MultiDropdown") {
+                dropdown = $('<select multiple>').addClass('dynamic-dropdown');
+            } else {
+                dropdown = $('<select>').addClass('dynamic-dropdown');
+            }
+
+            dropdown.prop('id', paramData.parameters[i].name);
+            dropdown.prop('name', paramData.parameters[i].name);
+
+            //This is to prevent errors in case there is an instance where values and labels are diff length. (avoiding out of index)
+            var length = 0;
+            if (paramData.parameters[i].values.length > paramData.parameters[i].labels.length) {
+                length = paramData.parameters[i].labels.length;
+            } else {
+                length = paramData.parameters[i].values.length;
+            }
+
+            if (paramData.parameters[i].type == "Dropdown") {
+                var defaultDropdownOption = $('<option disabled selected>').text("Select a Value...");
+                dropdown.append(defaultDropdownOption);
+            }
+
+            for (let j = 0; j < length; j++) {
+                var dropdownOption = $('<option>').text(paramData.parameters[i].labels[j]);
+                dropdownOption.prop('value', paramData.parameters[i].values[j]);
+
+                dropdown.append(dropdownOption);
+            }
+
+            sub_row.append(dropdownLabel);
+            sub_row.append(dropdown);
+            row.append(sub_row);
+
+        } else if (paramData.parameters[i].type == "Textbox") {
+            row.addClass("textbox");
+
+            var sub_row = $('<div>').addClass('addnew-textbox');
+            var textboxLabel = $('<label>').addClass('filter-label').text(paramData.parameters[i].name);
+            textboxLabel.prop('for', paramData.parameters[i].name);
+
+            //values at 0 because textboxes will have a list only with one val in it.
+            var textbox = $('<input type=text>').addClass('subscription-textbox').val(paramData.parameters[i].values[0]);
+            textbox.prop('id', paramData.parameters[i].name);
+            textbox.prop('name', paramData.parameters[i].name);
+
+            sub_row.append(textboxLabel);
+            sub_row.append(textbox);
+            row.append(sub_row);
+
+        } else if (paramData.parameters[i].type == "DateTime") {
+            row.addClass("textbox");
+            row.addClass("date-input");
+
+            var sub_row = $('<div>').addClass('addnew-textbox');
+            var dateTimeLabel = $('<label>').addClass('filter-label').text(paramData.parameters[i].name);
+            dateTimeLabel.prop('for', paramData.parameters[i].name);
+
+            var dateTime = $('<input type="date">').addClass('subscription-textbox');
+            dateTime.prop('id', paramData.parameters[i].name);
+            dateTime.prop('name', paramData.parameters[i].name);
+
+            sub_row.append(dateTimeLabel);
+            sub_row.append(dateTime);
+            row.append(sub_row);
+        }
+        $('#dynamicParams').append(row);
+
+        if (paramData.parameters[i].name == "Department_No" || paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category") {
+            $('#' + paramData.parameters[i].name).multiselect('disable');
+        }
+    }
+
+    $('.dynamic-dropdown').multiselect({
+        nonSelectedText: 'Select a Value...',
+        enableCaseInsensitiveFiltering: true
+    });
 }

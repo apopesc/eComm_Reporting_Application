@@ -11,13 +11,46 @@
 }
 
 @media screen and (max-width: 1920px) {
+    .dynamic-params-div {
+        max-height: 620px;
+    }
+    .dynamic-div {
+        width: 610px;
+    }
     .filter-data {
         width: 35%;
     }
 }
 
 @media screen and (max-width: 1280px) {
+    .dynamic-params-div {
+        max-height: 288px;
+    }
+    .dynamic-div {
+        width: 555px;
+    }
     .filter-data {
         width: 45%;
     }
+}
+
+.date-input {
+    padding-top: 5px;
+}
+
+.dynamic-params-div {
+    overflow-y: scroll;
+    width: 100%;
+}
+
+.dynamic-div {
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.multiselect-container {
+    max-height: 225px;
+}
+.textbox{
+    margin-top:15px;
 }
