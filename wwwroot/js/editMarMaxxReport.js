@@ -245,11 +245,14 @@ function getDynamicReportParams(selectedReportName, selectedFolderName) {
 
 function createParams(paramData) {
     $('#dynamicParams').empty();
+    $('#saveSubscription').empty();
 
     for (let i = 0; i < paramData.parameters.length; i++) {
-
         //Building out the dynamic dropdowns
         var row = $('<div>').addClass('addnew-row');
+        if (i == 0) {
+            row.addClass('first-row');
+        }
 
         if (paramData.parameters[i].type == "Dropdown" || paramData.parameters[i].type == "MultiDropdown") {
 
@@ -329,6 +332,11 @@ function createParams(paramData) {
             $('#' + paramData.parameters[i].name).multiselect('disable');
         }
     }
+
+    var saveSubscriptionBtn = $('<button>').addClass('btnAddPage').text("Save MarMaxx Report Subscription");
+    saveSubscriptionBtn.prop('id', 'saveMarmaxxSubscription');
+
+    $('#saveSubscription').append(saveSubscriptionBtn);
 
     $('.dynamic-dropdown').multiselect({
         nonSelectedText: 'Select a Value...',

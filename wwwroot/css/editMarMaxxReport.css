@@ -10,6 +10,14 @@
     float: right;
 }
 
+#saveMarmaxxSubscription {
+    background-color: #9E0000;
+    color: white;
+    font-weight: 700;
+    float: right;
+    margin-right: 0px;
+}
+
 @media screen and (max-width: 1920px) {
     .dynamic-params-div {
         max-height: 620px;
@@ -19,6 +27,10 @@
     }
     .filter-data {
         width: 35%;
+    }
+    #saveMarmaxxSubscription {
+        margin-top: 25px;
+        width: 230px;
     }
 }
 
@@ -32,6 +44,10 @@
     .filter-data {
         width: 45%;
     }
+    #saveMarmaxxSubscription {
+        margin-top: 22px;
+        width: 305px;
+    }
 }
 
 .date-input {
@@ -44,7 +60,7 @@
 }
 
 .dynamic-div {
-    margin-top: 5px;
+    margin-top: 20px;
     display: inline-block;
 }
 
@@ -52,5 +68,9 @@
     max-height: 225px;
 }
 .textbox{
-    margin-top:15px;
+    margin-top: 15px;
+}
+
+.first-row{
+    margin-top: -5px;
 }

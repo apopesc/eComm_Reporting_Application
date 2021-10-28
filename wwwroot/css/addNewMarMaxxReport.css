@@ -14,14 +14,12 @@
     color: white;
     font-weight: 700;
     float: right;
-    
     margin-right: 0px;
 }
 
 .addnew-dropdown {
     width: 440px;
 }
-
 
 @media screen and (max-width: 1920px) {
     #viewReportParams {
