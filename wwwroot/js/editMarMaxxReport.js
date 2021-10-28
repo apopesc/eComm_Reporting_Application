@@ -208,6 +208,67 @@ $(document).ready(function () {
             }
         }
     });
+
+    $('#saveSubscription').on('click', '#saveMarmaxxSubscription', function () {
+        var subscriptionID = $('#subscriptionID').val();
+        var subscriptionName = $('#subscriptionName').val();
+        var groupIDs = $('#marMaxxGroupID').val();
+        var groupNames = $('#marMaxxGroupName').val();
+        var dynamicParams = {};
+
+        if (subscriptionName == '') {
+            alert("Please enter a value for Subscription Name");
+        } else if (groupIDs.length == 0) {
+            alert("Please select a value for Group ID");
+        } else if (groupNames.length == 0) {
+            alert("Please select a value for Group Name");
+        } else {
+            $('#hiddenParamNames > input').each(function () {
+                var inputID = this.value;
+                var dynamicParamVal = $('#' + inputID).val();
+                if (dynamicParamVal !== null) {
+                    dynamicParams[inputID] = dynamicParamVal.toString();
+                } else {
+                    dynamicParams[inputID] = dynamicParamVal
+                }
+
+            });
+
+            var groupNames_String = groupNames.toString();
+            var groupIDs_String = groupIDs.toString();
+
+            var controllerUrl = '/MarMaxxReports/SaveEditedMarmaxxReportSubscription';
+
+            var editedReportSubModel = {
+                subscriptionID: parseInt(subscriptionID),
+                subscriptionName: subscriptionName,
+                reportName: selectedReportName,
+                groupNames: groupNames_String,
+                groupIDs: groupIDs_String,
+                dynamicParams: dynamicParams
+            };
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc,
+                data: { 'editedReportSub': editedReportSubModel }
+            });
+
+            function successFunc(returnedData) {
+                alert("Success editing subscription: " + subscriptionName);
+                if (returnedData.result == 'Redirect') {
+                    window.location = returnedData.url;
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Getting Report Subscription Data: " + error);
+            }
+        }
+    });
 });
 
 function getDynamicReportParams(selectedReportName, selectedFolderName) {
@@ -246,8 +307,14 @@ function getDynamicReportParams(selectedReportName, selectedFolderName) {
 function createParams(paramData) {
     $('#dynamicParams').empty();
     $('#saveSubscription').empty();
+    $('#hiddenParamNames').empty();
 
     for (let i = 0; i < paramData.parameters.length; i++) {
+
+        //adding parameter name to hidden list on the page (used for input validation on save)
+        var hiddenParam = $('<input type="hidden">').prop('value', paramData.parameters[i].name);
+        $('#hiddenParamNames').append(hiddenParam);
+
         //Building out the dynamic dropdowns
         var row = $('<div>').addClass('addnew-row');
         if (i == 0) {

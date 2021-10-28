@@ -323,6 +323,38 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        public JsonResult SaveEditedMarmaxxReportSubscription(ReportTableModel editedReportSub)
+        {
+            try
+            {
+                string paramJson = JsonConvert.SerializeObject(editedReportSub.dynamicParams);
+                //Add query here to store in database, store group ID in their respective columns, and paramJson in the last column
+
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                string editUserQueryString = "UPDATE MarMaxxReportSubscriptions SET Subscription_Name='" + editedReportSub.subscriptionName + "', Report_Name='" + editedReportSub.reportName + "', Group_Name='" + editedReportSub.groupNames + "', Group_ID='" + editedReportSub.groupIDs + "', Report_Params='" + paramJson + "' " +
+                    "WHERE Subscription_ID="+editedReportSub.subscriptionID+";";
+
+                SqlCommand editUserQuery = new SqlCommand(editUserQueryString, connection);
+
+                using (connection)
+                {
+                    connection.Open();
+                    using SqlDataReader reader = editUserQuery.ExecuteReader();
+                    connection.Close();
+                }
+
+                return Json(new { result = "Redirect", url = Url.Action("Index", "MarMaxxReports") });
+            }
+            catch (Exception e)
+            {
+                return Json("Error Saving Marmaxx Report Subscription: " + e);
+            }
+        }
+
+        [HttpPost]
         public JsonResult DeleteMarmaxxReportSubscription(int ID)
         {
             try
