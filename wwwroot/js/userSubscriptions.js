@@ -31,7 +31,7 @@ $(document).ready(function () {
     $('#SubscriptionGroups_Link').addClass('selected-nav-option');
 
     var groupIDValues = [];
-    $('.hidden-groupIDs input').each(function () {
+    $('#groupIDDropdown option').each(function () {
         groupIDValues.push($(this).val());
     });
     var groupDropdownValues = [];
