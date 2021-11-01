@@ -245,9 +245,9 @@ namespace eComm_Reporting_Application.Controllers
                 string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                 SqlConnection connection = new SqlConnection(connectionstring);
 
-                string groupsQueryString = "SELECT DISTINCT User_Group FROM UserSubscriptionFilters WHERE User_Group IS NOT NULL";
-                string groupIDsQueryString = "SELECT DISTINCT Group_ID FROM UserSubscriptionFilters WHERE Group_ID IS NOT NULL";
-                string masterGroupsQueryString = "SELECT DISTINCT Master_Group FROM UserSubscriptionFilters WHERE Master_Group IS NOT NULL";
+                string groupsQueryString = "SELECT DISTINCT GroupName FROM Groups WHERE GroupName IS NOT NULL";
+                string groupIDsQueryString = "SELECT DISTINCT GroupID FROM Groups WHERE GroupID IS NOT NULL";
+                string masterGroupsQueryString = "SELECT DISTINCT MasterGroup FROM Groups WHERE MasterGroup IS NOT NULL";
 
                 SqlCommand groupsQuery = new SqlCommand(groupsQueryString, connection);
                 SqlCommand groupIDsQuery = new SqlCommand(groupIDsQueryString, connection);

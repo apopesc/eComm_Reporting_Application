@@ -78,8 +78,8 @@ $(document).ready(function () {
             selectedCheckBoxVal = checkBoxEnum.none; //0
         }
 
-        if (selectedMasterGroups.length == 0 || selectedGroups.length == 0 || selectedCheckBoxVal == 0) {
-            alert("Please enter a value for Master Group, Group, and Is Active");
+        if (selectedMasterGroups.length == 0 || selectedGroups.length == 0 || selectedGroupIDs.length == 0 || selectedCheckBoxVal == 0) {
+            alert("Please enter a value for Master Group, Group ID, Group, and Is Active");
         } else {
 
             //Posting collected filter data back to the SubscriptionsGroupsController
