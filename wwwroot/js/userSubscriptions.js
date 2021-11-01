@@ -54,11 +54,16 @@ $(document).ready(function () {
         includeSelectAllOption: true,
         enableCaseInsensitiveFiltering: true,
     });
-
+    $('#groupIDDropdown').multiselect({
+        nonSelectedText: 'Select a group ID...',
+        includeSelectAllOption: true,
+        enableCaseInsensitiveFiltering: true,
+    });
 
     $("#btnViewUserData").click(function () {
 
         var selectedGroups = $('#groupDropdown').val();
+        var selectedGroupIDs = $('#groupIDDropdown').val();
         var selectedMasterGroups = $('#masterGroupDropdown').val();
 
         var selectedCheckBoxVal = 0;
@@ -82,6 +87,7 @@ $(document).ready(function () {
 
             var filterData = {
                 isActive: selectedCheckBoxVal,
+                groupsIDList: selectedGroupIDs,
                 groupsList: selectedGroups,
                 masterGroupsList: selectedMasterGroups
             }

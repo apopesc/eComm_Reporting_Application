@@ -27,7 +27,7 @@
     <div class="first-row">
         <div class="main-dropdown">
             <label class="filter-label" for="masterGroupDropdown">Master Group:</label>
-            <select id="masterGroupDropdown" name="masterGroupDropdown" multiple>
+            <select id="masterGroupDropdown" name="masterGroupDropdown" class="user-dropdown" multiple>
                 @foreach (var master_group in @Model.masterGroupsList)
                 {
                     <option value=@master_group> @master_group </option>
@@ -35,8 +35,20 @@
             </select>
         </div>
         <div class="main-dropdown">
+            <label class="filter-label" for="groupIDDropdown">Group ID:</label>
+            <select id="groupIDDropdown" name="groupIDDropdown" class="user-dropdown" multiple>
+                @foreach (var groupID in @Model.groupsIDList)
+                {
+                    <option value=@groupID> @groupID </option>
+                }
+            </select>
+        </div>     
+    </div>
+    
+    <div class="second-row">
+        <div class="main-dropdown">
             <label class="filter-label" for="groupDropdown">Group:</label>
-            <select id="groupDropdown" name="groupDropdown" multiple>
+            <select id="groupDropdown" name="groupDropdown" class="user-dropdown" multiple>
                 @foreach (var group in @Model.groupsList)
                 {
                     <option value=@group> @group </option>
@@ -53,7 +65,7 @@
             </div>
         </div>
     </div>
-    
+
     <button id="btnViewUserData" class="btnViewData" type="button">View Data</button>
 </div>
 

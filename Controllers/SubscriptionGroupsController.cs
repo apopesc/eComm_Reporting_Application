@@ -120,10 +120,12 @@ namespace eComm_Reporting_Application.Controllers
                 //Converting lists to strings for the query
                 string groupsListString = String.Join("', '", filterData.groupsList.ToArray());
                 groupsListString = "'" + groupsListString + "'";
+                string groupIDsListString = String.Join("', '", filterData.groupsIDList.ToArray());
+                groupIDsListString = "'" + groupIDsListString + "'";
                 string masterGroupsListString = String.Join("', '", filterData.masterGroupsList.ToArray());
                 masterGroupsListString = "'" + masterGroupsListString + "'";
 
-                string queryString = "SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND User_Group IN (" + groupsListString + ") AND Master_Group IN (" + masterGroupsListString + ");";
+                string queryString = "SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND User_Group IN (" + groupsListString + ") AND Group_ID IN (" + groupIDsListString + ") AND Master_Group IN (" + masterGroupsListString + ");";
 
                 tableQuery = new SqlCommand(queryString, connection);
                 using (connection)

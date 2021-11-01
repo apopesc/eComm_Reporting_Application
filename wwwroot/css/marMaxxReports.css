@@ -3,7 +3,7 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 90%;
+    width: 93%;
     margin-bottom: 45px;
     overflow: scroll;
 }
@@ -16,7 +16,7 @@
 
 @media screen and (max-width: 1280px) {
     #marMaxxSubscriptionData {
-        max-height: 210px;
+        max-height: 300px;
     }
 }
 
@@ -56,3 +56,4 @@
 .marMaxxSubscriptionsEntry_Icon{
     min-width: 60px;
 }
+

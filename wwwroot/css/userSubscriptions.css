@@ -1,9 +1,7 @@
 ﻿.is-active {
-    width: 200px;
     height: 38px;
     padding: 14px 0;
     float: left;
-    margin-left: -45px;
 }
 
 #userSubscriptionData {
@@ -11,7 +9,7 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 90%;
+    width: 93%;
     margin-bottom: 45px;
     overflow: scroll;
 }
@@ -24,7 +22,7 @@
 
 @media screen and (max-width: 1280px) {
     #userSubscriptionData {
-        max-height: 210px;
+        max-height: 300px;
     }
 }
 
@@ -60,11 +58,47 @@
     z-index: 10;
 }
 
-
 .radio-btns {
-    margin-left: 10px;
+    float: right;
 }
 
 .userSubscriptionsEntry_Email{
     width: 350px;
+}
+
+.separator-line {
+    top: 268px;
+}
+
+.addNew {
+    margin-top: 75px;
+}
+
+.btnViewData {
+    margin-top: 16px;
+}
+
+.btn-group{
+    float: right;
+}
+
+@media screen and (max-width: 1920px) {
+    .main-dropdown {
+        width: 420px;
+    }
+    .is-active {
+        width: 219px;
+    }
+
+@media screen and (max-width: 1280px) {
+    .main-dropdown {
+        width: 380px;
+    }
+    .is-active {
+        width: 218px;
+    }
+}
+
+.main-dropdown {
+    margin-right: 80px;
 }
