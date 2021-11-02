@@ -232,6 +232,41 @@ namespace eComm_Reporting_Application.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult GetGroupValues(List<string> masterGroupList)
+        {
+            try
+            {
+                IDictionary<string, string> groups = new Dictionary<string, string>();
+
+                string masterGroupsListString = String.Join("', '", masterGroupList.ToArray());
+                masterGroupsListString = "'" + masterGroupsListString + "'";
+
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                string groupsQueryString = "SELECT GroupID,GroupName FROM Groups WHERE MasterGroup IN (" + masterGroupsListString + ")";
+                SqlCommand groupsQuery = new SqlCommand(groupsQueryString, connection);
+                using (connection)
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = groupsQuery.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var groupID = reader.GetString(0);
+                            var groupName = reader.GetString(1);
+                            groups.Add(groupID, groupName);
+                        }
+                    }
+                }
+                return Json(groups);
+            }
+            catch (Exception e)
+            {
+                return Json("Error getting group values");
+            }
+        }
         //Getting filter data from the database
         private UserSubscriptionDropdownModel GetFilterData()
         {

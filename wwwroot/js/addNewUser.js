@@ -3,12 +3,14 @@
     $('#SubscriptionGroups_Link').addClass('selected-nav-option');
 
     $('#addNew_groupDropdown').multiselect({
-        enableCaseInsensitiveFiltering: true
+        nonSelectedText: 'Select a group...',
+        enableCaseInsensitiveFiltering: true,
+        enableClickableOptGroups: true,
+        enableCollapsibleOptGroups: true
     });
-    $('#addNew_groupIDDropdown').multiselect({
-        enableCaseInsensitiveFiltering: true
-    });
+    
     $('#addNew_masterGroupDropdown').multiselect({
+        nonSelectedText: 'Select a master group...',
         enableCaseInsensitiveFiltering: true
     });
 
@@ -76,3 +78,43 @@
         }
     });
 });
+
+function selectedMasterGroup() {
+    if ($('#addNew_masterGroupDropdown :selected').length == 0) { //Nothing is selected in the dropdown (last value is deselected)
+
+        var data = [];
+        $("#addNew_groupDropdown").multiselect('dataprovider', data);
+        $('#addNew_groupDropdown').multiselect('disable');
+
+    } else { //Something is selected in the dropdown
+        var controllerUrl = '/SubscriptionGroups/GetGroupValues';
+
+        var masterGroupList = $('#addNew_masterGroupDropdown').val();
+
+        $.ajax({
+            type: "POST",
+            url: controllerUrl,
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc,
+            data: { 'masterGroupList': masterGroupList }
+        });
+
+        function successFunc(dropdownData) {
+            //manage the list of dropdown values in the front end -> just use controller to get the dropdown values for each selected folder
+            var data = [{label: 'Group ID', value: 'demoOption', disabled: true, children: [{ label: 'Group Name', value: '', disabled: true }]}];
+
+            for (var groupID in dropdownData) {
+                var dropdownEntry = { label: groupID, children: [{ label: dropdownData[groupID], value: dropdownData[groupID], title: groupID }] };
+                data.push(dropdownEntry);
+            }
+
+            $("#addNew_groupDropdown").multiselect('dataprovider', data);
+            $('#addNew_groupDropdown').multiselect('enable');
+        }
+
+        function errorFunc(error) {
+            alert("Error Retrieving Report Names: " + error);
+        }
+    }
+}
