@@ -35,7 +35,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddUserSubToDB(string userEmail, string isActive, string selectedGroupID, string selectedGroup, string selectedMasterGroup)
+        public IActionResult AddUserSubToDB(string userEmail, string isActive, string selectedGroupIDs, string selectedGroups, string selectedMasterGroups)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace eComm_Reporting_Application.Controllers
                 SqlConnection connection = new SqlConnection(connectionstring);
 
                 string addUserQueryString = "INSERT INTO UserSubscriptions (User_Email, Is_Active, User_Group, Group_ID, Master_Group) " +
-                    "VALUES ('" + userEmail + "', '" + isActive + "', '" + selectedGroup + "', '" + selectedGroupID + "', '" + selectedMasterGroup + "');";
+                    "VALUES ('" + userEmail + "', '" + isActive + "', '" + selectedGroups + "', '" + selectedGroupIDs + "', '" + selectedMasterGroups + "');";
 
                 SqlCommand addUserQuery = new SqlCommand(addUserQueryString, connection);
 
@@ -77,9 +77,9 @@ namespace eComm_Reporting_Application.Controllers
                 newEntry.ID = userID;
                 newEntry.userEmail = userEmail;
                 newEntry.isActive = isActive;
-                newEntry.groupID = selectedGroupID;
-                newEntry.group = selectedGroup;
-                newEntry.masterGroup = selectedMasterGroup;
+                newEntry.groupID = selectedGroupIDs;
+                newEntry.group = selectedGroups;
+                newEntry.masterGroup = selectedMasterGroups;
 
                 tableData.Insert(0, newEntry); //Adding new user to start of table
 

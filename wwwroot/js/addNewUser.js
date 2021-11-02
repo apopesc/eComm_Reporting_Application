@@ -41,9 +41,15 @@
         var enteredEmail = $("#addNew_UserEmail").val();
         var isValidEmail = ValidateEmail(enteredEmail);
 
-        var enteredGroupID = $('#addNew_groupIDDropdown').val();
-        var enteredGroup = $('#addNew_groupDropdown').val();
-        var enteredMasterGroup = $('#addNew_masterGroupDropdown').val();
+        //var enteredGroupID = $('#addNew_groupIDDropdown').val();
+        var enteredGroups = $('#addNew_groupDropdown').val();
+        var enteredMasterGroups = $('#addNew_masterGroupDropdown').val();
+        var enteredGroupIDs = [];
+
+        $('#addNew_groupDropdown').find("option:selected").each(function () {
+            var groupID = $(this).prop('title');
+            enteredGroupIDs.push(groupID)
+        });
 
         var enteredIsActive;
 
@@ -59,12 +65,16 @@
             alert("Please enter a valid email address before submitting.");
         } else if (enteredIsActive == '') {
             alert("Please enter a value for Is Active.");
-        } else if (enteredGroupID == null || enteredGroup == null || enteredMasterGroup == null) {
+        } else if (enteredGroupIDs.length == 0 || enteredGroups.length == 0 || enteredMasterGroups.length == 0) {
             alert("Please enter a value for Group ID, Group, and MasterGroup");
         } else {
 
             //Posting the collected data to the SubscriptionsGroupsController
             var controllerUrl = '/SubscriptionGroups/AddUserSubToDB';
+
+            var groupNames_String = enteredGroups.toString();
+            var groupIDs_String = enteredGroupIDs.toString();
+            var masterGroups_String = enteredMasterGroups.toString();
 
             $.ajax({
                 type: "POST",
@@ -75,9 +85,9 @@
                 data: {
                     userEmail: enteredEmail,
                     isActive: enteredIsActive,
-                    selectedGroupID: enteredGroupID,
-                    selectedGroup: enteredGroup,
-                    selectedMasterGroup: enteredMasterGroup
+                    selectedGroupIDs: groupIDs_String,
+                    selectedGroups: groupNames_String,
+                    selectedMasterGroups: masterGroups_String
                 }
             });
 
