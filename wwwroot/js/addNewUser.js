@@ -41,7 +41,6 @@
         var enteredEmail = $("#addNew_UserEmail").val();
         var isValidEmail = ValidateEmail(enteredEmail);
 
-        //var enteredGroupID = $('#addNew_groupIDDropdown').val();
         var enteredGroups = $('#addNew_groupDropdown').val();
         var enteredMasterGroups = $('#addNew_masterGroupDropdown').val();
         var enteredGroupIDs = [];
@@ -131,7 +130,7 @@ function selectedMasterGroup() {
             var data = [];
 
             for (var groupID in dropdownData) {
-                var dropdownEntry = { label: '<b>ID: </b>' + groupID, children: [{ label: "<b>Name: </b>" + dropdownData[groupID], value: dropdownData[groupID], title: groupID }] };
+                var dropdownEntry = { label: "<b>ID: </b>" + groupID + " </br><b>Name: </b>" + dropdownData[groupID], value: dropdownData[groupID], title: groupID };
                 data.push(dropdownEntry);
             }
 
