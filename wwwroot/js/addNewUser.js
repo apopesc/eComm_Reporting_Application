@@ -3,10 +3,26 @@
     $('#SubscriptionGroups_Link').addClass('selected-nav-option');
 
     $('#addNew_groupDropdown').multiselect({
-        nonSelectedText: 'Select a group...',
         enableCaseInsensitiveFiltering: true,
         enableClickableOptGroups: true,
-        enableCollapsibleOptGroups: true
+        enableCollapsibleOptGroups: true,
+        enableHTML: true,
+        buttonText: function (options, select) {
+            if (options.length > 0) {
+                var labels = [];
+                options.each(function () {
+                    if ($(this).attr('label') !== undefined) {
+                        labels.push($(this).attr('value'));
+                    }
+                    else {
+                        labels.push($(this).html());
+                    }
+                });
+                return labels.join(', ') + '';
+            } else {
+                return 'Select a group...';
+            }
+        }
     });
     
     $('#addNew_masterGroupDropdown').multiselect({
@@ -101,11 +117,11 @@ function selectedMasterGroup() {
         });
 
         function successFunc(dropdownData) {
-            //manage the list of dropdown values in the front end -> just use controller to get the dropdown values for each selected folder
-            var data = [{label: 'Group ID', value: 'demoOption', disabled: true, children: [{ label: 'Group Name', value: '', disabled: true }]}];
+            //var data = [{label: 'Group ID', value: 'demoOption', disabled: true, children: [{ label: 'Group Name', value: '', disabled: true }]}];
+            var data = [];
 
             for (var groupID in dropdownData) {
-                var dropdownEntry = { label: groupID, children: [{ label: dropdownData[groupID], value: dropdownData[groupID], title: groupID }] };
+                var dropdownEntry = { label: '<b>ID: </b>' + groupID, children: [{ label: "<b>Name: </b>" + dropdownData[groupID], value: dropdownData[groupID], title: groupID }] };
                 data.push(dropdownEntry);
             }
 
