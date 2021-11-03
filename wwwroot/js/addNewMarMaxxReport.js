@@ -1,14 +1,25 @@
 ﻿$(document).ready(function () {
     $('#MarMaxxReports_Link').addClass('selected-nav-option');
 
-
-    $('#marMaxxGroupID').multiselect({
-        nonSelectedText: 'Select a group ID...',
-        enableCaseInsensitiveFiltering: true
-    });
-    $('#marMaxxGroupName').multiselect({
-        nonSelectedText: 'Select a group name...',
-        enableCaseInsensitiveFiltering: true
+    $('#marMaxxGroup').multiselect({
+        enableCaseInsensitiveFiltering: true,
+        enableHTML: true,
+        buttonText: function (options, select) {
+            if (options.length > 0) {
+                var labels = [];
+                options.each(function () {
+                    if ($(this).attr('label') !== undefined) {
+                        labels.push($(this).attr('value'));
+                    }
+                    else {
+                        labels.push($(this).html());
+                    }
+                });
+                return labels.join(', ') + '';
+            } else {
+                return 'Select a group...';
+            }
+        }
     });
     $('#marMaxxFolderDropdown').multiselect({
         nonSelectedText: 'Select a folder...',
@@ -66,9 +77,13 @@
 
     $('#saveSubscription').on('click', '#saveMarmaxxSubscription', function () {
         var subscriptionName = $('#subscriptionName').val();
-        var groupIDs = $('#marMaxxGroupID').val();
-        var groupNames = $('#marMaxxGroupName').val();
+        var groupNames = $('#marMaxxGroup').val();
         var reportName = $('#marMaxxReportDropdown').val();
+        var groupIDs = [];
+        $('#marMaxxGroup').find("option:selected").each(function () {
+            var groupID = $(this).prop('title');
+            groupIDs.push(groupID)
+        });
         var dynamicParams = {};
 
         if (subscriptionName == '') {

@@ -4,8 +4,6 @@
 
     $('#addNew_groupDropdown').multiselect({
         enableCaseInsensitiveFiltering: true,
-        enableClickableOptGroups: true,
-        enableCollapsibleOptGroups: true,
         enableHTML: true,
         buttonText: function (options, select) {
             if (options.length > 0) {
