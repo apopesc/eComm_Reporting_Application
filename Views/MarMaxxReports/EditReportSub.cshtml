@@ -62,23 +62,11 @@
 
     <div class="addnew-row">
         <div class="addnew-dropdown">
-            <label class="filter-label" for="marMaxxGroupName">Group Name: </label>
-            <select id="marMaxxGroupName" name="marMaxxReportName" multiple>
-                @foreach (var groupName in @Model.groupNames)
+            <label class="filter-label" for="marMaxxGroup">Group:</label>
+            <select id="marMaxxGroup" name="marMaxxGroup" multiple>
+                @for (int i = 0; i < Model.groupIDs.Count; i++)
                 {
-                    <option value=@groupName> @groupName </option>
-                }
-            </select>
-        </div>
-    </div>
-
-    <div class="addnew-row">
-        <div class="addnew-dropdown">
-            <label class="filter-label" for="marMaxxGroupID">Group ID:</label>
-            <select id="marMaxxGroupID" name="marMaxxGroupID" multiple>
-                @foreach (var groupID in @Model.groupIDs)
-                {
-                    <option value=@groupID> @groupID </option>
+                    <option title="@Model.groupIDs[i]" value=@Model.groupNames[i] label="<b>ID: </b>@Model.groupIDs[i]</br> <b>Name: </b>@Model.groupNames[i]"> </option>
                 }
             </select>
         </div>

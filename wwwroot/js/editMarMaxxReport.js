@@ -3,13 +3,25 @@
 $(document).ready(function () {
     $('#MarMaxxReports_Link').addClass('selected-nav-option');
 
-    $('#marMaxxGroupID').multiselect({
-        nonSelectedText: 'Select a group ID...',
-        enableCaseInsensitiveFiltering: true
-    });
-    $('#marMaxxGroupName').multiselect({
-        nonSelectedText: 'Select a group name...',
-        enableCaseInsensitiveFiltering: true
+    $('#marMaxxGroup').multiselect({
+        enableCaseInsensitiveFiltering: true,
+        enableHTML: true,
+        buttonText: function (options, select) {
+            if (options.length > 0) {
+                var labels = [];
+                options.each(function () {
+                    if ($(this).attr('label') !== undefined) {
+                        labels.push($(this).attr('value'));
+                    }
+                    else {
+                        labels.push($(this).html());
+                    }
+                });
+                return labels.join(', ') + '';
+            } else {
+                return 'Select a group...';
+            }
+        }
     });
     $('#marMaxxReportName').multiselect({
         nonSelectedText: 'Select a report name...',
@@ -18,25 +30,17 @@ $(document).ready(function () {
 
     //Getting group IDs and Names from hidden parameters
     var selectedGroupNamesString = "";
-    var selectedGroupIDsString = "";
     $('.hidden-selected-groups input').each(function () {
         if ($(this).attr("id") == "selectedGroupNames") {
             selectedGroupNamesString = $(this).val();
-        }
-        else if ($(this).attr("id") == "selectedGroupIDs") {
-            selectedGroupIDsString = $(this).val();
         }
     });
 
     //setting selected values of group IDs and group names in the dropdowns
     var selectedGroupNames = selectedGroupNamesString.split(",");
-    var selectedGroupIDs = selectedGroupIDsString.split(",");
 
-    $('#marMaxxGroupName').val(selectedGroupNames);
-    $('#marMaxxGroupName').multiselect('refresh');
-
-    $('#marMaxxGroupID').val(selectedGroupIDs);
-    $('#marMaxxGroupID').multiselect('refresh');
+    $('#marMaxxGroup').val(selectedGroupNames);
+    $('#marMaxxGroup').multiselect('refresh');
 
     //Getting report folder name first before getting all dynamic parameter dropdown data
     var selectedReportName = $('#marMaxxReportName option[disabled]:selected').val();
@@ -212,8 +216,12 @@ $(document).ready(function () {
     $('#saveSubscription').on('click', '#saveMarmaxxSubscription', function () {
         var subscriptionID = $('#subscriptionID').val();
         var subscriptionName = $('#subscriptionName').val();
-        var groupIDs = $('#marMaxxGroupID').val();
-        var groupNames = $('#marMaxxGroupName').val();
+        var groupNames = $('#marMaxxGroup').val();
+        var groupIDs = [];
+        $('#marMaxxGroup').find("option:selected").each(function () {
+            var groupID = $(this).prop('title');
+            groupIDs.push(groupID)
+        });
         var dynamicParams = {};
 
         if (subscriptionName == '') {
