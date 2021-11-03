@@ -299,7 +299,9 @@ $(document).ready(function () {
         $('#userSubscriptionData').empty();
 
         var subTable = $('<table>').addClass('userSubscriptionsTable');
+        subTable.prop('id', 'userSubscriptionsTable');
 
+        let header = $('<thead>');
         //TTable headers -------------------------------------------------------------------------------
         let Hrow = $('<tr>').addClass('userSubscriptionsRow_Header')
         let tableHeader_Icons = $('<th>').addClass('userSubscriptionsHeader').text(''); //Invisible header for icons
@@ -314,11 +316,13 @@ $(document).ready(function () {
         Hrow.append(tableHeader4);
         let tableHeader5 = $('<th>').addClass('userSubscriptionsHeader').text('Master Group');
         Hrow.append(tableHeader5);
-        subTable.append(Hrow); //Adding the row to the table
+        header.append(Hrow);
+        subTable.append(header); //Adding the row to the table
 
+        let body = $('<tbody>');
         //----------------------------------------------------------------------------------------------
         for (let i = 0; i < tableData.length; i++) {
-
+            
             if (i == tableData.length - 1) { //This is so that the bottom border isn't added to the last row (it pops out of the table otherwise)
                 var row = $('<tr>').addClass('userSubscriptionsRow_Last');
                 row.prop('id', tableData[i].id);
@@ -346,9 +350,13 @@ $(document).ready(function () {
             let tableEntry5 = $('<td contenteditable = "true">').addClass('userSubscriptionsEntry_masterGroup').text(tableData[i].masterGroup);
             row.append(tableEntry5);
 
-            subTable.append(row); //adding row to the table
+            body.append(row);
+            //subTable.append(row); //adding row to the table
         }
+        subTable.append(body);
         $('#userSubscriptionData').append(subTable);
+
+        $('#userSubscriptionsTable').DataTable();
     }
 
 

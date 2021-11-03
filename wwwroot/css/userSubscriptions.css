@@ -11,19 +11,6 @@
     margin-right: auto;
     width: 93%;
     margin-bottom: 45px;
-    overflow: scroll;
-}
-
-@media screen and (max-width: 1920px) {
-    #userSubscriptionData {
-        max-height: 445px;
-    }
-}
-
-@media screen and (max-width: 1280px) {
-    #userSubscriptionData {
-        max-height: 300px;
-    }
 }
 
 .userSubscriptionsTable {
