@@ -117,15 +117,49 @@ namespace eComm_Reporting_Application.Controllers
                     isActiveString = "'Y', 'N'";
                 }
 
-                //Converting lists to strings for the query
-                string groupsListString = String.Join("', '", filterData.groupsList.ToArray());
-                groupsListString = "'" + groupsListString + "'";
-                string groupIDsListString = String.Join("', '", filterData.groupsIDList.ToArray());
-                groupIDsListString = "'" + groupIDsListString + "'";
-                string masterGroupsListString = String.Join("', '", filterData.masterGroupsList.ToArray());
-                masterGroupsListString = "'" + masterGroupsListString + "'";
+                string queryString = "SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND (User_Group LIKE ";
 
-                string queryString = "SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND User_Group IN (" + groupsListString + ") AND Group_ID IN (" + groupIDsListString + ") AND Master_Group IN (" + masterGroupsListString + ");";
+                for(int i = 0; i<filterData.groupsList.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        queryString = queryString + "'%"+filterData.groupsList[i]+"%'";
+                    }
+                    else
+                    {
+                        queryString = queryString + " OR User_Group LIKE " + "'%" + filterData.groupsList[i] + "%'";
+                    }
+                }
+
+                queryString = queryString + ") AND (Group_ID LIKE ";
+
+                for (int i = 0; i < filterData.groupsIDList.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        queryString = queryString + "'%" + filterData.groupsIDList[i] + "%'";
+                    }
+                    else
+                    {
+                        queryString = queryString + " OR Group_ID LIKE " + "'%" + filterData.groupsIDList[i] + "%'";
+                    }
+                }
+
+                queryString = queryString + ") AND (Master_Group LIKE ";
+
+                for (int i = 0; i < filterData.masterGroupsList.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        queryString = queryString + "'%" + filterData.masterGroupsList[i] + "%'";
+                    }
+                    else
+                    {
+                        queryString = queryString + " OR Master_Group LIKE " + "'%" + filterData.masterGroupsList[i] + "%'";
+                    }
+                }
+
+                queryString = queryString + ");";
 
                 tableQuery = new SqlCommand(queryString, connection);
                 using (connection)
