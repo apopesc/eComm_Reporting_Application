@@ -356,7 +356,9 @@ $(document).ready(function () {
         subTable.append(body);
         $('#userSubscriptionData').append(subTable);
 
-        $('#userSubscriptionsTable').DataTable();
+        $('#userSubscriptionsTable').DataTable({
+            "lengthMenu": [8, 15, 25, 50]
+        });
     }
 
 
