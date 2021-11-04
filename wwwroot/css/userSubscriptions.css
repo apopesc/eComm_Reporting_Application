@@ -48,7 +48,6 @@
 }
 
 .userSubscriptionsRow_Header {
-    box-shadow: 0 0 0 1px black;
     height: 40px;
     background: #E5E5E5;
     position: sticky;

@@ -133,9 +133,12 @@ function selectedFolder() {
 function createTable(tableData) {
     //Clearing table initially
     $('#marMaxxSubscriptionData').empty();
+    $('#marMaxxSubscriptionData').addClass("horizontal-scroll");
 
     var subTable = $('<table>').addClass('marMaxxSubscriptionsTable');
+    subTable.prop('id', 'marMaxxSubscriptionsTable');
 
+    let header = $('<thead>');
     //Adding the headers to the table
     let Hrow = $('<tr>').addClass('marMaxxSubscriptionsRow_Header');
 
@@ -146,8 +149,10 @@ function createTable(tableData) {
         let tableHeader = $('<th>').addClass('marMaxxSubscriptionsHeader').text(tableData.tableParams[i].name);
         Hrow.append(tableHeader);
     }
-    subTable.append(Hrow);
+    header.append(Hrow);
+    subTable.append(header); //Adding the row to the table
 
+    let body = $('<tbody>');
     //Adding the data under the headers
     for (let j = 0; j < tableData.rowData.length; j++) {
 
@@ -193,7 +198,12 @@ function createTable(tableData) {
             }
         }
 
-        subTable.append(row); //adding row to the table
+        body.append(row);
     }
+    subTable.append(body);
     $('#marMaxxSubscriptionData').append(subTable);
+
+    $('#marMaxxSubscriptionsTable').DataTable({
+        "lengthMenu": [5, 8, 15, 25]
+    });
 }

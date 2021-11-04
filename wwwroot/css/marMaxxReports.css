@@ -1,23 +1,23 @@
 ﻿#marMaxxSubscriptionData {
-    margin-top: 100px;
     display: block;
     margin-left: auto;
     margin-right: auto;
     width: 93%;
-    margin-bottom: 45px;
-    overflow: scroll;
 }
 
-@media screen and (max-width: 1920px) {
-    #marMaxxSubscriptionData {
-        max-height: 445px;
-    }
+.horizontal-scroll {
+    overflow-x: scroll;
 }
 
-@media screen and (max-width: 1280px) {
-    #marMaxxSubscriptionData {
-        max-height: 300px;
-    }
+#marMaxxSubscriptionsTable_filter {
+    float: left;
+    margin-left: 45px;
+    line-height: 1.34;
+    margin-top: 0px;
+}
+
+#marMaxxSubscriptionsTable_length {
+    margin-top: 0px;
 }
 
 .marMaxxSubscriptionsTable {
@@ -41,7 +41,6 @@
 }
 
 .marMaxxSubscriptionsRow_Header {
-    box-shadow: 0 0 0 1px black;
     height: 40px;
     background: #E5E5E5;
     position: sticky;
@@ -57,3 +56,9 @@
     min-width: 60px;
 }
 
+.addNew{
+    margin-bottom: -36px;
+    margin-top: 36px;
+    z-index: 3;
+    position: relative;
+}
