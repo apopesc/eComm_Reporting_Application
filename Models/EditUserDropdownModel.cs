@@ -11,5 +11,7 @@ namespace eComm_Reporting_Application.Models
         public string userEmail { get; set; }
         public string isActive { get; set; }
         public List<string> masterGroupsList { get; set; }
+        public string selectedGroupNames { get; set; }
+        public string selectedMasterGroups { get; set; }
     }
 }

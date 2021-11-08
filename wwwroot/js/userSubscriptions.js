@@ -208,7 +208,12 @@ $(document).ready(function () {
         }
     });
 
+    $('#userSubscriptionData').on('click', '.editBtn', function () {
+        var $selectedRow = $(this).closest("tr");
+        var _ID = $selectedRow.attr('id');
 
+        window.location = "/SubscriptionGroups/EditUserSub?ID=" + _ID;
+    });
 
     function createTable(tableData) {
         //Clearing table initially

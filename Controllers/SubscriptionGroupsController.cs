@@ -34,10 +34,48 @@ namespace eComm_Reporting_Application.Controllers
             return View(subModel);
         }
 
-        public IActionResult EditUserSub()
+        public IActionResult EditUserSub(int ID)
         {
             EditUserDropdownModel subModel = new EditUserDropdownModel();
-            //need to populate model
+
+            List<string> master_groups_list = new List<string>();
+
+            string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+            SqlConnection connection = new SqlConnection(connectionstring);
+
+            string masterGroupsQueryString = "SELECT DISTINCT MasterGroup FROM Groups WHERE MasterGroup IS NOT NULL";
+            string userQueryString = "SELECT * FROM UserSubscriptions WHERE ID=" + ID;
+
+            SqlCommand masterGroupsQuery = new SqlCommand(masterGroupsQueryString, connection);
+            SqlCommand userQuery = new SqlCommand(userQueryString, connection);
+
+            using (connection)
+            {
+                connection.Open();
+                using (SqlDataReader reader = masterGroupsQuery.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var groupString = reader.GetString(0);
+                        master_groups_list.Add(groupString);
+                    }
+                }
+
+                using (SqlDataReader reader = userQuery.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        subModel.userEmail = reader.GetString(1);
+                        subModel.isActive = reader.GetString(2);
+                        subModel.selectedGroupNames = reader.GetString(3);
+                        subModel.selectedMasterGroups = reader.GetString(4);
+                    }
+                }
+                connection.Close();
+            }
+
+            subModel.ID = ID;
+            subModel.masterGroupsList = master_groups_list;
 
             return View(subModel);
         }
