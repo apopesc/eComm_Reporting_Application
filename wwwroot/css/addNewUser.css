@@ -44,6 +44,13 @@
     font-weight: 700;
 }
 
+#editUserSubmit {
+    width: 150px;
+    background-color: #9E0000;
+    color: white;
+    font-weight: 700;
+}
+
 .email{
     width: 420px;
 }

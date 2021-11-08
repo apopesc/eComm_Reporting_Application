@@ -209,90 +209,6 @@ $(document).ready(function () {
     });
 
 
-    $('#btnSubmitUser').click(function () {
-
-        var editedUsersList = [];
-        var isValidEdit = true;
-
-        $('.userSubscriptionsTable tr').each(function () {
-            $currentRow = $(this).closest("tr");
-            if ($currentRow.hasClass("edited")) { //Getting data from rows only with the 'edited' class
-                //Add input validation here to make sure users don't make crazy edits
-
-                var _ID = $currentRow.attr('id');
-                var _userEmail = $currentRow.find(".userSubscriptionsEntry_Email").text();
-                var _isActive = $currentRow.find(".userSubscriptionsEntry_isActive").text();
-                var _group = $currentRow.find(".userSubscriptionsEntry_Group").text();
-                var _groupID = $currentRow.find(".userSubscriptionsEntry_GroupID").text();
-                var _masterGroup = $currentRow.find(".userSubscriptionsEntry_masterGroup").text();
-
-                //Input validation for the edited users
-                var isValidEmail = ValidateEmail(_userEmail);
-                if (isValidEmail == false) {
-                    alert(_userEmail + " is an invalid Email.");
-                    isValidEdit = false;
-                    return false;
-
-                } else if (!(_isActive == 'Y' || _isActive == 'N')) {
-                    alert(_userEmail + " has an invalid Is Active value. Please enter Y or N.");
-                    isValidEdit = false;
-                    return false;
-
-                } else if (!(groupDropdownValues.includes(_group))){
-                    alert(_userEmail + " has an invalid Group value. Please enter an existing Group.");
-                    isValidEdit = false;
-                    return false;
-
-                } else if (!(masterGroupDropdownValues.includes(_masterGroup))){
-                    alert(_userEmail + " has an invalid Master Group value. Please enter an existing Master Group.");
-                    isValidEdit = false;
-                    return false;
-
-                } else if (!(groupIDValues.includes(_groupID))) {
-                    alert(_userEmail + " has an invalid Group ID value. Please enter an existing Group ID.");
-                    isValidEdit = false;
-                    return false;
-                }
-
-                let editedUser = {
-                    ID: _ID,
-                    userEmail: _userEmail,
-                    isActive: _isActive,
-                    group: _group,
-                    groupID: _groupID,
-                    masterGroup: _masterGroup
-                }
-                editedUsersList.push(editedUser);
-            }
-        });
-
-        if (editedUsersList.length > 0 && isValidEdit == true) {
-
-            var controllerUrl  = '/SubscriptionGroups/EditUserSub';
-
-            $.ajax({
-                dataType: 'json',
-                type: 'POST',
-                url: controllerUrl,
-                data: { 'editedUsersList': editedUsersList },
-                success: successFunc,
-                error: errorFunc
-            });
-
-            function successFunc(editedUserData) {
-                alert(editedUserData);
-            }
-
-            function errorFunc(error) {
-                alert("Error Saving Edited Users: " + error);
-            }
-
-        } else  if (isValidEdit == true){
-            alert("Please load a table of users and make an edit before submitting.");
-        }
-
-    });
-
 
     function createTable(tableData) {
         //Clearing table initially
@@ -332,22 +248,28 @@ $(document).ready(function () {
             }
 
             //Adding the icons to each row ------------------------------------------------------------
-            let tableEntry_Icon = $('<td>').addClass('userSubscriptionsEntry_Icon');
+            let tableEntry_Icons = $('<td>').addClass('userSubscriptionsEntry_Icon');
             let deleteIcon = $('<button>').addClass('deleteBtn');
             let deleteLink = $('<i>').addClass('fa fa-trash');
             deleteIcon.append(deleteLink);
-            tableEntry_Icon.append(deleteIcon);
-            row.append(tableEntry_Icon);
+            tableEntry_Icons.append(deleteIcon);
 
-            let tableEntry1 = $('<td contenteditable = "true">').addClass('userSubscriptionsEntry_Email').text(tableData[i].userEmail);
+            let editIcon = $('<button>').addClass('editBtn');
+            let editLink = $('<i>').addClass('fas fa-pencil-alt');
+            editIcon.append(editLink);
+            tableEntry_Icons.append(editIcon);
+
+            row.append(tableEntry_Icons);
+
+            let tableEntry1 = $('<td>').addClass('userSubscriptionsEntry_Email').text(tableData[i].userEmail);
             row.append(tableEntry1); //adding element to the row
-            let tableEntry2 = $('<td contenteditable = "true">').addClass('userSubscriptionsEntry_isActive').text(tableData[i].isActive);
+            let tableEntry2 = $('<td>').addClass('userSubscriptionsEntry_isActive').text(tableData[i].isActive);
             row.append(tableEntry2);
-            let tableEntry3 = $('<td contenteditable = "true">').addClass('userSubscriptionsEntry_Group').text(tableData[i].group);
+            let tableEntry3 = $('<td>').addClass('userSubscriptionsEntry_Group').text(tableData[i].group);
             row.append(tableEntry3);
-            let tableEntry4 = $('<td contenteditable = "true">').addClass('userSubscriptionsEntry_GroupID').text(tableData[i].groupID);
+            let tableEntry4 = $('<td>').addClass('userSubscriptionsEntry_GroupID').text(tableData[i].groupID);
             row.append(tableEntry4);
-            let tableEntry5 = $('<td contenteditable = "true">').addClass('userSubscriptionsEntry_masterGroup').text(tableData[i].masterGroup);
+            let tableEntry5 = $('<td>').addClass('userSubscriptionsEntry_masterGroup').text(tableData[i].masterGroup);
             row.append(tableEntry5);
 
             body.append(row);
@@ -357,7 +279,7 @@ $(document).ready(function () {
         $('#userSubscriptionData').append(subTable);
 
         $('#userSubscriptionsTable').DataTable({
-            "lengthMenu": [8, 15, 25, 50]
+            "lengthMenu": [10, 15, 25, 50]
         });
     }
 
@@ -370,3 +292,88 @@ $(document).ready(function () {
     }
 
 });
+
+
+//$('#btnSubmitUser').click(function () {
+
+    //    var editedUsersList = [];
+    //    var isValidEdit = true;
+
+    //    $('.userSubscriptionsTable tr').each(function () {
+    //        $currentRow = $(this).closest("tr");
+    //        if ($currentRow.hasClass("edited")) { //Getting data from rows only with the 'edited' class
+    //            //Add input validation here to make sure users don't make crazy edits
+
+    //            var _ID = $currentRow.attr('id');
+    //            var _userEmail = $currentRow.find(".userSubscriptionsEntry_Email").text();
+    //            var _isActive = $currentRow.find(".userSubscriptionsEntry_isActive").text();
+    //            var _group = $currentRow.find(".userSubscriptionsEntry_Group").text();
+    //            var _groupID = $currentRow.find(".userSubscriptionsEntry_GroupID").text();
+    //            var _masterGroup = $currentRow.find(".userSubscriptionsEntry_masterGroup").text();
+
+    //            //Input validation for the edited users
+    //            var isValidEmail = ValidateEmail(_userEmail);
+    //            if (isValidEmail == false) {
+    //                alert(_userEmail + " is an invalid Email.");
+    //                isValidEdit = false;
+    //                return false;
+
+    //            } else if (!(_isActive == 'Y' || _isActive == 'N')) {
+    //                alert(_userEmail + " has an invalid Is Active value. Please enter Y or N.");
+    //                isValidEdit = false;
+    //                return false;
+
+    //            } else if (!(groupDropdownValues.includes(_group))){
+    //                alert(_userEmail + " has an invalid Group value. Please enter an existing Group.");
+    //                isValidEdit = false;
+    //                return false;
+
+    //            } else if (!(masterGroupDropdownValues.includes(_masterGroup))){
+    //                alert(_userEmail + " has an invalid Master Group value. Please enter an existing Master Group.");
+    //                isValidEdit = false;
+    //                return false;
+
+    //            } else if (!(groupIDValues.includes(_groupID))) {
+    //                alert(_userEmail + " has an invalid Group ID value. Please enter an existing Group ID.");
+    //                isValidEdit = false;
+    //                return false;
+    //            }
+
+    //            let editedUser = {
+    //                ID: _ID,
+    //                userEmail: _userEmail,
+    //                isActive: _isActive,
+    //                group: _group,
+    //                groupID: _groupID,
+    //                masterGroup: _masterGroup
+    //            }
+    //            editedUsersList.push(editedUser);
+    //        }
+    //    });
+
+    //    if (editedUsersList.length > 0 && isValidEdit == true) {
+
+    //        var controllerUrl  = '/SubscriptionGroups/EditUserSub';
+
+    //        $.ajax({
+    //            dataType: 'json',
+    //            type: 'POST',
+    //            url: controllerUrl,
+    //            data: { 'editedUsersList': editedUsersList },
+    //            success: successFunc,
+    //            error: errorFunc
+    //        });
+
+    //        function successFunc(editedUserData) {
+    //            alert(editedUserData);
+    //        }
+
+    //        function errorFunc(error) {
+    //            alert("Error Saving Edited Users: " + error);
+    //        }
+
+    //    } else  if (isValidEdit == true){
+    //        alert("Please load a table of users and make an edit before submitting.");
+    //    }
+
+    //});

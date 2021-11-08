@@ -34,6 +34,14 @@ namespace eComm_Reporting_Application.Controllers
             return View(subModel);
         }
 
+        public IActionResult EditUserSub()
+        {
+            EditUserDropdownModel subModel = new EditUserDropdownModel();
+            //need to populate model
+
+            return View(subModel);
+        }
+
         [HttpPost]
         public IActionResult AddUserSubToDB(string userEmail, string isActive, string selectedGroupIDs, string selectedGroups, string selectedMasterGroups)
         {

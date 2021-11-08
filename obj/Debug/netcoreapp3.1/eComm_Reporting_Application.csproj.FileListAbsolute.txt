@@ -120,3 +120,4 @@ C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Appli
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\eComm_Reporting_Application.genruntimeconfig.cache
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\eComm_Reporting_Application.csproj.AssemblyReference.cache
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\Razor\Views\MarMaxxReports\EditReportSub.cshtml.g.cs
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\Razor\Views\SubscriptionGroups\EditUserSub.cshtml.g.cs

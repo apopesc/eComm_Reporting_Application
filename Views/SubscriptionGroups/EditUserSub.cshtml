@@ -1,0 +1,73 @@
+﻿@model eComm_Reporting_Application.Models.EditUserDropdownModel
+
+@{
+    ViewData["Title"] = "Edit User Subscription Group";
+}
+
+@section Scripts{
+    <script src="~/js/editUser.js"></script>
+}
+
+<link rel="stylesheet" href="~/css/addNewUser.css" />
+
+<div class="page-header">
+    <div class="page-title">
+        <h1 class="title-text">Edit User Subscription Group</h1>
+    </div>
+</div>
+
+
+<div class="filter-data">
+    <div class="addnew-row textbox">
+        <div class="addnew-textbox">
+            <label class="filter-label" for="subscription-id">User ID: </label>
+            <input type="text" id="editUserEmail" class="email-input" name="email-id" disabled value="@Model.ID" />
+        </div>
+    </div>
+
+    <div class="addnew-row">
+        <div class="email">
+            <label class="filter-label" for="email-input">Email: </label>
+            <input type="text" id="editNew_UserEmail" class="email-input" name="email-input" />
+        </div>
+    </div>
+
+    <div class="addnew-row">
+        <div class="addnew-is-active">
+            <p class="radio-label filter-label">Is Active:</p>
+            <div class="radio-btns">
+                <input type="radio" id="addNew_checkYes" name="is_active" value="yes" />
+                <label id="addNew_yesBox" class="yes-box" for="yes">Yes</label>
+                <input type="radio" id="addNew_checkNo" name="is_active" value="no" />
+                <label for="no">No</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="addnew-row">
+        <div class="addnew-dropdown">
+            <label class="filter-label" for="masterGroupDropdown">Master Group:</label>
+            <select id="edit_masterGroupDropdown" name="masterGroupDropdown" class="add-new-dropdown" onchange="selectedMasterGroup();" multiple>
+                @foreach (var master_group in @Model.masterGroupsList)
+                {
+                    <option value=@master_group> @master_group </option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="addnew-row">
+        <div class="addnew-dropdown">
+            <label class="filter-label" for="groupDropdown">Group:</label>
+            <select id="edit_groupDropdown" name="groupDropdown" class="add-new-dropdown" multiple disabled>
+            </select>
+        </div>
+    </div>
+
+    <div class="addnew-row-last">
+        <button id="backToUsers" class="btnAddPage" type="button" onclick="location.href='@Url.Action("Index", "SubscriptionGroups")'">Back</button>
+        <button id="editUserSubmit" class="btnAddPage" type="button">Submit User</button>
+    </div>
+
+</div>
+

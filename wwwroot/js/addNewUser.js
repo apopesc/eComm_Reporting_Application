@@ -111,7 +111,6 @@ function selectedMasterGroup() {
 
     } else { //Something is selected in the dropdown
         var controllerUrl = '/SubscriptionGroups/GetGroupValues';
-
         var masterGroupList = $('#addNew_masterGroupDropdown').val();
 
         $.ajax({
