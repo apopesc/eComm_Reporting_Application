@@ -348,6 +348,52 @@ namespace eComm_Reporting_Application.Controllers
                 return Json("Error getting group values");
             }
         }
+
+        [HttpPost]
+        public IActionResult EditUserSubToDB(int ID, string userEmail, string isActive, string selectedGroupIDs, string selectedGroups, string selectedMasterGroups)
+        {
+            try
+            {
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                string editUserQueryString = "UPDATE UserSubscriptions SET User_Email='" + userEmail + "', Is_Active='" + isActive + "', User_Group='" + selectedGroups + "', Group_ID='" + selectedGroupIDs + "', Master_Group='" + selectedMasterGroups + "' " +
+                    "WHERE ID=" + ID + ";";
+
+                SqlCommand editUserQuery = new SqlCommand(editUserQueryString, connection);
+
+                using (connection)
+                {
+                    connection.Open();
+                    using SqlDataReader reader = editUserQuery.ExecuteReader();
+                    connection.Close();
+                }
+
+                UserSubscriptionTableModel editedEntry = new UserSubscriptionTableModel();
+
+                for(int i = 0; i < tableData.Count; i++)
+                {
+                    if(tableData[i].ID == ID)
+                    {
+                        tableData[i].userEmail = userEmail;
+                        tableData[i].isActive = isActive;
+                        tableData[i].groupID = selectedGroupIDs;
+                        tableData[i].group = selectedGroups;
+                        tableData[i].masterGroup = selectedMasterGroups;
+                        break;
+                    }
+
+                }
+
+                return Json(new { result = "Redirect", url = Url.Action("Index", "SubscriptionGroups") });
+            }
+            catch (Exception e)
+            {
+                return Json("Error Saving to Database: " + e);
+            }
+        }
+
         //Getting filter data from the database
         private UserSubscriptionDropdownModel GetFilterData()
         {

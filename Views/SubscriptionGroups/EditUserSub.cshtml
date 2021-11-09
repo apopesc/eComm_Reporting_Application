@@ -28,14 +28,14 @@
     <div class="addnew-row textbox">
         <div class="email">
             <label class="filter-label" for="subscription-id">User ID: </label>
-            <input type="text" id="editUserEmail" class="email-input" name="email-id" disabled value="@Model.ID" />
+            <input type="text" id="userID" class="email-input" name="email-id" disabled value="@Model.ID" />
         </div>
     </div>
 
     <div class="addnew-row">
         <div class="email">
             <label class="filter-label" for="email-input">Email: </label>
-            <input type="text" id="editNew_UserEmail" class="email-input" name="email-input" value="@Model.userEmail"/>
+            <input type="text" id="userEmail" class="email-input" name="email-input" value="@Model.userEmail"/>
         </div>
     </div>
 
@@ -43,9 +43,9 @@
         <div class="addnew-is-active">
             <p class="radio-label filter-label">Is Active:</p>
             <div class="radio-btns">
-                <input type="radio" id="addNew_checkYes" name="is_active" value="yes" />
+                <input type="radio" id="edit_checkYes" name="is_active" value="yes" />
                 <label id="addNew_yesBox" class="yes-box" for="yes">Yes</label>
-                <input type="radio" id="addNew_checkNo" name="is_active" value="no" />
+                <input type="radio" id="edit_checkNo" name="is_active" value="no" />
                 <label for="no">No</label>
             </div>
         </div>

@@ -96,7 +96,7 @@
             }
 
             function errorFunc(error) {
-                alert("Error Sending Filter Data to the Subscriptions Controller: " + error);
+                alert("Error Saving New User: " + error);
             }
         }
     });

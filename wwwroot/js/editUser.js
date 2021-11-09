@@ -31,10 +31,14 @@
     //Getting group IDs and Names from hidden parameters
 
     var selectedMasterGroupsString = "";
+    var selectedGroupIDsString = "";
     var selectedIsActive = "";
 
     if ($("#selectedMasterGroups").length) {
         selectedMasterGroupsString = $("#selectedMasterGroups").val();
+    }
+    if ($("#selectedGroupIDs").length) {
+        selectedGroupIDsString = $("#selectedGroupIDs").val();
     }
     if ($("#isActive").length) {
         selectedIsActive = $("#isActive").val();
@@ -45,11 +49,14 @@
     $('#edit_masterGroupDropdown').val(selectedMasterGroups);
     $('#edit_masterGroupDropdown').multiselect('refresh');
 
+    $('#edit_groupDropdown').prop('title', selectedGroupIDsString);
+    $('#edit_groupDropdown').multiselect('refresh');
+
     if (selectedIsActive == "Y") {
-        $('#addNew_checkYes').prop("checked",true)
+        $('#edit_checkYes').prop("checked",true)
     }
     else if (selectedIsActive == "N") {
-        $('#addNew_checkNo').prop("checked", true)
+        $('#edit_checkNo').prop("checked", true)
     }
 
     function ValidateEmail(mail) {
@@ -60,7 +67,78 @@
     }
 
     $("#editUserSubmit").click(function () {
-        
+        var userID = $('#userID').val();
+        var enteredEmail = $("#userEmail").val();
+        var isValidEmail = ValidateEmail(enteredEmail);
+
+        var enteredGroups = $('#edit_groupDropdown').val();
+        var enteredMasterGroups = $('#edit_masterGroupDropdown').val();
+        var enteredGroupIDs = [];
+
+        if ($('#edit_groupDropdown').prop('disabled')) {
+            var groupIDsString = $("#selectedGroupIDs").val();
+            enteredGroupIDs = groupIDsString.split(',');
+            var groupsString = $("#selectedGroupNames").val();
+            enteredGroups = groupsString.split(',');
+        } else {
+            $('#edit_groupDropdown').find("option:selected").each(function () {
+                var groupID = $(this).prop('title');
+                enteredGroupIDs.push(groupID)
+            });
+        }
+
+        var enteredIsActive;
+
+        if ($('#edit_checkYes').is(':checked')) {
+            enteredIsActive = 'Y';
+        } else if ($('#edit_checkNo').is(':checked')) {
+            enteredIsActive = 'N';
+        } else {
+            enteredIsActive = '';
+        }
+
+        if (isValidEmail == false) {
+            alert("Please enter a valid email address before submitting.");
+        } else if (enteredIsActive == '') {
+            alert("Please enter a value for Is Active.");
+        } else if (enteredGroupIDs.length == 0 || enteredGroups.length == 0 || enteredMasterGroups.length == 0) {
+            alert("Please enter a value for Group ID, Group, and MasterGroup");
+        } else {
+
+            //Posting the collected data to the SubscriptionsGroupsController
+            var controllerUrl = '/SubscriptionGroups/EditUserSubToDB';
+
+            var groupNames_String = enteredGroups.toString();
+            var groupIDs_String = enteredGroupIDs.toString();
+            var masterGroups_String = enteredMasterGroups.toString();
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc,
+                data: {
+                    ID: userID,
+                    userEmail: enteredEmail,
+                    isActive: enteredIsActive,
+                    selectedGroupIDs: groupIDs_String,
+                    selectedGroups: groupNames_String,
+                    selectedMasterGroups: masterGroups_String
+                }
+            });
+
+            function successFunc(returnedData) {
+                alert("Success editing user: " + enteredEmail);
+                if (returnedData.result == 'Redirect') {
+                    window.location = returnedData.url;
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Saving Edited User: " + error);
+            }
+        }
     });
 });
 
