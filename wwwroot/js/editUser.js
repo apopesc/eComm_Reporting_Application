@@ -28,6 +28,30 @@
         enableCaseInsensitiveFiltering: true
     });
 
+    //Getting group IDs and Names from hidden parameters
+
+    var selectedMasterGroupsString = "";
+    var selectedIsActive = "";
+
+    if ($("#selectedMasterGroups").length) {
+        selectedMasterGroupsString = $("#selectedMasterGroups").val();
+    }
+    if ($("#isActive").length) {
+        selectedIsActive = $("#isActive").val();
+    }
+
+    var selectedMasterGroups = selectedMasterGroupsString.split(",");
+
+    $('#edit_masterGroupDropdown').val(selectedMasterGroups);
+    $('#edit_masterGroupDropdown').multiselect('refresh');
+
+    if (selectedIsActive == "Y") {
+        $('#addNew_checkYes').prop("checked",true)
+    }
+    else if (selectedIsActive == "N") {
+        $('#addNew_checkNo').prop("checked", true)
+    }
+
     function ValidateEmail(mail) {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
             return (true);

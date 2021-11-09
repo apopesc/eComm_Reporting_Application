@@ -16,6 +16,13 @@
     </div>
 </div>
 
+<div class="hidden-selected-items">
+    @Html.HiddenFor(selectedMasterGroups => Model.selectedMasterGroups)
+    @Html.HiddenFor(selectedGroupNames => Model.selectedGroupNames)
+    @Html.HiddenFor(selectedGroupIDs => Model.selectedGroupIDs)
+    @Html.HiddenFor(selectedIsActive => Model.isActive)
+</div>
+
 
 <div class="filter-data">
     <div class="addnew-row textbox">
@@ -60,6 +67,7 @@
         <div class="addnew-dropdown">
             <label class="filter-label" for="groupDropdown">Group:</label>
             <select id="edit_groupDropdown" name="groupDropdown" class="add-new-dropdown" multiple disabled>
+                <option value="@Model.selectedGroupIDs" disabled selected>@Model.selectedGroupNames</option>
             </select>
         </div>
     </div>

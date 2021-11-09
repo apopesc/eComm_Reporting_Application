@@ -68,7 +68,8 @@ namespace eComm_Reporting_Application.Controllers
                         subModel.userEmail = reader.GetString(1);
                         subModel.isActive = reader.GetString(2);
                         subModel.selectedGroupNames = reader.GetString(3);
-                        subModel.selectedMasterGroups = reader.GetString(4);
+                        subModel.selectedGroupIDs = reader.GetString(4);
+                        subModel.selectedMasterGroups = reader.GetString(5);
                     }
                 }
                 connection.Close();

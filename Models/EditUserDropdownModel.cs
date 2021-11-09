@@ -13,5 +13,6 @@ namespace eComm_Reporting_Application.Models
         public List<string> masterGroupsList { get; set; }
         public string selectedGroupNames { get; set; }
         public string selectedMasterGroups { get; set; }
+        public string selectedGroupIDs { get; set; }
     }
 }
