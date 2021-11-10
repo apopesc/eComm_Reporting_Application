@@ -361,3 +361,20 @@ body {
 .subscription-textbox {
     float: right;
 }
+
+.admin{
+    margin-left: auto;
+}
+
+@media screen and (max-width: 1920px) {
+    .admin {
+        padding-right: 12px;
+    }
+}
+
+
+@media screen and (max-width: 1280px) {
+    .admin {
+        padding-right: 4px;
+    }
+}
