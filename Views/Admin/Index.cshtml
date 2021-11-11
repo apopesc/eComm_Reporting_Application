@@ -53,7 +53,7 @@
             <tbody>
                 @foreach (var group in @Model.groupsList){
                 <tr>
-                    <td></td>
+                    <td><button class="deleteBtn"><i class="fa fa-trash"></i></button></td>
                     <td class="groupNameEntry">@group.groupName</td>
                     <td class="groupIDEntry">@group.groupID</td>
                     <td class="masterGroupEntry">@group.masterGroup</td>

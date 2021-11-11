@@ -8,6 +8,24 @@
     display: inline-block;
 }
 
+@media screen and (max-width: 1920px) {
+    .addNewGroups {
+        width: 35%;
+    }
+    .groupsTableDiv {
+        width: 65%;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .addNewGroups {
+        width: 43%;
+    }
+    .groupsTableDiv {
+        width: 57%;
+    }
+}
+
 .groups-div {
     margin-top: 25px;
     margin-inline: 3.5%
