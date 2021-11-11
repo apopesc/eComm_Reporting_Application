@@ -1,4 +1,5 @@
-﻿@{
+﻿@model eComm_Reporting_Application.Models.AdminPageModel
+@{
     ViewData["Title"] = "Admin";
 }
 @section Scripts{
@@ -9,5 +10,56 @@
 <div class="page-header">
     <div class="page-title">
         <h1 class="title-text">Admin</h1>
+    </div>
+</div>
+
+<div class="groups-div">
+    <div id="addNewGroups" class="addNewGroups">
+        <div class="addnew-row">
+            <div class="addnew-dropdown">
+                <label class="filter-label" for="masterGroupDropdown">Master Group:</label>
+                <select id="addNewMasterGroup" name="masterGroupDropdown" class="add-new-dropdown" multiple>
+                    @*@foreach (var master_group in @Model.masterGroupsList)
+                        {
+                            <option value=@master_group> @master_group </option>
+                        }*@
+                </select>
+            </div>
+        </div>
+        <div class="addnew-row textbox">
+            <div class="addnew-textbox">
+                <label class="filter-label" for="group-input">Group ID: </label>
+                <input type="text" id="addNewGroupID" class="subscription-textbox" name="group-input" />
+            </div>
+        </div>
+        <div class="addnew-row textbox">
+            <div class="addnew-textbox">
+                <label class="filter-label" for="group-input">Group Name: </label>
+                <input type="text" id="addNewGroupName" class="subscription-textbox" name="group-input" />
+            </div>
+        </div>
+    </div>
+
+    <div id="groupsTableDiv" class="groupsTableDiv">
+        <table id="groupsTable">
+            <thead>
+                <tr class="groupsHeader">
+                    <th></th>
+                    <th>Group Name</th>
+                    <th>Group ID</th>
+                    <th>Master Group</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var group in @Model.groupsList){
+                <tr>
+                    <td></td>
+                    <td class="groupNameEntry">@group.groupName</td>
+                    <td class="groupIDEntry">@group.groupID</td>
+                    <td class="masterGroupEntry">@group.masterGroup</td>
+                </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>

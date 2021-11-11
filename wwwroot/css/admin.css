@@ -1,2 +1,34 @@
-﻿body {
+﻿.addNewGroups{
+    width: 40%;
+    float: left;
+}
+
+.groupsTableDiv{
+    width: 60%;
+    display: inline-block;
+}
+
+.groups-div {
+    margin-top: 25px;
+    margin-inline: 3.5%
+}
+
+.btn-group {
+    float: right;
+}
+
+.addnew-textbox{
+    width: 420px;
+}
+
+.groupsHeader {
+    height: 40px;
+    background: #E5E5E5;
+    position: sticky;
+    top: 0px;
+    z-index: 10;
+}
+
+#groupsTable {
+    border: 1px solid black;
 }
