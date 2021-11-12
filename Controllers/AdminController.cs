@@ -26,7 +26,12 @@ namespace eComm_Reporting_Application.Controllers
             string groupsQueryString = "SELECT * FROM Groups";
             SqlCommand groupsQuery = new SqlCommand(groupsQueryString, connection);
 
+            string masterGroupsQueryString = "SELECT * FROM MasterGroups";
+            SqlCommand masterGroupsQuery = new SqlCommand(masterGroupsQueryString, connection);
+
             List<GroupModel> groupsList = new List<GroupModel>();
+            List<string> masterGroupsList = new List<string>();
+
             using (connection)
             {
                 connection.Open();
@@ -41,8 +46,20 @@ namespace eComm_Reporting_Application.Controllers
                         groupsList.Add(groupEntry);
                     }
                 }
+
+                using (SqlDataReader reader = masterGroupsQuery.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        //var mastergroupID = reader.GetString(0);
+                        var mastergroupName = reader.GetString(1);
+                        masterGroupsList.Add(mastergroupName);
+                    }
+                }
+                connection.Close();
             }
 
+            adminModel.masterGroupsList = masterGroupsList;
             adminModel.groupsList = groupsList;
             return View(adminModel);
         }

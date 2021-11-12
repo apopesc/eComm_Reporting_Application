@@ -14,15 +14,21 @@
 </div>
 
 <div class="groups-div">
+    <div class="sub-header">
+        <div class="page-title">
+            <h1 class="title-text sub">Add New Group</h1>
+        </div>
+    </div>
     <div id="addNewGroups" class="addNewGroups">
         <div class="addnew-row">
             <div class="addnew-dropdown">
                 <label class="filter-label" for="masterGroupDropdown">Master Group:</label>
-                <select id="addNewMasterGroup" name="masterGroupDropdown" class="add-new-dropdown" multiple>
-                    @*@foreach (var master_group in @Model.masterGroupsList)
-                        {
-                            <option value=@master_group> @master_group </option>
-                        }*@
+                <select id="addNewMasterGroup" name="masterGroupDropdown" class="add-new-dropdown">
+                    <option value="" disabled selected>Select a master group...</option>
+                    @foreach (var master_group in @Model.masterGroupsList)
+                    {
+                        <option value=@master_group> @master_group </option>
+                    }
                 </select>
             </div>
         </div>
@@ -38,6 +44,9 @@
                 <input type="text" id="addNewGroupName" class="subscription-textbox" name="group-input" />
             </div>
         </div>
+        <div class="addnew-row-last">
+            <button id="addGroupSubmit" class="btnAddPage" type="button">Add Group</button>
+        </div>
     </div>
 
     <div id="groupsTableDiv" class="groupsTableDiv">
@@ -45,19 +54,20 @@
             <thead>
                 <tr class="groupsHeader">
                     <th></th>
-                    <th>Group Name</th>
-                    <th>Group ID</th>
                     <th>Master Group</th>
+                    <th>Group ID</th>
+                    <th>Group Name</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var group in @Model.groupsList){
-                <tr>
-                    <td><button class="deleteBtn"><i class="fa fa-trash"></i></button></td>
-                    <td class="groupNameEntry">@group.groupName</td>
-                    <td class="groupIDEntry">@group.groupID</td>
-                    <td class="masterGroupEntry">@group.masterGroup</td>
-                </tr>
+                @foreach (var group in @Model.groupsList)
+                {
+                    <tr>
+                        <td><button class="deleteBtn"><i class="fa fa-trash"></i></button></td>
+                        <td class="masterGroupEntry">@group.masterGroup</td>
+                        <td class="groupIDEntry">@group.groupID</td>
+                        <td class="groupNameEntry">@group.groupName</td>
+                    </tr>
                 }
             </tbody>
         </table>

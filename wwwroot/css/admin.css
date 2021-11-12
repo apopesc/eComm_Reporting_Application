@@ -1,42 +1,50 @@
 ﻿.addNewGroups{
-    width: 40%;
     float: left;
+    margin-left: 12px;
 }
 
 .groupsTableDiv{
-    width: 60%;
+    margin-top: 10px;
     display: inline-block;
 }
 
 @media screen and (max-width: 1920px) {
     .addNewGroups {
-        width: 35%;
+        width: 32%;
     }
     .groupsTableDiv {
-        width: 65%;
+        width: 66%;
+    }
+    .addnew-textbox {
+        width: 420px;
     }
 }
 
 @media screen and (max-width: 1280px) {
     .addNewGroups {
-        width: 43%;
+        width: 40%;
     }
     .groupsTableDiv {
-        width: 57%;
+        width: 58%;
+    }
+    .addnew-textbox {
+        width: 390px;
+    }
+    .addnew-dropdown {
+        width: 390px;
+    }
+    #addGroupSubmit {
+        margin-right: 4.3%;
     }
 }
 
 .groups-div {
-    margin-top: 25px;
+    margin-top: 18px;
     margin-inline: 3.5%
 }
 
 .btn-group {
     float: right;
-}
-
-.addnew-textbox{
-    width: 420px;
 }
 
 .groupsHeader {
@@ -49,4 +57,21 @@
 
 #groupsTable {
     border: 1px solid black;
+}
+
+.sub-header{
+    background-color: #007bff;
+    height: 30px;
+}
+
+.sub{
+    font-size: 23px;
+    margin-left: 20px;
+}
+
+#addGroupSubmit {
+    background-color: #007bff;
+    color: white;
+    width: 125px;
+    float: right;
 }
