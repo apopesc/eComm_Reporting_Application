@@ -59,10 +59,6 @@
     float: right;
 }
 
-.userSubscriptionsEntry_Email{
-    width: 350px;
-}
-
 .separator-line {
     top: 268px;
 }
@@ -84,9 +80,11 @@
     .main-dropdown {
         width: 420px;
     }
+
     .is-active {
         width: 219px;
     }
+}
 
 @media screen and (max-width: 1280px) {
     .main-dropdown {
@@ -99,4 +97,21 @@
 
 .main-dropdown {
     margin-right: 80px;
+}
+
+
+
+@media screen and (max-width: 1920px) {
+    .userEmail_Header {
+        max-width: 230px !important;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .userEmail_Header {
+        max-width: 210px !important;
+    }
+    .isActive_Header {
+        min-width: 100px !important;
+    }
 }

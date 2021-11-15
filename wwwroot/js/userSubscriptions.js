@@ -168,9 +168,9 @@ $(document).ready(function () {
         let Hrow = $('<tr>').addClass('userSubscriptionsRow_Header')
         let tableHeader_Icons = $('<th>').addClass('userSubscriptionsHeader').text(''); //Invisible header for icons
         Hrow.append(tableHeader_Icons);
-        let tableHeader1 = $('<th>').addClass('userSubscriptionsHeader').text('User Email');
+        let tableHeader1 = $('<th>').addClass('userSubscriptionsHeader').addClass('userEmail_Header').text('User Email');
         Hrow.append(tableHeader1); //Adding it to the row
-        let tableHeader2 = $('<th>').addClass('userSubscriptionsHeader').text('Is Active');
+        let tableHeader2 = $('<th>').addClass('userSubscriptionsHeader').addClass('isActive_Header').text('Is Active');
         Hrow.append(tableHeader2);
         let tableHeader3 = $('<th>').addClass('userSubscriptionsHeader').text('Group');
         Hrow.append(tableHeader3);

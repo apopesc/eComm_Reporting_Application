@@ -110,5 +110,31 @@ namespace eComm_Reporting_Application.Controllers
                 }
             }
         }
+
+        [HttpPost]
+        public JsonResult DeleteGroup(string groupID)
+        {
+            try
+            {
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                string queryString = "DELETE FROM Groups WHERE GroupID='" + groupID +"';";
+
+                SqlCommand deleteGroupQuery = new SqlCommand(queryString, connection);
+                using (connection)
+                {
+                    connection.Open();
+                    SqlDataReader reader = deleteGroupQuery.ExecuteReader();
+                    connection.Close();
+                }
+                return Json("Success deleting group: ");
+            }
+            catch (Exception e)
+            {
+                return Json("Error deleting group: " + e);
+            }
+            
+        }
     }
 }

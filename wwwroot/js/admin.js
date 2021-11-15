@@ -51,6 +51,42 @@
                 alert(returnedData.errorMsg)
             }
         }
+    });
 
+    $('#groupsTableDiv').on('click', '.deleteBtn', function () { //Need to use on click for a dynamically generated element
+
+        var $selectedRow = $(this).closest("tr");
+
+        let selectedGroup = $selectedRow
+            .find(".groupNameEntry")
+            .text();
+
+        let selectedGroupID = $selectedRow
+            .find(".groupIDEntry")
+            .text();
+
+        if (confirm('Are you sure you want to delete group: ' + selectedGroup + '? You will no longer be able to view user data tied to this group.')) {
+            var controllerUrl = '/Admin/DeleteGroup';
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc,
+                data: { 'groupID': selectedGroupID }
+            });
+
+            function successFunc(response) {
+                $selectedRow.remove();
+                alert(response + selectedGroup);
+            }
+
+            function errorFunc(error) {
+                alert(error);
+            }
+        } else { //User clicks no
+
+        }
     });
 });
