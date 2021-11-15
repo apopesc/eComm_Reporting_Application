@@ -42,9 +42,10 @@
 
 .marMaxxSubscriptionsRow_Header {
     height: 40px;
-    background: #E5E5E5;
+    background: #9E0000;
     position: sticky;
     top: 0px;
+    color: white;
     z-index: 10;
 }
 

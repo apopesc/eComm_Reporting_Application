@@ -11,15 +11,18 @@ namespace eComm_Reporting_Application.Controllers
     {
 
         private readonly IConfiguration configuration;
+        public static AdminPageModel adminModel = new AdminPageModel();
+
+
         public AdminController(IConfiguration config)
         {
             this.configuration = config;
         }
 
+
         public IActionResult Index()
         {
-            AdminPageModel adminModel = new AdminPageModel();
-
+            
             string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
             SqlConnection connection = new SqlConnection(connectionstring);
 
@@ -62,6 +65,44 @@ namespace eComm_Reporting_Application.Controllers
             adminModel.masterGroupsList = masterGroupsList;
             adminModel.groupsList = groupsList;
             return View(adminModel);
+        }
+
+        [HttpPost]
+        public JsonResult AddNewGroup(string masterGroup, string groupID, string groupName)
+        {
+            try
+            {
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                string addGroupQueryString = "INSERT INTO Groups (GroupID, GroupName, MasterGroup) " +
+                    "VALUES ('" + groupID + "', '" + groupName + "', '" + masterGroup + "');";
+
+                SqlCommand addGroupQuery = new SqlCommand(addGroupQueryString, connection);
+                using (connection)
+                {
+                    connection.Open();
+                    using SqlDataReader reader = addGroupQuery.ExecuteReader();
+                    connection.Close();
+
+                }
+
+                GroupModel newGroup = new GroupModel();
+                newGroup.masterGroup = masterGroup;
+                newGroup.groupID = groupID;
+                newGroup.groupName = groupName;
+
+                adminModel.groupsList.Insert(0,newGroup);
+
+                return Json(new { success = true, saved_masterGroup = masterGroup, new_groupID = groupID, new_groupName = groupName});
+            }
+            catch (Exception e)
+            {
+                string errorString = "Error saving new Group: " + e;
+                return Json(new { success = false, errorMsg = errorString });
+            }
+            
         }
     }
 }
