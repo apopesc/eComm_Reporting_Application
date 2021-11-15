@@ -115,7 +115,6 @@ $(document).ready(function () {
         }
     });
 
-
     $('#userSubscriptionData').on('click', '.deleteBtn', function () { //Need to use on click for a dynamically generated element
 
         var $selectedRow = $(this).closest("tr");
@@ -147,64 +146,6 @@ $(document).ready(function () {
             }
         } else { //User clicks no
 
-        }
-    });
-
-
-    //Triggering change event when the table item is edited
-    $('#userSubscriptionData').on('focus', '.userSubscriptionsEntry_Email', function () {
-        before = $(this).html();
-    }).on('blur keyup paste', '.userSubscriptionsEntry_Email', function () {
-        if (before != $(this).html()) { $(this).trigger('change'); }
-    });
-    //Using the change event to add the edited class to the table row
-    $('#userSubscriptionData').on('change', '.userSubscriptionsEntry_Email', function () {
-        if (!($(this).closest("tr").hasClass("edited"))) {
-            $(this).closest("tr").addClass("edited");
-        }
-    });
-
-    $('#userSubscriptionData').on('focus', '.userSubscriptionsEntry_isActive', function () {
-        before = $(this).html();
-    }).on('blur keyup paste', '.userSubscriptionsEntry_isActive', function () {
-        if (before != $(this).html()) { $(this).trigger('change'); }
-    });
-    $('#userSubscriptionData').on('change', '.userSubscriptionsEntry_isActive', function () {
-        if (!($(this).closest("tr").hasClass("edited"))) {
-            $(this).closest("tr").addClass("edited");
-        }
-    });
-
-    $('#userSubscriptionData').on('focus', '.userSubscriptionsEntry_Group', function () {
-        before = $(this).html();
-    }).on('blur keyup paste', '.userSubscriptionsEntry_Group', function () {
-        if (before != $(this).html()) { $(this).trigger('change'); }
-    });
-    $('#userSubscriptionData').on('change', '.userSubscriptionsEntry_Group', function () {
-        if (!($(this).closest("tr").hasClass("edited"))) {
-            $(this).closest("tr").addClass("edited");
-        }
-    });
-
-    $('#userSubscriptionData').on('focus', '.userSubscriptionsEntry_GroupID', function () {
-        before = $(this).html();
-    }).on('blur keyup paste', '.userSubscriptionsEntry_GroupID', function () {
-        if (before != $(this).html()) { $(this).trigger('change'); }
-    });
-    $('#userSubscriptionData').on('change', '.userSubscriptionsEntry_GroupID', function () {
-        if (!($(this).closest("tr").hasClass("edited"))) {
-            $(this).closest("tr").addClass("edited");
-        }
-    });
-
-    $('#userSubscriptionData').on('focus', '.userSubscriptionsEntry_masterGroup', function () {
-        before = $(this).html();
-    }).on('blur keyup paste', '.userSubscriptionsEntry_masterGroup', function () {
-        if (before != $(this).html()) { $(this).trigger('change'); }
-    });
-    $('#userSubscriptionData').on('change', '.userSubscriptionsEntry_masterGroup', function () {
-        if (!($(this).closest("tr").hasClass("edited"))) {
-            $(this).closest("tr").addClass("edited");
         }
     });
 
@@ -382,3 +323,62 @@ $(document).ready(function () {
     //    }
 
     //});
+
+
+
+////Triggering change event when the table item is edited
+//$('#userSubscriptionData').on('focus', '.userSubscriptionsEntry_Email', function () {
+//    before = $(this).html();
+//}).on('blur keyup paste', '.userSubscriptionsEntry_Email', function () {
+//    if (before != $(this).html()) { $(this).trigger('change'); }
+//});
+////Using the change event to add the edited class to the table row
+//$('#userSubscriptionData').on('change', '.userSubscriptionsEntry_Email', function () {
+//    if (!($(this).closest("tr").hasClass("edited"))) {
+//        $(this).closest("tr").addClass("edited");
+//    }
+//});
+
+//$('#userSubscriptionData').on('focus', '.userSubscriptionsEntry_isActive', function () {
+//    before = $(this).html();
+//}).on('blur keyup paste', '.userSubscriptionsEntry_isActive', function () {
+//    if (before != $(this).html()) { $(this).trigger('change'); }
+//});
+//$('#userSubscriptionData').on('change', '.userSubscriptionsEntry_isActive', function () {
+//    if (!($(this).closest("tr").hasClass("edited"))) {
+//        $(this).closest("tr").addClass("edited");
+//    }
+//});
+
+//$('#userSubscriptionData').on('focus', '.userSubscriptionsEntry_Group', function () {
+//    before = $(this).html();
+//}).on('blur keyup paste', '.userSubscriptionsEntry_Group', function () {
+//    if (before != $(this).html()) { $(this).trigger('change'); }
+//});
+//$('#userSubscriptionData').on('change', '.userSubscriptionsEntry_Group', function () {
+//    if (!($(this).closest("tr").hasClass("edited"))) {
+//        $(this).closest("tr").addClass("edited");
+//    }
+//});
+
+//$('#userSubscriptionData').on('focus', '.userSubscriptionsEntry_GroupID', function () {
+//    before = $(this).html();
+//}).on('blur keyup paste', '.userSubscriptionsEntry_GroupID', function () {
+//    if (before != $(this).html()) { $(this).trigger('change'); }
+//});
+//$('#userSubscriptionData').on('change', '.userSubscriptionsEntry_GroupID', function () {
+//    if (!($(this).closest("tr").hasClass("edited"))) {
+//        $(this).closest("tr").addClass("edited");
+//    }
+//});
+
+//$('#userSubscriptionData').on('focus', '.userSubscriptionsEntry_masterGroup', function () {
+//    before = $(this).html();
+//}).on('blur keyup paste', '.userSubscriptionsEntry_masterGroup', function () {
+//    if (before != $(this).html()) { $(this).trigger('change'); }
+//});
+//$('#userSubscriptionData').on('change', '.userSubscriptionsEntry_masterGroup', function () {
+//    if (!($(this).closest("tr").hasClass("edited"))) {
+//        $(this).closest("tr").addClass("edited");
+//    }
+//});

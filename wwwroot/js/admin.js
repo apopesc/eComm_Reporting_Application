@@ -39,14 +39,16 @@
 
             function successFunc(returnedData) {
                 if (returnedData.success == true) {
-                    $('#groupsTable').prepend('<tr><td><button class="deleteBtn"><i class="fa fa-trash"></i></button></td> <td class="masterGroupEntry">' + returnedData.saved_masterGroup + '</td> <td class="groupIDEntry">' + returnedData.new_groupID + '</td> <td class="groupNameEntry">' + returnedData.new_groupName+'</td> </tr>')
+                    alert("Success adding group: " + returnedData.new_groupName);
+                    $('#groupsTable').prepend('<tr><td><button class="deleteBtn"><i class="fa fa-trash"></i></button></td> <td class="masterGroupEntry">' + returnedData.saved_masterGroup + '</td> <td class="groupIDEntry">' + returnedData.new_groupID + '</td> <td class="groupNameEntry">' + returnedData.new_groupName + '</td> </tr>');
                 } else {
-                    alert("Failed");
+                    alert(returnedData.errorMsg)
                 }
+               
             }
 
             function errorFunc(error) {
-                alert("Error Saving New User: " + error);
+                alert(returnedData.errorMsg)
             }
         }
 

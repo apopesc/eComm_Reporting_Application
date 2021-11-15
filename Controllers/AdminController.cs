@@ -99,10 +99,16 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
-                string errorString = "Error saving new Group: " + e;
-                return Json(new { success = false, errorMsg = errorString });
+                string exceptionString = e.ToString();
+                if (exceptionString.Contains("Violation of UNIQUE KEY constraint"))
+                {
+                    return Json(new { success = false, errorMsg = "Error saving new group: The entered Group ID already exists."});
+                }
+                else
+                {
+                    return Json(new { success = false, errorMsg = "Error saving new group: " + e});
+                }
             }
-            
         }
     }
 }
