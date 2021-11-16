@@ -455,11 +455,11 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetCategoryData(ReportModel reportData, List<string> selectedDepartments, List<string> selectedClasses)
+        public JsonResult GetCategoryData([FromBody]ClassModel classModel)
         {
             try
             {
-                ReportParameterModel reportParams = GetReportParameters(reportData);
+                ReportParameterModel reportParams = GetReportParameters(classModel.reportData);
                 string connectionstring = "";
 
                 //There are other data sources that need to be mapped here
@@ -478,10 +478,10 @@ namespace eComm_Reporting_Application.Controllers
                 SqlCommand storedProcQuery = new SqlCommand(categoryParameter.query, connection);
                 storedProcQuery.CommandType = CommandType.StoredProcedure;
 
-                string selectedDepartmentsString = string.Join(",", selectedDepartments.ToArray());
+                string selectedDepartmentsString = string.Join(",", classModel.selectedDepartments.ToArray());
                 storedProcQuery.Parameters.AddWithValue("@Department_No", selectedDepartmentsString);
 
-                string selectedClassesString = string.Join(",", selectedClasses.ToArray());
+                string selectedClassesString = string.Join(",", classModel.selectedClasses.ToArray());
                 storedProcQuery.Parameters.AddWithValue("@Class_Number", selectedClassesString);
 
                 Parameter populatedParam = getCascadingDropdownValues(categoryParameter, storedProcQuery, connection);

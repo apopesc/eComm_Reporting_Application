@@ -271,19 +271,24 @@
                 var reportData = {
                     reportName: $('#hiddenSelectedReport').attr('name'),
                     reportFolder: $('#hiddenSelectedReport').attr('folder')
-                }
+                };
+
+                var classData = {
+                    'reportData': reportData,
+                    'selectedDepartments': selectedDepartmentValues,
+                    'selectedClasses': selectedClassValues
+                };
+
+                var json_ClassData = JSON.stringify(classData);
 
                 $.ajax({
                     type: "POST",
                     url: controllerUrl,
                     dataType: "json",
+                    contentType: "application/json",
                     success: successFunc,
                     error: errorFunc,
-                    data: {
-                        'reportData': reportData,
-                        'selectedDepartments': selectedDepartmentValues,
-                        'selectedClasses': selectedClassValues
-                    }
+                    data: json_ClassData
                 });
 
                 function successFunc(dropdownData) {
@@ -432,7 +437,12 @@ function createParams(paramData) {
         $('#dynamicParams').append(row);
 
         if (paramData.parameters[i].name == "Department_No" || paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category") {
+            $('#' + paramData.parameters[i].name).multiselect({ includeSelectAllOption: true });
             $('#' + paramData.parameters[i].name).multiselect('disable');
+        }
+
+        if (paramData.parameters[i].name == "Banner") {
+            $('#' + paramData.parameters[i].name).multiselect({ includeSelectAllOption: true });
         }
     }
 
