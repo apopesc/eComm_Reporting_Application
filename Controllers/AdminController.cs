@@ -133,8 +133,46 @@ namespace eComm_Reporting_Application.Controllers
             catch (Exception e)
             {
                 return Json("Error deleting group: " + e);
+            } 
+        }
+
+        [HttpPost]
+        public JsonResult AddNewMasterGroup(string masterGroup)
+        {
+            try
+            {
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                string addMasterGroupQueryString = "INSERT INTO MasterGroups (MasterGroup) " +
+                    "VALUES ('" + masterGroup + "');";
+
+                SqlCommand addMasterGroupQuery = new SqlCommand(addMasterGroupQueryString, connection);
+                using (connection)
+                {
+                    connection.Open();
+                    using SqlDataReader reader = addMasterGroupQuery.ExecuteReader();
+                    connection.Close();
+
+                }
+
+                adminModel.masterGroupsList.Insert(0, masterGroup);
+
+                return Json(new { success = true, saved_masterGroup = masterGroup});
             }
-            
+            catch (Exception e)
+            {
+                string exceptionString = e.ToString();
+                if (exceptionString.Contains("Violation of UNIQUE KEY constraint"))
+                {
+                    return Json(new { success = false, errorMsg = "Error saving new group: The entered Master Group already exists." });
+                }
+                else
+                {
+                    return Json(new { success = false, errorMsg = "Error saving new group: " + e });
+                }
+            }
         }
     }
 }

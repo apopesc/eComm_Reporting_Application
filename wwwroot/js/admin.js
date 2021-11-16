@@ -93,4 +93,43 @@
 
         }
     });
+
+    $('#addMasterGroupSubmit').click(function () {
+        var newMasterGroup = $("#masterGroup").val();
+        if (newMasterGroup == '') {
+            alert("Please enter a value for Master Group");
+        } else {
+            var controllerUrl = '/Admin/AddNewMasterGroup';
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc,
+                data: {
+                    masterGroup: newMasterGroup
+                }
+            });
+
+            function successFunc(returnedData) {
+                if (returnedData.success == true) {
+                    alert("Success adding master group: " + returnedData.saved_masterGroup);
+                    $('#masterGroupsTable').prepend('<tr><td><button class="deleteBtn"><i class="fa fa-trash"></i></button></td> <td class="new_masterGroupEntry">' + returnedData.saved_masterGroup + '</td></tr>');
+
+                    $('#addNewMasterGroup option').eq(1).before($('<option></option>').val(returnedData.saved_masterGroup).text(returnedData.saved_masterGroup));
+                    $('#addNewMasterGroup').multiselect('rebuild')
+
+                } else {
+                    alert(returnedData.errorMsg)
+                }
+
+            }
+
+            function errorFunc(error) {
+                alert(returnedData.errorMsg)
+            }
+        }
+    });
+
 });
