@@ -409,7 +409,7 @@ namespace eComm_Reporting_Application.Controllers
 
                 string groupsQueryString = "SELECT DISTINCT GroupName FROM Groups WHERE GroupName IS NOT NULL";
                 string groupIDsQueryString = "SELECT DISTINCT GroupID FROM Groups WHERE GroupID IS NOT NULL";
-                string masterGroupsQueryString = "SELECT DISTINCT MasterGroup FROM Groups WHERE MasterGroup IS NOT NULL";
+                string masterGroupsQueryString = "SELECT * FROM MasterGroups";
 
                 SqlCommand groupsQuery = new SqlCommand(groupsQueryString, connection);
                 SqlCommand groupIDsQuery = new SqlCommand(groupIDsQueryString, connection);
@@ -438,7 +438,7 @@ namespace eComm_Reporting_Application.Controllers
                     {
                         while (reader.Read())
                         {
-                            var masterGroupString = reader.GetString(0);
+                            var masterGroupString = reader.GetString(1);
                             master_groups_list.Add(masterGroupString);
                         }
                     }
