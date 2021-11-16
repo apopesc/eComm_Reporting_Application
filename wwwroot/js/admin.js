@@ -10,6 +10,10 @@
         "lengthMenu": [5, 8, 15, 25]
     });
 
+    $('#masterGroupsTable').DataTable({
+        "lengthMenu": [5, 8, 15, 25]
+    });
+
     $("#addGroupSubmit").click(function () {
         var enteredMasterGroup = $("#addNewMasterGroup").val();
         var enteredGroupID = $("#addNewGroupID").val();
@@ -53,7 +57,7 @@
         }
     });
 
-    $('#groupsTableDiv').on('click', '.deleteBtn', function () { //Need to use on click for a dynamically generated element
+    $('#groupsTable').on('click', '.deleteBtn', function () { //Need to use on click for a dynamically generated element
 
         var $selectedRow = $(this).closest("tr");
 

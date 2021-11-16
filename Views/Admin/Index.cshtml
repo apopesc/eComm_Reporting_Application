@@ -73,3 +73,43 @@
         </table>
     </div>
 </div>
+
+<div class="master-groups-div">
+    <div class="sub-header">
+        <div class="page-title">
+            <h1 class="title-text sub">Add New Master Group</h1>
+        </div>
+    </div>
+    <div id="addNewGroups" class="addNewGroups">
+        <div class="addnew-row textbox first">
+            <div class="addnew-textbox">
+                <label class="filter-label" for="group-input">Master Group: </label>
+                <input type="text" id="masterGroup" class="subscription-textbox" name="group-input" />
+            </div>
+        </div>
+
+        <div class="addnew-row-last">
+            <button id="addMasterGroupSubmit" class="btnAddPage" type="button">Add Master Group</button>
+        </div>
+    </div>
+
+    <div id="masterGroupsTableDiv" class="masterGroupsTableDiv">
+        <table id="masterGroupsTable">
+            <thead>
+                <tr class="groupsHeader">
+                    <th></th>
+                    <th>Master Group</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var master_group in @Model.masterGroupsList)
+                {
+                    <tr>
+                        <td><button class="deleteBtn"><i class="fa fa-trash"></i></button></td>
+                        <td class="new_masterGroupEntry">@master_group</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
