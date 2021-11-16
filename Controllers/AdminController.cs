@@ -174,5 +174,30 @@ namespace eComm_Reporting_Application.Controllers
                 }
             }
         }
+
+        [HttpPost]
+        public JsonResult DeleteMasterGroup(string masterGroup)
+        {
+            try
+            {
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                string queryString = "DELETE FROM MasterGroups WHERE MasterGroup='" + masterGroup + "';";
+
+                SqlCommand deleteMasterGroupQuery = new SqlCommand(queryString, connection);
+                using (connection)
+                {
+                    connection.Open();
+                    SqlDataReader reader = deleteMasterGroupQuery.ExecuteReader();
+                    connection.Close();
+                }
+                return Json("Success deleting group: ");
+            }
+            catch (Exception e)
+            {
+                return Json("Error deleting group: " + e);
+            }
+        }
     }
 }

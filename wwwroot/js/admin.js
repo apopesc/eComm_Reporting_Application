@@ -82,6 +82,7 @@
             });
 
             function successFunc(response) {
+                alert("Success deleting group: " + selectedGroup);
                 $selectedRow.remove();
                 alert(response + selectedGroup);
             }
@@ -118,7 +119,7 @@
                     $('#masterGroupsTable').prepend('<tr><td><button class="deleteBtn"><i class="fa fa-trash"></i></button></td> <td class="new_masterGroupEntry">' + returnedData.saved_masterGroup + '</td></tr>');
 
                     $('#addNewMasterGroup option').eq(1).before($('<option></option>').val(returnedData.saved_masterGroup).text(returnedData.saved_masterGroup));
-                    $('#addNewMasterGroup').multiselect('rebuild')
+                    $('#addNewMasterGroup').multiselect('rebuild');
 
                 } else {
                     alert(returnedData.errorMsg)
@@ -132,4 +133,40 @@
         }
     });
 
+    $('#masterGroupsTable').on('click', '.deleteBtn', function () { //Need to use on click for a dynamically generated element
+
+        var $selectedRow = $(this).closest("tr");
+
+        let selectedMasterGroup = $selectedRow
+            .find(".new_masterGroupEntry")
+            .text();
+
+        if (confirm('Are you sure you want to delete master group: ' + selectedMasterGroup + '? You will no longer be able to view user data tied to this group.')) {
+            var controllerUrl = '/Admin/DeleteMasterGroup';
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc,
+                data: { 'masterGroup': selectedMasterGroup }
+            });
+
+            function successFunc(response) {
+                alert("Success deleting master group: " + selectedMasterGroup);
+                $selectedRow.remove();
+                $('#addNewMasterGroup option[value="' + selectedMasterGroup + '"]').remove();
+                $('#addNewMasterGroup').multiselect('rebuild');
+
+                alert(response + selectedGroup);
+            }
+
+            function errorFunc(error) {
+                alert(error);
+            }
+        } else { //User clicks no
+
+        }
+    });
 });
