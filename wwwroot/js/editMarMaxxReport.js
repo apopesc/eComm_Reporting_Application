@@ -132,16 +132,21 @@ $(document).ready(function () {
                     reportFolder: selectedFolderName
                 }
 
+                var departmentData = {
+                    'reportData': reportData,
+                    'selectedDepartments': selectedDepartmentValues
+                }
+
+                var json_DepartmentData = JSON.stringify(departmentData);
+
                 $.ajax({
                     type: "POST",
                     url: controllerUrl,
                     dataType: "json",
+                    contentType: "application/json",
                     success: successFunc,
                     error: errorFunc,
-                    data: {
-                        'reportData': reportData,
-                        'selectedDepartments': selectedDepartmentValues
-                    }
+                    data: json_DepartmentData
                 });
 
                 function successFunc(dropdownData) {
@@ -182,17 +187,22 @@ $(document).ready(function () {
                     reportFolder: selectedFolderName
                 }
 
+                var classData = {
+                    'reportData': reportData,
+                    'selectedDepartments': selectedDepartmentValues,
+                    'selectedClasses': selectedClassValues
+                };
+
+                var json_ClassData = JSON.stringify(classData);
+
                 $.ajax({
                     type: "POST",
                     url: controllerUrl,
                     dataType: "json",
+                    contentType: "application/json",
                     success: successFunc,
                     error: errorFunc,
-                    data: {
-                        'reportData': reportData,
-                        'selectedDepartments': selectedDepartmentValues,
-                        'selectedClasses': selectedClassValues
-                    }
+                    data: json_ClassData
                 });
 
                 function successFunc(dropdownData) {

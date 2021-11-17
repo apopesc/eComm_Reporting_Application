@@ -223,16 +223,21 @@
                     reportFolder: $('#hiddenSelectedReport').attr('folder')
                 }
 
+                var departmentData = {
+                    'reportData': reportData,
+                    'selectedDepartments': selectedDepartmentValues
+                }
+
+                var json_DepartmentData = JSON.stringify(departmentData);
+
                 $.ajax({
                     type: "POST",
                     url: controllerUrl,
                     dataType: "json",
+                    contentType: "application/json",
                     success: successFunc,
                     error: errorFunc,
-                    data: {
-                        'reportData': reportData,
-                        'selectedDepartments': selectedDepartmentValues
-                    }
+                    data: json_DepartmentData
                 });
 
                 function successFunc(dropdownData) {
