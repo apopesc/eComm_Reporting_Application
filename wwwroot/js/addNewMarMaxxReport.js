@@ -34,6 +34,13 @@
     $('#marMaxxReportDropdown').multiselect('disable');
 
     $('#viewReportParams').click(function () {
+
+        $("#loadMe").modal({
+            backdrop: "static", //remove ability to close modal with click
+            keyboard: false, //remove option to close with keyboard
+            show: true //Display loader!
+        });
+
         var selectedReport = $('#marMaxxReportDropdown').val();
         var selectedReportFolder = $('#marMaxxReportDropdown option:selected').prop('title');
 
@@ -63,13 +70,16 @@
 
             function successFunc(paramData) {
                 if (typeof paramData === 'string') { //If there is an error saving it to the database
+                    $("#loadMe").modal("hide");
                     alert(paramData);
                 } else {
                     createParams(paramData);
+                    $("#loadMe").modal("hide");
                 }
             }
 
             function errorFunc(error) {
+                $("#loadMe").modal("hide");
                 alert("Error Getting Report Parameters: " + error);
             }
         }
@@ -214,6 +224,13 @@
                 $('#Category').multiselect('disable');
 
             } else {
+
+                $("#loadMe").modal({
+                    backdrop: "static", //remove ability to close modal with click
+                    keyboard: false, //remove option to close with keyboard
+                    show: true //Display loader!
+                });
+
                 var selectedDepartmentValues = $('#Department_No').val();
 
                 var controllerUrl = '/MarMaxxReports/GetClassData';
@@ -249,9 +266,12 @@
 
                     $("#Class_Number").multiselect('dataprovider', data);
                     $('#Class_Number').multiselect('enable');
+
+                    $("#loadMe").modal("hide");
                 }
 
                 function errorFunc(error) {
+                    $("#loadMe").modal("hide");
                     alert("Error Retrieving Classes: " + error);
                 }
             }
@@ -268,6 +288,13 @@
                 $('#Category').multiselect('disable');
 
             } else {
+
+                $("#loadMe").modal({
+                    backdrop: "static", //remove ability to close modal with click
+                    keyboard: false, //remove option to close with keyboard
+                    show: true //Display loader!
+                });
+
                 var selectedDepartmentValues = $('#Department_No').val();
                 var selectedClassValues = $('#Class_Number').val();
 
@@ -305,9 +332,11 @@
 
                     $("#Category").multiselect('dataprovider', data);
                     $('#Category').multiselect('enable');
+                    $("#loadMe").modal("hide");
                 }
 
                 function errorFunc(error) {
+                    $("#loadMe").modal("hide");
                     alert("Error Retrieving Categories: " + error);
                 }
             }
@@ -444,10 +473,6 @@ function createParams(paramData) {
         if (paramData.parameters[i].name == "Department_No" || paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category") {
             $('#' + paramData.parameters[i].name).multiselect({ includeSelectAllOption: true });
             $('#' + paramData.parameters[i].name).multiselect('disable');
-        }
-
-        if (paramData.parameters[i].name == "Banner") {
-            $('#' + paramData.parameters[i].name).multiselect({ includeSelectAllOption: true });
         }
     }
 

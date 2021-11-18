@@ -441,7 +441,7 @@ namespace eComm_Reporting_Application.Controllers
                 SqlCommand storedProcQuery = new SqlCommand(classParameter.query, connection);
                 storedProcQuery.CommandType = CommandType.StoredProcedure;
 
-                string selectedDepartmentsString = string.Join(",", departmentModelselectedDepartments.ToArray());
+                string selectedDepartmentsString = string.Join(",", departmentModel.selectedDepartments.ToArray());
                 storedProcQuery.Parameters.AddWithValue("@Department_No", selectedDepartmentsString);
 
                 Parameter populatedParam = getCascadingDropdownValues(classParameter, storedProcQuery, connection);
@@ -491,7 +491,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
-                return Json("Error Deleting Subscription: " + e);
+                return Json("Error Getting Category Data: " + e);
             }
         }
 
