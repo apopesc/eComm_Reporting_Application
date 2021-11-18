@@ -123,6 +123,13 @@ $(document).ready(function () {
                 $('#Category').multiselect('disable');
 
             } else {
+
+                $("#loadMe").modal({
+                    backdrop: "static", //remove ability to close modal with click
+                    keyboard: false, //remove option to close with keyboard
+                    show: true //Display loader!
+                });
+
                 var selectedDepartmentValues = $('#Department_No').val();
 
                 var controllerUrl = '/MarMaxxReports/GetClassData';
@@ -158,9 +165,12 @@ $(document).ready(function () {
 
                     $("#Class_Number").multiselect('dataprovider', data);
                     $('#Class_Number').multiselect('enable');
+
+                    $("#loadMe").modal("hide");
                 }
 
                 function errorFunc(error) {
+                    $("#loadMe").modal("hide");
                     alert("Error Retrieving Classes: " + error);
                 }
             }
@@ -177,6 +187,13 @@ $(document).ready(function () {
                 $('#Category').multiselect('disable');
 
             } else {
+
+                $("#loadMe").modal({
+                    backdrop: "static", //remove ability to close modal with click
+                    keyboard: false, //remove option to close with keyboard
+                    show: true //Display loader!
+                });
+
                 var selectedDepartmentValues = $('#Department_No').val();
                 var selectedClassValues = $('#Class_Number').val();
 
@@ -214,9 +231,11 @@ $(document).ready(function () {
 
                     $("#Category").multiselect('dataprovider', data);
                     $('#Category').multiselect('enable');
+                    $("#loadMe").modal("hide");
                 }
 
                 function errorFunc(error) {
+                    $("#loadMe").modal("hide");
                     alert("Error Retrieving Categories: " + error);
                 }
             }
@@ -290,6 +309,12 @@ $(document).ready(function () {
 });
 
 function getDynamicReportParams(selectedReportName, selectedFolderName) {
+    $("#loadMe").modal({
+        backdrop: "static", //remove ability to close modal with click
+        keyboard: false, //remove option to close with keyboard
+        show: true //Display loader!
+    });
+
     var controllerUrl = '/MarMaxxReports/GetMarMaxxReportParameters';
 
     var reportData = {
@@ -314,10 +339,12 @@ function getDynamicReportParams(selectedReportName, selectedFolderName) {
             if (paramData.parameters.length > 0) {
                 selectDynamicParams();
             }
+            $("#loadMe").modal("hide");
         }
     }
 
     function errorFunc(error) {
+        $("#loadMe").modal("hide");
         alert("Error Getting Report Parameters: " + error);
     }
 }
@@ -414,6 +441,7 @@ function createParams(paramData) {
         $('#dynamicParams').append(row);
 
         if (paramData.parameters[i].name == "Department_No" || paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category") {
+            $('#' + paramData.parameters[i].name).multiselect({ includeSelectAllOption: true });
             $('#' + paramData.parameters[i].name).multiselect('disable');
         }
     }

@@ -483,7 +483,7 @@ namespace eComm_Reporting_Application.Controllers
 
                 string selectedClassesString = string.Join(",", classModel.selectedClasses.ToArray());
                 storedProcQuery.Parameters.AddWithValue("@Class_Number", selectedClassesString);
-                storedProcQuery.CommandTimeout = 0;
+                storedProcQuery.CommandTimeout = 350;
 
                 Parameter populatedParam = getCascadingDropdownValues(categoryParameter, storedProcQuery, connection);
 
