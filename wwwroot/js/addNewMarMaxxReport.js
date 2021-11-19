@@ -70,16 +70,16 @@
 
             function successFunc(paramData) {
                 if (typeof paramData === 'string') { //If there is an error saving it to the database
-                    $("#loadMe").modal("hide");
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     alert(paramData);
                 } else {
                     createParams(paramData);
-                    $("#loadMe").modal("hide");
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 }
             }
 
             function errorFunc(error) {
-                $("#loadMe").modal("hide");
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 alert("Error Getting Report Parameters: " + error);
             }
         }
@@ -195,6 +195,8 @@
                 function successFunc(dropdownData) {
                     var data = [];
 
+                    data.push({ label: "Select All", value: "selectAll" });
+
                     for (i = 0; i < dropdownData.values.length; i++) {
                         data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
                     }
@@ -267,11 +269,11 @@
                     $("#Class_Number").multiselect('dataprovider', data);
                     $('#Class_Number').multiselect('enable');
 
-                    $("#loadMe").modal("hide");
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 }
 
                 function errorFunc(error) {
-                    $("#loadMe").modal("hide");
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     alert("Error Retrieving Classes: " + error);
                 }
             }
@@ -332,11 +334,11 @@
 
                     $("#Category").multiselect('dataprovider', data);
                     $('#Category').multiselect('enable');
-                    $("#loadMe").modal("hide");
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 }
 
                 function errorFunc(error) {
-                    $("#loadMe").modal("hide");
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     alert("Error Retrieving Categories: " + error);
                 }
             }
@@ -471,7 +473,34 @@ function createParams(paramData) {
         $('#dynamicParams').append(row);
 
         if (paramData.parameters[i].name == "Department_No" || paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category") {
-            $('#' + paramData.parameters[i].name).multiselect({ includeSelectAllOption: true });
+
+            $('#' + paramData.parameters[i].name).multiselect({
+                enableCaseInsensitiveFiltering: true,
+                buttonText: function (options, select) {
+                    if (options.length > 0) {
+                        var labels = [];
+                        options.each(function () {
+                            if ($(this).attr('label') !== undefined) {
+
+                                if ($(this).attr('value') == "selectAll") {
+                                    labels = [];
+                                    labels.push('All');
+                                    return false;
+                                }else{
+                                    labels.push($(this).attr('label'));
+                                }
+                            }
+                            else {
+                                labels.push($(this).html());
+                            }
+                        });
+                        return labels.join(', ') + '';
+                    } else {
+                        return 'Select a Value...';
+                    }
+                }
+            });
+            
             $('#' + paramData.parameters[i].name).multiselect('disable');
         }
     }

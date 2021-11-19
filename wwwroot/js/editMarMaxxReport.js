@@ -166,11 +166,11 @@ $(document).ready(function () {
                     $("#Class_Number").multiselect('dataprovider', data);
                     $('#Class_Number').multiselect('enable');
 
-                    $("#loadMe").modal("hide");
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 }
 
                 function errorFunc(error) {
-                    $("#loadMe").modal("hide");
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     alert("Error Retrieving Classes: " + error);
                 }
             }
@@ -231,11 +231,11 @@ $(document).ready(function () {
 
                     $("#Category").multiselect('dataprovider', data);
                     $('#Category').multiselect('enable');
-                    $("#loadMe").modal("hide");
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 }
 
                 function errorFunc(error) {
-                    $("#loadMe").modal("hide");
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     alert("Error Retrieving Categories: " + error);
                 }
             }
@@ -339,12 +339,12 @@ function getDynamicReportParams(selectedReportName, selectedFolderName) {
             if (paramData.parameters.length > 0) {
                 selectDynamicParams();
             }
-            $("#loadMe").modal("hide");
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
         }
     }
 
     function errorFunc(error) {
-        $("#loadMe").modal("hide");
+        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
         alert("Error Getting Report Parameters: " + error);
     }
 }
