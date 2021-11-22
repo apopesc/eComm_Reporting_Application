@@ -107,13 +107,60 @@
         } else if (reportName.length == 0) {
             alert("Please select a value for Report Name");
         } else {
+            var isAllDept = false;
+            var isAllClass = false;
+
             $('#hiddenParamNames > input').each(function () {
                 var inputID = this.value;
                 var dynamicParamVal = $('#' + inputID).val();
+
                 if (dynamicParamVal !== null) {
-                    dynamicParams[inputID] = dynamicParamVal.toString();
+                    if (inputID == 'Department_No') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            isAllDept = true;
+                            dynamicParams[inputID] = 'ALL';
+                        }
+                    } else if (inputID == 'Class_Number') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            if (isAllDept == true) {
+                                isAllClass = true;
+                                dynamicParams[inputID] = 'ALL';
+                            } else {
+                                dynamicParamVal = [];
+                                $("#Class_Number option").each(function () {
+                                    var thisOptionValue = $(this).val();
+                                    if (thisOptionValue != 'selectAll') {
+                                        dynamicParamVal.push(thisOptionValue);
+                                    }
+                                });
+                                dynamicParams[inputID] = dynamicParamVal.toString();
+                            }
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'Category') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            if (isAllDept == true && isAllClass == true) {
+                                dynamicParams[inputID] = 'ALL';
+                            } else {
+                                dynamicParamVal = [];
+                                $("#Category option").each(function () {
+                                    var thisOptionValue = $(this).val();
+                                    if (thisOptionValue != 'selectAll') {
+                                        dynamicParamVal.push(thisOptionValue);
+                                    }
+                                });
+                                dynamicParams[inputID] = dynamicParamVal.toString();
+                            }
+                            
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else {
+                        dynamicParams[inputID] = dynamicParamVal.toString();
+                    }
                 } else {
-                    dynamicParams[inputID] = dynamicParamVal
+                    dynamicParams[inputID] = dynamicParamVal;
                 }
                 
             });
@@ -197,7 +244,7 @@
                 function successFunc(dropdownData) {
                     var data = [];
 
-                    data.push({ label: "All", value: "selectAll" });
+                    data.push({ label: "(ALL)", value: "selectAll" });
 
                     for (i = 0; i < dropdownData.values.length; i++) {
                         data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
@@ -280,7 +327,7 @@
                 function successFunc(dropdownData) {
                     var data = [];
 
-                    data.push({ label: "All", value: "selectAll" });
+                    data.push({ label: "(ALL)", value: "selectAll" });
 
                     for (i = 0; i < dropdownData.values.length; i++) {
                         data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
@@ -373,7 +420,7 @@
                 function successFunc(dropdownData) {
                     var data = [];
 
-                    data.push({ label: "All", value: "selectAll" });
+                    data.push({ label: "(ALL)", value: "selectAll" });
                     for (i = 0; i < dropdownData.values.length; i++) {
                         data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
                     }
@@ -543,7 +590,7 @@ function createParams(paramData) {
 
                                 if ($(this).attr('value') == "selectAll") {
                                     labels = [];
-                                    labels.push('All');
+                                    labels.push('(ALL)');
                                     return false;
                                 }else{
                                     labels.push($(this).attr('label'));
