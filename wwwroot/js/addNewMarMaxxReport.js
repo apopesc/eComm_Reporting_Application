@@ -119,6 +119,8 @@
                         if (dynamicParamVal.includes('selectAll')) {
                             isAllDept = true;
                             dynamicParams[inputID] = 'ALL';
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
                         }
                     } else if (inputID == 'Class_Number') {
                         if (dynamicParamVal.includes('selectAll')) {

@@ -1,6 +1,4 @@
-﻿
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $('#MarMaxxReports_Link').addClass('selected-nav-option');
 
     $('#marMaxxGroup').multiselect({
@@ -94,6 +92,8 @@ $(document).ready(function () {
                 function successFunc(dropdownData) {
                     var data = [];
 
+                    data.push({ label: "(ALL)", value: "selectAll" });
+
                     for (i = 0; i < dropdownData.values.length; i++) {
                         data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
                     }
@@ -132,6 +132,22 @@ $(document).ready(function () {
 
                 var selectedDepartmentValues = $('#Department_No').val();
 
+                if (selectedDepartmentValues.includes('selectAll')) {
+                    if (selectedDepartmentValues.length > 1) {
+                        var index = selectedDepartmentValues.indexOf('selectAll');
+                        var deselectValues = selectedDepartmentValues;
+                        deselectValues.splice(index, 1);
+                        $('#Department_No').multiselect('deselect', deselectValues);
+                    }
+                    selectedDepartmentValues = [];
+                    $("#Department_No option").each(function () {
+                        var thisOptionValue = $(this).val();
+                        if (thisOptionValue != 'selectAll') {
+                            selectedDepartmentValues.push(thisOptionValue);
+                        }
+                    });
+                }
+
                 var controllerUrl = '/MarMaxxReports/GetClassData';
 
                 var reportData = {
@@ -158,6 +174,8 @@ $(document).ready(function () {
 
                 function successFunc(dropdownData) {
                     var data = [];
+
+                    data.push({ label: "(ALL)", value: "selectAll" });
 
                     for (i = 0; i < dropdownData.values.length; i++) {
                         data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
@@ -197,6 +215,31 @@ $(document).ready(function () {
                 var selectedDepartmentValues = $('#Department_No').val();
                 var selectedClassValues = $('#Class_Number').val();
 
+                if (selectedDepartmentValues.includes('selectAll')) {
+                    $("#Department_No option").each(function () {
+                        var thisOptionValue = $(this).val();
+                        if (thisOptionValue != 'selectAll') {
+                            selectedDepartmentValues.push(thisOptionValue);
+                        }
+                    });
+                }
+
+                if (selectedClassValues.includes('selectAll')) {
+                    if (selectedClassValues.length > 1) {
+                        var index = selectedClassValues.indexOf('selectAll');
+                        var deselectValues = selectedClassValues;
+                        deselectValues.splice(index, 1);
+                        $('#Class_Number').multiselect('deselect', deselectValues);
+                    }
+                    selectedClassValues = [];
+                    $("#Class_Number option").each(function () {
+                        var thisOptionValue = $(this).val();
+                        if (thisOptionValue != 'selectAll') {
+                            selectedClassValues.push(thisOptionValue);
+                        }
+                    });
+                }
+
                 var controllerUrl = '/MarMaxxReports/GetCategoryData';
 
                 var reportData = {
@@ -225,6 +268,7 @@ $(document).ready(function () {
                 function successFunc(dropdownData) {
                     var data = [];
 
+                    data.push({ label: "(ALL)", value: "selectAll" });
                     for (i = 0; i < dropdownData.values.length; i++) {
                         data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
                     }
@@ -264,9 +308,54 @@ $(document).ready(function () {
                 var inputID = this.value;
                 var dynamicParamVal = $('#' + inputID).val();
                 if (dynamicParamVal !== null) {
-                    dynamicParams[inputID] = dynamicParamVal.toString();
+                    if (inputID == 'Department_No') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            isAllDept = true;
+                            dynamicParams[inputID] = 'ALL';
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'Class_Number') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            if (isAllDept == true) {
+                                isAllClass = true;
+                                dynamicParams[inputID] = 'ALL';
+                            } else {
+                                dynamicParamVal = [];
+                                $("#Class_Number option").each(function () {
+                                    var thisOptionValue = $(this).val();
+                                    if (thisOptionValue != 'selectAll') {
+                                        dynamicParamVal.push(thisOptionValue);
+                                    }
+                                });
+                                dynamicParams[inputID] = dynamicParamVal.toString();
+                            }
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'Category') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            if (isAllDept == true && isAllClass == true) {
+                                dynamicParams[inputID] = 'ALL';
+                            } else {
+                                dynamicParamVal = [];
+                                $("#Category option").each(function () {
+                                    var thisOptionValue = $(this).val();
+                                    if (thisOptionValue != 'selectAll') {
+                                        dynamicParamVal.push(thisOptionValue);
+                                    }
+                                });
+                                dynamicParams[inputID] = dynamicParamVal.toString();
+                            }
+
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else {
+                        dynamicParams[inputID] = dynamicParamVal.toString();
+                    }
                 } else {
-                    dynamicParams[inputID] = dynamicParamVal
+                    dynamicParams[inputID] = dynamicParamVal;
                 }
 
             });
@@ -303,6 +392,19 @@ $(document).ready(function () {
 
             function errorFunc(error) {
                 alert("Error Getting Report Subscription Data: " + error);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Category', function () {
+        var selectedCategoryValues = $('#Category').val();
+
+        if (selectedCategoryValues.includes('selectAll')) {
+            if (selectedCategoryValues.length > 1) {
+                var index = selectedCategoryValues.indexOf('selectAll');
+                var deselectValues = selectedCategoryValues;
+                deselectValues.splice(index, 1);
+                $('#Category').multiselect('deselect', deselectValues);
             }
         }
     });
@@ -441,7 +543,33 @@ function createParams(paramData) {
         $('#dynamicParams').append(row);
 
         if (paramData.parameters[i].name == "Department_No" || paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category") {
-            $('#' + paramData.parameters[i].name).multiselect({ includeSelectAllOption: true });
+            $('#' + paramData.parameters[i].name).multiselect({
+                enableCaseInsensitiveFiltering: true,
+                buttonText: function (options, select) {
+                    if (options.length > 0) {
+                        var labels = [];
+                        options.each(function () {
+                            if ($(this).attr('label') !== undefined) {
+
+                                if ($(this).attr('value') == "selectAll") {
+                                    labels = [];
+                                    labels.push('(ALL)');
+                                    return false;
+                                } else {
+                                    labels.push($(this).attr('label'));
+                                }
+                            }
+                            else {
+                                labels.push($(this).html());
+                            }
+                        });
+                        return labels.join(', ') + '';
+                    } else {
+                        return 'Select a Value...';
+                    }
+                }
+            });
+
             $('#' + paramData.parameters[i].name).multiselect('disable');
         }
     }
