@@ -307,6 +307,7 @@
             $('#hiddenParamNames > input').each(function () {
                 var inputID = this.value;
                 var dynamicParamVal = $('#' + inputID).val();
+
                 if (dynamicParamVal !== null) {
                     if (inputID == 'Department_No') {
                         if (dynamicParamVal.includes('selectAll')) {
