@@ -379,6 +379,10 @@ body {
     }
 }
 
+table.dataTable {
+    border-collapse: collapse;
+}
+
 /** SPINNER CREATION **/
 
 .loader {

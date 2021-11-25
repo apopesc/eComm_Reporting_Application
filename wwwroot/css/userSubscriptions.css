@@ -43,6 +43,7 @@
 }
 
 .userSubscriptionsRow_Last {
+    border-bottom: 1px solid #ADADAD;
     height: 32px;
 }
 
