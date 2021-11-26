@@ -44,7 +44,7 @@
             function successFunc(returnedData) {
                 if (returnedData.success == true) {
                     alert("Success adding group: " + returnedData.new_groupName);
-                    $('#groupsTable').prepend('<tr><td><button class="deleteBtn"><i class="fa fa-trash"></i></button></td> <td class="masterGroupEntry">' + returnedData.saved_masterGroup + '</td> <td class="groupIDEntry">' + returnedData.new_groupID + '</td> <td class="groupNameEntry">' + returnedData.new_groupName + '</td> </tr>');
+                    $('#groupsTable').prepend('<tr class="newRow"><td><button class="deleteBtn"><i class="fa fa-trash"></i></button></td> <td class="masterGroupEntry">' + returnedData.saved_masterGroup + '</td> <td class="groupIDEntry">' + returnedData.new_groupID + '</td> <td class="groupNameEntry">' + returnedData.new_groupName + '</td> </tr>');
                 } else {
                     alert(returnedData.errorMsg)
                 }
@@ -118,7 +118,7 @@
             function successFunc(returnedData) {
                 if (returnedData.success == true) {
                     alert("Success adding master group: " + returnedData.saved_masterGroup);
-                    $('#masterGroupsTable').prepend('<tr><td><button class="deleteBtn"><i class="fa fa-trash"></i></button></td> <td class="new_masterGroupEntry">' + returnedData.saved_masterGroup + '</td></tr>');
+                    $('#masterGroupsTable').prepend('<tr class="newRow"><td><button class="deleteBtn"><i class="fa fa-trash"></i></button></td> <td class="new_masterGroupEntry">' + returnedData.saved_masterGroup + '</td></tr>');
 
                     $('#addNewMasterGroup option').eq(1).before($('<option></option>').val(returnedData.saved_masterGroup).text(returnedData.saved_masterGroup));
                     $('#addNewMasterGroup').multiselect('rebuild');
