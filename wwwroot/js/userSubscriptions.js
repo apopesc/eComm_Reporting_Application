@@ -3,6 +3,8 @@ const checkBoxEnum = Object.freeze({ "none": 0, "yes": 1, "no": 2, "both": 3 }) 
 
 $(document).ready(function () {
 
+    var userTable;
+
     //Getting the previously loaded table if there is one
     var controllerUrl = '/SubscriptionGroups/GetInitialTable';
 
@@ -125,6 +127,7 @@ $(document).ready(function () {
             .text();
 
         if (confirm('Are you sure you want to delete user: ' + selectedEmail + '?')) {
+            $selectedRow.addClass('selected');
             var controllerUrl = '/SubscriptionGroups/DeleteUserSub';
 
             $.ajax({
@@ -137,7 +140,8 @@ $(document).ready(function () {
             });
 
             function successFunc(response) {
-                $selectedRow.remove();
+                //$selectedRow.remove();
+                userTable.row('.selected').remove().draw(false);
                 alert(response + selectedEmail);
             }
 
@@ -224,7 +228,7 @@ $(document).ready(function () {
         subTable.append(body);
         $('#userSubscriptionData').append(subTable);
 
-        $('#userSubscriptionsTable').DataTable({
+        userTable = $('#userSubscriptionsTable').DataTable({
             "lengthMenu": [10, 15, 25, 50]
         });
     }

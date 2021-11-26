@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿var marMaxxTable;
+
+$(document).ready(function () {
     $('#MarMaxxReports_Link').addClass('selected-nav-option');
 
     $('#marMaxxFolderDropdown').multiselect({
@@ -60,6 +62,7 @@
             .text();
 
         if (confirm('Are you sure you want to delete subscription: ' + selectedSubscription + '?')) {
+            $selectedRow.addClass('selected');
             var controllerUrl = '/MarMaxxReports/DeleteMarmaxxReportSubscription';
 
             $.ajax({
@@ -72,7 +75,8 @@
             });
 
             function successFunc(response) {
-                $selectedRow.remove();
+                //$selectedRow.remove();
+                marMaxxTable.row('.selected').remove().draw(false);
                 alert(response + selectedSubscription);
             }
 
@@ -203,7 +207,7 @@ function createTable(tableData) {
     subTable.append(body);
     $('#marMaxxSubscriptionData').append(subTable);
 
-    $('#marMaxxSubscriptionsTable').DataTable({
+    marMaxxTable = $('#marMaxxSubscriptionsTable').DataTable({
         "lengthMenu": [5, 8, 15, 25]
     });
 }
