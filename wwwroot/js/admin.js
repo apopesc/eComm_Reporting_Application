@@ -6,11 +6,11 @@
         enableCaseInsensitiveFiltering: true
     });
 
-    $('#groupsTable').DataTable({
+    var groupTable = $('#groupsTable').DataTable({
         "lengthMenu": [5, 8, 15, 25]
     });
 
-    $('#masterGroupsTable').DataTable({
+    var masterGroupTable = $('#masterGroupsTable').DataTable({
         "lengthMenu": [5, 8, 15, 25]
     });
 
@@ -70,6 +70,8 @@
             .text();
 
         if (confirm('Are you sure you want to delete group: ' + selectedGroup + '? You will no longer be able to view user data tied to this group.')) {
+
+            $selectedRow.addClass('selected');
             var controllerUrl = '/Admin/DeleteGroup';
 
             $.ajax({
@@ -82,8 +84,8 @@
             });
 
             function successFunc(response) {
-                alert("Success deleting group: " + selectedGroup);
-                $selectedRow.remove();
+                //$selectedRow.remove();
+                groupTable.row('.selected').remove().draw(false);
                 alert(response + selectedGroup);
             }
 
@@ -142,6 +144,8 @@
             .text();
 
         if (confirm('Are you sure you want to delete master group: ' + selectedMasterGroup + '? You will no longer be able to view user data tied to this group.')) {
+
+            $selectedRow.addClass('selected');
             var controllerUrl = '/Admin/DeleteMasterGroup';
 
             $.ajax({
@@ -154,8 +158,7 @@
             });
 
             function successFunc(response) {
-                alert("Success deleting master group: " + selectedMasterGroup);
-                $selectedRow.remove();
+                masterGroupTable.row('.selected').remove().draw(false);
                 $('#addNewMasterGroup option[value="' + selectedMasterGroup + '"]').remove();
                 $('#addNewMasterGroup').multiselect('rebuild');
 
