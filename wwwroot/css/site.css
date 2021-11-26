@@ -383,6 +383,10 @@ table.dataTable {
     border-collapse: collapse;
 }
 
+table.dataTable.no-footer{
+    border-bottom: 1.1px solid #111;
+}
+
 /** SPINNER CREATION **/
 
 .loader {

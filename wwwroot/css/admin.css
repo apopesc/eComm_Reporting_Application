@@ -72,11 +72,12 @@
 }
 
 #groupsTable {
-    border: 1px solid black;
+    border: 1.1px solid black;
 }
 
 #masterGroupsTable {
     border: 1px solid black;
+    border-bottom: 1.1px solid #111;
 }
 
 .sub-header{
