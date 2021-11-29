@@ -92,7 +92,14 @@ $(document).ready(function () {
         var $selectedRow = $(this).closest("tr");
         var _ID = $selectedRow.attr('id');
 
-        window.location = "/MarMaxxReports/EditReportSub?ID="+_ID;
+        window.location = "/MarMaxxReports/EditReportSub?ID=" + _ID + "&copy=false";
+    });
+
+    $('#marMaxxSubscriptionData').on('click', '.copyBtn', function () {
+        var $selectedRow = $(this).closest("tr");
+        var _ID = $selectedRow.attr('id');
+
+        window.location = "/MarMaxxReports/EditReportSub?ID=" + _ID + "&copy=true";
     });
 });
 

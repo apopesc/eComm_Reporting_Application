@@ -16,5 +16,6 @@ namespace eComm_Reporting_Application.Models
         public Dictionary<string, string> dynamicParams { get; set; }
         public List<string> groupNames { get; set; }
         public List<string> groupIDs { get; set; }
+        public bool isCopy { get; set; }
     }
 }

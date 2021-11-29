@@ -1,4 +1,9 @@
-﻿$(document).ready(function () {
+﻿var url_string = window.location.href;
+url = new URL(url_string);
+var isCopyScreen = url.searchParams.get("copy");
+
+$(document).ready(function () {
+    
     $('#MarMaxxReports_Link').addClass('selected-nav-option');
 
     $('#marMaxxGroup').multiselect({
@@ -287,7 +292,12 @@
     });
 
     $('#saveSubscription').on('click', '#saveMarmaxxSubscription', function () {
-        var subscriptionID = $('#subscriptionID').val();
+        var subscriptionID;
+        if (isCopyScreen == 'false') {
+            subscriptionID = $('#subscriptionID').val();
+        } else {
+            subscriptionID = "0";
+        }
         var subscriptionName = $('#subscriptionName').val();
         var groupNames = $('#marMaxxGroup').val();
         var groupIDs = [];
@@ -364,7 +374,11 @@
             var groupNames_String = groupNames.toString();
             var groupIDs_String = groupIDs.toString();
 
-            var controllerUrl = '/MarMaxxReports/SaveEditedMarmaxxReportSubscription';
+            if (isCopyScreen == 'false') {
+                var controllerUrl = '/MarMaxxReports/SaveEditedMarmaxxReportSubscription';
+            } else {
+                var controllerUrl = '/MarMaxxReports/SaveMarmaxxReportSubscription';
+            }
 
             var editedReportSubModel = {
                 subscriptionID: parseInt(subscriptionID),
@@ -381,11 +395,11 @@
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
-                data: { 'editedReportSub': editedReportSubModel }
+                data: { 'reportSub': editedReportSubModel }
             });
 
             function successFunc(returnedData) {
-                alert("Success editing subscription: " + subscriptionName);
+                alert(returnedData.message + subscriptionName);
                 if (returnedData.result == 'Redirect') {
                     window.location = returnedData.url;
                 }
@@ -575,9 +589,15 @@ function createParams(paramData) {
         }
     }
 
-    var saveSubscriptionBtn = $('<button>').addClass('btnAddPage').text("Save MarMaxx Report Subscription");
+    var saveSubscriptionBtn = $('<button>').addClass('btnAddPage');
     saveSubscriptionBtn.prop('id', 'saveMarmaxxSubscription');
 
+    if (isCopyScreen == 'false') {
+        saveSubscriptionBtn.text("Save Edited MarMaxx Report Subscription"); 
+    } else {
+        saveSubscriptionBtn.text("Save New MarMaxx Report Subscription");
+    }
+   
     $('#saveSubscription').append(saveSubscriptionBtn);
 
     $('.dynamic-dropdown').multiselect({

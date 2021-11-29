@@ -42,9 +42,11 @@ namespace eComm_Reporting_Application.Controllers
             return View(addNewDropdownModel);
         }
 
-        public IActionResult EditReportSub(int ID)
+        public IActionResult EditReportSub(int ID, bool copy)
         {
             EditReportSubscriptionModel reportSubModel = new EditReportSubscriptionModel();
+
+            reportSubModel.isCopy = copy;
 
             string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Subscription_ID='" + ID + "'";
 
@@ -291,11 +293,11 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult SaveMarmaxxReportSubscription(ReportTableModel savedReportSub)
+        public JsonResult SaveMarmaxxReportSubscription(ReportTableModel reportSub)
         {
             try
             {
-                string paramJson = JsonConvert.SerializeObject(savedReportSub.dynamicParams);
+                string paramJson = JsonConvert.SerializeObject(reportSub.dynamicParams);
                 //Add query here to store in database, store group ID in their respective columns, and paramJson in the last column
 
                 string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
@@ -303,7 +305,7 @@ namespace eComm_Reporting_Application.Controllers
                 SqlConnection connection = new SqlConnection(connectionstring);
 
                 string addUserQueryString = "INSERT INTO MarMaxxReportSubscriptions (Subscription_Name, Report_Name, Group_Name, Group_ID, Report_Params) " +
-                    "VALUES ('" + savedReportSub.subscriptionName + "', '" + savedReportSub.reportName + "', '" + savedReportSub.groupNames + "', '" + savedReportSub.groupIDs + "', '" + paramJson + "');";
+                    "VALUES ('" + reportSub.subscriptionName + "', '" + reportSub.reportName + "', '" + reportSub.groupNames + "', '" + reportSub.groupIDs + "', '" + paramJson + "');";
 
                 SqlCommand addUserQuery = new SqlCommand(addUserQueryString, connection);
 
@@ -314,7 +316,7 @@ namespace eComm_Reporting_Application.Controllers
                     connection.Close();
                 }
 
-                return Json(new { result = "Redirect", url = Url.Action("Index", "MarMaxxReports") });
+                return Json(new { message = "Success saving subscription: ", result = "Redirect", url = Url.Action("Index", "MarMaxxReports") });
             }
             catch (Exception e)
             {
@@ -323,19 +325,19 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult SaveEditedMarmaxxReportSubscription(ReportTableModel editedReportSub)
+        public JsonResult SaveEditedMarmaxxReportSubscription(ReportTableModel reportSub)
         {
             try
             {
-                string paramJson = JsonConvert.SerializeObject(editedReportSub.dynamicParams);
+                string paramJson = JsonConvert.SerializeObject(reportSub.dynamicParams);
                 //Add query here to store in database, store group ID in their respective columns, and paramJson in the last column
 
                 string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
 
                 SqlConnection connection = new SqlConnection(connectionstring);
 
-                string editUserQueryString = "UPDATE MarMaxxReportSubscriptions SET Subscription_Name='" + editedReportSub.subscriptionName + "', Report_Name='" + editedReportSub.reportName + "', Group_Name='" + editedReportSub.groupNames + "', Group_ID='" + editedReportSub.groupIDs + "', Report_Params='" + paramJson + "' " +
-                    "WHERE Subscription_ID="+editedReportSub.subscriptionID+";";
+                string editUserQueryString = "UPDATE MarMaxxReportSubscriptions SET Subscription_Name='" + reportSub.subscriptionName + "', Report_Name='" + reportSub.reportName + "', Group_Name='" + reportSub.groupNames + "', Group_ID='" + reportSub.groupIDs + "', Report_Params='" + paramJson + "' " +
+                    "WHERE Subscription_ID="+ reportSub.subscriptionID+";";
 
                 SqlCommand editUserQuery = new SqlCommand(editUserQueryString, connection);
 
@@ -346,7 +348,7 @@ namespace eComm_Reporting_Application.Controllers
                     connection.Close();
                 }
 
-                return Json(new { result = "Redirect", url = Url.Action("Index", "MarMaxxReports") });
+                return Json(new { message = "Success editing subscription: ", result = "Redirect", url = Url.Action("Index", "MarMaxxReports") });
             }
             catch (Exception e)
             {

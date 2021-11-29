@@ -187,11 +187,11 @@
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
-                data: { 'savedReportSub': savedReportSubModel }
+                data: { 'reportSub': savedReportSubModel }
             });
 
             function successFunc(returnedData) {
-                alert("Success adding subscription: " + subscriptionName);
+                alert(returnedData.message + subscriptionName);
                 if (returnedData.result == 'Redirect') {
                     window.location = returnedData.url;
                 }

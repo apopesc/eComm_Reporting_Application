@@ -10,7 +10,14 @@
 
 <div class="page-header">
     <div class="page-title">
-        <h1 class="title-text">Edit MarMaxx Report Subscription</h1>
+        @if (Model.isCopy == false)
+        {
+            <h1 class="title-text">Edit MarMaxx Report Subscription</h1>
+        }
+        else
+        {
+            <h1 class="title-text">Copy MarMaxx Report Subscription</h1>
+        }
     </div>
 </div>
 
@@ -37,12 +44,15 @@
 </div>
 
 <div class="filter-data">
-    <div class="addnew-row textbox">
-        <div class="addnew-textbox">
-            <label class="filter-label" for="subscription-id">Subscription ID: </label>
-            <input type="text" id="subscriptionID" class="subscription-textbox" name="subscription-id" disabled value="@Model.subscriptionID" />
+    @if (Model.isCopy == false)
+    {
+        <div class="addnew-row textbox">
+            <div class="addnew-textbox">
+                <label class="filter-label" for="subscription-id">Subscription ID: </label>
+                <input type="text" id="subscriptionID" class="subscription-textbox" name="subscription-id" disabled value="@Model.subscriptionID" />
+            </div>
         </div>
-    </div>
+    }
 
     <div class="addnew-row textbox">
         <div class="addnew-textbox">
