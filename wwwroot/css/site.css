@@ -334,6 +334,12 @@ body {
     margin-left: 1px;
 }
 
+.copyBtn {
+    border: none;
+    background: white;
+    margin-left: 1px;
+}
+
 .fa-trash {
     color: black;
 }
