@@ -663,29 +663,21 @@ namespace eComm_Reporting_Application.Controllers
                 string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                 SqlConnection connection = new SqlConnection(connectionstring);
 
-                string groupsQueryString = "SELECT DISTINCT GroupName FROM Groups WHERE GroupName IS NOT NULL";
-                string groupIDsQueryString = "SELECT DISTINCT GroupID FROM Groups WHERE GroupID IS NOT NULL";
+                string groupIDsQueryString = "SELECT * FROM Groups";
 
-                SqlCommand groupsQuery = new SqlCommand(groupsQueryString, connection);
                 SqlCommand groupIDsQuery = new SqlCommand(groupIDsQueryString, connection);
 
                 using (connection)
                 {
                     connection.Open();
-                    using (SqlDataReader reader = groupsQuery.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var groupString = reader.GetString(0);
-                            groups_list.Add(groupString);
-                        }
-                    }
                     using (SqlDataReader reader = groupIDsQuery.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             var groupIDString = reader.GetString(0);
+                            var groupString = reader.GetString(1);
                             groupsID_list.Add(groupIDString);
+                            groups_list.Add(groupString);
                         }
                     }
                     connection.Close();
