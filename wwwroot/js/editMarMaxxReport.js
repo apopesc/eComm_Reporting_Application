@@ -14,7 +14,7 @@ $(document).ready(function () {
                 var labels = [];
                 options.each(function () {
                     if ($(this).attr('label') !== undefined) {
-                        labels.push($(this).attr('value'));
+                        labels.push($(this).attr('title'));
                     }
                     else {
                         labels.push($(this).html());
@@ -32,17 +32,17 @@ $(document).ready(function () {
     });
 
     //Getting group IDs and Names from hidden parameters
-    var selectedGroupNamesString = "";
+    var selectedGroupIDsString = "";
     $('.hidden-selected-groups input').each(function () {
-        if ($(this).attr("id") == "selectedGroupNames") {
-            selectedGroupNamesString = $(this).val();
+        if ($(this).attr("id") == "selectedGroupIDs") {
+            selectedGroupIDsString = $(this).val();
         }
     });
 
     //setting selected values of group IDs and group names in the dropdowns
-    var selectedGroupNames = selectedGroupNamesString.split(",");
+    var selectedGroupIDs = selectedGroupIDsString.split(",");
 
-    $('#marMaxxGroup').val(selectedGroupNames);
+    $('#marMaxxGroup').val(selectedGroupIDs);
     $('#marMaxxGroup').multiselect('refresh');
 
     //Getting report folder name first before getting all dynamic parameter dropdown data
@@ -293,18 +293,23 @@ $(document).ready(function () {
 
     $('#saveSubscription').on('click', '#saveMarmaxxSubscription', function () {
         var subscriptionID;
+
         if (isCopyScreen == 'false') {
             subscriptionID = $('#subscriptionID').val();
         } else {
             subscriptionID = "0";
         }
+
         var subscriptionName = $('#subscriptionName').val();
-        var groupNames = $('#marMaxxGroup').val();
-        var groupIDs = [];
+
+        var groupNames = [];
         $('#marMaxxGroup').find("option:selected").each(function () {
-            var groupID = $(this).prop('title');
-            groupIDs.push(groupID)
+            var groupName = $(this).prop('title');
+            groupNames.push(groupName);
         });
+            
+        var groupIDs = $('#marMaxxGroup').val();
+        
         var dynamicParams = {};
 
         if (subscriptionName == '') {

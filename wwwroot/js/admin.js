@@ -25,6 +25,8 @@
             alert("Please enter a value for Group ID");
         } else if (enteredGroupName == '') {
             alert("Please enter a value for Group Name");
+        } else if (enteredGroupID.includes(",")) {
+            alert("Group ID can not have a comma ( , ) in it's value. Please enter a Group ID without a comma.");
         } else {
             var controllerUrl = '/Admin/AddNewGroup';
 
