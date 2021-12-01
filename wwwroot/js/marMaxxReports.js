@@ -202,6 +202,10 @@ function createTable(tableData) {
         row.append(tableEntry4);
         let tableEntry5 = $('<td>').addClass('marMaxxSubscriptionsEntry_GroupID').text(tableData.rowData[j].groupIDs);
         row.append(tableEntry5);
+        let tableEntry6 = $('<td>').addClass('marMaxxSubscriptionsEntry_FileFormat').text(tableData.rowData[j].fileFormat);
+        row.append(tableEntry6);
+        let tableEntry7 = $('<td>').addClass('marMaxxSubscriptionsEntry_Schedule').text(tableData.rowData[j].schedule);
+        row.append(tableEntry7);
 
         for (i = 5; i < tableData.tableParams.length; i++) {
             for (var paramName in tableData.rowData[j].dynamicParams) {

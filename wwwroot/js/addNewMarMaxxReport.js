@@ -33,6 +33,14 @@
         enableCaseInsensitiveFiltering: true
     });
 
+    $('#fileFormat').multiselect({
+        enableCaseInsensitiveFiltering: true
+    });
+
+    $('#schedule').multiselect({
+        enableCaseInsensitiveFiltering: true
+    });
+
     $('#marMaxxReportDropdown').multiselect('disable');
 
     $('#viewReportParams').click(function () {
@@ -96,6 +104,8 @@
             var groupID = $(this).prop('title');
             groupIDs.push(groupID)
         });
+        var fileFormat = $('#fileFormat').val();
+        var schedule = $('#schedule').val();
         var dynamicParams = {};
 
         if (subscriptionName == '') {
@@ -178,6 +188,8 @@
                 reportName: reportName,
                 groupNames: groupNames_String,
                 groupIDs: groupIDs_String,
+                fileFormat: fileFormat,
+                schedule: schedule,
                 dynamicParams: dynamicParams
             };
 

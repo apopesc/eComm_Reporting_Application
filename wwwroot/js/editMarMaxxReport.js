@@ -31,6 +31,14 @@ $(document).ready(function () {
         enableCaseInsensitiveFiltering: true
     });
 
+    $('#fileFormat').multiselect({
+        enableCaseInsensitiveFiltering: true
+    });
+
+    $('#schedule').multiselect({
+        enableCaseInsensitiveFiltering: true
+    });
+
     //Getting group IDs and Names from hidden parameters
     var selectedGroupIDsString = "";
     $('.hidden-selected-groups input').each(function () {
@@ -309,6 +317,9 @@ $(document).ready(function () {
         });
             
         var groupIDs = $('#marMaxxGroup').val();
+
+        var fileFormat = $('#fileFormat').val();
+        var schedule = $('#schedule').val();
         
         var dynamicParams = {};
 
@@ -391,6 +402,8 @@ $(document).ready(function () {
                 reportName: selectedReportName,
                 groupNames: groupNames_String,
                 groupIDs: groupIDs_String,
+                fileFormat: fileFormat,
+                schedule: schedule,
                 dynamicParams: dynamicParams
             };
 

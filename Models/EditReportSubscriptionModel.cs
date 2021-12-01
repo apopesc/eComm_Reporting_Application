@@ -13,6 +13,8 @@ namespace eComm_Reporting_Application.Models
         public string folderName { get; set; }
         public string selectedGroupNames { get; set; }
         public string selectedGroupIDs { get; set; }
+        public string selectedFileFormat { get; set; }
+        public string selectedSchedule { get; set; }
         public Dictionary<string, string> dynamicParams { get; set; }
         public List<string> groupNames { get; set; }
         public List<string> groupIDs { get; set; }

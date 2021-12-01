@@ -65,6 +65,8 @@ namespace eComm_Reporting_Application.Controllers
                         reportSubModel.reportName = reader.GetString(2);
                         reportSubModel.selectedGroupNames = reader.GetString(3);
                         reportSubModel.selectedGroupIDs = reader.GetString(4);
+                        reportSubModel.selectedFileFormat = reader.GetString(6);
+                        reportSubModel.selectedSchedule = reader.GetString(7);
 
                         string report_params_json = reader.GetString(5);
                         Dictionary<string, string> reportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(report_params_json);
@@ -136,6 +138,12 @@ namespace eComm_Reporting_Application.Controllers
                 List<ReportTableModel> tableData = new List<ReportTableModel>();
 
                 //Adding the static columns to the table (these will appear for every report)
+                Parameter schedule = new Parameter();
+                schedule.name = "Schedule";
+                tableParameters.parameters.Insert(0, schedule);
+                Parameter fileFormat = new Parameter();
+                fileFormat.name = "File_Format";
+                tableParameters.parameters.Insert(0, fileFormat);
                 Parameter groupID = new Parameter();
                 groupID.name = "Group_ID";
                 tableParameters.parameters.Insert(0, groupID);
@@ -151,6 +159,7 @@ namespace eComm_Reporting_Application.Controllers
                 Parameter subscriptionID = new Parameter();
                 subscriptionID.name = "Subscription_ID";
                 tableParameters.parameters.Insert(0, subscriptionID);
+                
 
                 string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                 SqlConnection connection = new SqlConnection(connectionstring);
@@ -171,6 +180,8 @@ namespace eComm_Reporting_Application.Controllers
                             tableRow.reportName = reader.GetString(2);
                             tableRow.groupNames = reader.GetString(3);
                             tableRow.groupIDs = reader.GetString(4);
+                            tableRow.fileFormat = reader.GetString(6);
+                            tableRow.schedule = reader.GetString(7);
 
                             string reportParamsJson = reader.GetString(5);
                             Dictionary<string, string> reportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(reportParamsJson);
@@ -304,8 +315,8 @@ namespace eComm_Reporting_Application.Controllers
 
                 SqlConnection connection = new SqlConnection(connectionstring);
 
-                string addUserQueryString = "INSERT INTO MarMaxxReportSubscriptions (Subscription_Name, Report_Name, Group_Name, Group_ID, Report_Params) " +
-                    "VALUES ('" + reportSub.subscriptionName + "', '" + reportSub.reportName + "', '" + reportSub.groupNames + "', '" + reportSub.groupIDs + "', '" + paramJson + "');";
+                string addUserQueryString = "INSERT INTO MarMaxxReportSubscriptions (Subscription_Name, Report_Name, Group_Name, Group_ID, Report_Params, File_Format, Schedule) " +
+                    "VALUES ('" + reportSub.subscriptionName + "', '" + reportSub.reportName + "', '" + reportSub.groupNames + "', '" + reportSub.groupIDs + "', '" + paramJson + "', '" + reportSub.fileFormat + "', '" + reportSub.schedule + "');";
 
                 SqlCommand addUserQuery = new SqlCommand(addUserQueryString, connection);
 
@@ -336,7 +347,7 @@ namespace eComm_Reporting_Application.Controllers
 
                 SqlConnection connection = new SqlConnection(connectionstring);
 
-                string editUserQueryString = "UPDATE MarMaxxReportSubscriptions SET Subscription_Name='" + reportSub.subscriptionName + "', Report_Name='" + reportSub.reportName + "', Group_Name='" + reportSub.groupNames + "', Group_ID='" + reportSub.groupIDs + "', Report_Params='" + paramJson + "' " +
+                string editUserQueryString = "UPDATE MarMaxxReportSubscriptions SET Subscription_Name='" + reportSub.subscriptionName + "', Report_Name='" + reportSub.reportName + "', Group_Name='" + reportSub.groupNames + "', Group_ID='" + reportSub.groupIDs + "', Report_Params='" + paramJson + "', File_Format='" + reportSub.fileFormat + "', Schedule='" + reportSub.schedule + "' " +
                     "WHERE Subscription_ID="+ reportSub.subscriptionID+";";
 
                 SqlCommand editUserQuery = new SqlCommand(editUserQueryString, connection);
