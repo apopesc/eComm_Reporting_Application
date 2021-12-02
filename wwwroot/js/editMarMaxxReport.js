@@ -330,6 +330,8 @@ $(document).ready(function () {
         } else if (groupNames.length == 0) {
             alert("Please select a value for Group Name");
         } else {
+            var isAllDept = false;
+            var isAllClass = false;
             $('#hiddenParamNames > input').each(function () {
                 var inputID = this.value;
                 var dynamicParamVal = $('#' + inputID).val();
