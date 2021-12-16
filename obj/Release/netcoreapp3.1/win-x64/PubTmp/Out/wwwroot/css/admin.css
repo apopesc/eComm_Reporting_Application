@@ -1,0 +1,122 @@
+﻿.addNewGroups{
+    float: left;
+    margin-left: 12px;
+}
+
+.groupsTableDiv{
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.masterGroupsTableDiv {
+    margin-top: 10px;
+    display: inline-block;
+}
+
+@media screen and (max-width: 1920px) {
+    .addNewGroups {
+        width: 32%;
+    }
+    .groupsTableDiv {
+        width: 66%;
+    }
+    .masterGroupsTableDiv {
+        width: 28%;
+    }
+    .addnew-textbox {
+        width: 420px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .addNewGroups {
+        width: 40%;
+    }
+    .groupsTableDiv {
+        width: 58%;
+    }
+    .masterGroupsTableDiv {
+        width: 38%;
+    }
+    .addnew-textbox {
+        width: 390px;
+    }
+    .addnew-dropdown {
+        width: 390px;
+    }
+    #addGroupSubmit {
+        margin-right: 4.3%;
+    }
+}
+
+.groups-div {
+    min-height:270px;
+    margin-top: 18px;
+    margin-inline: 3.5%
+}
+
+.master-groups-div {
+    margin-top: 5px;
+    margin-inline: 3.5%
+}
+
+.btn-group {
+    float: right;
+}
+
+.groupsHeader {
+    height: 40px;
+    background: #E5E5E5;
+    position: sticky;
+    top: 0px;
+    z-index: 10;
+}
+
+#groupsTable {
+    border: 1.1px solid black;
+}
+
+#masterGroupsTable {
+    border: 1px solid black;
+    border-bottom: 1.1px solid #111;
+}
+
+.sub-header{
+    background-color: #007bff;
+    height: 30px;
+}
+
+.sub{
+    font-size: 23px;
+    margin-left: 20px;
+}
+
+#addGroupSubmit {
+    background-color: #007bff;
+    color: white;
+    width: 125px;
+    float: right;
+}
+
+#addMasterGroupSubmit {
+    background-color: #007bff;
+    color: white;
+    width: 125px;
+    float: right;
+}
+
+.first{
+    margin-top: 18px;
+}
+
+.even {
+    border-bottom: 1px solid #ADADAD;
+}
+
+.odd {
+    border-bottom: 1px solid #ADADAD;
+}
+
+.newRow {
+    border-bottom: 1px solid #ADADAD;
+}

@@ -1,0 +1,56 @@
+﻿.btn-group{
+    float: right;
+}
+
+.addnew-is-active {
+    width: 270px;
+    height: 38px;
+    padding: 14px 0;
+    float: left;
+}
+
+.email-input {
+    float: right;
+}
+
+@media screen and (max-width: 1920px) {
+    .email-input {
+        width: 290px;
+    }
+    .radio-btns {
+        margin-left: 65px;
+    }
+    #addUserSubmit {
+        margin-left: 130px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .email-input {
+        width: 250px;
+    }
+    .radio-btns {
+        margin-left: 105px;
+    }
+    #addUserSubmit {
+        margin-left: 141px;
+    }
+}
+
+#addUserSubmit {
+    width: 150px;
+    background-color: #9E0000;
+    color: white;
+    font-weight: 700;
+}
+
+#editUserSubmit {
+    width: 150px;
+    background-color: #9E0000;
+    color: white;
+    font-weight: 700;
+}
+
+.email{
+    width: 420px;
+}

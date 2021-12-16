@@ -1,0 +1,118 @@
+﻿.is-active {
+    height: 38px;
+    padding: 14px 0;
+    float: left;
+}
+
+#userSubscriptionData {
+    margin-top: 0px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 93%;
+}
+
+#userSubscriptionsTable_filter {
+    float: left;
+    margin-left: 45px;
+    line-height: 1.34;
+    margin-top: -40px;
+}
+
+#userSubscriptionsTable_length {
+   margin-top: -40px;
+}
+
+.userSubscriptionsTable {
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+.userSubscriptionsHeader {
+    text-align: center;
+}
+
+.userSubscriptionsEntry_isActive, .userSubscriptionsEntry_Group, .userSubscriptionsEntry_GroupID, .userSubscriptionsEntry_masterGroup {
+    text-align: center;
+}
+
+.userSubscriptionsRow {
+    border-bottom: 1px solid #ADADAD;
+    height: 32px;
+}
+
+.userSubscriptionsRow_Last {
+    border-bottom: 1px solid #ADADAD;
+    height: 32px;
+}
+
+.userSubscriptionsRow_Header {
+    height: 40px;
+    background: #9E0000;
+    position: sticky;
+    top: 0px;
+    color: white;
+    z-index: 10;
+}
+
+.radio-btns {
+    float: right;
+}
+
+.separator-line {
+    top: 268px;
+}
+
+.addNew {
+    margin-top: 75px;
+    margin-bottom: 4px;
+}
+
+.btnViewData {
+    margin-top: 16px;
+}
+
+.btn-group{
+    float: right;
+}
+
+@media screen and (max-width: 1920px) {
+    .main-dropdown {
+        width: 420px;
+    }
+
+    .is-active {
+        width: 219px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .main-dropdown {
+        width: 380px;
+    }
+    .is-active {
+        width: 218px;
+    }
+}
+
+.main-dropdown {
+    margin-right: 80px;
+}
+
+
+
+@media screen and (max-width: 1920px) {
+    .userEmail_Header {
+        max-width: 230px !important;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .userEmail_Header {
+        max-width: 210px !important;
+    }
+    .isActive_Header {
+        min-width: 100px !important;
+    }
+}

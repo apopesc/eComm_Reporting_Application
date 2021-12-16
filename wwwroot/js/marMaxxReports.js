@@ -176,17 +176,17 @@ function createTable(tableData) {
 
         let tableEntry_Icons = $('<td>').addClass('marMaxxSubscriptionsEntry_Icon');
         let deleteIcon = $('<button>').addClass('deleteBtn');
-        let deleteLink = $('<i>').addClass('fa fa-trash fa-lg');
+        let deleteLink = $('<i>').addClass('fa fa-trash');
         deleteIcon.append(deleteLink);
         tableEntry_Icons.append(deleteIcon);
 
         let editIcon = $('<button>').addClass('editBtn');
-        let editLink = $('<i>').addClass('fas fa-pencil-alt fa-lg');
+        let editLink = $('<i>').addClass('fas fa-pencil-alt');
         editIcon.append(editLink);
         tableEntry_Icons.append(editIcon);
 
         let copyIcon = $('<button>').addClass('copyBtn');
-        let copyLink = $('<i>').addClass('fas fa-copy fa-lg');
+        let copyLink = $('<i>').addClass('fas fa-copy');
         copyIcon.append(copyLink);
         tableEntry_Icons.append(copyIcon);
 

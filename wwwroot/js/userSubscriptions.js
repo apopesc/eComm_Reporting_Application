@@ -200,12 +200,12 @@ $(document).ready(function () {
             //Adding the icons to each row ------------------------------------------------------------
             let tableEntry_Icons = $('<td>').addClass('userSubscriptionsEntry_Icon');
             let deleteIcon = $('<button>').addClass('deleteBtn');
-            let deleteLink = $('<i>').addClass('fa fa-trash fa-lg');
+            let deleteLink = $('<i>').addClass('fa fa-trash');
             deleteIcon.append(deleteLink);
             tableEntry_Icons.append(deleteIcon);
 
             let editIcon = $('<button>').addClass('editBtn');
-            let editLink = $('<i>').addClass('fas fa-pencil-alt fa-lg');
+            let editLink = $('<i>').addClass('fas fa-pencil-alt');
             editIcon.append(editLink);
             tableEntry_Icons.append(editIcon);
 

@@ -1,0 +1,67 @@
+﻿#marMaxxSubscriptionData {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 93%;
+}
+
+.horizontal-scroll {
+    overflow-x: scroll;
+}
+
+#marMaxxSubscriptionsTable_filter {
+    float: left;
+    margin-left: 45px;
+    line-height: 1.34;
+    margin-top: 0px;
+}
+
+#marMaxxSubscriptionsTable_length {
+    margin-top: 0px;
+}
+
+.marMaxxSubscriptionsTable {
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+.marMaxxSubscriptionsHeader {
+    text-align: center;
+    padding-inline: 20px;
+}
+
+.marMaxxSubscriptionsRow {
+    border-bottom: 1px solid #ADADAD;
+    height: 32px;
+}
+
+.marMaxxSubscriptionsRow_Last {
+    border-bottom: 1px solid #ADADAD;
+    height: 32px;
+}
+
+.marMaxxSubscriptionsRow_Header {
+    height: 40px;
+    background: #9E0000;
+    position: sticky;
+    top: 0px;
+    color: white;
+    z-index: 10;
+}
+
+.marMaxxSubscriptionsEntry_SubscriptionID, .marMaxxSubscriptionsEntry_SubscriptionName, .marMaxxSubscriptionsEntry_ReportName, .marMaxxSubscriptionsEntry_GroupName, .marMaxxSubscriptionsEntry_GroupID, .marMaxxSubscriptionEntry_Dynamic, .marMaxxSubscriptionsEntry_FileFormat, .marMaxxSubscriptionsEntry_Schedule {
+    text-align: center;
+}
+
+.marMaxxSubscriptionsEntry_Icon{
+    min-width: 100px;
+}
+
+.addNew{
+    margin-bottom: -36px;
+    margin-top: 36px;
+    z-index: 3;
+    position: relative;
+}
+

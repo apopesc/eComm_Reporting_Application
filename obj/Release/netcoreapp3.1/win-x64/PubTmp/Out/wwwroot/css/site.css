@@ -1,0 +1,472 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+.top-bar{
+    max-width:100%;
+    padding-left:0px;
+    height:80px;
+}
+
+.tjx-icon{
+    width: 110px;
+    height: 90px;
+}
+
+.site-header {
+    background-color: lightgrey !important;
+    border: 1.2px solid #BDBDBD;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 1px;
+}
+
+.page-header {
+    background-color: #9E0000;
+    margin-inline: 2.5%;
+    height: 35px;
+    margin-top: 25px;
+}
+
+.page-content {
+    max-width: 100%;
+}
+
+.title-text {
+    margin-left: 22px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 26px;
+    color: #FFFFFF;
+}
+
+.filter-data {
+    margin-left: 5%;
+    margin-top: 12px;
+}
+.radio-label{
+    float:left;
+}
+.radio-btns{
+    float:left;
+}
+
+.multiselect {
+    height: 33px;
+}
+
+@media screen and (max-width: 1920px) {
+    .multiselect {
+        width: 290px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .multiselect {
+        width: 250px;
+    }
+}
+
+.yes-box{
+    margin-right: 5px;
+}
+
+.filter-label {
+    font-weight: 600;
+    margin-right: 6px;
+    font-size: 15px;
+}
+
+.separator-line {
+    position: absolute;
+    width: 100%;
+    height: 0px;
+    left: 0px;
+    top: 232px;
+    border: 2px solid #BDBDBD;
+    box-shadow: 0px 2px 2px rgb(0 0 0 / 25%);
+}
+
+.nav-option{
+    margin-inline: 0.8rem;
+}
+
+@media screen and (max-width: 1920px) {
+    .multiselect-container {
+        overflow-y: scroll;
+        max-height: 300px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .multiselect-container {
+        overflow-y: scroll;
+        max-height: 250px;
+    }
+}
+
+.navbarOption{
+    font-weight: 500;
+}
+
+.first-row {
+    width: 100%;
+    display: inline-block;
+}
+
+.second-row{
+    width: 92%;
+}
+
+.btnViewData {
+    float: right;
+    margin-top: -22px;
+    margin-right: 2.5%;
+    width: 100px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 5px #999;
+    font-weight: 500;
+}
+
+    .btnViewData:active {
+        box-shadow: 0 2px #666;
+        transform: translateY(4px);
+    }
+
+    .btnViewData:focus {
+        outline: none;
+    }
+
+.btnSubmit {
+    position: absolute;
+    bottom: 75px;
+    right: 3.4%;
+    width: 100px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 5px #999;
+    background-color: #9E0000;
+    color: white;
+    font-weight: 700;
+}
+
+    .btnSubmit:active {
+        box-shadow: 0 2px #666;
+        transform: translateY(4px);
+    }
+
+    .btnSubmit:focus {
+        outline: none;
+    }
+
+.main-dropdown {
+    padding: 8px 0;
+    float: left;
+}
+
+@media screen and (max-width: 1920px) {
+    .main-dropdown {
+        width: 470px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .main-dropdown {
+        width: 407px;
+    }
+}
+
+.selected-nav-option {
+    color: #9E0000 !important;
+}
+
+.nav-item a:hover {
+    color: #9E0000 !important;
+}
+
+.addNew {
+    float: right;
+    margin-top: 40px;
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: -20px;
+}
+
+.addNewText {
+    float: left;
+    margin-right: 7px;
+    line-height: 48px;
+    color: #9E0000;
+    font-weight: 700;
+}
+
+.addNewBtn {
+    float: left;
+    border: none;
+    background: white;
+}
+
+    .addNewBtn:focus {
+        outline: none;
+        transform: rotate(45deg);
+    }
+
+.fa-plus-circle {
+    font-size: 3em;
+    color: #9E0000;
+}
+
+.addnew-dropdown {
+    width: 420px;
+    padding: 8px 0;
+    float: left;
+}
+
+.addnew-row {
+    width: 92%;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.addnew-row-last {
+    width: 92%;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.btnAddPage {
+    float: left;
+    margin-right: 10.3%;
+    width: 100px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 5px #999;
+    font-weight: 500;
+}
+
+    .btnAddPage:active {
+        box-shadow: 0 2px #666;
+        transform: translateY(4px);
+    }
+
+    .btnAddPage:focus {
+        outline: none;
+    }
+
+.deleteBtn {
+    border: none;
+    background: white;
+    margin-left: 1px;
+}
+
+.editBtn {
+    border: none;
+    background: white;
+    margin-left: 1px;
+}
+
+.copyBtn {
+    border: none;
+    background: white;
+    margin-left: 1px;
+}
+
+.fa-trash {
+    color: black;
+}
+
+@media screen and (max-width: 1920px) {
+    .subscription-textbox {
+        width: 290px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .subscription-textbox {
+        width: 250px;
+    }
+}
+
+.addnew-textbox {
+    width: 440px;
+}
+
+.textbox {
+    margin-bottom: 10px;
+}
+
+.subscription-textbox {
+    float: right;
+}
+
+.admin{
+    margin-left: auto;
+}
+
+@media screen and (max-width: 1920px) {
+    .admin {
+        padding-right: 12px;
+    }
+}
+
+
+@media screen and (max-width: 1280px) {
+    .admin {
+        padding-right: 4px;
+    }
+}
+
+table.dataTable {
+    border-collapse: collapse;
+}
+
+table.dataTable.no-footer{
+    border-bottom: 1.1px solid #111;
+}
+
+/** SPINNER CREATION **/
+
+.loader {
+    position: relative;
+    text-align: center;
+    margin: 15px auto 35px auto;
+    z-index: 9999;
+    display: block;
+    width: 80px;
+    height: 80px;
+    border: 10px solid rgba(0, 0, 0, .3);
+    border-radius: 50%;
+    border-top-color: #000;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+
+/** MODAL STYLING **/
+
+.modal-content {
+    border-radius: 0px;
+    box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.7);
+}
+
+.modal-backdrop.show {
+    opacity: 0.75;
+}
+
+.loader-txt p {
+    font-size: 13px;
+    color: #666;
+}
+
+
+#output {
+    padding: 25px 15px;
+    background: #222;
+    border: 1px solid #222;
+    max-width: 350px;
+    margin: 35px auto;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+    #output p.subtle {
+        color: #555;
+        font-style: italic;
+        font-family: 'Roboto', sans-serif !important;
+    }
+
+    #output h4 {
+        font-weight: 300 !important;
+        font-size: 1.1em;
+        font-family: 'Roboto', sans-serif !important;
+    }
+
+    #output p {
+        font-family: 'Roboto', sans-serif !important;
+        font-size: 0.9em;
+    }
+
+        #output p b {
+            text-transform: uppercase;
+            text-decoration: underline;
+        }
