@@ -19,14 +19,19 @@
         var enteredGroupID = $("#addNewGroupID").val();
         var enteredGroupName = $("#addNewGroupName").val();
 
+        var validGroupName = /^[a-zA-Z0-9- ]*$/.test(enteredGroupName);
+        var validGroupID = /^[a-zA-Z0-9- ]*$/.test(enteredGroupID);
+
         if (enteredMasterGroup == null) {
             alert("Please select a value for Master Group");
         } else if (enteredGroupID == '') {
             alert("Please enter a value for Group ID");
         } else if (enteredGroupName == '') {
             alert("Please enter a value for Group Name");
-        } else if (enteredGroupID.includes(",")) {
-            alert("Group ID can not have a comma ( , ) in it's value. Please enter a Group ID without a comma.");
+        }  else if (validGroupName == false) {
+            alert("Group Name contains special characters, you can only enter values a-z, A-Z, 0-9, space( ), and hyphen(-).");
+        } else if (validGroupID == false) {
+            alert("Group ID contains special characters, you can only enter values a-z, A-Z, 0-9, space( ), and hyphen(-).");
         } else {
             var controllerUrl = '/Admin/AddNewGroup';
 
@@ -101,8 +106,13 @@
 
     $('#addMasterGroupSubmit').click(function () {
         var newMasterGroup = $("#masterGroup").val();
+
+        var validMasterGroup = /^[a-zA-Z0-9- ]*$/.test(newMasterGroup);
+
         if (newMasterGroup == '') {
             alert("Please enter a value for Master Group");
+        } else if (validMasterGroup == false) {
+            alert("Master Group contains special characters, you can only enter values a-z, A-Z, 0-9, space( ), and hyphen(-).");
         } else {
             var controllerUrl = '/Admin/AddNewMasterGroup';
 
