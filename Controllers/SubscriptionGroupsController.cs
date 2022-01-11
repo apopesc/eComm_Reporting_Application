@@ -4,28 +4,35 @@ using System.Collections.Generic;
 using eComm_Reporting_Application.Models;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
+using Microsoft.AspNetCore.Authorization;
 
 namespace eComm_Reporting_Application.Controllers
 {
+    [Authorize]
     public class SubscriptionGroupsController : Controller
     {
 
         private readonly IConfiguration configuration;
         public static List<UserSubscriptionTableModel> tableData = new List<UserSubscriptionTableModel>();
 
-
         public SubscriptionGroupsController(IConfiguration config)
         {
             this.configuration = config;
         }
 
-
         public IActionResult Index()
         {
+            bool isAuthenticated = isAuthenticatedUser();
+
+            if(isAuthenticated == false) { 
+                //redirect to error page
+            }
+
             UserSubscriptionDropdownModel subModel = GetFilterData(); 
             
             return View(subModel);
         }
+
 
         public IActionResult AddNewUserSub()
         {
@@ -391,6 +398,38 @@ namespace eComm_Reporting_Application.Controllers
             catch (Exception e)
             {
                 return Json("Error Saving to Database: " + e);
+            }
+        }
+
+        private bool isAuthenticatedUser()
+        {
+            string userName = User.Identity.Name;
+
+            int userCount = 0;
+
+            string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+            SqlConnection connection = new SqlConnection(connectionstring);
+            string authUserQueryString = "SELECT COUNT(*) FROM [dbo].[User] WHERE UserName='" + userName + "';";
+            SqlCommand authUserQuery = new SqlCommand(authUserQueryString, connection);
+
+            connection.Open();
+            using (SqlDataReader reader = authUserQuery.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var temp_userCount = reader.GetInt32(0);
+                    userCount = temp_userCount;
+                }
+            }
+            connection.Close();
+
+            if (userCount < 1)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
 

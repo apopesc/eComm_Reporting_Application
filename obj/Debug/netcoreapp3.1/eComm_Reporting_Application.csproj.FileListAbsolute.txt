@@ -10,12 +10,16 @@ C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Appli
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\eComm_Reporting_Application.pdb
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\eComm_Reporting_Application.Views.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\eComm_Reporting_Application.Views.pdb
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.Negotiate.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Connections.Abstractions.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Http.Features.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.Razor.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.Workspaces.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
@@ -32,6 +36,7 @@ C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Appli
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\System.Composition.Runtime.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\System.Composition.TypedParts.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\System.Data.SqlClient.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\System.IO.Pipelines.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\cs\Microsoft.CodeAnalysis.resources.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\de\Microsoft.CodeAnalysis.resources.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\es\Microsoft.CodeAnalysis.resources.dll
@@ -89,6 +94,7 @@ C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Appli
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\eComm_Reporting_Application.csproj.AssemblyReference.cache
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\eComm_Reporting_Application.AssemblyInfoInputs.cache
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\eComm_Reporting_Application.AssemblyInfo.cs
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\eComm_Reporting_Application.csproj.CoreCompileInputs.cache
@@ -121,4 +127,3 @@ C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Appli
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\eComm_Reporting_Application.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\eComm_Reporting_Application.pdb
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\eComm_Reporting_Application.genruntimeconfig.cache
-C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Debug\netcoreapp3.1\eComm_Reporting_Application.csproj.AssemblyReference.cache

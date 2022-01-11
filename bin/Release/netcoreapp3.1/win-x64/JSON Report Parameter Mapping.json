@@ -827,7 +827,7 @@
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
-              "value": "Yes,No",
+              "value": "Y,N",
               "label": "Yes,No"
             },
             "Combine_Banners": {
