@@ -19,10 +19,24 @@ namespace eComm_Reporting_Application.Controllers
             this.configuration = config;
         }
 
+        public IActionResult Error(string errorMsg)
+        {
+            ErrorViewModel errorModel = new ErrorViewModel();
+            errorModel.errorMessage = errorMsg;
+            return View(errorModel);
+        }
 
         public IActionResult Index()
         {
-            
+            bool isAuthenticated = isAuthenticatedUser();
+
+            if (isAuthenticated == false)
+            {
+                string userName = User.Identity.Name;
+                string error = "User " + userName + " does not have suffecient permissions to access this application. Please contact an administrator.";
+                return RedirectToAction("Error", new { errorMsg = error });
+            }
+
             string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
             SqlConnection connection = new SqlConnection(connectionstring);
 
@@ -197,6 +211,38 @@ namespace eComm_Reporting_Application.Controllers
             catch (Exception e)
             {
                 return Json("Error deleting group: " + e);
+            }
+        }
+
+        private bool isAuthenticatedUser()
+        {
+            string userName = User.Identity.Name;
+
+            int userCount = 0;
+
+            string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+            SqlConnection connection = new SqlConnection(connectionstring);
+            string authUserQueryString = "SELECT COUNT(*) FROM [dbo].[User] WHERE UserName='" + userName + "';";
+            SqlCommand authUserQuery = new SqlCommand(authUserQueryString, connection);
+
+            connection.Open();
+            using (SqlDataReader reader = authUserQuery.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var temp_userCount = reader.GetInt32(0);
+                    userCount = temp_userCount;
+                }
+            }
+            connection.Close();
+
+            if (userCount < 1)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
     }

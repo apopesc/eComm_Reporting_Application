@@ -20,12 +20,21 @@ namespace eComm_Reporting_Application.Controllers
             this.configuration = config;
         }
 
+        public IActionResult Error(string errorMsg)
+        {
+            ErrorViewModel errorModel = new ErrorViewModel();
+            errorModel.errorMessage = errorMsg;
+            return View(errorModel);
+        }
+
         public IActionResult Index()
         {
             bool isAuthenticated = isAuthenticatedUser();
 
-            if(isAuthenticated == false) { 
-                //redirect to error page
+            if(isAuthenticated == false) {
+                string userName = User.Identity.Name;
+                string error = "User " + userName + " does not have sufficient permissions to access this application. Please contact an administrator.";
+                return RedirectToAction("Error", new { errorMsg = error });
             }
 
             UserSubscriptionDropdownModel subModel = GetFilterData(); 
@@ -36,6 +45,15 @@ namespace eComm_Reporting_Application.Controllers
 
         public IActionResult AddNewUserSub()
         {
+            bool isAuthenticated = isAuthenticatedUser();
+
+            if (isAuthenticated == false)
+            {
+                string userName = User.Identity.Name;
+                string error = "User " + userName + " does not have suffecient permissions to access this application. Please contact an administrator.";
+                return RedirectToAction("Error", new { errorMsg = error });
+            }
+
             UserSubscriptionDropdownModel subModel = GetFilterData();
 
             return View(subModel);
@@ -43,6 +61,15 @@ namespace eComm_Reporting_Application.Controllers
 
         public IActionResult EditUserSub(int ID)
         {
+            bool isAuthenticated = isAuthenticatedUser();
+
+            if (isAuthenticated == false)
+            {
+                string userName = User.Identity.Name;
+                string error = "User " + userName + " does not have suffecient permissions to access this application. Please contact an administrator.";
+                return RedirectToAction("Error", new { errorMsg = error });
+            }
+
             EditUserDropdownModel subModel = new EditUserDropdownModel();
 
             List<string> master_groups_list = new List<string>();
