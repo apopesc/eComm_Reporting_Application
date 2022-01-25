@@ -122,3 +122,8 @@ C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Appli
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\eComm_Reporting_Application.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\eComm_Reporting_Application.pdb
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\eComm_Reporting_Application.genruntimeconfig.cache
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Release\netcoreapp3.1\Microsoft.AspNetCore.Authentication.Negotiate.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Release\netcoreapp3.1\Microsoft.AspNetCore.Connections.Abstractions.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Release\netcoreapp3.1\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Release\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Release\netcoreapp3.1\System.IO.Pipelines.dll

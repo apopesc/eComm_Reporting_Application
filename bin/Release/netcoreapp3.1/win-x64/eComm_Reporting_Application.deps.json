@@ -31,6 +31,7 @@
     ".NETCoreApp,Version=v3.1": {
       "eComm_Reporting_Application/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Authentication.Negotiate": "3.1.13",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "3.1.5",
           "Newtonsoft.Json": "13.0.1",
           "System.Data.SqlClient": "4.8.2",
@@ -48,7 +49,6 @@
           "Microsoft.AspNetCore.Components.Forms": "3.1.0.0",
           "Microsoft.AspNetCore.Components.Server": "3.1.0.0",
           "Microsoft.AspNetCore.Components.Web": "3.1.0.0",
-          "Microsoft.AspNetCore.Connections.Abstractions": "3.1.0.0",
           "Microsoft.AspNetCore.CookiePolicy": "3.1.0.0",
           "Microsoft.AspNetCore.Cors": "3.1.0.0",
           "Microsoft.AspNetCore.Cryptography.Internal": "3.1.0.0",
@@ -70,7 +70,6 @@
           "Microsoft.AspNetCore.Http.Connections": "3.1.0.0",
           "Microsoft.AspNetCore.Http": "3.1.0.0",
           "Microsoft.AspNetCore.Http.Extensions": "3.1.0.0",
-          "Microsoft.AspNetCore.Http.Features": "3.1.0.0",
           "Microsoft.AspNetCore.HttpOverrides": "3.1.0.0",
           "Microsoft.AspNetCore.HttpsPolicy": "3.1.0.0",
           "Microsoft.AspNetCore.Identity": "3.1.0.0",
@@ -154,7 +153,6 @@
           "Microsoft.Extensions.Options.ConfigurationExtensions": "3.1.0.0",
           "Microsoft.Extensions.Options.DataAnnotations": "3.1.0.0",
           "Microsoft.Extensions.Options": "3.1.0.0",
-          "Microsoft.Extensions.Primitives": "3.1.0.0",
           "Microsoft.Extensions.WebEncoders": "3.1.0.0",
           "Microsoft.JSInterop": "3.1.0.0",
           "Microsoft.Net.Http.Headers": "3.1.0.0",
@@ -212,7 +210,6 @@
           "System.IO.FileSystem.Watcher": "4.1.2.0",
           "System.IO.IsolatedStorage": "4.1.2.0",
           "System.IO.MemoryMappedFiles": "4.1.2.0",
-          "System.IO.Pipelines": "4.0.2.0",
           "System.IO.Pipes": "4.1.2.0",
           "System.IO.UnmanagedMemoryStream": "4.1.2.0",
           "System.Linq.Reference": "4.2.2.0",
@@ -387,11 +384,6 @@
           "Microsoft.AspNetCore.Components.Web.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Connections.Abstractions/3.1.0.0": {
-        "compile": {
-          "Microsoft.AspNetCore.Connections.Abstractions.dll": {}
-        }
-      },
       "Microsoft.AspNetCore.CookiePolicy/3.1.0.0": {
         "compile": {
           "Microsoft.AspNetCore.CookiePolicy.dll": {}
@@ -495,11 +487,6 @@
       "Microsoft.AspNetCore.Http.Extensions/3.1.0.0": {
         "compile": {
           "Microsoft.AspNetCore.Http.Extensions.dll": {}
-        }
-      },
-      "Microsoft.AspNetCore.Http.Features/3.1.0.0": {
-        "compile": {
-          "Microsoft.AspNetCore.Http.Features.dll": {}
         }
       },
       "Microsoft.AspNetCore.HttpOverrides/3.1.0.0": {
@@ -917,11 +904,6 @@
           "Microsoft.Extensions.Options.dll": {}
         }
       },
-      "Microsoft.Extensions.Primitives/3.1.0.0": {
-        "compile": {
-          "Microsoft.Extensions.Primitives.dll": {}
-        }
-      },
       "Microsoft.Extensions.WebEncoders/3.1.0.0": {
         "compile": {
           "Microsoft.Extensions.WebEncoders.dll": {}
@@ -1205,11 +1187,6 @@
       "System.IO.MemoryMappedFiles/4.1.2.0": {
         "compile": {
           "System.IO.MemoryMappedFiles.dll": {}
-        }
-      },
-      "System.IO.Pipelines/4.0.2.0": {
-        "compile": {
-          "System.IO.Pipelines.dll": {}
         }
       },
       "System.IO.Pipes/4.1.2.0": {
@@ -1738,9 +1715,35 @@
         }
       },
       "jQuery/1.6.4": {},
+      "Microsoft.AspNetCore.Authentication.Negotiate/3.1.13": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Connections.Abstractions": "3.1.13"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.Negotiate.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Connections.Abstractions/3.1.13": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Features": "3.1.13",
+          "System.IO.Pipelines": "4.7.4"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Connections.Abstractions.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
         "dependencies": {
           "System.Text.Encodings.Web": "4.5.0"
+        }
+      },
+      "Microsoft.AspNetCore.Http.Features/3.1.13": {
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "3.1.13",
+          "System.IO.Pipelines": "4.7.4"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Http.Features.dll": {}
         }
       },
       "Microsoft.AspNetCore.Razor/2.2.0": {
@@ -1817,6 +1820,11 @@
         }
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions/3.1.0": {},
+      "Microsoft.Extensions.Primitives/3.1.13": {
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.Extensions.Primitives.dll": {}
+        }
+      },
       "Microsoft.NETCore.Platforms/3.1.0": {},
       "Microsoft.NETCore.Targets/1.1.0": {},
       "Microsoft.VisualStudio.Web.CodeGeneration/3.1.5": {
@@ -2401,6 +2409,11 @@
           "System.Runtime": "4.3.0"
         }
       },
+      "System.IO.Pipelines/4.7.4": {
+        "compile": {
+          "ref/netcoreapp2.0/System.IO.Pipelines.dll": {}
+        }
+      },
       "System.Linq/4.3.0": {
         "dependencies": {
           "System.Collections": "4.3.0",
@@ -2866,6 +2879,7 @@
     ".NETCoreApp,Version=v3.1/win-x64": {
       "eComm_Reporting_Application/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Authentication.Negotiate": "3.1.13",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "3.1.5",
           "Newtonsoft.Json": "13.0.1",
           "System.Data.SqlClient": "4.8.2",
@@ -2883,7 +2897,6 @@
           "Microsoft.AspNetCore.Components.Forms": "3.1.0.0",
           "Microsoft.AspNetCore.Components.Server": "3.1.0.0",
           "Microsoft.AspNetCore.Components.Web": "3.1.0.0",
-          "Microsoft.AspNetCore.Connections.Abstractions": "3.1.0.0",
           "Microsoft.AspNetCore.CookiePolicy": "3.1.0.0",
           "Microsoft.AspNetCore.Cors": "3.1.0.0",
           "Microsoft.AspNetCore.Cryptography.Internal": "3.1.0.0",
@@ -2905,7 +2918,6 @@
           "Microsoft.AspNetCore.Http.Connections": "3.1.0.0",
           "Microsoft.AspNetCore.Http": "3.1.0.0",
           "Microsoft.AspNetCore.Http.Extensions": "3.1.0.0",
-          "Microsoft.AspNetCore.Http.Features": "3.1.0.0",
           "Microsoft.AspNetCore.HttpOverrides": "3.1.0.0",
           "Microsoft.AspNetCore.HttpsPolicy": "3.1.0.0",
           "Microsoft.AspNetCore.Identity": "3.1.0.0",
@@ -2989,7 +3001,6 @@
           "Microsoft.Extensions.Options.ConfigurationExtensions": "3.1.0.0",
           "Microsoft.Extensions.Options.DataAnnotations": "3.1.0.0",
           "Microsoft.Extensions.Options": "3.1.0.0",
-          "Microsoft.Extensions.Primitives": "3.1.0.0",
           "Microsoft.Extensions.WebEncoders": "3.1.0.0",
           "Microsoft.JSInterop": "3.1.0.0",
           "Microsoft.Net.Http.Headers": "3.1.0.0",
@@ -3047,7 +3058,6 @@
           "System.IO.FileSystem.Watcher": "4.1.2.0",
           "System.IO.IsolatedStorage": "4.1.2.0",
           "System.IO.MemoryMappedFiles": "4.1.2.0",
-          "System.IO.Pipelines": "4.0.2.0",
           "System.IO.Pipes": "4.1.2.0",
           "System.IO.UnmanagedMemoryStream": "4.1.2.0",
           "System.Linq.Reference": "4.2.2.0",
@@ -3163,9 +3173,44 @@
         }
       },
       "jQuery/1.6.4": {},
+      "Microsoft.AspNetCore.Authentication.Negotiate/3.1.13": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Connections.Abstractions": "3.1.13"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.Negotiate.dll": {
+            "assemblyVersion": "3.1.13.0",
+            "fileVersion": "3.100.1321.11713"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Connections.Abstractions/3.1.13": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Features": "3.1.13",
+          "System.IO.Pipelines": "4.7.4"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Connections.Abstractions.dll": {
+            "assemblyVersion": "3.1.13.0",
+            "fileVersion": "3.100.1321.11713"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
         "dependencies": {
           "System.Text.Encodings.Web": "4.5.0"
+        }
+      },
+      "Microsoft.AspNetCore.Http.Features/3.1.13": {
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "3.1.13",
+          "System.IO.Pipelines": "4.7.4"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Http.Features.dll": {
+            "assemblyVersion": "3.1.13.0",
+            "fileVersion": "3.100.1321.11713"
+          }
         }
       },
       "Microsoft.AspNetCore.Razor/2.2.0": {
@@ -3424,6 +3469,14 @@
         }
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions/3.1.0": {},
+      "Microsoft.Extensions.Primitives/3.1.13": {
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.Extensions.Primitives.dll": {
+            "assemblyVersion": "3.1.13.0",
+            "fileVersion": "3.100.1321.11604"
+          }
+        }
+      },
       "Microsoft.NETCore.Platforms/3.1.0": {},
       "Microsoft.NETCore.Targets/1.1.0": {},
       "Microsoft.VisualStudio.Web.CodeGeneration/3.1.5": {
@@ -4062,6 +4115,14 @@
           "System.Runtime": "4.3.0"
         }
       },
+      "System.IO.Pipelines/4.7.4": {
+        "runtime": {
+          "lib/netcoreapp3.0/System.IO.Pipelines.dll": {
+            "assemblyVersion": "4.0.2.3",
+            "fileVersion": "4.700.20.56604"
+          }
+        }
+      },
       "System.Linq/4.3.0": {
         "dependencies": {
           "System.Collections": "4.3.0",
@@ -4545,12 +4606,33 @@
       "path": "jquery/1.6.4",
       "hashPath": "jquery.1.6.4.nupkg.sha512"
     },
+    "Microsoft.AspNetCore.Authentication.Negotiate/3.1.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rNmFyqKYA0ZB2cXaBJ/bogSgo8o9tVMd1idPQXzkR9iUkALGdp8gHIWyuCIfi2SgXZ5KQ6zBGGlStsVxRO2JRQ==",
+      "path": "microsoft.aspnetcore.authentication.negotiate/3.1.13",
+      "hashPath": "microsoft.aspnetcore.authentication.negotiate.3.1.13.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Connections.Abstractions/3.1.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-j/w8N732esfeDj8CM1+73DZgC3DYA3F0EkIeQY5nWcdJfoDGNxpRLwQz7CINvyUr9/YU/U4OqlCjnqs0zEC92g==",
+      "path": "microsoft.aspnetcore.connections.abstractions/3.1.13",
+      "hashPath": "microsoft.aspnetcore.connections.abstractions.3.1.13.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-Y4rs5aMEXY8G7wJo5S3EEt6ltqyOTr/qOeZzfn+hw/fuQj5GppGckMY5psGLETo1U9hcT5MmAhaT5xtusM1b5g==",
       "path": "microsoft.aspnetcore.html.abstractions/2.2.0",
       "hashPath": "microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Http.Features/3.1.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cTSmfnoW0ZHVm8Hy5clh43XQsY3/QPJNp8PIX+m75gm93q8H3ulvRym7lLozEL7wRRtdzwkeqgBEzFUokOaeFA==",
+      "path": "microsoft.aspnetcore.http.features/3.1.13",
+      "hashPath": "microsoft.aspnetcore.http.features.3.1.13.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Razor/2.2.0": {
       "type": "package",
@@ -4628,6 +4710,13 @@
       "sha512": "sha512-44rDtOf1JXXAFpNT2EXMExaDm/4OJ2RXOL9i9lE4bK427nzC7Exphv+beB6IgluyE2GIoo8zezTStMXI7MQ8WA==",
       "path": "microsoft.extensions.dependencyinjection.abstractions/3.1.0",
       "hashPath": "microsoft.extensions.dependencyinjection.abstractions.3.1.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Primitives/3.1.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cZVp49xwQPVWs+utx6khnnECWQtkHaFXQnMg/odvy1RUumFUkO6h6C19fJd5zUclC4cS6aIfVJs7b1CDL1ep0A==",
+      "path": "microsoft.extensions.primitives/3.1.13",
+      "hashPath": "microsoft.extensions.primitives.3.1.13.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/3.1.0": {
       "type": "package",
@@ -5217,6 +5306,13 @@
       "path": "system.io.filesystem.primitives/4.3.0",
       "hashPath": "system.io.filesystem.primitives.4.3.0.nupkg.sha512"
     },
+    "System.IO.Pipelines/4.7.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TQqNjDcTVu6eTDB2S0vjSUhn0udEugL93D9zgsOsSiJO1kv1UWDM2o0+79H95I5X+S0VPEzm4ihj6KPwhNEb7g==",
+      "path": "system.io.pipelines/4.7.4",
+      "hashPath": "system.io.pipelines.4.7.4.nupkg.sha512"
+    },
     "System.Linq/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -5604,11 +5700,6 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Microsoft.AspNetCore.Connections.Abstractions/3.1.0.0": {
-      "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
     "Microsoft.AspNetCore.CookiePolicy/3.1.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
@@ -5710,11 +5801,6 @@
       "sha512": ""
     },
     "Microsoft.AspNetCore.Http.Extensions/3.1.0.0": {
-      "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Microsoft.AspNetCore.Http.Features/3.1.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
@@ -6134,11 +6220,6 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Microsoft.Extensions.Primitives/3.1.0.0": {
-      "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
     "Microsoft.Extensions.WebEncoders/3.1.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
@@ -6420,11 +6501,6 @@
       "sha512": ""
     },
     "System.IO.MemoryMappedFiles/4.1.2.0": {
-      "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "System.IO.Pipelines/4.0.2.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""

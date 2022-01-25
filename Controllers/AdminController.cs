@@ -33,7 +33,7 @@ namespace eComm_Reporting_Application.Controllers
             if (isAuthenticated == false)
             {
                 string userName = User.Identity.Name;
-                string error = "User " + userName + " does not have suffecient permissions to access this application. Please contact an administrator.";
+                string error = "User " + userName + " does not have sufficient permissions to access this application. Please contact an administrator.";
                 return RedirectToAction("Error", new { errorMsg = error });
             }
 

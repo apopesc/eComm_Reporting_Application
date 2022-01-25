@@ -36,7 +36,7 @@ namespace eComm_Reporting_Application.Controllers
             if (isAuthenticated == false)
             {
                 string userName = User.Identity.Name;
-                string error = "User " + userName + " does not have suffecient permissions to access this application. Please contact an administrator.";
+                string error = "User " + userName + " does not have sufficient permissions to access this application. Please contact an administrator.";
                 return RedirectToAction("Error", new { errorMsg = error });
             }
 
@@ -52,7 +52,7 @@ namespace eComm_Reporting_Application.Controllers
             if (isAuthenticated == false)
             {
                 string userName = User.Identity.Name;
-                string error = "User " + userName + " does not have suffecient permissions to access this application. Please contact an administrator.";
+                string error = "User " + userName + " does not have sufficient permissions to access this application. Please contact an administrator.";
                 return RedirectToAction("Error", new { errorMsg = error });
             }
 
@@ -74,7 +74,7 @@ namespace eComm_Reporting_Application.Controllers
             if (isAuthenticated == false)
             {
                 string userName = User.Identity.Name;
-                string error = "User " + userName + " does not have suffecient permissions to access this application. Please contact an administrator.";
+                string error = "User " + userName + " does not have sufficient permissions to access this application. Please contact an administrator.";
                 return RedirectToAction("Error", new { errorMsg = error });
             }
 
@@ -259,6 +259,10 @@ namespace eComm_Reporting_Application.Controllers
                 else if (reportParams.dataSource == "ReportServerDB")
                 {
                     connectionstring = configuration.GetConnectionString("ReportServer");
+                }
+                else if (reportParams.dataSource == "eCom_WMSDB")
+                {
+                    connectionstring = configuration.GetConnectionString("eCom_WMSDB");
                 }
 
                 for (int i = 0; i < reportParams.parameters.Count; i++)
@@ -733,7 +737,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
-                //Redirect to error page and pass forward exception e once error page is set up.
+                
             }
 
             UserSubscriptionDropdownModel groupModel = new UserSubscriptionDropdownModel()

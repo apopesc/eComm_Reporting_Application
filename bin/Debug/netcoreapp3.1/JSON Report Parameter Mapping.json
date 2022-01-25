@@ -37,6 +37,39 @@
               "label": ""
             }
           }
+        },
+        "Shipping and Tracking Report": {
+          "data_source": "eCom_WMSDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_ShipandTrack_Report"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            },
+            "FiscalMonth": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_SalesMonths"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Shipped_FiscalMonth": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_SalesMonths",
+              "value": "Sales_Months",
+              "label": "Sales_Months"
+            }
+          }
         }
       }
     },
@@ -2958,6 +2991,35 @@
             }
           }
         },
+        "Quarantine Dollars": {
+          "data_source": "eCom_ReportDB",
+          "data_sets": {
+            "ReportDataSet": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Quarantine_Dollars"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }
+          }
+        },
         "Unprocessed Holdings Parent Details": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
@@ -3109,6 +3171,51 @@
     },
     "Executive Reports": {
       "reports": {
+        "Digital Website Statistics": {
+          "data_source": "eCom_WebAnalytics",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Digital_Site_Statistics"
+            },
+            "ReportDatasetByBanner": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Digital_Site_Statistics"
+            },
+            "ReportDatasetbyPeaks": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Digital_Site_Statistics_Peaks"
+            },
+            "ReportDataset_YOY": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Digital_Site_Statistics_YOY"
+            },
+            "ReportDataset_Holiday": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Digital_Site_Statistics_Holiday"
+            },
+            "ReportDataset_YOYByDate": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Digital_Site_Statistics_YOY_By_Date"
+            }
+          },
+          "parameters": {
+            "Start_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "End_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            }
+          }
+        },
         "Homegoods Executive Summary": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
@@ -3135,6 +3242,66 @@
             "rpt_HomegoodsExecutiveSummary_QTD": {
               "query_type": "Stored Procedure",
               "query": "rpt_HomegoodsExecutiveSummary"
+            }
+          },
+          "parameters": {}
+        },
+        "Marshalls Executive Summary": {
+          "data_source": "eCom_ReportDB",
+          "data_sets": {
+            "rpt_MarshallsExecutiveSummaryMTDDetailPage": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_MarshallsExecutiveSummaryMTDDetailPage"
+            },
+            "rpt_MarshallsExecutiveSummary_Daily": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_MarshallsExecutiveSummary"
+            },
+            "rpt_MarshallsExecutiveSummary_WTD": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_MarshallsExecutiveSummary"
+            },
+            "rpt_MarshallsExecutiveSummary_MTD": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_MarshallsExecutiveSummary"
+            },
+            "rpt_MarshallsExecutiveSummary_YTD": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_MarshallsExecutiveSummary"
+            },
+            "rpt_MarshallsExecutiveSummary_QTD": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_MarshallsExecutiveSummary"
+            }
+          },
+          "parameters": {}
+        },
+        "TJMaxx Executive Summary": {
+          "data_source": "eCom_ReportDB",
+          "data_sets": {
+            "rpt_TJMaxxExecutiveSummaryMTDDetailPage": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_TJMaxxExecutiveSummaryMTDDetailPage"
+            },
+            "rpt_TJMaxxExecutiveSummary_Daily": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_TJMaxxExecutiveSummary"
+            },
+            "rpt_TJMaxxExecutiveSummary_WTD": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_TJMaxxExecutiveSummary"
+            },
+            "rpt_TJMaxxExecutiveSummary_MTD": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_TJMaxxExecutiveSummary"
+            },
+            "rpt_TJMaxxExecutiveSummary_YTD": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_TJMaxxExecutiveSummary"
+            },
+            "rpt_TJMaxxExecutiveSummary_QTD": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_TJMaxxExecutiveSummary"
             }
           },
           "parameters": {}

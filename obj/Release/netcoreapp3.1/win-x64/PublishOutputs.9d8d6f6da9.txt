@@ -148,12 +148,16 @@ C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Appli
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\eComm_Reporting_Application.deps.json
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\eComm_Reporting_Application.runtimeconfig.json
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\eComm_Reporting_Application.pdb
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.AspNetCore.Authentication.Negotiate.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.AspNetCore.Connections.Abstractions.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.AspNetCore.Http.Features.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.CodeAnalysis.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.CodeAnalysis.CSharp.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.CodeAnalysis.Razor.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.CodeAnalysis.Workspaces.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.Extensions.Primitives.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
@@ -170,6 +174,7 @@ C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Appli
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\System.Composition.Runtime.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\System.Composition.TypedParts.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\System.Data.SqlClient.dll
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\System.IO.Pipelines.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\cs\Microsoft.CodeAnalysis.resources.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\de\Microsoft.CodeAnalysis.resources.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\es\Microsoft.CodeAnalysis.resources.dll
