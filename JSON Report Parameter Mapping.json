@@ -4163,6 +4163,332 @@
               "label": "Yes,No"
             }
           }
+        },
+        "Exceptions from EOM to Netsuite": {
+          "data_source": "eCom_WMSDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Exceptions_from_EOM_to_Netsuite"
+            },
+            "Previous_Day": {
+              "query_type": "In Line",
+              "query": "SELECT CAST(DATEADD(day,-1,GETDATE()) AS Date) AS Previous_Day"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Start_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "End_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }
+          }
+        },
+        "Exceptions from Netsuite to EOM": {
+          "data_source": "eCom_WMSDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Exceptions_from_Netsuite_to_EOM"
+            },
+            "Previous_Day": {
+              "query_type": "In Line",
+              "query": "SELECT CAST(DATEADD(day,-1,GETDATE()) AS Date) AS Previous_Day"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Start_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "End_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }
+          }
+        },
+        "Gift Card Redemption Report": {
+          "data_source": "eCom_WMSDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_GC_Redemption_Report"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Start_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "End_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }
+          }
+        },
+        "Manual Settlements in EMAF": {
+          "data_source": "ECD",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Manual_Settlements_in_EMAF"
+            },
+            "Previous_Day": {
+              "query_type": "In Line",
+              "query": "SELECT CAST(DATEADD(day,-1,GETDATE()) AS Date) AS Previous_Day"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Start_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "End_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }
+          }
+        },
+        "Monthly Cross Divisional Report": {
+          "data_source": "eComm_ReportDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Monthly_Cross_Divisional_Report"
+            },
+            "Current_Month": {
+              "query_type": "In Line",
+              "query": "SELECT DISTINCT [F_Month] + '-' + [F_Year] AS FMonth FROM [Dim_Calendar] WITH(NOLOCK) WHERE CALENDAR_DATE = CAST(GETDATE() AS Date)"
+            },
+            "Fiscal_Month": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_FiscalMonth"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Fiscal_Month": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_FiscalMonth",
+              "value": "Display",
+              "label": "Display"
+            },
+            "Display_FMonth": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }
+          }
+        },
+        "Monthly Usage Summary": {
+          "data_source": "eComm_ReportDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Monthly_Usage_Summary"
+            },
+            "Current_Month": {
+              "query_type": "In Line",
+              "query": "SELECT DISTINCT [F_Month] + '-' + [F_Year] AS FMonth FROM [Dim_Calendar] WITH(NOLOCK) WHERE CALENDAR_DATE = CAST(GETDATE() AS Date)"
+            },
+            "Fiscal_Month": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_FiscalMonth"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Fiscal_Month": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_FiscalMonth",
+              "value": "Display",
+              "label": "Display"
+            },
+            "Display_FMonth": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }
+          }
+        },
+        "Open Gift Card Orders": {
+          "data_source": "eCom_WMSDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Open_Gift_Card_Orders"
+            },
+            "ReportDataset_Summary": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Open_Gift_Card_Orders"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Aging": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "100",
+              "label": "100"
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }
+          }
         }
       }
     },
