@@ -7390,6 +7390,31 @@
             }
           }
         },
+        "Consume USKU Exceptions Report": {
+          "data_source": "eCom_WMSDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_USKU_Report"
+            }
+          },
+          "parameters": {
+            "Start_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "End_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            }
+          }
+        },
         "Cubiscan Exception Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
@@ -7475,6 +7500,16 @@
               "label": "LP_Month"
             }
           }
+        },
+        "Homegoods Dashboard": {
+          "data_source": "eCom_ReportDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Homegoods_Dashboard"
+            }
+          },
+          "parameters": {}
         },
         "In Yard to Putaway": {
           "data_source": "eCom_ReportDB",
@@ -7600,6 +7635,16 @@
             }
           }
         },
+        "Inventory Comparison Report": {
+          "data_source": "eCom_WMSDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Inventory_comparison"
+            }
+          },
+          "parameters": {}
+        },
         "Inventory Details by DC": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
@@ -7609,6 +7654,46 @@
             }
           },
           "parameters": {}
+        },
+        "Items Comparison Between Netsuite and WMS": {
+          "data_source": "eCom_ReportDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Item_Comparison"
+            },
+            "Dates": {
+              "query_type": "In Line",
+              "query": "SELECT CAST(DATEADD(day,-180,GETDATE()) AS Date) AS [6_Months_Ago],CAST(DATEADD(day,-2,GETDATE()) AS Date) AS Two_Days_Ago"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Start_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "End_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            }
+          }
         },
         "Keytrol ID Report": {
           "data_source": "NetSuite_ODS",
@@ -7692,6 +7777,24 @@
             }
           },
           "parameters": {}
+        },
+        "Low Inventory in Forward Pick": {
+          "data_source": "eCom_WMSDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Low_Inventory_in_Forward_Pick"
+            }
+          },
+          "parameters": {
+            "DCNumber": {
+              "type": "MultiDropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "0899,0894",
+              "label": "0899,0894"
+            }
+          }
         },
         "Negative Inventory Report": {
           "data_source": "eCom_ReportDB",
@@ -7895,6 +7998,46 @@
             }
           }
         },
+        "PO Comparison between Netsuite and WMS": {
+          "data_source": "eCom_ReportDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_PO_Comparison"
+            },
+            "Dates": {
+              "query_type": "In Line",
+              "query": "SELECT CAST(DATEADD(day,-180,GETDATE()) AS Date) AS [6_Months_Ago],CAST(DATEADD(day,-2,GETDATE()) AS Date) AS Two_Days_Ago"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Start_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "End_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            }
+          }
+        },
         "PO Detail": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
@@ -8074,6 +8217,177 @@
             }
           }
         },
+        "PO Velocity Report": {
+          "data_source": "eCom_ReportDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_PO_Velocity"
+            },
+            "Departments": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
+            },
+            "LPMonth": {
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Department_No": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
+              "value": "Dept_Number",
+              "label": "Dept_FullName"
+            },
+            "Ladder_Plan_Date": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth",
+              "value": "LP_Month",
+              "label": "LP_Month"
+            },
+            "Parent_No": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            }
+          }
+        },
+        "Putaway to Photo Pick": {
+          "data_source": "eCom_ReportDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Operations_PhotoPick"
+            },
+            "Departments": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
+            },
+            "LPMonth": {
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth"
+            },
+            "ChartDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Operations_PhotoPick"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Department_No": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
+              "value": "Dept_Number",
+              "label": "Dept_FullName"
+            },
+            "Ladder_Plan_Date": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth",
+              "value": "LP_Month",
+              "label": "LP_Month"
+            },
+            "ViewBy": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Summary,Division,Department,Processing Type,Photo Type",
+              "label": "Summary,Division,Department,Processing Type,Photo Type"
+            },
+            "UOM": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "U,D,P,B",
+              "label": "Units,Dollars,Parents,Both Units and Dollars"
+            }
+          }
+        },
+        "Rejections Report": {
+          "data_source": "eCom_ReportDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Rejections_Report"
+            },
+            "Departments": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
+            },
+            "LPMonth": {
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Department_No": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
+              "value": "Dept_Number",
+              "label": "Dept_FullName"
+            },
+            "Ladder_Plan_Date": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth",
+              "value": "LP_Month",
+              "label": "LP_Month"
+            },
+            "ViewBy": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "SBX,NS",
+              "label": "Sandbox Rejections,Netsuite Rejections"
+            },
+            "Ignore_LP": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }
+          }
+        },
         "Ship Alone Ratio": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
@@ -8139,6 +8453,257 @@
               "query": "",
               "value": "",
               "label": ""
+            }
+          }
+        },
+        "Unpickable Items": {
+          "data_source": "eCom_ReportDB",
+          "data_sets": {
+            "ReportDataset": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Unpickable_Items"
+            },
+            "Departments": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
+            },
+            "LPMonth": {
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth"
+            },
+            "Status": {
+              "query_type": "In Line",
+              "query": "SELECT DISTINCT ISNULL(H.Status,'No Status') AS Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER By 1"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Department_No": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
+              "value": "Dept_Number",
+              "label": "Dept_FullName"
+            },
+            "Ladder_Plan_Date": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth",
+              "value": "LP_Month",
+              "label": "LP_Month"
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }
+          }
+        },
+        "Warehouse Inventory Report": {
+          "data_source": "eCom_ReportDB",
+          "data_sets": {
+            "ReportDataSet": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Warehouse_Inventory_Report"
+            },
+            "Departments": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
+            },
+            "Class": {
+              "query_type": "Stored Procedure",
+              "query": "par_Class_Details_by_Banner"
+            },
+            "Category": {
+              "query_type": "Stored Procedure",
+              "query": "par_Category_by_Banner"
+            },
+            "DepartmentHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_DepartmentHeaders_by_Banner"
+            },
+            "ClassHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_ClassHeaders_by_Banner"
+            },
+            "CategoryHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_CategoryHeaders_by_Banner"
+            },
+            "Business_Unit": {
+              "query_type": "In Line",
+              "query": "SELECT DISTINCT Business_Unit,CAST(Business_Unit AS varchar(20)) + '-' + REPLACE(Description,'Warehouse','') AS Description FROM [dbo].[PFSWeb_BusinessUnit] WITH(NOLOCK) ORDER BY 1"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Department_No": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
+              "value": "Department_Number",
+              "label": "Department"
+            },
+            "Class_Number": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Class_Details_by_Banner",
+              "value": "Class_Number",
+              "label": "Class"
+            },
+            "Category": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Category_by_Banner",
+              "value": "Category_Number",
+              "label": "Category"
+            },
+            "DCNumber": {
+              "type": "MultiDropdown",
+              "query_type": "Fixed",
+              "query": "par_Fiscal_Year",
+              "value": "0899,0894",
+              "label": "0899,0894"
+            },       
+            "Brand": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "ALL",
+              "label": "ALL"
+            },  
+            "Inventory_Type": {
+              "type": "MultiDropdown",
+              "query_type": "In Line",
+              "query": "SELECT DISTINCT Business_Unit,CAST(Business_Unit AS varchar(20)) + '-' + REPLACE(Description,'Warehouse','') AS Description FROM [dbo].[PFSWeb_BusinessUnit] WITH(NOLOCK) ORDER BY 1",
+              "value": "Business_Unit",
+              "label": "Description"
+            },
+            "SKU": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "ALL",
+              "label": "ALL"
+            },         
+            "RunBy": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Item,Location",
+              "label": "Item,Location"
+            }
+          }
+        },
+        "WM Inventory Details Report": {
+          "data_source": "eCom_WMSDB",
+          "data_sets": {
+            "Inventory_by_DC": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_WM_Inventory_by_DC"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "DCNumber": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "0899,0894",
+              "label": "0899,0894"
+            }
+          }
+        },
+        "WM Location Header": {
+          "data_source": "eCom_WMSDB",
+          "data_sets": {
+            "Inventory_by_DC": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_WMSMDA_LOCN_HDR"
+            }
+          },
+          "parameters": {
+            "DCNumber": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "0899,0894",
+              "label": "0899,0894"
+            }
+          }
+        },
+        "WMOS Inventory Transaction Detail Report": {
+          "data_source": "eCom_WMSDB",
+          "data_sets": {
+            "Inventory_by_DC": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_WMOS_Inventory_Transaction_Detail_Report"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "DCNumber": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "0899,0894",
+              "label": "0899,0894"
+            },
+            "SKU": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "UserID": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "ALL",
+              "label": "ALL"
             }
           }
         }
