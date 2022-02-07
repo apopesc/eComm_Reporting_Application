@@ -348,7 +348,7 @@
               "value": "Dept_Number",
               "label": "Dept_FullName"
             },
-            "Class": {
+            "Class_Number": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MatrixOrMechandisingClass_By_Banner",
@@ -438,7 +438,7 @@
               "value": "Dept_Number",
               "label": "Dept_FullName"
             },
-            "Class": {
+            "Class_Number": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MatrixOrMechandisingClass_By_Banner",
@@ -5175,7 +5175,7 @@
               "value": "Department_Number",
               "label": "Department"
             },
-            "Class": {
+            "Class_Number": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Class_Details_by_Banner",
@@ -5256,7 +5256,7 @@
               "value": "Department_Number",
               "label": "Department"
             },
-            "Class": {
+            "Class_Number": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Class_Details_by_Banner",
@@ -6046,7 +6046,7 @@
               "value": "Dept_Number",
               "label": "Dept_FullName"
             },
-            "Class": {
+            "Class_Number": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Class_Details_by_Banner",
@@ -7116,7 +7116,7 @@
           }
         },
         "Reveal Designer Exception Report": {
-          "data_source": "NetSuite_ODS",
+          "data_source": "ReportDataSource",
           "data_sets": {
             "ReportDataset": {
               "query_type": "Stored Procedure",
@@ -8159,7 +8159,7 @@
               "value": "",
               "label": ""
             },
-            "Class": {
+            "Class_Number": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Class_By_Banner",
@@ -8705,6 +8705,926 @@
               "value": "ALL",
               "label": "ALL"
             }
+          }
+        }
+      }
+    },
+    "SuperUser Merch Reports": {
+      "reports": {
+        "BCF Collections Detail By Size By Color": {
+          "data_source": "ReportDataSource",
+          "data_sets": {
+            "ReportDataSet": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_BCF_Detail_By_Style_Report"
+            },
+            "Departments": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
+            },
+            "Classes": {
+              "query_type": "Stored Procedure",
+              "query": "par_Class_Details_by_Banner"
+            },
+            "Categories": {
+              "query_type": "Stored Procedure",
+              "query": "par_Category_by_Banner"
+            },
+            "Fiscal_Year": {
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year"
+            },
+            "FiscalYearDefault": {
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year_Default"
+            },
+            "FiscalWeekDefault": {
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default"
+            },
+            "DepartmentHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_DepartmentHeaders_by_Banner"
+            },
+            "ClassHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_ClassHeaders_by_Banner"
+            },
+            "Vendors": {
+              "query_type": "Stored Procedure",
+              "query": "par_Vendors"
+            },
+            "Brands": {
+              "query_type": "Stored Procedure",
+              "query": "par_Brands"
+            },
+            "VendorHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_VendorHeaders"
+            },
+            "BrandHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_BrandHeaders"
+            },
+            "CategoryHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_CategoryHeaders_by_Banner"
+            },
+            "Trend": {
+              "query_type": "Stored Procedure",
+              "query": "par_Trend"
+            },
+            "Seasons": {
+              "query_type": "Stored Procedure",
+              "query": "par_Season"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Department_No": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
+              "value": "Department_Number",
+              "label": "Department"
+            },
+            "Class_Number": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Class_Details_by_Banner",
+              "value": "Class_Number",
+              "label": "Class"
+            },
+            "Category": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Category_by_Banner",
+              "value": "Category_Number",
+              "label": "Category"
+            },
+            "Brand_Pattern": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "Brand": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Brands",
+              "value": "Brand_ID",
+              "label": "Brand"
+            },
+            "Trend": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Trend",
+              "value": "TREND_NAME",
+              "label": "TREND_NAME"
+            },
+            "Vendor_Pattern": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "Vendor": {
+              "type": "Dropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Vendors",
+              "value": "Vendor_ID",
+              "label": "Vendor"
+            },
+            "Season": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Season",
+              "value": "Season",
+              "label": "Season"
+            },
+            "Fiscal_Year": {
+              "type": "Dropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year",
+              "value": "FISCAL_YEAR",
+              "label": "FISCAL_YEAR"
+            },
+            "FW_Start": {
+              "type": "Textbox",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
+              "value": "Fiscal_Week_Default",
+              "label": "Fiscal_Week_Default"
+            },
+            "FW_End": {
+              "type": "Textbox",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
+              "value": "Fiscal_Week_Default",
+              "label": "Fiscal_Week_Default"
+            },
+            "ExpandOrCollapse": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Expand,Collapse",
+              "label": "Expand,Collapse"
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }
+          }
+        },
+        "BCF Detail By Size By Color": {
+          "data_source": "ReportDataSource",
+          "data_sets": {
+            "ReportDataSet": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_BCF_Detail_By_Style_Report"
+            },
+            "Departments": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
+            },
+            "Classes": {
+              "query_type": "Stored Procedure",
+              "query": "par_Class_Details_by_Banner"
+            },
+            "Categories": {
+              "query_type": "Stored Procedure",
+              "query": "par_Category_by_Banner"
+            },
+            "Fiscal_Year": {
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year"
+            },
+            "FiscalYearDefault": {
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year_Default"
+            },
+            "FiscalWeekDefault": {
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default"
+            },
+            "DepartmentHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_DepartmentHeaders_by_Banner"
+            },
+            "ClassHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_ClassHeaders_by_Banner"
+            },
+            "Vendors": {
+              "query_type": "Stored Procedure",
+              "query": "par_Vendors"
+            },
+            "Brands": {
+              "query_type": "Stored Procedure",
+              "query": "par_Brands"
+            },
+            "VendorHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_VendorHeaders"
+            },
+            "BrandHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_BrandHeaders"
+            },
+            "CategoryHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_CategoryHeaders_by_Banner"
+            },
+            "Trend": {
+              "query_type": "Stored Procedure",
+              "query": "par_Trend"
+            },
+            "Seasons": {
+              "query_type": "Stored Procedure",
+              "query": "par_Season"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Department_No": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
+              "value": "Department_Number",
+              "label": "Department"
+            },
+            "Class_Number": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Class_Details_by_Banner",
+              "value": "Class_Number",
+              "label": "Class"
+            },
+            "Category": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Category_by_Banner",
+              "value": "Category_Number",
+              "label": "Category"
+            },
+            "Brand_Pattern": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "Brand": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Brands",
+              "value": "Brand_ID",
+              "label": "Brand"
+            },
+            "Trend": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Trend",
+              "value": "TREND_NAME",
+              "label": "TREND_NAME"
+            },
+            "Vendor_Pattern": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "Vendor": {
+              "type": "Dropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Vendors",
+              "value": "Vendor_ID",
+              "label": "Vendor"
+            },
+            "Season": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Season",
+              "value": "Season",
+              "label": "Season"
+            },
+            "Fiscal_Year": {
+              "type": "Dropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year",
+              "value": "FISCAL_YEAR",
+              "label": "FISCAL_YEAR"
+            },
+            "FW_Start": {
+              "type": "Textbox",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
+              "value": "Fiscal_Week_Default",
+              "label": "Fiscal_Week_Default"
+            },
+            "FW_End": {
+              "type": "Textbox",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
+              "value": "Fiscal_Week_Default",
+              "label": "Fiscal_Week_Default"
+            },
+            "ExpandOrCollapse": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Expand,Collapse",
+              "label": "Expand,Collapse"
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }
+          }
+        },
+        "Production Tracker Details": {
+          "data_source": "eCom_ReportDB",
+          "data_sets": {
+            "ReportDataSet": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_BCF_Detail_By_Style_Report"
+            },
+            "Status": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Status"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Item_Status": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Status",
+              "value": "Item",
+              "label": "Item"
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }
+          }
+        },
+        "Year End Size Reporting": {
+          "data_source": "ReportDataSource",
+          "data_sets": {
+            "ReportDataSet": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_Year_End_Size_Reporting"
+            },
+            "Departments": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
+            },
+            "Fiscal_Year": {
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year"
+            },
+            "FiscalYearDefault": {
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year_Default"
+            },
+            "FiscalWeekDefault": {
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Department_No": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
+              "value": "Department_Number",
+              "label": "Department"
+            },
+            "Fiscal_Year": {
+              "type": "Dropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Year",
+              "value": "FISCAL_YEAR",
+              "label": "FISCAL_YEAR"
+            },
+            "FW_Start": {
+              "type": "Textbox",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
+              "value": "Fiscal_Week_Default",
+              "label": "Fiscal_Week_Default"
+            },
+            "FW_End": {
+              "type": "Textbox",
+              "query_type": "Stored Procedure",
+              "query": "par_Fiscal_Week_Default",
+              "value": "Fiscal_Week_Default",
+              "label": "Fiscal_Week_Default"
+            },
+            "Size_Family_Group": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }
+          }
+        }
+      }
+    },
+    "Vendor Compliance Reports": {
+      "reports": {
+        "eReady Written Report": {
+          "data_source": "ReportDataSource",
+          "data_sets": {
+            "ReportDataSet": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_eReady_Written_Report"
+            },
+            "Departments": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
+            },
+            "Vendors": {
+              "query_type": "Stored Procedure",
+              "query": "par_Vendors"
+            },
+            "VendorHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_VendorHeaders"
+            },
+            "Buy_Type": {
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_BuyType"
+            },
+            "Buyer": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Buyers"
+            },
+            "FiscalMonth": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_FiscalMonth"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Department_No": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
+              "value": "Department_Number",
+              "label": "Department"
+            },
+            "Fiscal_Month": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_FiscalMonth",
+              "value": "Display",
+              "label": "Display"
+            },
+            "Vendor_Pattern": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            }, 
+            "Vendor": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Vendors",
+              "value": "Vendor_ID",
+              "label": "Vendor"
+            },
+            "Buy_Type": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_BuyType",
+              "value": "Buy_TypeNum",
+              "label": "Buy_Type"
+            },
+            "Buyer": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Buyers",
+              "value": "Buyer",
+              "label": "Buyer"
+            },
+            "Display_Vendor": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            },
+            "eReady_Flag": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            },
+            "preLabel_Flag": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }        
+          }
+        },
+        "eReady PO Breakdown": {
+          "data_source": "ReportDataSource",
+          "data_sets": {
+            "ReportDataSet": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_BCF_for_Market_Travel"
+            },
+            "Departments": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
+            },
+            "Vendors": {
+              "query_type": "Stored Procedure",
+              "query": "par_Vendors"
+            },
+            "VendorHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_VendorHeaders"
+            },
+            "Buy_Type": {
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_BuyType"
+            },
+            "Buyer": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Buyers"
+            },
+            "FiscalMonth": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_FiscalMonth"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Department_No": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
+              "value": "Department_Number",
+              "label": "Department"
+            },
+            "Fiscal_Month": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_FiscalMonth",
+              "value": "Display",
+              "label": "Display"
+            },
+            "Vendor_Pattern": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            }, 
+            "Vendor": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Vendors",
+              "value": "Vendor_ID",
+              "label": "Vendor"
+            },    
+            "Season": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Season",
+              "value": "Season",
+              "label": "Season"
+            }, 
+            "Buy_Type": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_BuyType",
+              "value": "Buy_TypeNum",
+              "label": "Buy_Type"
+            },
+            "Buyer": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Buyers",
+              "value": "Buyer",
+              "label": "Buyer"
+            },
+            "Display_Vendor": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            },
+            "eReady_Flag": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            },
+            "preLabel_Flag": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            },
+            "YTD_Flag": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }        
+          }
+        },
+        "Vendor Compliance Details Report": {
+          "data_source": "eCom_ReportDB",
+          "data_sets": {
+            "ReportDataSet": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_VC_Details_Report"
+            },
+            "Departments": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner"
+            },
+            "Vendors": {
+              "query_type": "Stored Procedure",
+              "query": "par_Vendors"
+            },
+            "VendorHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_VendorHeaders"
+            },
+            "Buy_Type": {
+              "query_type": "Stored Procedure",
+              "query": "par_BuyTypes"
+            },
+            "Buyer": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Buyers"
+            },
+            "DepartmentHeaders": {
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_DepartmentHeaders_by_Banner"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Department_No": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_Departments_by_Banner",
+              "value": "Department_Number",
+              "label": "Department"
+            },
+            "Vendor_Pattern": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            }, 
+            "Vendor": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Vendors",
+              "value": "Vendor_ID",
+              "label": "Vendor"
+            }, 
+            "Buy_Type": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_BuyTypes",
+              "value": "Buy_Type_Number",
+              "label": "Buy_Type"
+            },
+            "Category_Code": {
+              "type": "MultiDropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Buyer Compliance,Carton Labeling,Item Pre-labeling,Jewelry,Misroutes,Packing,PO Accuracy,Product Labeling,Product Safety,Quality Issues",
+              "label": "Buyer Compliance,Carton Labeling,Item Pre-labeling,Jewelry,Misroutes,Packing,PO Accuracy,Product Labeling,Product Safety,Quality Issues"
+            },
+            "Inf_Start_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "Inf_End_Date": {
+              "type": "DateTime",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No"
+            }        
+          }
+        },
+        "Vendor Compliance Infraction Trend Summary": {
+          "data_source": "VCTool",
+          "data_sets": {
+            "ReportDataSet": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_VC_Infraction_Trend_Summary"
+            },
+            "FMonth": {
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_FiscalMonth"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            },
+            "Fiscal_Month": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "Par_rpt_FiscalMonth",
+              "value": "Display",
+              "label": "Display"
+            },
+            "TopNRows": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "25",
+              "label": "25"
+            }        
+          }
+        },
+        "Vendor Compliance PO and Infraction Metrics": {
+          "data_source": "VCTool",
+          "data_sets": {
+            "ReportDataSet": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_VC_PO_and_Infraction_Metrics"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            }    
+          }
+        },
+        "Vendor Compliance Summary Report": {
+          "data_source": "VCTool",
+          "data_sets": {
+            "ReportDataSet": {
+              "query_type": "Stored Procedure",
+              "query": "rpt_VC_Summary_Report"
+            },
+            "Banner": {
+              "query_type": "Stored Procedure",
+              "query": "par_Banner"
+            }
+          },
+          "parameters": {
+            "Banner": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_Banner",
+              "value": "Banner_Number",
+              "label": "Banner_Name"
+            }    
           }
         }
       }

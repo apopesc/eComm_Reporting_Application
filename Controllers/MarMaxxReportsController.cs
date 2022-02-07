@@ -264,6 +264,14 @@ namespace eComm_Reporting_Application.Controllers
                 {
                     connectionstring = configuration.GetConnectionString("eCom_WMSDB");
                 }
+                else if (reportParams.dataSource == "Transportation")
+                {
+                    connectionstring = configuration.GetConnectionString("Transportation");
+                }
+                else if (reportParams.dataSource == "VCTool")
+                {
+                    connectionstring = configuration.GetConnectionString("VCTool");
+                }
 
                 for (int i = 0; i < reportParams.parameters.Count; i++)
                 {

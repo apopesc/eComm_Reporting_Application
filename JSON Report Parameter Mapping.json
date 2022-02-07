@@ -348,7 +348,7 @@
               "value": "Dept_Number",
               "label": "Dept_FullName"
             },
-            "Class": {
+            "Class_Number": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MatrixOrMechandisingClass_By_Banner",
@@ -438,7 +438,7 @@
               "value": "Dept_Number",
               "label": "Dept_FullName"
             },
-            "Class": {
+            "Class_Number": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MatrixOrMechandisingClass_By_Banner",
@@ -5175,7 +5175,7 @@
               "value": "Department_Number",
               "label": "Department"
             },
-            "Class": {
+            "Class_Number": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Class_Details_by_Banner",
@@ -5256,7 +5256,7 @@
               "value": "Department_Number",
               "label": "Department"
             },
-            "Class": {
+            "Class_Number": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Class_Details_by_Banner",
@@ -6046,7 +6046,7 @@
               "value": "Dept_Number",
               "label": "Dept_FullName"
             },
-            "Class": {
+            "Class_Number": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Class_Details_by_Banner",
@@ -7116,7 +7116,7 @@
           }
         },
         "Reveal Designer Exception Report": {
-          "data_source": "NetSuite_ODS",
+          "data_source": "ReportDataSource",
           "data_sets": {
             "ReportDataset": {
               "query_type": "Stored Procedure",
@@ -8159,7 +8159,7 @@
               "value": "",
               "label": ""
             },
-            "Class": {
+            "Class_Number": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Class_By_Banner",
@@ -8776,7 +8776,7 @@
             },
             "Seasons": {
               "query_type": "Stored Procedure",
-              "query": "par_rpt_Season"
+              "query": "par_Season"
             },
             "Banner": {
               "query_type": "Stored Procedure",
@@ -8850,7 +8850,7 @@
             "Season": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
-              "query": "par_rpt_Season",
+              "query": "par_Season",
               "value": "Season",
               "label": "Season"
             },
@@ -8956,7 +8956,7 @@
             },
             "Seasons": {
               "query_type": "Stored Procedure",
-              "query": "par_rpt_Season"
+              "query": "par_Season"
             },
             "Banner": {
               "query_type": "Stored Procedure",
@@ -9030,7 +9030,7 @@
             "Season": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
-              "query": "par_rpt_Season",
+              "query": "par_Season",
               "value": "Season",
               "label": "Season"
             },
@@ -9200,7 +9200,7 @@
           "data_sets": {
             "ReportDataSet": {
               "query_type": "Stored Procedure",
-              "query": "rpt_BCF_for_Market_Travel"
+              "query": "rpt_eReady_Written_Report"
             },
             "Departments": {
               "query_type": "Stored Procedure",
@@ -9216,7 +9216,7 @@
             },
             "Buy_Type": {
               "query_type": "Stored Procedure",
-              "query": "par_BuyTypes"
+              "query": "par_rpt_BuyType"
             },
             "Buyer": {
               "query_type": "Stored Procedure",
@@ -9243,8 +9243,8 @@
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
-              "value": "Department_Number",
-              "label": "Department"
+              "value": "Dept_Number",
+              "label": "Dept_FullName"
             },
             "Fiscal_Month": {
               "type": "MultiDropdown",
@@ -9266,26 +9266,12 @@
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor"
-            },    
-            "Season": {
-              "type": "MultiDropdown",
-              "query_type": "Stored Procedure",
-              "query": "par_Season",
-              "value": "Season",
-              "label": "Season"
-            }, 
-            "Trend": {
-              "type": "MultiDropdown",
-              "query_type": "Stored Procedure",
-              "query": "par_Trend",
-              "value": "TREND_NAME",
-              "label": "TREND_NAME"
             },
             "Buy_Type": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
-              "query": "par_BuyTypes",
-              "value": "Buy_Type_Number",
+              "query": "par_rpt_BuyType",
+              "value": "Buy_TypeNum",
               "label": "Buy_Type"
             },
             "Buyer": {
@@ -9346,7 +9332,7 @@
             },
             "Buy_Type": {
               "query_type": "Stored Procedure",
-              "query": "par_BuyTypes"
+              "query": "par_rpt_BuyType"
             },
             "Buyer": {
               "query_type": "Stored Procedure",
@@ -9404,18 +9390,11 @@
               "value": "Season",
               "label": "Season"
             }, 
-            "Trend": {
-              "type": "MultiDropdown",
-              "query_type": "Stored Procedure",
-              "query": "par_Trend",
-              "value": "TREND_NAME",
-              "label": "TREND_NAME"
-            },
             "Buy_Type": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
-              "query": "par_BuyTypes",
-              "value": "Buy_Type_Number",
+              "query": "par_rpt_BuyType",
+              "value": "Buy_TypeNum",
               "label": "Buy_Type"
             },
             "Buyer": {
