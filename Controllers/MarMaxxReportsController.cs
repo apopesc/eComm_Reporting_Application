@@ -272,6 +272,18 @@ namespace eComm_Reporting_Application.Controllers
                 {
                     connectionstring = configuration.GetConnectionString("VCTool");
                 }
+                else if (reportParams.dataSource == "eCom_RefDB")
+                {
+                    connectionstring = configuration.GetConnectionString("eCom_RefDB");
+                }
+                else if (reportParams.dataSource == "ECD")
+                {
+                    connectionstring = configuration.GetConnectionString("ECD");
+                }
+                else if (reportParams.dataSource == "TJX_MFP_Marmaxx")
+                {
+                    connectionstring = configuration.GetConnectionString("TJX_MFP_Marmaxx");
+                }
 
                 for (int i = 0; i < reportParams.parameters.Count; i++)
                 {

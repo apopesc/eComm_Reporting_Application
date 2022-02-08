@@ -3397,7 +3397,7 @@
               "value": "",
               "label": ""
             },
-            "ATG_Customer_Number": {
+            "ATG_Cust_Number": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -4251,7 +4251,7 @@
           }
         },
         "Monthly Usage Summary": {
-          "data_source": "eComm_ReportDB",
+          "data_source": "eCom_ReportDB",
           "data_sets": {
             "ReportDataset": {
               "query_type": "Stored Procedure",
@@ -5182,13 +5182,6 @@
               "value": "Class_Number",
               "label": "Class"
             },
-            "Ladder_Plan_Date": {
-              "type": "Dropdown",
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth",
-              "value": "LP_Month",
-              "label": "LP_Month"
-            },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
@@ -5262,13 +5255,6 @@
               "query": "par_Class_Details_by_Banner",
               "value": "Class_Number",
               "label": "Class"
-            },
-            "Ladder_Plan_Date": {
-              "type": "Dropdown",
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth",
-              "value": "LP_Month",
-              "label": "LP_Month"
             },
             "Combine_Banners": {
               "type": "Dropdown",
@@ -5515,7 +5501,7 @@
           }
         },
         "Trial Balance Report": {
-          "data_source": "NetSuite_ODS",
+          "data_source": "ReportDataSource",
           "data_sets": {
             "ReportDataset": {
               "query_type": "Stored Procedure",
@@ -6004,7 +5990,7 @@
     "Loss Prevention": {
       "reports": {
         "Adjustments Report": {
-          "data_source": "NetSuite_ODS",
+          "data_source": "ReportDataSource",
           "data_sets": {
             "ReportDataset": {
               "query_type": "Stored Procedure",
@@ -6091,7 +6077,7 @@
           }
         },
         "Appeasements Report": {
-          "data_source": "NetSuite_ODS",
+          "data_source": "ReportDataSource",
           "data_sets": {
             "ReportDataset": {
               "query_type": "Stored Procedure",
@@ -6141,7 +6127,7 @@
           }
         },
         "Customer Returns Percentage": {
-          "data_source": "NetSuite_ODS",
+          "data_source": "ReportDataSource",
           "data_sets": {
             "ReportDataset": {
               "query_type": "Stored Procedure",
@@ -6160,14 +6146,14 @@
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
-            "ReturnQTYPercentage": {
+            "ReturnQTYPercent": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
               "value": "100",
               "label": "100"
             },
-            "ReturnDollarPercentage": {
+            "ReturnDollarPercent": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -6198,7 +6184,7 @@
           }
         },
         "Customer Sales Or Returns Report": {
-          "data_source": "NetSuite_ODS",
+          "data_source": "ReportDataSource",
           "data_sets": {
             "ReportDataset": {
               "query_type": "Stored Procedure",
@@ -6451,7 +6437,7 @@
           }
         },
         "Photo Returns": {
-          "data_source": "eCom_WMSDB",
+          "data_source": "ReportDataSource",
           "data_sets": {
             "ReportDataset": {
               "query_type": "Stored Procedure",
@@ -6502,7 +6488,7 @@
           }
         },
         "Sales Details by State or City": {
-          "data_source": "NetSuite_ODS",
+          "data_source": "ReportDataSource",
           "data_sets": {
             "ReportDataset": {
               "query_type": "Stored Procedure",
@@ -6635,7 +6621,7 @@
           }
         },
         "SKU Snapshot": {
-          "data_source": "NetSuite_ODS",
+          "data_source": "ReportDataSource",
           "data_sets": {
             "ReportDataset": {
               "query_type": "Stored Procedure",
@@ -7189,7 +7175,7 @@
           }
         },
         "Sales Returns Report - Marketing": {
-          "data_source": "NetSuite_ODS",
+          "data_source": "ReportDataSource",
           "data_sets": {
             "ReportDataset": {
               "query_type": "Stored Procedure",
@@ -7696,7 +7682,7 @@
           }
         },
         "Keytrol ID Report": {
-          "data_source": "NetSuite_ODS",
+          "data_source": "ReportDataSource",
           "data_sets": {
             "Inventory_by_DC": {
               "query_type": "Stored Procedure",
@@ -8151,13 +8137,6 @@
               "query": "Par_rpt_Departments_by_Banner",
               "value": "Dept_Number",
               "label": "Dept_FullName"
-            }, 
-            "MasterPO": {
-              "type": "Textbox",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
             },
             "Class_Number": {
               "type": "MultiDropdown",
@@ -8166,20 +8145,27 @@
               "value": "Class_Number",
               "label": "Class"
             },
-            "Ladder_Plan_Date": {
-              "type": "MultiDropdown",
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth",
-              "value": "LP_Month",
-              "label": "LP_Month"
-            },
             "Category": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Category_by_Banner",
               "value": "Category_Number",
               "label": "Category"
-            },
+            }, 
+            "MasterPO": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },           
+            "Ladder_Plan_Date": {
+              "type": "MultiDropdown",
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth",
+              "value": "LP_Month",
+              "label": "LP_Month"
+            },          
             "Vendor_Pattern": {
               "type": "Textbox",
               "query_type": "Fixed",
@@ -9243,8 +9229,8 @@
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
-              "value": "Department_Number",
-              "label": "Department"
+              "value": "Dept_Number",
+              "label": "Dept_FullName"
             },
             "Fiscal_Month": {
               "type": "MultiDropdown",
@@ -9462,7 +9448,7 @@
             },
             "Buy_Type": {
               "query_type": "Stored Procedure",
-              "query": "par_BuyTypes"
+              "query": "par_rpt_BuyType"
             },
             "Buyer": {
               "query_type": "Stored Procedure",
@@ -9509,8 +9495,8 @@
             "Buy_Type": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
-              "query": "par_BuyTypes",
-              "value": "Buy_Type_Number",
+              "query": "par_rpt_BuyType",
+              "value": "Buy_Type_Num",
               "label": "Buy_Type"
             },
             "Category_Code": {
