@@ -163,6 +163,9 @@ function createTable(tableData) {
     header.append(Hrow);
     subTable.append(header); //Adding the row to the table
 
+    let expandableRowEntries = [];
+    let expandableRowIDs = new Set();
+
     let body = $('<tbody>');
     //Adding the data under the headers
     for (let j = 0; j < tableData.rowData.length; j++) {
@@ -218,12 +221,17 @@ function createTable(tableData) {
 
                         if (commaCount > 2) {
                             let substringIndex = getPosition(parameterData, ',', 3);
-                            parameterData = parameterData.substring(0, substringIndex + 1) + "...";
-                            console.log(parameterData);
+
+                            let expandableRowEntry = { rowID: tableData.rowData[j].subscriptionID, data: paramName + ": " + parameterData};
+                            expandableRowEntries.push(expandableRowEntry);
+                            expandableRowIDs.add(tableData.rowData[j].subscriptionID);
+
+                            parameterData = parameterData.substring(0, substringIndex + 1) + " ... ";
                         }
                     }
 
                     let tableEntry = $('<td>').addClass('marMaxxSubscriptionEntry_Dynamic').text(parameterData);
+
                     row.append(tableEntry);
                 }
 
@@ -231,6 +239,7 @@ function createTable(tableData) {
         }
 
         body.append(row);
+
     }
     subTable.append(body);
     $('#marMaxxSubscriptionData').append(subTable);
@@ -238,6 +247,20 @@ function createTable(tableData) {
     marMaxxTable = $('#marMaxxSubscriptionsTable').DataTable({
         "lengthMenu": [5, 8, 15, 25]
     });
+
+    for (const rowID of expandableRowIDs) {
+
+        let childData = [];
+
+        for (let g = 0; g < expandableRowEntries.length; g++) {
+            if (expandableRowEntries[g].rowID == rowID) {
+                childData.push(expandableRowEntries[g].data)
+            }
+        }
+
+        marMaxxTable.row('#' + rowID).child(childData).show();
+    }
+    
 }
 
 function getPosition(string, subString, index) {

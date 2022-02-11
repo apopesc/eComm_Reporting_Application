@@ -69,3 +69,6 @@
     min-width: 150px;
 }
 
+#marMaxxSubscriptionsTable .hidden_row {
+    display: none;
+}

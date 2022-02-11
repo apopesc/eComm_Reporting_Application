@@ -328,6 +328,12 @@ body {
     margin-left: 1px;
 }
 
+.viewMoreBtn {
+    border: none;
+    background: white;
+    margin-left: 1px;
+}
+
 .editBtn {
     border: none;
     background: white;
