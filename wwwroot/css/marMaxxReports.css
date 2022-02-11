@@ -65,3 +65,7 @@
     position: relative;
 }
 
+.marMaxxSubscriptionEntry_Dynamic {
+    min-width: 150px;
+}
+

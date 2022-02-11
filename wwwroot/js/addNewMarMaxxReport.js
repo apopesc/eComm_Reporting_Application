@@ -60,6 +60,7 @@
 
         if (selectedReport == null) {
             alert("Please select a folder, then a report to view it's parameters.");
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
         } else {
 
             var controllerUrl = '/MarMaxxReports/GetMarMaxxReportParameters';

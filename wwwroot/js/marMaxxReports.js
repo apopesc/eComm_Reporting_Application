@@ -192,7 +192,7 @@ function createTable(tableData) {
 
         row.append(tableEntry_Icons); 
 
-        let tableEntry1 = $('<td>').addClass('marMaxxSubscriptionsEntry_SubscriptionID').text(tableData.rowData[j].subscriptionID);
+        let tableEntry1 = $('<td>').addClass('marMaxxSubscriptionsEntry_SubscriptionID subscriptionsTableEntry').text(tableData.rowData[j].subscriptionID);
         row.append(tableEntry1); //adding element to the row
         let tableEntry2 = $('<td>').addClass('marMaxxSubscriptionsEntry_SubscriptionName').text(tableData.rowData[j].subscriptionName);
         row.append(tableEntry2);
@@ -211,7 +211,19 @@ function createTable(tableData) {
             for (var paramName in tableData.rowData[j].dynamicParams) {
 
                 if (paramName == tableData.tableParams[i].name) {
-                    let tableEntry = $('<td>').addClass('marMaxxSubscriptionEntry_Dynamic').text(tableData.rowData[j].dynamicParams[paramName]);
+                    let parameterData = tableData.rowData[j].dynamicParams[paramName];
+
+                    if (parameterData != null) {
+                        let commaCount = parameterData.split(",").length - 1;
+
+                        if (commaCount > 2) {
+                            let substringIndex = getPosition(parameterData, ',', 3);
+                            parameterData = parameterData.substring(0, substringIndex + 1) + "...";
+                            console.log(parameterData);
+                        }
+                    }
+
+                    let tableEntry = $('<td>').addClass('marMaxxSubscriptionEntry_Dynamic').text(parameterData);
                     row.append(tableEntry);
                 }
 
@@ -226,4 +238,8 @@ function createTable(tableData) {
     marMaxxTable = $('#marMaxxSubscriptionsTable').DataTable({
         "lengthMenu": [5, 8, 15, 25]
     });
+}
+
+function getPosition(string, subString, index) {
+    return string.split(subString, index).join(subString).length;
 }
