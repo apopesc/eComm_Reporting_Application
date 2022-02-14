@@ -137,7 +137,7 @@ $(document).ready(function () {
                     }
                 }
 
-                marMaxxTable.row($selectedRow).child(childRows).show();
+                marMaxxTable.row($selectedRow).child(childRows, 'child-row').show();
 
             }
             $(this).addClass("shown_child");

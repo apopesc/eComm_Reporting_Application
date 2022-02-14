@@ -476,3 +476,7 @@ table.dataTable.no-footer{
             text-transform: uppercase;
             text-decoration: underline;
         }
+
+.child-row {
+    border-bottom: 1px solid #ADADAD;
+}
