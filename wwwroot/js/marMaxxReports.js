@@ -115,7 +115,6 @@ $(document).ready(function () {
         if ($(this).hasClass("shown_child")) {
 
             $('table > tbody  > tr > td > #expandBtn').each(function () {
-                $(this).text("Show");
                 $(this).removeClass("shown_child");
             });
 
@@ -141,7 +140,6 @@ $(document).ready(function () {
 
             }
             $(this).addClass("shown_child");
-            $(this).text("Hide");
         }
 
     });
@@ -271,10 +269,10 @@ function createTable(tableData) {
                             expandableRowEntries.push(expandableRowEntry);
                             expandableRowIDs.add(tableData.rowData[j].subscriptionID);
 
-                            parameterData = parameterData.substring(0, substringIndex + 1) + " ... ";
+                            parameterData = parameterData.substring(0, substringIndex + 1);
                             tableEntry.text(parameterData);
 
-                            var button = $('<button id = "expandBtn" class = "' + paramName + '">Show</button>');
+                            var button = $('<a id = "expandBtn" class = "' + paramName + '">(...)</a>');
                             button.appendTo(tableEntry);
                         } else {
                             tableEntry.text(parameterData);

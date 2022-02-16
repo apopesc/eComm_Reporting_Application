@@ -480,3 +480,9 @@ table.dataTable.no-footer{
 .child-row {
     border-bottom: 1px solid #ADADAD;
 }
+
+#expandBtn {
+    color: #007bff !important;
+    cursor: pointer;
+    font-weight: bold;
+}
