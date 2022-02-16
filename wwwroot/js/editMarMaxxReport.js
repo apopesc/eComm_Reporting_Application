@@ -381,7 +381,11 @@ $(document).ready(function () {
                             dynamicParams[inputID] = dynamicParamVal.toString();
                         }
                     } else {
-                        dynamicParams[inputID] = dynamicParamVal.toString();
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParams[inputID] = 'ALL';
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
                     }
                 } else {
                     dynamicParams[inputID] = dynamicParamVal;
@@ -440,6 +444,22 @@ $(document).ready(function () {
                 var deselectValues = selectedCategoryValues;
                 deselectValues.splice(index, 1);
                 $('#Category').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '.multiselect_dynamic', function () {
+
+        var parameterID = $(this).attr('id');
+
+        var selectedValues = $('#' + parameterID).val();
+
+        if (selectedValues.includes('selectAll')) {
+            if (selectedValues.length > 1) {
+                var index = selectedValues.indexOf('selectAll');
+                var deselectValues = selectedValues;
+                deselectValues.splice(index, 1);
+                $('#' + parameterID).multiselect('deselect', deselectValues);
             }
         }
     });
@@ -533,6 +553,12 @@ function createParams(paramData) {
                 dropdown.append(defaultDropdownOption);
             }
 
+            else if (paramData.parameters[i].type == "MultiDropdown" && (paramData.parameters[i].name != "Banner" && paramData.parameters[i].name != "Department_No" && paramData.parameters[i].name != "Class_Number" && paramData.parameters[i].name != "Category")) {
+                var allDropdownOption = $('<option value="selectAll">').text("(ALL)");
+                dropdown.append(allDropdownOption);
+                dropdown.addClass('multiselect_dynamic');
+            }
+
             for (let j = 0; j < length; j++) {
                 var dropdownOption = $('<option>').text(paramData.parameters[i].labels[j]);
                 dropdownOption.prop('value', paramData.parameters[i].values[j]);
@@ -577,7 +603,7 @@ function createParams(paramData) {
         }
         $('#dynamicParams').append(row);
 
-        if (paramData.parameters[i].name == "Department_No" || paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category") {
+        if (paramData.parameters[i].type == "MultiDropdown") {
             $('#' + paramData.parameters[i].name).multiselect({
                 enableCaseInsensitiveFiltering: true,
                 buttonText: function (options, select) {
@@ -605,7 +631,9 @@ function createParams(paramData) {
                 }
             });
 
-            $('#' + paramData.parameters[i].name).multiselect('disable');
+            if (paramData.parameters[i].name == "Department_No" || paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category") {
+                $('#' + paramData.parameters[i].name).multiselect('disable');
+            }
         }
     }
 
@@ -642,7 +670,14 @@ function selectDynamicParams() {
             if ($("#" + paramName).is("select")) {
 
                 if ($("#" + paramName).prop("multiple")) { // Multi Select Box
-                    var selectedValues = selectedDynamicParamVals[paramName].split(',');
+
+                    var selectedValues = '';
+
+                    if (selectedDynamicParamVals[paramName] == 'ALL') {
+                        selectedValues = 'selectAll';
+                    } else {
+                        selectedValues = selectedDynamicParamVals[paramName].split(',');
+                    }
 
                     if ($("#" + paramName).prop("disabled")) { //If it is a disabled multi-select (such as Dept, Class, Etc..)
                         var data = [
