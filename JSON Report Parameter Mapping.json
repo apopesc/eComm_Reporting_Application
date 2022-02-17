@@ -192,14 +192,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Y,N",
-              "label": "Y,N"
+              "label": "Y,N",
+              "default_val": "Y"
             },
             "RequestType": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
+              "label": "Interactive,Subscription",
+              "default_val": "Subscription"
             }
           }
         },
@@ -239,7 +241,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "1,0",
-              "label": "Success,Failed"
+              "label": "Success,Failed",
+              "default_val": "1"
             },
             "FromDate": {
               "type": "DateTime",
@@ -367,28 +370,32 @@
               "query_type": "Stored Procedure",
               "query": "par_rpt_Season",
               "value": "Season",
-              "label": "Season"
+              "label": "Season",
+              "default_val": "selectAll"
             },
             "ViewBy": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Matrix Dept,Merchandising Dept",
-              "label": "Matrix Dept,Merchandising Dept"
+              "label": "Matrix Dept,Merchandising Dept",
+              "default_val": "Matrix Dept"
             },
             "Summary": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "Yes"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Ladder_Plan_Date": {
               "type": "MultiDropdown",
@@ -457,14 +464,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Matrix Dept,Merchandising Dept",
-              "label": "Matrix Dept,Merchandising Dept"
+              "label": "Matrix Dept,Merchandising Dept",
+              "default_val": "Matrix Dept"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         }
@@ -593,12 +602,12 @@
               "label": ""
             },
             "Vendor": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "ALL"
+              "default_val": "selectAll"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -643,7 +652,7 @@
               "query": "",
               "value": "Yes,No",
               "label": "Yes,No",
-              "default_val": "Yes"
+              "default_val": "No"
             }
           }
         },
@@ -753,14 +762,16 @@
               "query_type": "Stored Procedure",
               "query": "par_Season",
               "value": "Category_Number",
-              "label": "Category"
+              "label": "Category",
+              "default_val": "selectAll"
             },
             "Trend": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
-              "label": "TREND_NAME"
+              "label": "TREND_NAME",
+              "default_val": "selectAll"
             },
             "Vendor_Pattern": {
               "type": "Textbox",
@@ -774,7 +785,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -788,14 +800,16 @@
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
-              "label": "Brand"
+              "label": "Brand",
+              "default_val": "selectAll"
             },
             "Fiscal_Year": {
               "type": "Dropdown",
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "label": "FISCAL_YEAR",
+              "default_val": "2023"
             },            
             "FW_Start": {
               "type": "Textbox",
@@ -816,7 +830,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Expand,Collapse",
-              "label": "Expand,Collapse"
+              "label": "Expand,Collapse",
+              "default_val": "Collapse"
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -922,7 +945,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "label": "FISCAL_YEAR",
+              "default_val": "2023"
             },
             "FW_Start": {
               "type": "Textbox",
@@ -946,11 +970,12 @@
               "label": ""
             },
             "Vendor": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -964,22 +989,33 @@
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
-              "label": "Brand"
+              "label": "Brand",
+              "default_val": "selectAll"
             },           
             "Trend": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
-              "label": "TREND_NAME"
+              "label": "TREND_NAME",
+              "default_val": "selectAll"
             },          
             "ExpandOrCollapse": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Expand,Collapse",
-              "label": "Expand,Collapse"
-            }                     
+              "label": "Expand,Collapse",
+              "default_val": "Collapse"
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No",
+              "default_val": "No"
+            }                      
           }
         },
         "BCF Dollars and Units By Department": {
@@ -1038,28 +1074,32 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Y,N",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },     
             "Trend": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
-              "label": "TREND_NAME"
+              "label": "TREND_NAME",
+              "default_val": "selectAll"
             },
             "Fiscal_Year": {
               "type": "Dropdown",
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "label": "FISCAL_YEAR",
+              "default_val": "2023"
             },
             "FW_Start": {
               "type": "Textbox",
@@ -1187,7 +1227,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "label": "FISCAL_YEAR",
+              "default_val": "2023"
             },
             "FW_Start": {
               "type": "Textbox",
@@ -1208,7 +1249,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Vendor_Pattern": {
               "type": "Textbox",
@@ -1222,7 +1264,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -1236,28 +1279,32 @@
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
-              "label": "Brand"
+              "label": "Brand",
+              "default_val": "selectAll"
             },        
             "Season": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Season",
               "value": "Season",
-              "label": "Season"
+              "label": "Season",
+              "default_val": "selectAll"
             }, 
             "Trend": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
-              "label": "TREND_NAME"
+              "label": "TREND_NAME",
+              "default_val": "selectAll"
             },
             "Buy_Type": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_BuyTypes",
               "value": "Buy_Type_Number",
-              "label": "Buy_Type"
+              "label": "Buy_Type",
+              "default_val": "selectAll"
             }        
           }
         },
@@ -1399,42 +1446,46 @@
               "query_type": "Stored Procedure",
               "query": "par_Season",
               "value": "Season",
-              "label": "Season"
+              "label": "Season",
+              "default_val": "selectAll"
             },
             "RetailPrice_Min": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "RetailPrice_Max": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "Trend": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
-              "label": "TREND_NAME"
+              "label": "TREND_NAME",
+              "default_val": "selectAll"
             },
             "Buy_Type": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_BuyTypes",
               "value": "Buy_Type_Number",
-              "label": "Buy_Type"
+              "label": "Buy_Type",
+              "default_val": "selectAll"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -1448,7 +1499,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
-              "label": "Brand"
+              "label": "Brand",
+              "default_val": "selectAll"
             },
             "Vendor_Pattern": {
               "type": "Textbox",
@@ -1462,14 +1514,16 @@
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },
             "Fiscal_Year": {
               "type": "Dropdown",
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "label": "FISCAL_YEAR",
+              "default_val": "2023"
             },
             "FW_Start": {
               "type": "Textbox",
@@ -1490,14 +1544,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Y,N",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Display_PY_Data": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Y,N",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -1603,14 +1659,16 @@
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "label": "FISCAL_YEAR",
+              "default_val": "2023"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Vendor_Pattern": {
               "type": "Textbox",
@@ -1624,7 +1682,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },      
             "Brand_Pattern": {
               "type": "Textbox",
@@ -1638,21 +1697,24 @@
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
-              "label": "Brand"
+              "label": "Brand",
+              "default_val": "selectAll"
             },
             "Trend": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
-              "label": "TREND_NAME"
+              "label": "TREND_NAME",
+              "default_val": "selectAll"
             },
             "ExpandOrCollapse": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Expand,Collapse",
-              "label": "Expand,Collapse"
+              "label": "Expand,Collapse",
+              "default_val": "Collapse"
             }
           }
         },
@@ -1758,7 +1820,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "label": "FISCAL_YEAR",
+              "default_val": "2023"
             },
             "FW_Start": {
               "type": "Textbox",
@@ -1786,7 +1849,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },         
             "Brand_Pattern": {
               "type": "Textbox",
@@ -1800,28 +1864,32 @@
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
-              "label": "Brand"
+              "label": "Brand",
+              "default_val": "selectAll"
             },     
             "Trend": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
-              "label": "TREND_NAME"
+              "label": "TREND_NAME",
+              "default_val": "selectAll"
             },   
             "Display_PY_Data": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Y,N",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "N"
             },         
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -1931,7 +1999,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "label": "FISCAL_YEAR",
+              "default_val": "2023"
             },          
             "FW_Start": {
               "type": "Textbox",
@@ -1952,7 +2021,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Top_10,Top_15,Top_20,Top_25,Bot_10,Bot_15,Bot_20,Bot_25",
-              "label": "Top 10,Top 15,Top 20,Top 25,Bottom 10,Bottom 15,Bottom 20,Bottom 25"
+              "label": "Top 10,Top 15,Top 20,Top 25,Bottom 10,Bottom 15,Bottom 20,Bottom 25",
+              "default_val": "Top_10"
             },
             "Vendor_Pattern": {
               "type": "Textbox",
@@ -1966,7 +2036,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -1980,35 +2051,40 @@
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
-              "label": "Brand"
+              "label": "Brand",
+              "default_val": "selectAll"
             },
             "Trend": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
-              "label": "TREND_NAME"
+              "label": "TREND_NAME",
+              "default_val": "selectAll"
             },
             "Sort_By": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "TW_SLS_Units,TW_SLS_Ant,TW_Inv_Units,TW_Inv_Amt,Cumul_Sls_Units,Cumul_Ship_Units,SS_Ratio_weeks,Sell_Through_Percent",
-              "label": "TW Sales Units,TW Sales Dollars,TW Inventory Units,TW Inventory Amt,Cumul Sls Units,Cumul Ship Units,SS Ratio Weeks,Sell Through Percent"
+              "label": "TW Sales Units,TW Sales Dollars,TW Inventory Units,TW Inventory Amt,Cumul Sls Units,Cumul Ship Units,SS Ratio Weeks,Sell Through Percent",
+              "default_val": "TW_SLS_Units"
             },
             "Buy_Type": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_BuyTypes",
               "value": "Buy_Type_Number",
-              "label": "Buy_Type"
+              "label": "Buy_Type",
+              "default_val": "selectAll"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -2114,28 +2190,32 @@
               "query_type": "Stored Procedure",
               "query": "par_rpt_Season",
               "value": "Season",
-              "label": "Season"
+              "label": "Season",
+              "default_val": "selectAll"
             },
             "Trend_Flag": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Trend",
               "value": "Trend",
-              "label": "Trend"
+              "label": "Trend",
+              "default_val": "selectAll"
             },
             "ViewBy": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Summary,Detail",
-              "label": "Summary,Detail"
+              "label": "Summary,Detail",
+              "default_val": "Summary"
             },
             "Buyer": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Buyers",
               "value": "Buyer",
-              "label": "Buyer"
+              "label": "Buyer",
+              "default_val": "selectAll"
             },
             "Vendor_Pattern": {
               "type": "Textbox",
@@ -2149,7 +2229,8 @@
               "query_type": "Stored Procedure",
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -2163,7 +2244,8 @@
               "query_type": "Stored Procedure",
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
-              "label": "Brand"
+              "label": "Brand",
+              "default_val": "selectAll"
             },
             "Ladder_Plan_Date": {
               "type": "MultiDropdown",
@@ -2177,7 +2259,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -2295,42 +2378,48 @@
               "query_type": "Stored Procedure",
               "query": "par_rpt_BuyType",
               "value": "Buy_TypeNum",
-              "label": "Buy_Type"
+              "label": "Buy_Type",
+              "default_val": "selectAll"
             },
             "Trend_Flag": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Trend",
               "value": "Trend",
-              "label": "Trend"
+              "label": "Trend",
+              "default_val": "selectAll"
             },
             "Rush_Flag": {
-              "type": "Dropdown",
+              "type": "MultiDropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "selectAll"
             },
             "Ladder_Plan_Date": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_LPMonth",
               "value": "LP_Month",
-              "label": "LP_Month"
+              "label": "LP_Month",
+              "default_val": "selectAll"
             },
             "ViewBy": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Matrix Dept,Merchandising Dept",
-              "label": "Matrix Dept,Merchandising Dept"
+              "label": "Matrix Dept,Merchandising Dept",
+              "default_val": "Matrix Dept"
             },
             "Buyer": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Buyers",
               "value": "Buyer",
-              "label": "Buyer"
+              "label": "Buyer",
+              "default_val": "selectAll"
             },
             "Vendor_Pattern": {
               "type": "Textbox",
@@ -2344,7 +2433,8 @@
               "query_type": "Stored Procedure",
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -2358,28 +2448,32 @@
               "query_type": "Stored Procedure",
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
-              "label": "Brand"
+              "label": "Brand",
+              "default_val": "selectAll"
             },
             "Season": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Season",
               "value": "Season",
-              "label": "Season"
+              "label": "Season",
+              "default_val": "selectAll"
             },
             "Status": {
               "type": "MultiDropdown",
               "query_type": "In Line",
               "query": "SELECT DISTINCT ISNULL(H.Status,'No Status') AS Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER By 1",
               "value": "Trend",
-              "label": "Trend"
+              "label": "Trend",
+              "default_val": "selectAll"
             },
             "PO_Status": {
               "type": "MultiDropdown",
               "query_type": "In Line",
               "query": "SELECT DISTINCT ISNULL(H.PO_Status ,'No Status') AS PO_Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER BY 1",
               "value": "Trend",
-              "label": "Trend"
+              "label": "Trend",
+              "default_val": "selectAll"
             }
           }
         },
@@ -2497,28 +2591,32 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Matrix Dept,Merchandising Dept",
-              "label": "Matrix Dept,Merchandising Dept"
+              "label": "Matrix Dept,Merchandising Dept",
+              "default_val": "Matrix Dept"
             },
             "Buy_Type": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_BuyType",
               "value": "Buy_TypeNum",
-              "label": "Buy_Type"
+              "label": "Buy_Type",
+              "default_val": "selectAll"
             },
             "Trend_Flag": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Trend",
               "value": "Trend",
-              "label": "Trend"
+              "label": "Trend",
+              "default_val": "selectAll"
             },
             "DisplayBy": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Brand,Group/Class",
-              "label": "Brand,Group/Class"
+              "label": "Brand,Group/Class",
+              "default_val": "Brand"
             },
             "Vendor_Pattern": {
               "type": "Textbox",
@@ -2532,7 +2630,8 @@
               "query_type": "Stored Procedure",
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -2546,21 +2645,24 @@
               "query_type": "Stored Procedure",
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
-              "label": "Brand"
+              "label": "Brand",
+              "default_val": "selectAll"
             },
             "Buyer": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Buyers",
               "value": "Buyer",
-              "label": "Buyer"
+              "label": "Buyer",
+              "default_val": "selectAll"
             },
             "Season": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Season",
               "value": "Season",
-              "label": "Season"
+              "label": "Season",
+              "default_val": "selectAll"
             },
             "Status": {
               "type": "MultiDropdown",
@@ -2569,26 +2671,21 @@
               "value": "Trend",
               "label": "Trend"
             },
-            "Rush_Flag": {
+            "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
-            },
-            "PO_Status": {
-              "type": "Dropdown",
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT ISNULL(H.PO_Status ,'No Status') AS PO_Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER BY 1",
-              "value": "Trend",
-              "label": "Trend"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Ladder_Plan_Date": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_LPMonth",
               "value": "LP_Month",
-              "label": "LP_Month"
+              "label": "LP_Month",
+              "default_val": "selectAll"
             }
           }
         },
@@ -2678,35 +2775,40 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Division": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Divisions",
               "value": "Division",
-              "label": "Division"
+              "label": "Division",
+              "default_val": "selectAll"
             },
             "Merch_Manager": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MerchMgr",
               "value": "MM",
-              "label": "MM"
+              "label": "MM",
+              "default_val": "selectAll"
             },
             "Buyer": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Buyers",
               "value": "Buyer",
-              "label": "Buyer"
+              "label": "Buyer",
+              "default_val": "selectAll"
             },
             "DC_Cancel_Month": {
               "type": "MultiDropdown",
@@ -2720,7 +2822,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "Yes"
             }
           }
         },
@@ -2814,42 +2917,46 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "LP_Month": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "DC_Cancel_Date": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "Division": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Divisions",
               "value": "Division",
-              "label": "Division"
+              "label": "Division",
+              "default_val": "selectAll"
             },
             "Merch_Manager": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MerchMgr",
               "value": "MM",
-              "label": "MM"
+              "label": "MM",
+              "default_val": "selectAll"
             },
             "Buyer": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Buyers",
               "value": "Buyer",
-              "label": "Buyer"
+              "label": "Buyer",
+              "default_val": "selectAll"
             },
             "DC_Cancel_Month": {
               "type": "MultiDropdown",
@@ -2863,14 +2970,15 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "Yes"
             },
             "DC_Cancel_WeekEnd": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             }
           }
         },
@@ -2960,42 +3068,48 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "Yes"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Merch_Manager": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_MerchMgr",
               "value": "MM",
-              "label": "MM"
+              "label": "MM",
+              "default_val": "selectAll"
             },
             "Division": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Divisions",
               "value": "Division",
-              "label": "Division"
+              "label": "Division",
+              "default_val": "selectAll"
             },
             "Buyer": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Buyers",
               "value": "Buyer",
-              "label": "Buyer"
+              "label": "Buyer",
+              "default_val": "selectAll"
             },
             "Live_On_Web_Flag": {
               "type": "MultiDropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "DC_Cancel_Month": {
               "type": "MultiDropdown",
@@ -3107,7 +3221,8 @@
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Buyers",
               "value": "Buyer",
-              "label": "Buyer"
+              "label": "Buyer",
+              "default_val": "selectAll"
             },
             "Vendor_Pattern": {
               "type": "Textbox",
@@ -3120,8 +3235,9 @@
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Vendors",
-              "value": "Category_Number",
-              "label": "Category"
+              "value": "Vendor_ID",
+              "label": "Vendor",
+              "default_val": "selectAll"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -3135,7 +3251,8 @@
               "query_type": "Stored Procedure",
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
-              "label": "Brand"
+              "label": "Brand",
+              "default_val": "selectAll"
             }
           }
         },
@@ -3164,7 +3281,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -3193,7 +3311,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -3291,14 +3410,15 @@
               "query_type": "Stored Procedure",
               "query": "par_rpt_Season",
               "value": "Season",
-              "label": "Season"
+              "label": "Season",
+              "default_val": "selectAll"
             },
             "Parent": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "Vendor_Pattern": {
               "type": "Textbox",
@@ -3312,7 +3432,8 @@
               "query_type": "Stored Procedure",
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -3326,14 +3447,16 @@
               "query_type": "Stored Procedure",
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
-              "label": "Brand"
+              "label": "Brand",
+              "default_val": "selectAll"
             },
             "Rush_Flag": {
               "type": "MultiDropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "selectAll"
             },
             "Ladder_Plan_Date": {
               "type": "MultiDropdown",
@@ -3386,85 +3509,86 @@
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "Last_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "Phone_Number": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "ATG_Cust_Number": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "selectAll"
             },
             "Email_ID": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "Shipping_Address": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "Shipping_State": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "Shipping_Zip_Code": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "Billing_Address": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "Billing_State": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "Billing_Zip_Code": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             }
           }
         },
@@ -3506,22 +3630,22 @@
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "Last_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "Email_ID": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "Phone_Number": {
               "type": "Textbox",
@@ -3535,7 +3659,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -3643,14 +3768,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Sales,Returns",
-              "label": "Sales,Returns"
-            },
-            "Combine_Banners": {
-              "type": "Dropdown",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Sales,Returns",
+              "default_val": "selectAll"
             }
           }
         },
@@ -3704,14 +3823,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Shortage,Overage",
-              "label": "Shortage,Overage"
-            },
-            "Combine_Banners": {
-              "type": "Dropdown",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Shortage,Overage",
+              "default_val": "selectAll"
             }
           }
         },
@@ -3765,21 +3878,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Initial MD,Sub MD",
-              "label": "Initial MD,Sub MD"
+              "label": "Initial MD,Sub MD",
+              "default_val": "selectAll"
             },
             "SeasonCode": {
               "type": "MultiDropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Basic,Fall,Spring",
-              "label": "Basic,Fall,Spring"
-            },
-            "Combine_Banners": {
-              "type": "Dropdown",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Basic,Fall,Spring",
+              "default_val": "selectAll"
             }
           }
         },
@@ -3880,7 +3988,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -3923,7 +4032,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "selectAll"
             }
           }
         },
@@ -3970,7 +4080,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4017,7 +4128,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4064,7 +4176,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4111,7 +4224,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4154,7 +4268,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4201,7 +4316,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4252,7 +4368,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4289,7 +4406,8 @@
               "query_type": "Stored Procedure",
               "query": "Par_rpt_FiscalMonth",
               "value": "Display",
-              "label": "Display"
+              "label": "Display",
+              "default_val": "selectAll"
             },
             "Display_FMonth": {
               "type": "Dropdown",
@@ -4303,7 +4421,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4343,7 +4462,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4390,7 +4510,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4427,7 +4548,8 @@
               "query_type": "Stored Procedure",
               "query": "Par_rpt_FiscalMonth",
               "value": "Display",
-              "label": "Display"
+              "label": "Display",
+              "default_val": "selectAll"
             },
             "Display_FMonth": {
               "type": "Dropdown",
@@ -4441,7 +4563,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4488,7 +4611,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4531,7 +4655,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4585,7 +4710,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4639,7 +4765,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4693,7 +4820,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4736,7 +4864,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -4779,7 +4908,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         }
@@ -5002,7 +5132,16 @@
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "Fiscal_Year_Default",
-              "label": "Fiscal_Year_Default"
+              "label": "Fiscal_Year_Default",
+              "default_val": "2023"
+            },
+            "Combine_Banners": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Yes,No",
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -5090,7 +5229,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "Yes"
             }
           }
         },
@@ -5193,14 +5333,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "ViewBy": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Summary,Detail,Dept and Buy Type,Dept and Class",
-              "label": "Summary,Detail,Dept and Buy Type,Dept and Class"
+              "label": "Summary,Detail,Dept and Buy Type,Dept and Class",
+              "default_val": "Summary"
             }
           }
         },
@@ -5262,19 +5404,13 @@
               "value": "Class_Number",
               "label": "Class"
             },
-            "Combine_Banners": {
-              "type": "Dropdown",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Yes,No",
-              "label": "Yes,No"
-            },
             "ViewBy": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Summary,Detail,Dept and Buy Type,Dept and Class",
-              "label": "Summary,Detail,Dept and Buy Type,Dept and Class"
+              "label": "Summary,Detail,Dept and Buy Type,Dept and Class",
+              "default_val": "Summary"
             }
           }
         },
@@ -5321,7 +5457,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -5416,7 +5553,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "label": "FISCAL_YEAR",
+              "default_val": "2023"
             },            
             "FW_Start": {
               "type": "Textbox",
@@ -5437,7 +5575,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -5488,14 +5627,24 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Ignore_LP": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
+            },
+            "Month": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Ladder Plan,DC Cancel",
+              "label": "Ladder Plan,DC Cancel",
+              "default_val": "Ladder Plan"
             },
             "Display": {
               "type": "Dropdown",
@@ -5594,7 +5743,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "label": "FISCAL_YEAR",
+              "default_val": "2023"
             },            
             "FW_End": {
               "type": "Textbox",
@@ -5608,28 +5758,32 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Display_QTD_Data": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Display_LY_Data": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "ExpandOrCollapse": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Expand,Collapse",
-              "label": "Expand,Collapse"
+              "label": "Expand,Collapse",
+              "default_val": "Expand"
             }
           }
         },
@@ -5685,7 +5839,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "label": "FISCAL_YEAR",
+              "default_val": "2023"
             },            
             "FW_End": {
               "type": "Textbox",
@@ -5699,21 +5854,24 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Display_QTD_Data": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Display_LY_Data": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -5769,7 +5927,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "label": "FISCAL_YEAR",
+              "default_val": "2023"
             },            
             "FW_End": {
               "type": "Textbox",
@@ -5783,21 +5942,24 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Display_QTD_Data": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Display_LY_Data": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -5853,7 +6015,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "label": "FISCAL_YEAR",
+              "default_val": "2023"
             },            
             "FW_End": {
               "type": "Textbox",
@@ -5867,21 +6030,24 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Display_QTD_Data": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Display_LY_Data": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         }
@@ -5980,7 +6146,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "PO_Number": {
               "type": "Textbox",
@@ -6057,7 +6224,8 @@
               "query_type": "In Line",
               "query": "SELECT DISTINCT [LOCATION_ID],NAME FROM [dbo].[Locations] WITH(NOLOCK) WHERE [POSTING_BANNER] = 'T' ORDER BY 1",
               "value": "LOCATION_ID",
-              "label": "NAME"
+              "label": "NAME",
+              "default_val": "selectAll"
             },
             "SKU": {
               "type": "Textbox",
@@ -6128,7 +6296,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -6185,7 +6354,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -6247,21 +6417,24 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Sales,Returns",
-              "label": "Sales,Returns"
+              "label": "Sales,Returns",
+              "default_val": "Returns"
             },
             "ReportBy": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Summary,Detail",
-              "label": "Summary,Detail"
+              "label": "Summary,Detail",
+              "default_val": "Summary"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -6346,7 +6519,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -6438,7 +6612,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -6565,7 +6740,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Cash Sale,Cash Refund",
-              "label": "Cash Sale,Cash Refund"
+              "label": "Cash Sale,Cash Refund",
+              "default_val": "Cash Sale"
             },
             "City": {
               "type": "Textbox",
@@ -6586,7 +6762,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -6622,7 +6799,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Parent,Item",
-              "label": "Parent,Item"
+              "label": "Parent,Item",
+              "default_val": "Item"
             }
           }
         },
@@ -6712,7 +6890,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -6748,7 +6927,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Start_Date": {
               "type": "DateTime",
@@ -6797,7 +6977,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -6833,7 +7014,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Start_Date": {
               "type": "DateTime",
@@ -6882,7 +7064,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         }
@@ -6964,20 +7147,6 @@
               "value": "Month,Detail",
               "label": "Month,Detail"
             },
-            "Buy_Type": {
-              "type": "MultiDropdown",
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_BuyType",
-              "value": "Buy_TypeNum",
-              "label": "Buy_Type"
-            },
-            "Trend_Flag": {
-              "type": "MultiDropdown",
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Trend",
-              "value": "Trend",
-              "label": "Trend"
-            },
             "DisplayBy": {
               "type": "Dropdown",
               "query_type": "Fixed",
@@ -6997,7 +7166,8 @@
               "query_type": "Stored Procedure",
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -7011,14 +7181,16 @@
               "query_type": "Stored Procedure",
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
-              "label": "Brand"
+              "label": "Brand",
+              "default_val": "selectAll"
             },
             "Buyer": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Buyers",
               "value": "Buyer",
-              "label": "Buyer"
+              "label": "Buyer",
+              "default_val": "selectAll"
             },
             "Season": {
               "type": "MultiDropdown",
@@ -7027,26 +7199,21 @@
               "value": "Season",
               "label": "Season"
             },
-            "Status": {
-              "type": "MultiDropdown",
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT ISNULL(H.Status,'No Status') AS Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER By 1",
-              "value": "Trend",
-              "label": "Trend"
-            },
             "Rush_Flag": {
               "type": "MultiDropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "selectAll"
             },
             "PO_Status": {
               "type": "Dropdown",
               "query_type": "In Line",
               "query": "SELECT DISTINCT ISNULL(H.PO_Status ,'No Status') AS PO_Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER BY 1",
               "value": "Trend",
-              "label": "Trend"
+              "label": "Trend",
+              "default_val": "selectAll"
             },
             "Ladder_Plan_Date": {
               "type": "MultiDropdown",
@@ -7060,7 +7227,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -7103,7 +7271,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -7132,7 +7301,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         }
@@ -7169,14 +7339,16 @@
               "query_type": "In Line",
               "query": "select distinct list_item_name from vendor_visibility_restriction",
               "value": "list_item_name",
-              "label": "list_item_name"
+              "label": "list_item_name",
+              "default_val": "Do Not Reveal Designer"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -7219,7 +7391,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         }
@@ -7252,14 +7425,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -7309,8 +7484,8 @@
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             }
           }
         },
@@ -7353,7 +7528,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -7475,14 +7651,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Summary,Division,Department,Processing Type,Photo Type",
-              "label": "Summary,Division,Department,Processing Type,Photo Type"
+              "label": "Summary,Division,Department,Processing Type,Photo Type",
+              "default_val": "Summary"
             },
             "UOM": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "U,D,P,B",
-              "label": "Units,Dollars,Parents,Both Units and Dollars"
+              "label": "Units,Dollars,Parents,Both Units and Dollars",
+              "default_val": "U"
             },
             "Ladder_Plan_Date": {
               "type": "MultiDropdown",
@@ -7547,14 +7725,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Summary,Division,Department,Processing Type,Photo Type",
-              "label": "Summary,Division,Department,Processing Type,Photo Type"
+              "label": "Summary,Division,Department,Processing Type,Photo Type",
+              "default_val": "Summary"
             },
             "UOM": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "U,D,P,B",
-              "label": "Units,Dollars,Parents,Both Units and Dollars"
+              "label": "Units,Dollars,Parents,Both Units and Dollars",
+              "default_val": "U"
             },
             "Ladder_Plan_Date": {
               "type": "MultiDropdown",
@@ -7602,7 +7782,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Summary,Division,Department,Processing Type,Photo Type",
-              "label": "Summary,Division,Department,Processing Type,Photo Type"
+              "label": "Summary,Division,Department,Processing Type,Photo Type",
+              "default_val": "Summary"
             },
             "Department_No": {
               "type": "MultiDropdown",
@@ -7616,7 +7797,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "U,D,P,B",
-              "label": "Units,Dollars,Parents,Both Units and Dollars"
+              "label": "Units,Dollars,Parents,Both Units and Dollars",
+              "default_val": "U"
             },
             "Ladder_Plan_Date": {
               "type": "MultiDropdown",
@@ -7842,14 +8024,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Summary,Division,Department,Processing Type,Photo Type",
-              "label": "Summary,Division,Department,Processing Type,Photo Type"
+              "label": "Summary,Division,Department,Processing Type,Photo Type",
+              "default_val": "Summary"
             },
             "UOM": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "U,D,P,B",
-              "label": "Units,Dollars,Parents,Both Units and Dollars"
+              "label": "Units,Dollars,Parents,Both Units and Dollars",
+              "default_val": "U"
             },
             "Ladder_Plan_Date": {
               "type": "MultiDropdown",
@@ -7910,14 +8094,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "WH,VM",
-              "label": "Outstanding WHS Items,Outstanding VM Proofing"
+              "label": "Outstanding WHS Items,Outstanding VM Proofing",
+              "default_val": "WH"
             },
             "Ignore_LP": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "Yes"
             },
             "Delivery_Date": {
               "type": "DateTime",
@@ -7972,14 +8158,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Summary,Division,Department,Processing Type,Photo Type",
-              "label": "Summary,Division,Department,Processing Type,Photo Type"
+              "label": "Summary,Division,Department,Processing Type,Photo Type",
+              "default_val": "Summary"
             },
             "UOM": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "U,D,P,B",
-              "label": "Units,Dollars,Parents,Both Units and Dollars"
+              "label": "Units,Dollars,Parents,Both Units and Dollars",
+              "default_val": "U"
             },
             "Ladder_Plan_Date": {
               "type": "MultiDropdown",
@@ -8162,8 +8350,8 @@
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },           
             "Ladder_Plan_Date": {
               "type": "MultiDropdown",
@@ -8183,29 +8371,24 @@
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
-              "value": "",
-              "label": ""
+              "value": "ALL",
+              "label": "ALL"
             },
             "Vendor": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },
-            "View_Type": {
+            "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
-              "value": "Inbound,Site",
-              "label": "Inbound,Site"
-            },
-            "Job_Type": {
-              "type": "Dropdown",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Interactive,Subscription",
-              "label": "Interactive,Subscription"
+              "value": "Yes,No",
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -8311,14 +8494,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Summary,Division,Department,Processing Type,Photo Type",
-              "label": "Summary,Division,Department,Processing Type,Photo Type"
+              "label": "Summary,Division,Department,Processing Type,Photo Type",
+              "default_val": "Summary"
             },
             "UOM": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "U,D,P,B",
-              "label": "Units,Dollars,Parents,Both Units and Dollars"
+              "label": "Units,Dollars,Parents,Both Units and Dollars",
+              "default_val": "U"
             }
           }
         },
@@ -8369,14 +8554,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "SBX,NS",
-              "label": "Sandbox Rejections,Netsuite Rejections"
+              "label": "Sandbox Rejections,Netsuite Rejections",
+              "default_val": "SBX"
             },
             "Ignore_LP": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -8499,7 +8686,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -8605,7 +8793,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Item,Location",
-              "label": "Item,Location"
+              "label": "Item,Location",
+              "default_val": "Item"
             }
           }
         },
@@ -8816,14 +9005,16 @@
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
-              "label": "Brand"
+              "label": "Brand",
+              "default_val": "selectAll"
             },
             "Trend": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
-              "label": "TREND_NAME"
+              "label": "TREND_NAME",
+              "default_val": "selectAll"
             },
             "Vendor_Pattern": {
               "type": "Textbox",
@@ -8837,21 +9028,24 @@
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },
             "Season": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Season",
               "value": "Season",
-              "label": "Season"
+              "label": "Season",
+              "default_val": "selectAll"
             },
             "Fiscal_Year": {
               "type": "Dropdown",
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "label": "FISCAL_YEAR",
+              "default_val": "2023"
             },
             "FW_Start": {
               "type": "Textbox",
@@ -8872,14 +9066,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Expand,Collapse",
-              "label": "Expand,Collapse"
+              "label": "Expand,Collapse",
+              "default_val": "Expand"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -8996,14 +9192,16 @@
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
-              "label": "Brand"
+              "label": "Brand",
+              "default_val": "selectAll"
             },
             "Trend": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
-              "label": "TREND_NAME"
+              "label": "TREND_NAME",
+              "default_val": "selectAll"
             },
             "Vendor_Pattern": {
               "type": "Textbox",
@@ -9017,21 +9215,24 @@
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },
             "Season": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Season",
               "value": "Season",
-              "label": "Season"
+              "label": "Season",
+              "default_val": "selectAll"
             },
             "Fiscal_Year": {
               "type": "Dropdown",
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "label": "FISCAL_YEAR",
+              "default_val": "2023"
             },
             "FW_Start": {
               "type": "Textbox",
@@ -9052,14 +9253,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Expand,Collapse",
-              "label": "Expand,Collapse"
+              "label": "Expand,Collapse",
+              "default_val": "Expand"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -9099,7 +9302,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         },
@@ -9179,7 +9383,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         }
@@ -9257,14 +9462,16 @@
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },
             "Buy_Type": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_BuyType",
               "value": "Buy_TypeNum",
-              "label": "Buy_Type"
+              "label": "Buy_Type",
+              "default_val": "selectAll"
             },
             "Buyer": {
               "type": "MultiDropdown",
@@ -9278,28 +9485,32 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "eReady_Flag": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "preLabel_Flag": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "Yes"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }        
           }
         },
@@ -9373,7 +9584,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             },    
             "Season": {
               "type": "MultiDropdown",
@@ -9387,7 +9599,8 @@
               "query_type": "Stored Procedure",
               "query": "par_rpt_BuyType",
               "value": "Buy_TypeNum",
-              "label": "Buy_Type"
+              "label": "Buy_Type",
+              "default_val": "selectAll"
             },
             "Buyer": {
               "type": "MultiDropdown",
@@ -9401,35 +9614,40 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "eReady_Flag": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             },
             "preLabel_Flag": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "Yes"
             },
             "YTD_Flag": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "Yes"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }        
           }
         },
@@ -9496,21 +9714,24 @@
               "query_type": "Stored Procedure",
               "query": "par_Vendors",
               "value": "Vendor_ID",
-              "label": "Vendor"
+              "label": "Vendor",
+              "default_val": "selectAll"
             }, 
             "Buy_Type": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_BuyType",
               "value": "Buy_Type_Num",
-              "label": "Buy_Type"
+              "label": "Buy_Type",
+              "default_val": "selectAll"
             },
             "Category_Code": {
               "type": "MultiDropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Buyer Compliance,Carton Labeling,Item Pre-labeling,Jewelry,Misroutes,Packing,PO Accuracy,Product Labeling,Product Safety,Quality Issues",
-              "label": "Buyer Compliance,Carton Labeling,Item Pre-labeling,Jewelry,Misroutes,Packing,PO Accuracy,Product Labeling,Product Safety,Quality Issues"
+              "label": "Buyer Compliance,Carton Labeling,Item Pre-labeling,Jewelry,Misroutes,Packing,PO Accuracy,Product Labeling,Product Safety,Quality Issues",
+              "default_val": "selectAll"
             },
             "Inf_Start_Date": {
               "type": "DateTime",
@@ -9531,7 +9752,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }        
           }
         },
