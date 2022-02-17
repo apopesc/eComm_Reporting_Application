@@ -653,6 +653,11 @@ function createParams(paramData) {
                 $('#' + paramData.parameters[i].name).multiselect('disable');
             }
         }
+        if (paramData.parameters[i].defaultVal != null) {
+            $('#' + paramData.parameters[i].name).val(paramData.parameters[i].defaultVal);
+            $('#' + paramData.parameters[i].name).multiselect('refresh');
+        }
+
     }
 
     var saveSubscriptionBtn = $('<button>').addClass('btnAddPage').text("Save MarMaxx Report Subscription");

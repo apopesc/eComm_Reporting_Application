@@ -13,5 +13,6 @@ namespace eComm_Reporting_Application.Models
         public string query { get; set; }
         public List<string> values { get; set; }
         public List<string> labels { get; set; }
+        public string defaultVal { get; set; }
     }
 }

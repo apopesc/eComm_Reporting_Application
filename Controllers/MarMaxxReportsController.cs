@@ -709,6 +709,9 @@ namespace eComm_Reporting_Application.Controllers
                                         List<string> lab_list = new List<string>(lab_array);
                                         reportParam.labels = lab_list;
                                         break;
+                                    case "default_val":
+                                        reportParam.defaultVal = param_value;
+                                        break;
                                 }
                             }
                             parameters.Add(reportParam);

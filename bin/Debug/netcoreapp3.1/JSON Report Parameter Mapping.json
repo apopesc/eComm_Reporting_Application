@@ -574,14 +574,16 @@
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
-              "label": "Brand"
+              "label": "Brand",
+              "default_val": "selectAll"
             },
             "Trend": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Trend",
               "value": "TREND_NAME",
-              "label": "TREND_NAME"
+              "label": "TREND_NAME",
+              "default_val": "selectAll"
             },
             "Vendor_Pattern": {
               "type": "Textbox",
@@ -609,7 +611,8 @@
               "query_type": "Stored Procedure",
               "query": "par_Fiscal_Year",
               "value": "FISCAL_YEAR",
-              "label": "FISCAL_YEAR"
+              "label": "FISCAL_YEAR",
+              "default_val": "2023"
             },
             "FW_Start": {
               "type": "Textbox",
@@ -630,14 +633,16 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Expand,Collapse",
-              "label": "Expand,Collapse"
+              "label": "Expand,Collapse",
+              "default_val": "Collapse"
             },
             "Combine_Banners": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "2023"
             }
           }
         },
