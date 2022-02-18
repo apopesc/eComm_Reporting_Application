@@ -3539,7 +3539,7 @@
               "query": "",
               "value": "Yes,No",
               "label": "Yes,No",
-              "default_val": "selectAll"
+              "default_val": "No"
             },
             "Email_ID": {
               "type": "Textbox",
@@ -3710,7 +3710,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "Yes,No",
-              "label": "Yes,No"
+              "label": "Yes,No",
+              "default_val": "No"
             }
           }
         }
@@ -4033,7 +4034,7 @@
               "query": "",
               "value": "Yes,No",
               "label": "Yes,No",
-              "default_val": "selectAll"
+              "default_val": "No"
             }
           }
         },
