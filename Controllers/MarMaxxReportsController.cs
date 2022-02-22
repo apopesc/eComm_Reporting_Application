@@ -566,6 +566,90 @@ namespace eComm_Reporting_Application.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult GetBrandData([FromBody] BrandModel brandModel)
+        {
+            try
+            {
+                ReportParameterModel reportParams = GetReportParameters(brandModel.reportData);
+                
+                string connectionstring = "";
+                SqlConnection connection = new SqlConnection();
+                SqlCommand storedProcQuery = new SqlCommand();
+                
+
+                //There are other data sources that need to be mapped here
+                if (reportParams.dataSource == "ReportDataSource")
+                {
+                    connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                    connection = new SqlConnection(connectionstring);
+                    storedProcQuery = new SqlCommand("par_Brands", connection);
+                }
+                else if (reportParams.dataSource == "eCom_ReportDB")
+                {
+                    connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                    connection = new SqlConnection(connectionstring);
+                    storedProcQuery = new SqlCommand("par_rpt_Brands", connection);
+                }
+
+                storedProcQuery.CommandType = CommandType.StoredProcedure;
+
+                storedProcQuery.Parameters.AddWithValue("@Brand_Pattern", brandModel.brandPattern);
+
+                Parameter brandParameter = reportParams.parameters.Find(x => x.name == "Brand");
+
+                Parameter populatedParam = getCascadingDropdownValues(brandParameter, storedProcQuery, connection);
+
+                return Json(populatedParam);
+            }
+            catch (Exception e)
+            {
+                return Json("Error Getting Brand Data: " + e);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetVendorData([FromBody] VendorModel vendorModel)
+        {
+            try
+            {
+                ReportParameterModel reportParams = GetReportParameters(vendorModel.reportData);
+
+                string connectionstring = "";
+                SqlConnection connection = new SqlConnection();
+                SqlCommand storedProcQuery = new SqlCommand();
+
+
+                //There are other data sources that need to be mapped here
+                if (reportParams.dataSource == "ReportDataSource")
+                {
+                    connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                    connection = new SqlConnection(connectionstring);
+                    storedProcQuery = new SqlCommand("par_Vendors", connection);
+                }
+                else if (reportParams.dataSource == "eCom_ReportDB")
+                {
+                    connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                    connection = new SqlConnection(connectionstring);
+                    storedProcQuery = new SqlCommand("par_rpt_Vendors", connection);
+                }
+
+                storedProcQuery.CommandType = CommandType.StoredProcedure;
+
+                storedProcQuery.Parameters.AddWithValue("@Vendor_Pattern", vendorModel.vendorPattern);
+
+                Parameter vendorParameter = reportParams.parameters.Find(x => x.name == "Vendor");
+
+                Parameter populatedParam = getCascadingDropdownValues(vendorParameter, storedProcQuery, connection);
+
+                return Json(populatedParam);
+            }
+            catch (Exception e)
+            {
+                return Json("Error Getting Vendor Data: " + e);
+            }
+        }
+
         public Parameter getCascadingDropdownValues(Parameter cascadingParam , SqlCommand storedProcQuery, SqlConnection connection)
         {
             List<string> dropdownValues = new List<string>();

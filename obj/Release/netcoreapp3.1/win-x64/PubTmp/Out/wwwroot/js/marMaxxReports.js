@@ -1,5 +1,8 @@
 ﻿var marMaxxTable;
 
+var expandableRowEntries = [];
+var expandableRowIDs = new Set();
+
 $(document).ready(function () {
     $('#MarMaxxReports_Link').addClass('selected-nav-option');
 
@@ -101,6 +104,45 @@ $(document).ready(function () {
 
         window.location = "/MarMaxxReports/EditReportSub?ID=" + _ID + "&copy=true";
     });
+
+
+    $('#marMaxxSubscriptionData').on('click', '#expandBtn', function () {
+        var $selectedRow = $(this).closest("tr");
+        var dataTable_row = marMaxxTable.row($selectedRow);
+
+        var selectedParameter = $(this).attr('class');
+
+        if ($(this).hasClass("shown_child")) {
+
+            $('table > tbody  > tr > td > #expandBtn').each(function () {
+                $(this).removeClass("shown_child");
+            });
+
+            dataTable_row.child.hide();
+
+        } else {
+            for (const rowID of expandableRowIDs) {
+
+                let childRows = "";
+
+                for (let g = 0; g < expandableRowEntries.length; g++) {
+                    if (expandableRowEntries[g].rowID == rowID) {
+                        var paramName = expandableRowEntries[g].parameter_name;
+
+                        if (paramName == selectedParameter) {
+                            var childEntry = '<tr id="' + paramName + '"><td><b>'+paramName+':</b> ' + expandableRowEntries[g].data + '</td></tr>';
+                            childRows = childRows + childEntry;
+                        }
+                    }
+                }
+
+                marMaxxTable.row($selectedRow).child(childRows, 'child-row').show();
+
+            }
+            $(this).addClass("shown_child");
+        }
+
+    });
 });
 
 function selectedFolder() {
@@ -163,6 +205,8 @@ function createTable(tableData) {
     header.append(Hrow);
     subTable.append(header); //Adding the row to the table
 
+    
+
     let body = $('<tbody>');
     //Adding the data under the headers
     for (let j = 0; j < tableData.rowData.length; j++) {
@@ -192,7 +236,7 @@ function createTable(tableData) {
 
         row.append(tableEntry_Icons); 
 
-        let tableEntry1 = $('<td>').addClass('marMaxxSubscriptionsEntry_SubscriptionID').text(tableData.rowData[j].subscriptionID);
+        let tableEntry1 = $('<td>').addClass('marMaxxSubscriptionsEntry_SubscriptionID subscriptionsTableEntry').text(tableData.rowData[j].subscriptionID);
         row.append(tableEntry1); //adding element to the row
         let tableEntry2 = $('<td>').addClass('marMaxxSubscriptionsEntry_SubscriptionName').text(tableData.rowData[j].subscriptionName);
         row.append(tableEntry2);
@@ -211,7 +255,32 @@ function createTable(tableData) {
             for (var paramName in tableData.rowData[j].dynamicParams) {
 
                 if (paramName == tableData.tableParams[i].name) {
-                    let tableEntry = $('<td>').addClass('marMaxxSubscriptionEntry_Dynamic').text(tableData.rowData[j].dynamicParams[paramName]);
+                    let parameterData = tableData.rowData[j].dynamicParams[paramName];
+
+                    let tableEntry = $('<td>').addClass('marMaxxSubscriptionEntry_Dynamic')
+
+                    if (parameterData != null) {
+                        let commaCount = parameterData.split(",").length - 1;
+
+                        if (commaCount > 1) {
+                            let substringIndex = getPosition(parameterData, ',', 2);
+
+                            let expandableRowEntry = { rowID: tableData.rowData[j].subscriptionID, data: parameterData, parameter_name: paramName };
+                            expandableRowEntries.push(expandableRowEntry);
+                            expandableRowIDs.add(tableData.rowData[j].subscriptionID);
+
+                            parameterData = parameterData.substring(0, substringIndex + 1);
+                            tableEntry.text(parameterData);
+
+                            var button = $('<a id = "expandBtn" class = "' + paramName + '">(...)</a>');
+                            button.appendTo(tableEntry);
+                        } else {
+                            tableEntry.text(parameterData);
+                        }
+                    } else {
+                        tableEntry.text(parameterData);
+                    }
+
                     row.append(tableEntry);
                 }
 
@@ -219,6 +288,7 @@ function createTable(tableData) {
         }
 
         body.append(row);
+
     }
     subTable.append(body);
     $('#marMaxxSubscriptionData').append(subTable);
@@ -226,4 +296,8 @@ function createTable(tableData) {
     marMaxxTable = $('#marMaxxSubscriptionsTable').DataTable({
         "lengthMenu": [5, 8, 15, 25]
     });
+}
+
+function getPosition(string, subString, index) {
+    return string.split(subString, index).join(subString).length;
 }

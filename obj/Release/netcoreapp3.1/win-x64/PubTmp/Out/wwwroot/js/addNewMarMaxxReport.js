@@ -170,7 +170,11 @@
                             dynamicParams[inputID] = dynamicParamVal.toString();
                         }
                     } else {
-                        dynamicParams[inputID] = dynamicParamVal.toString();
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParams[inputID] = 'ALL';
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }                       
                     }
                 } else {
                     dynamicParams[inputID] = dynamicParamVal;
@@ -465,6 +469,23 @@
             }
         }
     });
+
+    $('#dynamicParams').on('change', '.multiselect_dynamic', function () {
+
+        var parameterID = $(this).attr('id');
+
+        var selectedValues = $('#' + parameterID).val();
+
+        if (selectedValues.includes('selectAll')) {
+            if (selectedValues.length > 1) {
+                var index = selectedValues.indexOf('selectAll');
+                var deselectValues = selectedValues;
+                deselectValues.splice(index, 1);
+                $('#' + parameterID).multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
 });
 
 function selectedFolder() {
@@ -547,6 +568,12 @@ function createParams(paramData) {
                 var defaultDropdownOption = $('<option disabled selected>').text("Select a Value...");
                 dropdown.append(defaultDropdownOption);
             }
+
+            else if (paramData.parameters[i].type == "MultiDropdown" && (paramData.parameters[i].name != "Banner" && paramData.parameters[i].name != "Department_No" && paramData.parameters[i].name != "Class_Number" && paramData.parameters[i].name != "Category")) {
+                var allDropdownOption = $('<option value="selectAll">').text("(ALL)");
+                dropdown.append(allDropdownOption);
+                dropdown.addClass('multiselect_dynamic');
+            }
             
             for (let j = 0; j < length; j++) {
                 var dropdownOption = $('<option>').text(paramData.parameters[i].labels[j]);
@@ -593,7 +620,7 @@ function createParams(paramData) {
         }
         $('#dynamicParams').append(row);
 
-        if (paramData.parameters[i].name == "Department_No" || paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category") {
+        if (paramData.parameters[i].type == "MultiDropdown") {
 
             $('#' + paramData.parameters[i].name).multiselect({
                 enableCaseInsensitiveFiltering: true,
@@ -621,9 +648,16 @@ function createParams(paramData) {
                     }
                 }
             });
-            
-            $('#' + paramData.parameters[i].name).multiselect('disable');
+
+            if (paramData.parameters[i].name == "Department_No" || paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category") {
+                $('#' + paramData.parameters[i].name).multiselect('disable');
+            }
         }
+        if (paramData.parameters[i].defaultVal != null) {
+            $('#' + paramData.parameters[i].name).val(paramData.parameters[i].defaultVal);
+            $('#' + paramData.parameters[i].name).multiselect('refresh');
+        }
+
     }
 
     var saveSubscriptionBtn = $('<button>').addClass('btnAddPage').text("Save MarMaxx Report Subscription");

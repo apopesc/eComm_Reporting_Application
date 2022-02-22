@@ -578,13 +578,20 @@
               "value": "Category_Number",
               "label": "Category"
             },
+            "Brand_Pattern": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "",
+              "label": ""
+            },
             "Brand": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Brands",
               "value": "Brand_ID",
               "label": "Brand",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Trend": {
               "type": "MultiDropdown",
@@ -607,14 +614,7 @@
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
-            },
-            "Brand_Pattern": {
-              "type": "Textbox",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "",
-              "label": ""
+              "default_val": "ALL"
             },
             "Fiscal_Year": {
               "type": "Dropdown",
@@ -786,7 +786,7 @@
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -801,7 +801,7 @@
               "query": "par_Brands",
               "value": "Brand_ID",
               "label": "Brand",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Fiscal_Year": {
               "type": "Dropdown",
@@ -975,7 +975,7 @@
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -990,7 +990,7 @@
               "query": "par_Brands",
               "value": "Brand_ID",
               "label": "Brand",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },           
             "Trend": {
               "type": "MultiDropdown",
@@ -1265,7 +1265,7 @@
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -1280,7 +1280,7 @@
               "query": "par_Brands",
               "value": "Brand_ID",
               "label": "Brand",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },        
             "Season": {
               "type": "MultiDropdown",
@@ -1500,7 +1500,7 @@
               "query": "par_Brands",
               "value": "Brand_ID",
               "label": "Brand",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Vendor_Pattern": {
               "type": "Textbox",
@@ -1515,7 +1515,7 @@
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Fiscal_Year": {
               "type": "Dropdown",
@@ -1683,7 +1683,7 @@
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },      
             "Brand_Pattern": {
               "type": "Textbox",
@@ -1698,7 +1698,7 @@
               "query": "par_Brands",
               "value": "Brand_ID",
               "label": "Brand",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Trend": {
               "type": "MultiDropdown",
@@ -1850,7 +1850,7 @@
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },         
             "Brand_Pattern": {
               "type": "Textbox",
@@ -1865,7 +1865,7 @@
               "query": "par_Brands",
               "value": "Brand_ID",
               "label": "Brand",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },     
             "Trend": {
               "type": "MultiDropdown",
@@ -2037,7 +2037,7 @@
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -2052,7 +2052,7 @@
               "query": "par_Brands",
               "value": "Brand_ID",
               "label": "Brand",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Trend": {
               "type": "MultiDropdown",
@@ -2230,7 +2230,7 @@
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -2245,7 +2245,7 @@
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
               "label": "Brand",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Ladder_Plan_Date": {
               "type": "MultiDropdown",
@@ -2434,7 +2434,7 @@
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -2449,7 +2449,7 @@
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
               "label": "Brand",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Season": {
               "type": "MultiDropdown",
@@ -2631,7 +2631,7 @@
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -2646,7 +2646,7 @@
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
               "label": "Brand",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Buyer": {
               "type": "MultiDropdown",
@@ -3237,7 +3237,7 @@
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -3252,7 +3252,7 @@
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
               "label": "Brand",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             }
           }
         },
@@ -3433,7 +3433,7 @@
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -3448,7 +3448,7 @@
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
               "label": "Brand",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Rush_Flag": {
               "type": "MultiDropdown",
@@ -7168,7 +7168,7 @@
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Brand_Pattern": {
               "type": "Textbox",
@@ -7183,7 +7183,7 @@
               "query": "par_rpt_Brands",
               "value": "Brand_ID",
               "label": "Brand",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Buyer": {
               "type": "MultiDropdown",
@@ -8368,20 +8368,20 @@
               "value": "",
               "label": ""
             },
-            "Vendor_Style": {
-              "type": "Textbox",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "ALL",
-              "label": "ALL"
-            },
             "Vendor": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
+            },
+            "Vendor_Style": {
+              "type": "Textbox",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "ALL",
+              "label": "ALL"
             },
             "Combine_Banners": {
               "type": "Dropdown",
@@ -9007,7 +9007,7 @@
               "query": "par_Brands",
               "value": "Brand_ID",
               "label": "Brand",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Trend": {
               "type": "MultiDropdown",
@@ -9030,7 +9030,7 @@
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Season": {
               "type": "MultiDropdown",
@@ -9194,7 +9194,7 @@
               "query": "par_Brands",
               "value": "Brand_ID",
               "label": "Brand",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Trend": {
               "type": "MultiDropdown",
@@ -9217,7 +9217,7 @@
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Season": {
               "type": "MultiDropdown",
@@ -9464,7 +9464,7 @@
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },
             "Buy_Type": {
               "type": "MultiDropdown",
@@ -9586,7 +9586,7 @@
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             },    
             "Season": {
               "type": "MultiDropdown",
@@ -9716,7 +9716,7 @@
               "query": "par_Vendors",
               "value": "Vendor_ID",
               "label": "Vendor",
-              "default_val": "selectAll"
+              "default_val": "ALL"
             }, 
             "Buy_Type": {
               "type": "MultiDropdown",

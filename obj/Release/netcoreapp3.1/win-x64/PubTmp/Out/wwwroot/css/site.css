@@ -328,6 +328,12 @@ body {
     margin-left: 1px;
 }
 
+.viewMoreBtn {
+    border: none;
+    background: white;
+    margin-left: 1px;
+}
+
 .editBtn {
     border: none;
     background: white;
@@ -470,3 +476,13 @@ table.dataTable.no-footer{
             text-transform: uppercase;
             text-decoration: underline;
         }
+
+.child-row {
+    border-bottom: 1px solid #ADADAD;
+}
+
+#expandBtn {
+    color: #007bff !important;
+    cursor: pointer;
+    font-weight: bold;
+}
