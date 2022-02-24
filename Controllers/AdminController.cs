@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using eComm_Reporting_Application.Models;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
+using Microsoft.AspNetCore.Authorization;
 
 namespace eComm_Reporting_Application.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
 

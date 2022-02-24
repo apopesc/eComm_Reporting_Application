@@ -120,3 +120,15 @@
 .newRow {
     border-bottom: 1px solid #ADADAD;
 }
+
+.selected-nav-option {
+    color: #007bff !important;
+}
+
+.nav-item a:hover {
+    color: #007bff !important;
+}
+
+.page-header {
+    background-color: #343a40; 
+}

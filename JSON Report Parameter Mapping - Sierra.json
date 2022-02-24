@@ -1,0 +1,114 @@
+{
+    "folders": {
+      "Financial Accounting": {
+        "reports": {
+          "Cash Tender Report": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "",
+                "query": "",
+                "value": "",
+                "label": ""
+              },
+              "Store_Location": {
+                "type": "MultiDropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": "",
+                "default_val": "selectAll"
+              }
+            }
+          },
+          "Credit Card Tender Report": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "",
+                "query": "",
+                "value": "",
+                "label": ""
+              }
+            }
+          },
+          "Deferred Ship to Customer Report": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "",
+                "query": "",
+                "value": "",
+                "label": ""
+              },
+              "Store_Location": {
+                "type": "MultiDropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": "",
+                "default_val": "selectAll"
+              }
+            }
+          },
+          "Deferred Ship to Store": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              }
+            },
+            "parameters": {}
+          },
+          "Discount Type Summary": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "",
+                "query": "",
+                "value": "",
+                "label": ""
+              },
+              "Store_Location": {
+                "type": "MultiDropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": "",
+                "default_val": "selectAll"
+              }
+            }
+          }
+        }
+      }
+    }
+  }

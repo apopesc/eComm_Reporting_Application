@@ -4,3 +4,94 @@
 .page-header {
     background-color: #f28c20;
 }
+
+#sierraSubscriptionData {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 93%;
+}
+
+.horizontal-scroll {
+    overflow-x: scroll;
+}
+
+#sierraSubscriptionsTable_filter {
+    float: left;
+    margin-left: 45px;
+    line-height: 1.34;
+    margin-top: 0px;
+}
+
+#sierraSubscriptionsTable_length {
+    margin-top: 0px;
+}
+
+.sierraSubscriptionsTable {
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+.sierraSubscriptionsHeader {
+    text-align: center;
+    padding-inline: 20px;
+}
+
+.sierraSubscriptionsRow {
+    border-bottom: 1px solid #ADADAD;
+    height: 32px;
+}
+
+.sierraSubscriptionsRow_Last {
+    border-bottom: 1px solid #ADADAD;
+    height: 32px;
+}
+
+.sierraSubscriptionsRow_Header {
+    height: 40px;
+    background: #9E0000;
+    position: sticky;
+    top: 0px;
+    color: white;
+    z-index: 10;
+}
+
+.sierraSubscriptionsEntry_SubscriptionID, .sierraSubscriptionsEntry_SubscriptionName, .sierraSubscriptionsEntry_ReportName, .sierraSubscriptionsEntry_GroupName, .marMaxxSubscriptionsEntry_GroupID, .sierraSubscriptionEntry_Dynamic, .sierraSubscriptionsEntry_FileFormat, .sierraSubscriptionsEntry_Schedule {
+    text-align: center;
+}
+
+.sierraSubscriptionsEntry_Icon {
+    min-width: 100px;
+}
+
+.addNew {
+    margin-bottom: -36px;
+    margin-top: 36px;
+    z-index: 3;
+    position: relative;
+}
+
+.sierraSubscriptionEntry_Dynamic {
+    min-width: 150px;
+}
+
+#sierraSubscriptionsTable .hidden_row {
+    display: none;
+}
+
+.addNewText {
+    color: #f28c20; 
+}
+
+.fa-plus-circle {
+    color: #f28c20;
+}
+
+.selected-nav-option {
+    color: #f28c20 !important;
+}
+
+.nav-item a:hover {
+    color: #f28c20 !important;
+}

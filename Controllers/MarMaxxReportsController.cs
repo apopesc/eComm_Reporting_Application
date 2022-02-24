@@ -8,9 +8,11 @@ using Newtonsoft.Json.Linq;
 using System.Linq;
 using Newtonsoft.Json;
 using System.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace eComm_Reporting_Application.Controllers
 {
+    [Authorize]
     public class MarMaxxReportsController : Controller
     {
         private readonly IConfiguration configuration;

@@ -11,3 +11,36 @@
         <h1 class="title-text">Sierra Reports Subscriptions</h1>
     </div>
 </div>
+
+<div class="filter-data">
+
+    <div class="first-row">
+        <div class="main-dropdown">
+            <label class="filter-label" for="sierraFolderDropdown">Folder:</label>
+            <select id="sierraFolderDropdown" name="sierraFolderDropdown" onchange="selectedFolder();" multiple>
+                @foreach (var folder in @Model.folders)
+                {
+                    <option value=@folder.folderName> @folder.folderName </option>
+                }
+            </select>
+        </div>
+        <div class="main-dropdown">
+            <label class="filter-label" for="sierraReportDropdown">Report Name:</label>
+            <select id="sierraReportDropdown" name="sierraReportDropdown">
+            </select>
+        </div>
+    </div>
+
+    <button id="btnViewSierraData" class="btnViewData" type="button">View Data</button>
+</div>
+
+<div class="separator-line">
+</div>
+
+<div class="addNew">
+    <h4 class="addNewText">Add New Subscription</h4>
+    <button id="addNewBtn" class="addNewBtn"><i class="fas fa-plus-circle" onclick="location.href='@Url.Action("AddNewReportSub", "SierraReports")'"></i></button>
+</div>
+
+<div id="sierraSubscriptionData">
+</div>
