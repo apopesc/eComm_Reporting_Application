@@ -6,24 +6,32 @@
             "data_source": "STP_CMS_DW",
             "data_sets": {
               "ReportDataset": {
-                "query_type": "",
-                "query": ""
+                "query_type": "Stored Procedure",
+                "query": "rpt_Cash_Tender_Report"
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              },
+              "Store_Location": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations"
               }
             },
             "parameters": {
               "Fiscal_Month": {
                 "type": "MultiDropdown",
-                "query_type": "",
-                "query": "",
-                "value": "",
-                "label": ""
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month",
+                "value": "Display",
+                "label": "Display"
               },
               "Store_Location": {
                 "type": "MultiDropdown",
-                "query_type": "Fixed",
-                "query": "",
-                "value": "",
-                "label": "",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations",
+                "value": "Location_Code",
+                "label": "Location_Name",
                 "default_val": "selectAll"
               }
             }
@@ -34,15 +42,19 @@
               "ReportDataset": {
                 "query_type": "",
                 "query": ""
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
               }
             },
             "parameters": {
               "Fiscal_Month": {
                 "type": "MultiDropdown",
-                "query_type": "",
-                "query": "",
-                "value": "",
-                "label": ""
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month",
+                "value": "Display",
+                "label": "Display"
               }
             }
           },
@@ -52,22 +64,30 @@
               "ReportDataset": {
                 "query_type": "",
                 "query": ""
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              },
+              "Store_Location": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations"
               }
             },
             "parameters": {
               "Fiscal_Month": {
                 "type": "MultiDropdown",
-                "query_type": "",
-                "query": "",
-                "value": "",
-                "label": ""
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month",
+                "value": "Display",
+                "label": "Display"
               },
               "Store_Location": {
                 "type": "MultiDropdown",
-                "query_type": "Fixed",
-                "query": "",
-                "value": "",
-                "label": "",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations",
+                "value": "Location_Code",
+                "label": "Location_Name",
                 "default_val": "selectAll"
               }
             }
@@ -88,23 +108,53 @@
               "ReportDataset": {
                 "query_type": "",
                 "query": ""
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              },
+              "Store_Location": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations"
               }
             },
             "parameters": {
               "Fiscal_Month": {
                 "type": "MultiDropdown",
-                "query_type": "",
-                "query": "",
-                "value": "",
-                "label": ""
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month",
+                "value": "Display",
+                "label": "Display"
               },
               "Store_Location": {
                 "type": "MultiDropdown",
-                "query_type": "Fixed",
-                "query": "",
-                "value": "",
-                "label": "",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations",
+                "value": "Location_Code",
+                "label": "Location_Name",
                 "default_val": "selectAll"
+              }
+            }
+          },
+          "Exceptions Report": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month",
+                "value": "Display",
+                "label": "Display"
               }
             }
           }

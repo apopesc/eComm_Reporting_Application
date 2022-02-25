@@ -47,6 +47,35 @@ namespace eComm_Reporting_Application.Controllers
             return View(sierraDropdownModel);
         }
 
+        [HttpPost]
+        public JsonResult GetReportNameValues(List<string> folderPathList)
+        {
+            try
+            {
+                List<ReportModel> reportNameList = new List<ReportModel>();
+                var json_folders = jsonObject["folders"];
+
+                foreach (string folder in folderPathList)
+                {
+                    var reportFolder = json_folders[folder];
+                    var reports = reportFolder["reports"];
+                    foreach (JProperty x in reports)
+                    {
+                        ReportModel report = new ReportModel();
+                        report.reportName = x.Name;
+                        report.reportFolder = folder;
+                        reportNameList.Add(report);
+                    }
+                }
+
+                return Json(reportNameList);
+            }
+            catch (Exception e)
+            {
+                return Json("Error retrieving report dropdown data: " + e);
+            }
+        }
+
         public ReportPageDropdownModel GetFoldersForDropdown()
         {
             ReportPageDropdownModel dropdownModel = new ReportPageDropdownModel();
