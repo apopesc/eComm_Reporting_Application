@@ -1,0 +1,106 @@
+﻿@model eComm_Reporting_Application.Models.AddNewReportSubDropdownModel
+@{
+    ViewData["Title"] = "Add New Report Subscription";
+}
+
+@section Scripts{
+    <script src="~/js/addNewSierraReport.js"></script>
+}
+<link rel="stylesheet" href="~/css/addNewSierraReport.css" />
+
+<div class="page-header">
+    <div class="page-title">
+        <h1 class="title-text">Add New Sierra Report Subscription</h1>
+    </div>
+</div>
+
+<div class="filter-data">
+    <div class="addnew-row">
+        <div class="addnew-dropdown">
+            <label class="filter-label" for="sierraFolderDropdown">Folder:</label>
+            <select id="sierraFolderDropdown" name="sierraFolderDropdown" onchange="selectedFolder();" multiple>
+                @foreach (var folder in @Model.folders)
+                {
+                    <option value=@folder.folderName> @folder.folderName </option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="addnew-row">
+        <div class="addnew-dropdown">
+            <label class="filter-label" for="sierraReportDropdown">Report Name:</label>
+            <select id="sierraReportDropdown" name="sierraReportDropdown">
+            </select>
+        </div>
+    </div>
+
+    <div class="addnew-row-last">
+        <button id="backToSierra" class="btnAddPage" type="button" onclick="location.href='@Url.Action("Index", "SierraReports")'">Back</button>
+        <button id="viewReportParams" class="btnAddPage" type="button">View Report Parameters</button>
+    </div>
+</div>
+
+<div id="addNewDynamic" class="dynamic-div">
+    <div class="dynamic-params-div">
+
+        <div id="staticParams">
+            <div class="addnew-row textbox">
+                <div class="addnew-textbox">
+                    <label class="filter-label" for="subscription-name">Subscription Name: </label>
+                    <input type="text" id="subscriptionName" class="subscription-textbox" name="subscription-name" />
+                </div>
+            </div>
+
+            <div class="addnew-row">
+                <div class="addnew-dropdown">
+                    <label class="filter-label" for="sierraGroup">Group:</label>
+                    <select id="sierraGroup" name="sierraGroup" multiple>
+                        @for (int i = 0; i < Model.groupIDs.Count; i++)
+                        {
+                            <option title="@Model.groupIDs[i]" value=@Model.groupNames[i] label="<b>ID: </b>@Model.groupIDs[i]</br> <b>Name: </b>@Model.groupNames[i]"> </option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="addnew-row">
+                <div class="addnew-dropdown">
+                    <label class="filter-label" for="fileFormat">File Format:</label>
+                    <select id="fileFormat" name="fileFormat">
+                        <option value="EXCELOPENXML">EXCELOPENXML</option>
+                        <option value="PDF">PDF</option>
+                        <option value="CSV">CSV</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="addnew-row">
+                <div class="addnew-dropdown">
+                    <label class="filter-label" for="schedule">Schedule:</label>
+                    <select id="schedule" name="schedule">
+                        <option value="Daily">Daily</option>
+                        <option value="Weekly" selected>Weekly</option>
+                        <option value="Quarterly">Quarterly</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="dynamicParams">
+
+        </div>
+    </div>
+
+
+    <div id="saveSubscription" class="save-subscription">
+    </div>
+</div>
+
+<div id="hiddenParamNames">
+</div>
+
+<div id="hiddenSelectedReport">
+</div>
+
+

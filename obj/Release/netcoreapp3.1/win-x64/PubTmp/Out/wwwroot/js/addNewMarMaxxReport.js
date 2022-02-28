@@ -315,7 +315,7 @@
                         var thisOptionValue = $(this).val();
                         if (thisOptionValue != 'selectAll') {
                             selectedDepartmentValues.push(thisOptionValue);
-                        }                       
+                        }
                     });
                 }
 
@@ -363,7 +363,26 @@
                     alert("Error Retrieving Classes: " + error);
                 }
             }
-        }      
+        } else {
+
+            var selectedDepartmentValues = $('#Department_No').val();
+
+            if (selectedDepartmentValues.includes('selectAll')) {
+                if (selectedDepartmentValues.length > 1) {
+                    var index = selectedDepartmentValues.indexOf('selectAll');
+                    var deselectValues = selectedDepartmentValues;
+                    deselectValues.splice(index, 1);
+                    $('#Department_No').multiselect('deselect', deselectValues);
+                }
+                selectedDepartmentValues = [];
+                $("#Department_No option").each(function () {
+                    var thisOptionValue = $(this).val();
+                    if (thisOptionValue != 'selectAll') {
+                        selectedDepartmentValues.push(thisOptionValue);
+                    }
+                });
+            }
+        }
     });
 
     $('#dynamicParams').on('change', '#Class_Number', function () {

@@ -47,6 +47,28 @@ namespace eComm_Reporting_Application.Controllers
             return View(sierraDropdownModel);
         }
 
+        public IActionResult AddNewReportSub()
+        {
+            bool isAuthenticated = isAuthenticatedUser();
+
+            if (isAuthenticated == false)
+            {
+                string userName = User.Identity.Name;
+                string error = "User " + userName + " does not have sufficient permissions to access this application. Please contact an administrator.";
+                return RedirectToAction("Error", new { errorMsg = error });
+            }
+
+            ReportPageDropdownModel folderModel = GetFoldersForDropdown();
+            UserSubscriptionDropdownModel groupModel = GetGroups();
+
+            AddNewReportSubDropdownModel addNewDropdownModel = new AddNewReportSubDropdownModel();
+            addNewDropdownModel.folders = folderModel.folders;
+            addNewDropdownModel.groupIDs = groupModel.groupsIDList;
+            addNewDropdownModel.groupNames = groupModel.groupsList;
+
+            return View(addNewDropdownModel);
+        }
+
         [HttpPost]
         public JsonResult GetReportNameValues(List<string> folderPathList)
         {
@@ -98,6 +120,51 @@ namespace eComm_Reporting_Application.Controllers
                 //Redirect to error page and pass forward exception e once error page is set up.
             }
             return dropdownModel;
+        }
+
+        private UserSubscriptionDropdownModel GetGroups()
+        {
+            List<string> groups_list = new List<string>();
+            List<string> groupsID_list = new List<string>();
+
+            try
+            {
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                string groupIDsQueryString = "SELECT * FROM Groups";
+
+                SqlCommand groupIDsQuery = new SqlCommand(groupIDsQueryString, connection);
+
+                using (connection)
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = groupIDsQuery.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var groupIDString = reader.GetString(0);
+                            var groupString = reader.GetString(1);
+                            groupsID_list.Add(groupIDString);
+                            groups_list.Add(groupString);
+                        }
+                    }
+                    connection.Close();
+                }
+
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            UserSubscriptionDropdownModel groupModel = new UserSubscriptionDropdownModel()
+            {
+                groupsIDList = groupsID_list,
+                groupsList = groups_list
+            };
+
+            return groupModel;
         }
 
         private bool isAuthenticatedUser()

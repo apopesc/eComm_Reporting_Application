@@ -1,22 +1,52 @@
 ﻿$(document).ready(function () {
     $('#SierraReports_Link').addClass('selected-nav-option');
 
+    $('#sierraGroup').multiselect({
+        enableCaseInsensitiveFiltering: true,
+        enableHTML: true,
+        buttonText: function (options, select) {
+            if (options.length > 0) {
+                var labels = [];
+                options.each(function () {
+                    if ($(this).attr('label') !== undefined) {
+                        labels.push($(this).attr('value'));
+                    }
+                    else {
+                        labels.push($(this).html());
+                    }
+                });
+                return labels.join(', ') + '';
+            } else {
+                return 'Select a group...';
+            }
+        }
+    });
+
     $('#sierraFolderDropdown').multiselect({
         nonSelectedText: 'Select a folder...',
         includeSelectAllOption: true,
         enableCaseInsensitiveFiltering: true
     });
+
     $('#sierraReportDropdown').multiselect({
         nonSelectedText: 'Select a report name...',
         enableCaseInsensitiveFiltering: true
     });
 
+    $('#fileFormat').multiselect({
+        enableCaseInsensitiveFiltering: true
+    });
+
+    $('#schedule').multiselect({
+        enableCaseInsensitiveFiltering: true
+    });
+
     $('#sierraReportDropdown').multiselect('disable');
+
 });
 
 function selectedFolder() {
     if ($('#sierraFolderDropdown :selected').length == 0) { //Nothing is selected in the dropdown (last value is deselected)
-
         var data = [{ label: 'Select a report name...', value: '', disabled: true, selected: true }];
         $("#sierraReportDropdown").multiselect('dataprovider', data);
         $('#sierraReportDropdown').multiselect('disable');
@@ -51,3 +81,4 @@ function selectedFolder() {
         }
     }
 }
+
