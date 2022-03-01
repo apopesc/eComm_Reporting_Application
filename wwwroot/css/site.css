@@ -267,6 +267,7 @@ body {
     line-height: 48px;
     color: #9E0000;
     font-weight: 700;
+    cursor: pointer;
 }
 
 .addNewBtn {

@@ -31,14 +31,14 @@
         </div>
     </div>
 
-    <button id="btnViewSierraData" class="btnViewData" type="button">View Data</button>
+    <button id="btnViewSierraData" class="btnViewData" type="button" hidden>View Data</button>
 </div>
 
 <div class="separator-line">
 </div>
 
 <div class="addNew">
-    <h4 class="addNewText">Add New Subscription</h4>
+    <h4 class="addNewText" onclick="location.href='@Url.Action("AddNewReportSub", "SierraReports")'">Add New Subscription</h4>
     <button id="addNewBtn" class="addNewBtn"><i class="fas fa-plus-circle" onclick="location.href='@Url.Action("AddNewReportSub", "SierraReports")'"></i></button>
 </div>
 

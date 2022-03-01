@@ -21,3 +21,15 @@ video{
     display: inline-block;
     width: 40%;
 }
+
+.separator-line-help {
+    margin-top: 12px;
+    width: 96%;
+    height: 0px;
+    border: 2px solid #BDBDBD;
+    box-shadow: 0px 2px 2px rgb(0 0 0 / 25%);
+}
+
+.individual-step{
+    margin-top:20px;
+}

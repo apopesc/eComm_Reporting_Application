@@ -43,8 +43,7 @@
 
     $('#marMaxxReportDropdown').multiselect('disable');
 
-    $('#viewReportParams').click(function () {
-
+    $('.filter-data').on('change', '#marMaxxReportDropdown', function () {
         $("#loadMe").modal({
             backdrop: "static", //remove ability to close modal with click
             keyboard: false, //remove option to close with keyboard
@@ -55,7 +54,7 @@
         var selectedReportFolder = $('#marMaxxReportDropdown option:selected').prop('title');
 
         //adding the selected report name
-        $('#hiddenSelectedReport').attr('name', selectedReport); 
+        $('#hiddenSelectedReport').attr('name', selectedReport);
         $('#hiddenSelectedReport').attr('folder', selectedReportFolder);
 
         if (selectedReport == null) {
@@ -777,3 +776,56 @@ function createParams(paramData) {
         enableCaseInsensitiveFiltering: true
     });
 }
+
+//$('#viewReportParams').click(function () {
+
+//    $("#loadMe").modal({
+//        backdrop: "static", //remove ability to close modal with click
+//        keyboard: false, //remove option to close with keyboard
+//        show: true //Display loader!
+//    });
+
+//    var selectedReport = $('#marMaxxReportDropdown').val();
+//    var selectedReportFolder = $('#marMaxxReportDropdown option:selected').prop('title');
+
+//    //adding the selected report name
+//    $('#hiddenSelectedReport').attr('name', selectedReport);
+//    $('#hiddenSelectedReport').attr('folder', selectedReportFolder);
+
+//    if (selectedReport == null) {
+//        alert("Please select a folder, then a report to view it's parameters.");
+//        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+//    } else {
+
+//        var controllerUrl = '/MarMaxxReports/GetMarMaxxReportParameters';
+
+//        var reportData = {
+//            reportName: selectedReport,
+//            reportFolder: selectedReportFolder
+//        }
+
+//        $.ajax({
+//            type: "POST",
+//            url: controllerUrl,
+//            dataType: "json",
+//            success: successFunc,
+//            error: errorFunc,
+//            data: { 'reportData': reportData }
+//        });
+
+//        function successFunc(paramData) {
+//            if (typeof paramData === 'string') { //If there is an error saving it to the database
+//                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+//                alert(paramData);
+//            } else {
+//                createParams(paramData);
+//                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+//            }
+//        }
+
+//        function errorFunc(error) {
+//            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+//            alert("Error Getting Report Parameters: " + error);
+//        }
+//    }
+//});
