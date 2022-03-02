@@ -31,5 +31,6 @@ video{
 }
 
 .individual-step{
-    margin-top:20px;
+    margin-top: 20px;
+    overflow: hidden;
 }
