@@ -21,6 +21,7 @@ namespace eComm_Reporting_Application.Controllers
 
         public static List<ReportTableModel> tableData = new List<ReportTableModel>();
         public static ReportParameterModel tableParameters = new ReportParameterModel();
+        public static ReportModel selectedReport = new ReportModel();
 
         public MarMaxxReportsController(IConfiguration config)
         {
@@ -175,6 +176,7 @@ namespace eComm_Reporting_Application.Controllers
             {
                 tableParameters = GetReportParameters(reportData);
                 tableData = new List<ReportTableModel>();
+                selectedReport = reportData;
 
                 //Adding the static columns to the table (these will appear for every report)
                 Parameter schedule = new Parameter();
@@ -660,7 +662,7 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                return Json(new { tableParams = tableParameters.parameters, rowData = tableData });
+                return Json(new { tableParams = tableParameters.parameters, rowData = tableData, report = selectedReport });
             }
             catch (Exception e)
             {

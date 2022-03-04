@@ -5,6 +5,20 @@ var expandableRowIDs = new Set();
 
 $(document).ready(function () {
 
+    $('#MarMaxxReports_Link').addClass('selected-nav-option');
+
+    $('#marMaxxFolderDropdown').multiselect({
+        nonSelectedText: 'Select a folder...',
+        includeSelectAllOption: true,
+        enableCaseInsensitiveFiltering: true
+    });
+    $('#marMaxxReportDropdown').multiselect({
+        nonSelectedText: 'Select a report name...',
+        enableCaseInsensitiveFiltering: true
+    });
+
+    $('#marMaxxReportDropdown').multiselect('disable');
+
     $("#loadMe").modal({
         backdrop: "static", //remove ability to close modal with click
         keyboard: false, //remove option to close with keyboard
@@ -27,8 +41,21 @@ $(document).ready(function () {
             setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             alert(tableData);
         } else {
-            if (tableData != null) {
-                createTable(tableData);
+            if (tableData.tableParams != null) {
+
+                var loadedTableData = {
+                    tableParams: tableData.tableParams,
+                    rowData: tableData.rowData
+                }
+
+                $('#marMaxxFolderDropdown').val(tableData.report.reportFolder);
+                $('#marMaxxFolderDropdown').multiselect('refresh');
+
+                selectedFolder(tableData.report.reportName);
+
+                createTable(loadedTableData);
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+            } else {
                 setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             }
         }
@@ -39,19 +66,7 @@ $(document).ready(function () {
         alert("Error Loading Previously Loaded User Table: " + error);
     }
 
-    $('#MarMaxxReports_Link').addClass('selected-nav-option');
-
-    $('#marMaxxFolderDropdown').multiselect({
-        nonSelectedText: 'Select a folder...',
-        includeSelectAllOption: true,
-        enableCaseInsensitiveFiltering: true
-    });
-    $('#marMaxxReportDropdown').multiselect({
-        nonSelectedText: 'Select a report name...',
-        enableCaseInsensitiveFiltering: true
-    });
-
-    $('#marMaxxReportDropdown').multiselect('disable');
+    
 
     $('.filter-data').on('change', '#marMaxxReportDropdown', function () {
 
@@ -193,7 +208,7 @@ $(document).ready(function () {
     });
 });
 
-function selectedFolder() {
+function selectedFolder(selectedVal = "") {
     if ($('#marMaxxFolderDropdown :selected').length == 0) { //Nothing is selected in the dropdown (last value is deselected)
 
         var data = [{ label: 'Select a report name...', value: '', disabled: true, selected: true }];
@@ -223,6 +238,11 @@ function selectedFolder() {
 
             $("#marMaxxReportDropdown").multiselect('dataprovider', data);
             $('#marMaxxReportDropdown').multiselect('enable');
+
+            if (selectedVal != "") {
+                $('#marMaxxReportDropdown').val(selectedVal);
+                $('#marMaxxReportDropdown').multiselect('refresh');
+            }
         }
 
         function errorFunc(error) {
