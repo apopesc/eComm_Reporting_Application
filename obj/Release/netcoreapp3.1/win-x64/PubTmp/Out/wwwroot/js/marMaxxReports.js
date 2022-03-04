@@ -18,12 +18,20 @@ $(document).ready(function () {
 
     $('#marMaxxReportDropdown').multiselect('disable');
 
-    $('#btnViewMarmaxxData').click(function(){
+    $('.filter-data').on('change', '#marMaxxReportDropdown', function () {
+
+        $("#loadMe").modal({
+            backdrop: "static", //remove ability to close modal with click
+            keyboard: false, //remove option to close with keyboard
+            show: true //Display loader!
+        });
+
         var selectedReport = $('#marMaxxReportDropdown').val();
         var selectedReportFolder = $('#marMaxxReportDropdown option:selected').prop('title');
 
         if (selectedReport == null) {
             alert("Please select a report to view subscription data");
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
         } else {
 
             var controllerUrl = '/MarMaxxReports/GetMarMaxxTableData';
@@ -44,17 +52,22 @@ $(document).ready(function () {
 
             function successFunc(tableData) {
                 if (typeof tableData === 'string') { //If there is an error saving it to the database
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     alert(tableData);
                 } else {
                     createTable(tableData); //Creating the dynamic table and displaying it on the screen
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 }
             }
 
             function errorFunc(error) {
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 alert("Error Getting Report Subscription Data: " + error);
             }
         }
     });
+
+    
 
     $('#marMaxxSubscriptionData').on('click', '.deleteBtn', function () {
         var $selectedRow = $(this).closest("tr");
@@ -301,3 +314,41 @@ function createTable(tableData) {
 function getPosition(string, subString, index) {
     return string.split(subString, index).join(subString).length;
 }
+
+//$('#btnViewMarmaxxData').click(function () {
+//    var selectedReport = $('#marMaxxReportDropdown').val();
+//    var selectedReportFolder = $('#marMaxxReportDropdown option:selected').prop('title');
+
+//    if (selectedReport == null) {
+//        alert("Please select a report to view subscription data");
+//    } else {
+
+//        var controllerUrl = '/MarMaxxReports/GetMarMaxxTableData';
+
+//        var reportData = {
+//            reportName: selectedReport,
+//            reportFolder: selectedReportFolder
+//        };
+
+//        $.ajax({
+//            type: "POST",
+//            url: controllerUrl,
+//            dataType: "json",
+//            success: successFunc,
+//            error: errorFunc,
+//            data: { 'reportData': reportData }
+//        });
+
+//        function successFunc(tableData) {
+//            if (typeof tableData === 'string') { //If there is an error saving it to the database
+//                alert(tableData);
+//            } else {
+//                createTable(tableData); //Creating the dynamic table and displaying it on the screen
+//            }
+//        }
+
+//        function errorFunc(error) {
+//            alert("Error Getting Report Subscription Data: " + error);
+//        }
+//    }
+//});

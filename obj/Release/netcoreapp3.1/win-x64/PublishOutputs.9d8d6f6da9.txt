@@ -1,8 +1,10 @@
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\eComm_Reporting_Application.exe
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\addNewMarMaxxReport.css
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\addNewSierraReport.css
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\addNewUser.css
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\admin.css
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\editMarMaxxReport.css
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\help.css
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\marMaxxReports.css
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\sierraReports.css
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\site.css
@@ -10,10 +12,12 @@ C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Appli
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\favicon.ico
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Images\TJX_IT.png
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\js\addNewMarMaxxReport.js
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\js\addNewSierraReport.js
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\js\addNewUser.js
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\js\admin.js
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\js\editMarMaxxReport.js
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\js\editUser.js
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\js\help.js
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\js\marMaxxReports.js
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\js\sierraReports.js
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\js\userSubscriptions.js
@@ -140,6 +144,10 @@ C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Appli
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\lib\jquery\dist\jquery.min.js
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\lib\jquery\dist\jquery.min.map
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\lib\jquery\LICENSE.txt
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Videos\Add report subscription.mp4
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Videos\Add user to subscription group.mp4
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Videos\Verify report subscriptions.mp4
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Videos\Verify subscription group.mp4
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\appsettings.Development.json
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\appsettings.json
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\JSON Report Parameter Mapping - Sierra.json

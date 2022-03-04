@@ -19,6 +19,9 @@ namespace eComm_Reporting_Application.Controllers
         private static string myJsonString = System.IO.File.ReadAllText("JSON Report Parameter Mapping.json");
         private static JObject jsonObject = JObject.Parse(myJsonString);
 
+        public static List<ReportTableModel> tableData = new List<ReportTableModel>();
+        public static ReportParameterModel tableParameters = new ReportParameterModel();
+
         public MarMaxxReportsController(IConfiguration config)
         {
             this.configuration = config;
@@ -170,8 +173,8 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                ReportParameterModel tableParameters = GetReportParameters(reportData);
-                List<ReportTableModel> tableData = new List<ReportTableModel>();
+                tableParameters = GetReportParameters(reportData);
+                tableData = new List<ReportTableModel>();
 
                 //Adding the static columns to the table (these will appear for every report)
                 Parameter schedule = new Parameter();
@@ -649,6 +652,19 @@ namespace eComm_Reporting_Application.Controllers
             catch (Exception e)
             {
                 return Json("Error Getting Vendor Data: " + e);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetInitialTable()
+        {
+            try
+            {
+                return Json(new { tableParams = tableParameters.parameters, rowData = tableData });
+            }
+            catch (Exception e)
+            {
+                return Json("Error retrieving table data: " + e);
             }
         }
 

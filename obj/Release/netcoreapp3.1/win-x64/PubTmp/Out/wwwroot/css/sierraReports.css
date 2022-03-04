@@ -50,7 +50,7 @@
 
 .sierraSubscriptionsRow_Header {
     height: 40px;
-    background: #9E0000;
+    background: #f28c20;
     position: sticky;
     top: 0px;
     color: white;
@@ -66,6 +66,7 @@
 }
 
 .addNew {
+    margin-right: 7.5%;
     margin-bottom: -36px;
     margin-top: 36px;
     z-index: 3;

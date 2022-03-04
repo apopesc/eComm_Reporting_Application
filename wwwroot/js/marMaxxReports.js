@@ -4,6 +4,32 @@ var expandableRowEntries = [];
 var expandableRowIDs = new Set();
 
 $(document).ready(function () {
+
+    //Getting the previously loaded table if there is one
+    var controllerUrl = '/MarMaxxReports/GetInitialTable';
+
+    $.ajax({
+        type: "POST",
+        url: controllerUrl,
+        dataType: "json",
+        success: successFunction,
+        error: errorFunction
+    });
+
+    function successFunction(tableData) {
+        if (typeof tableData === 'string') { //If there is an error pulling it from the database
+            alert(tableData);
+        } else {
+            if (tableData != null) {
+                createTable(tableData);
+            }
+        }
+    }
+
+    function errorFunction(error) {
+        alert("Error Loading Previously Loaded User Table: " + error);
+    }
+
     $('#MarMaxxReports_Link').addClass('selected-nav-option');
 
     $('#marMaxxFolderDropdown').multiselect({

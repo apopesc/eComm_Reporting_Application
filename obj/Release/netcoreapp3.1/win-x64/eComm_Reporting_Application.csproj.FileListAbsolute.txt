@@ -123,3 +123,5 @@ C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Appli
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Release\netcoreapp3.1\win-x64\Microsoft.Extensions.Primitives.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Release\netcoreapp3.1\win-x64\System.IO.Pipelines.dll
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\bin\Release\netcoreapp3.1\win-x64\JSON Report Parameter Mapping - Sierra.json
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\Razor\Views\Help\Index.cshtml.g.cs
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\Razor\Views\SierraReports\AddNewReportSub.cshtml.g.cs
