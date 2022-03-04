@@ -5,6 +5,12 @@ var expandableRowIDs = new Set();
 
 $(document).ready(function () {
 
+    $("#loadMe").modal({
+        backdrop: "static", //remove ability to close modal with click
+        keyboard: false, //remove option to close with keyboard
+        show: true //Display loader!
+    });
+
     //Getting the previously loaded table if there is one
     var controllerUrl = '/MarMaxxReports/GetInitialTable';
 
@@ -18,15 +24,18 @@ $(document).ready(function () {
 
     function successFunction(tableData) {
         if (typeof tableData === 'string') { //If there is an error pulling it from the database
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             alert(tableData);
         } else {
             if (tableData != null) {
                 createTable(tableData);
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             }
         }
     }
 
     function errorFunction(error) {
+        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
         alert("Error Loading Previously Loaded User Table: " + error);
     }
 
