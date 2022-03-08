@@ -204,8 +204,13 @@ $(document).ready(function () {
             }
             $(this).addClass("shown_child");
         }
-
     });
+
+    $('#addNewDiv').click(function () {
+        var selectedReportName = $('#marMaxxReportDropdown').val();
+        window.location = "/MarMaxxReports/AddNewReportSub?selectedReportName=" + selectedReportName;
+    });
+
 });
 
 function selectedFolder(selectedVal = "") {

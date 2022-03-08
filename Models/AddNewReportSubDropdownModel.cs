@@ -11,5 +11,8 @@ namespace eComm_Reporting_Application.Models
 
         public List<string> groupNames { get; set; }
         public List<string> groupIDs { get; set; }
+
+        public string selectedReport { get; set; }
+        public string selectedFolder { get; set; }
     }
 }

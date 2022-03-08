@@ -43,6 +43,59 @@
 
     $('#marMaxxReportDropdown').multiselect('disable');
 
+    var initialSelectedReport = $('#selectedReport').val();
+    var initialSelectedFolder = $('#selectedFolder').val();
+
+    if (initialSelectedReport != null && initialSelectedFolder != null) {
+        $("#loadMe").modal({
+            backdrop: "static", //remove ability to close modal with click
+            keyboard: false, //remove option to close with keyboard
+            show: true //Display loader!
+        });
+
+        //adding the selected report name
+        $('#hiddenSelectedReport').attr('name', initialSelectedReport);
+        $('#hiddenSelectedReport').attr('folder', initialSelectedFolder);
+
+        var controllerUrl = '/MarMaxxReports/GetMarMaxxReportParameters';
+
+        var reportData = {
+            reportName: initialSelectedReport,
+            reportFolder: initialSelectedFolder
+        }
+
+        $.ajax({
+            type: "POST",
+            url: controllerUrl,
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc,
+            data: { 'reportData': reportData }
+        });
+
+        function successFunc(paramData) {
+            if (typeof paramData === 'string') { //If there is an error saving it to the database
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                alert(paramData);
+            } else {
+
+                $('#marMaxxFolderDropdown').val(initialSelectedFolder);
+                $('#marMaxxFolderDropdown').multiselect('refresh');
+
+                selectedFolder(initialSelectedReport);
+
+                createParams(paramData);
+
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+            }
+        }
+
+        function errorFunc(error) {
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+            alert("Error Getting Report Parameters: " + error);
+        }
+    }
+
     $('.filter-data').on('change', '#marMaxxReportDropdown', function () {
         $("#loadMe").modal({
             backdrop: "static", //remove ability to close modal with click
@@ -594,7 +647,7 @@
     });
 });
 
-function selectedFolder() {
+function selectedFolder(selectedVal = "") {
     if ($('#marMaxxFolderDropdown :selected').length == 0) { //Nothing is selected in the dropdown (last value is deselected)
         var data = [{ label: 'Select a report name...', value: '', disabled: true, selected: true }];
         $("#marMaxxReportDropdown").multiselect('dataprovider', data);
@@ -623,6 +676,11 @@ function selectedFolder() {
 
             $("#marMaxxReportDropdown").multiselect('dataprovider', data);
             $('#marMaxxReportDropdown').multiselect('enable');
+
+            if (selectedVal != "") {
+                $('#marMaxxReportDropdown').val(selectedVal);
+                $('#marMaxxReportDropdown').multiselect('refresh');
+            }
         }
 
         function errorFunc(error) {

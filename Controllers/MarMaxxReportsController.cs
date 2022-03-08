@@ -20,8 +20,9 @@ namespace eComm_Reporting_Application.Controllers
         private static JObject jsonObject = JObject.Parse(myJsonString);
 
         public static List<ReportTableModel> tableData = new List<ReportTableModel>();
-        public static ReportParameterModel tableParameters = new ReportParameterModel();
+        public static ReportParameterModel reportParams = new ReportParameterModel();
         public static ReportModel selectedReport = new ReportModel();
+        public static bool changedReport = false;
 
         public MarMaxxReportsController(IConfiguration config)
         {
@@ -51,7 +52,7 @@ namespace eComm_Reporting_Application.Controllers
             return View(marMaxxDropdownModel);
         }
 
-        public IActionResult AddNewReportSub()
+        public IActionResult AddNewReportSub(string selectedReportName)
         {
             bool isAuthenticated = isAuthenticatedUser();
 
@@ -66,6 +67,19 @@ namespace eComm_Reporting_Application.Controllers
             UserSubscriptionDropdownModel groupModel = GetGroups();
 
             AddNewReportSubDropdownModel addNewDropdownModel = new AddNewReportSubDropdownModel();
+
+            if(selectedReportName == "null")
+            {
+                tableData = new List<ReportTableModel>();
+                reportParams = new ReportParameterModel();
+                selectedReport = new ReportModel();
+            }
+            else
+            {
+                addNewDropdownModel.selectedFolder = selectedReport.reportFolder;
+                addNewDropdownModel.selectedReport = selectedReport.reportName;
+            }
+
             addNewDropdownModel.folders = folderModel.folders;
             addNewDropdownModel.groupIDs = groupModel.groupsIDList;
             addNewDropdownModel.groupNames = groupModel.groupsList;
@@ -109,8 +123,8 @@ namespace eComm_Reporting_Application.Controllers
                         reportSubModel.selectedSchedule = reader.GetString(7);
 
                         string report_params_json = reader.GetString(5);
-                        Dictionary<string, string> reportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(report_params_json);
-                        reportSubModel.dynamicParams = reportParams;
+                        Dictionary<string, string> dynamicReportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(report_params_json);
+                        reportSubModel.dynamicParams = dynamicReportParams;
                     }
                 }
                 connection.Close();
@@ -174,32 +188,32 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                tableParameters = GetReportParameters(reportData);
+                reportParams = GetReportParameters(reportData);
                 tableData = new List<ReportTableModel>();
                 selectedReport = reportData;
 
                 //Adding the static columns to the table (these will appear for every report)
                 Parameter schedule = new Parameter();
                 schedule.name = "Schedule";
-                tableParameters.parameters.Insert(0, schedule);
+                reportParams.parameters.Insert(0, schedule);
                 Parameter fileFormat = new Parameter();
                 fileFormat.name = "File_Format";
-                tableParameters.parameters.Insert(0, fileFormat);
+                reportParams.parameters.Insert(0, fileFormat);
                 Parameter groupID = new Parameter();
                 groupID.name = "Group_ID";
-                tableParameters.parameters.Insert(0, groupID);
+                reportParams.parameters.Insert(0, groupID);
                 Parameter groupName = new Parameter();
                 groupName.name = "Group_Name";
-                tableParameters.parameters.Insert(0, groupName);
+                reportParams.parameters.Insert(0, groupName);
                 Parameter reportName = new Parameter();
                 reportName.name = "Report_Name";
-                tableParameters.parameters.Insert(0, reportName);
+                reportParams.parameters.Insert(0, reportName);
                 Parameter subscriptionName = new Parameter();
                 subscriptionName.name = "Subscription_Name";
-                tableParameters.parameters.Insert(0, subscriptionName);
+                reportParams.parameters.Insert(0, subscriptionName);
                 Parameter subscriptionID = new Parameter();
                 subscriptionID.name = "Subscription_ID";
-                tableParameters.parameters.Insert(0, subscriptionID);
+                reportParams.parameters.Insert(0, subscriptionID);
                 
 
                 string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
@@ -225,8 +239,8 @@ namespace eComm_Reporting_Application.Controllers
                             tableRow.schedule = reader.GetString(7);
 
                             string reportParamsJson = reader.GetString(5);
-                            Dictionary<string, string> reportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(reportParamsJson);
-                            tableRow.dynamicParams = reportParams;
+                            Dictionary<string, string> dynamicReportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(reportParamsJson);
+                            tableRow.dynamicParams = dynamicReportParams;
 
                             tableData.Add(tableRow);
                         }
@@ -234,8 +248,49 @@ namespace eComm_Reporting_Application.Controllers
                     connection.Close();
                 }
 
-                return Json(new { tableParams = tableParameters.parameters, rowData = tableData });
+                return Json(new { tableParams = reportParams.parameters, rowData = tableData});
 
+            }
+            catch (Exception e)
+            {
+                return Json("Error retrieving table data: " + e);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetInitialTable()
+        {
+            try
+            {
+                if(reportParams.parameters != null)
+                {
+                    if (reportParams.parameters[0].name != "Subscription_ID")
+                    {
+                        Parameter schedule = new Parameter();
+                        schedule.name = "Schedule";
+                        reportParams.parameters.Insert(0, schedule);
+                        Parameter fileFormat = new Parameter();
+                        fileFormat.name = "File_Format";
+                        reportParams.parameters.Insert(0, fileFormat);
+                        Parameter groupID = new Parameter();
+                        groupID.name = "Group_ID";
+                        reportParams.parameters.Insert(0, groupID);
+                        Parameter groupName = new Parameter();
+                        groupName.name = "Group_Name";
+                        reportParams.parameters.Insert(0, groupName);
+                        Parameter reportName = new Parameter();
+                        reportName.name = "Report_Name";
+                        reportParams.parameters.Insert(0, reportName);
+                        Parameter subscriptionName = new Parameter();
+                        subscriptionName.name = "Subscription_Name";
+                        reportParams.parameters.Insert(0, subscriptionName);
+                        Parameter subscriptionID = new Parameter();
+                        subscriptionID.name = "Subscription_ID";
+                        reportParams.parameters.Insert(0, subscriptionID);
+                    }
+                }
+                
+                return Json(new { tableParams = reportParams.parameters, rowData = tableData, report = selectedReport });
             }
             catch (Exception e)
             {
@@ -251,7 +306,14 @@ namespace eComm_Reporting_Application.Controllers
             //ReportServerDB = ReportDatabase
             try
             {
-                ReportParameterModel reportParams = GetReportParameters(reportData);
+                reportParams = GetReportParameters(reportData);
+
+                if(reportData.reportName != selectedReport.reportName)
+                {
+                    selectedReport = reportData;
+                    changedReport = true;
+                }
+
                 string connectionstring = "";
 
                 //There are other data sources that need to be mapped here
@@ -373,6 +435,8 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
+                int subscriptionID = 0;
+
                 string paramJson = JsonConvert.SerializeObject(reportSub.dynamicParams);
                 //Add query here to store in database, store group ID in their respective columns, and paramJson in the last column
 
@@ -385,12 +449,46 @@ namespace eComm_Reporting_Application.Controllers
 
                 SqlCommand addUserQuery = new SqlCommand(addUserQueryString, connection);
 
+                string getSubIDString = "SELECT TOP 1* FROM MarMaxxReportSubscriptions ORDER BY Subscription_ID Desc;"; //Getting the ID by getting the most recently added row
+                SqlCommand getSubID = new SqlCommand(getSubIDString, connection);
+
                 using (connection)
                 {
                     connection.Open();
                     using SqlDataReader reader = addUserQuery.ExecuteReader();
                     connection.Close();
+
+                    connection.Open();
+                    using (SqlDataReader reader_ID = getSubID.ExecuteReader())
+                    {
+                        while (reader_ID.Read())
+                        {
+                            var id = reader_ID.GetInt32(0);
+                            subscriptionID = id;
+                        }
+                    }
+                    connection.Close();
                 }
+
+
+                ReportTableModel newEntry = new ReportTableModel();
+                newEntry.subscriptionID = subscriptionID;
+                newEntry.subscriptionName = reportSub.subscriptionName;
+                newEntry.reportName = reportSub.reportName;
+                newEntry.groupNames = reportSub.groupNames;
+                newEntry.groupIDs = reportSub.groupIDs;
+                newEntry.fileFormat = reportSub.fileFormat;
+                newEntry.schedule = reportSub.schedule;
+                newEntry.dynamicParams = reportSub.dynamicParams;
+
+                if(changedReport == true)
+                {
+                    tableData = new List<ReportTableModel>();
+                    changedReport = false;
+                }
+
+                tableData.Insert(0, newEntry); //Adding new subscription to start of table
+
 
                 return Json(new { message = "Success saving subscription: ", result = "Redirect", url = Url.Action("Index", "MarMaxxReports") });
             }
@@ -422,6 +520,23 @@ namespace eComm_Reporting_Application.Controllers
                     connection.Open();
                     using SqlDataReader reader = editUserQuery.ExecuteReader();
                     connection.Close();
+                }
+
+                for (int i = 0; i < tableData.Count; i++)
+                {
+                    if (tableData[i].subscriptionID == reportSub.subscriptionID)
+                    {
+                        tableData[i].subscriptionName = reportSub.subscriptionName;
+                        tableData[i].reportName = reportSub.reportName;
+                        tableData[i].groupNames = reportSub.groupNames;
+                        tableData[i].groupIDs = reportSub.groupIDs;
+                        tableData[i].fileFormat = reportSub.fileFormat;
+                        tableData[i].schedule = reportSub.schedule;
+                        tableData[i].dynamicParams = reportSub.dynamicParams;
+
+                        break;
+                    }
+
                 }
 
                 return Json(new { message = "Success editing subscription: ", result = "Redirect", url = Url.Action("Index", "MarMaxxReports") });
@@ -463,20 +578,20 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                ReportParameterModel reportParams = GetReportParameters(reportData);
+                ReportParameterModel local_reportParams = GetReportParameters(reportData);
                 string connectionstring = "";
 
                 //There are other data sources that need to be mapped here
-                if (reportParams.dataSource == "ReportDataSource")
+                if (local_reportParams.dataSource == "ReportDataSource")
                 {
                     connectionstring = configuration.GetConnectionString("NetSuite_DB");
                 }
-                else if (reportParams.dataSource == "eCom_ReportDB")
+                else if (local_reportParams.dataSource == "eCom_ReportDB")
                 {
                     connectionstring = configuration.GetConnectionString("eCom_ReportDB");
                 }
 
-                Parameter departmentParameter = reportParams.parameters.Find(x => x.name == "Department_No");
+                Parameter departmentParameter = local_reportParams.parameters.Find(x => x.name == "Department_No");
 
                 SqlConnection connection = new SqlConnection(connectionstring);
                 SqlCommand storedProcQuery = new SqlCommand(departmentParameter.query, connection);
@@ -500,20 +615,20 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                ReportParameterModel reportParams = GetReportParameters(departmentModel.reportData);
+                ReportParameterModel local_reportParams = GetReportParameters(departmentModel.reportData);
                 string connectionstring = "";
 
                 //There are other data sources that need to be mapped here
-                if (reportParams.dataSource == "ReportDataSource")
+                if (local_reportParams.dataSource == "ReportDataSource")
                 {
                     connectionstring = configuration.GetConnectionString("NetSuite_DB");
                 }
-                else if (reportParams.dataSource == "eCom_ReportDB")
+                else if (local_reportParams.dataSource == "eCom_ReportDB")
                 {
                     connectionstring = configuration.GetConnectionString("eCom_ReportDB");
                 }
 
-                Parameter classParameter = reportParams.parameters.Find(x => x.name == "Class_Number");
+                Parameter classParameter = local_reportParams.parameters.Find(x => x.name == "Class_Number");
 
                 SqlConnection connection = new SqlConnection(connectionstring);
                 SqlCommand storedProcQuery = new SqlCommand(classParameter.query, connection);
@@ -537,20 +652,20 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                ReportParameterModel reportParams = GetReportParameters(classModel.reportData);
+                ReportParameterModel local_reportParams = GetReportParameters(classModel.reportData);
                 string connectionstring = "";
 
                 //There are other data sources that need to be mapped here
-                if (reportParams.dataSource == "ReportDataSource")
+                if (local_reportParams.dataSource == "ReportDataSource")
                 {
                     connectionstring = configuration.GetConnectionString("NetSuite_DB");
                 }
-                else if (reportParams.dataSource == "eCom_ReportDB")
+                else if (local_reportParams.dataSource == "eCom_ReportDB")
                 {
                     connectionstring = configuration.GetConnectionString("eCom_ReportDB");
                 }
 
-                Parameter categoryParameter = reportParams.parameters.Find(x => x.name == "Category");
+                Parameter categoryParameter = local_reportParams.parameters.Find(x => x.name == "Category");
 
                 SqlConnection connection = new SqlConnection(connectionstring);
                 SqlCommand storedProcQuery = new SqlCommand(categoryParameter.query, connection);
@@ -578,7 +693,7 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                ReportParameterModel reportParams = GetReportParameters(brandModel.reportData);
+                ReportParameterModel local_reportParams = GetReportParameters(brandModel.reportData);
                 
                 string connectionstring = "";
                 SqlConnection connection = new SqlConnection();
@@ -586,13 +701,13 @@ namespace eComm_Reporting_Application.Controllers
                 
 
                 //There are other data sources that need to be mapped here
-                if (reportParams.dataSource == "ReportDataSource")
+                if (local_reportParams.dataSource == "ReportDataSource")
                 {
                     connectionstring = configuration.GetConnectionString("NetSuite_DB");
                     connection = new SqlConnection(connectionstring);
                     storedProcQuery = new SqlCommand("par_Brands", connection);
                 }
-                else if (reportParams.dataSource == "eCom_ReportDB")
+                else if (local_reportParams.dataSource == "eCom_ReportDB")
                 {
                     connectionstring = configuration.GetConnectionString("eCom_ReportDB");
                     connection = new SqlConnection(connectionstring);
@@ -603,7 +718,7 @@ namespace eComm_Reporting_Application.Controllers
 
                 storedProcQuery.Parameters.AddWithValue("@Brand_Pattern", brandModel.brandPattern);
 
-                Parameter brandParameter = reportParams.parameters.Find(x => x.name == "Brand");
+                Parameter brandParameter = local_reportParams.parameters.Find(x => x.name == "Brand");
 
                 Parameter populatedParam = getCascadingDropdownValues(brandParameter, storedProcQuery, connection);
 
@@ -620,7 +735,7 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                ReportParameterModel reportParams = GetReportParameters(vendorModel.reportData);
+                ReportParameterModel local_reportParams = GetReportParameters(vendorModel.reportData);
 
                 string connectionstring = "";
                 SqlConnection connection = new SqlConnection();
@@ -628,13 +743,13 @@ namespace eComm_Reporting_Application.Controllers
 
 
                 //There are other data sources that need to be mapped here
-                if (reportParams.dataSource == "ReportDataSource")
+                if (local_reportParams.dataSource == "ReportDataSource")
                 {
                     connectionstring = configuration.GetConnectionString("NetSuite_DB");
                     connection = new SqlConnection(connectionstring);
                     storedProcQuery = new SqlCommand("par_Vendors", connection);
                 }
-                else if (reportParams.dataSource == "eCom_ReportDB")
+                else if (local_reportParams.dataSource == "eCom_ReportDB")
                 {
                     connectionstring = configuration.GetConnectionString("eCom_ReportDB");
                     connection = new SqlConnection(connectionstring);
@@ -645,7 +760,7 @@ namespace eComm_Reporting_Application.Controllers
 
                 storedProcQuery.Parameters.AddWithValue("@Vendor_Pattern", vendorModel.vendorPattern);
 
-                Parameter vendorParameter = reportParams.parameters.Find(x => x.name == "Vendor");
+                Parameter vendorParameter = local_reportParams.parameters.Find(x => x.name == "Vendor");
 
                 Parameter populatedParam = getCascadingDropdownValues(vendorParameter, storedProcQuery, connection);
 
@@ -657,18 +772,7 @@ namespace eComm_Reporting_Application.Controllers
             }
         }
 
-        [HttpPost]
-        public JsonResult GetInitialTable()
-        {
-            try
-            {
-                return Json(new { tableParams = tableParameters.parameters, rowData = tableData, report = selectedReport });
-            }
-            catch (Exception e)
-            {
-                return Json("Error retrieving table data: " + e);
-            }
-        }
+        
 
         public Parameter getCascadingDropdownValues(Parameter cascadingParam , SqlCommand storedProcQuery, SqlConnection connection)
         {
