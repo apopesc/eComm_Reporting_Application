@@ -11,9 +11,12 @@ namespace eComm_Reporting_Application.Controllers
     [Authorize]
     public class SubscriptionGroupsController : Controller
     {
-
         private readonly IConfiguration configuration;
+
         public static List<UserSubscriptionTableModel> tableData = new List<UserSubscriptionTableModel>();
+        public static List<string> selectedMasterGroups = new List<string>();
+        public static List<string> selectedGroups = new List<string>();
+        public static List<string> selectedGroupIDs = new List<string>();
 
         public SubscriptionGroupsController(IConfiguration config)
         {
@@ -178,6 +181,9 @@ namespace eComm_Reporting_Application.Controllers
             try
             {
                 tableData = new List<UserSubscriptionTableModel>();//Resetting the table each time we want to get new data
+                selectedGroupIDs = filterData.groupsIDList;
+                selectedGroups = filterData.groupsList;
+                selectedMasterGroups = filterData.masterGroupsList;
 
                 string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                 SqlConnection connection = new SqlConnection(connectionstring);
@@ -278,7 +284,7 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                return Json(tableData);
+                return Json(new { tableData, selectedGroupIDs, selectedGroups, selectedMasterGroups } );
             }
             catch (Exception e)
             {
