@@ -264,7 +264,7 @@ namespace eComm_Reporting_Application.Controllers
             {
                 if(reportParams.parameters != null)
                 {
-                    if (reportParams.parameters[0].name != "Subscription_ID")
+                    if (reportParams.parameters.Count == 0 || reportParams.parameters[0].name != "Subscription_ID")
                     {
                         Parameter schedule = new Parameter();
                         schedule.name = "Schedule";
@@ -564,6 +564,8 @@ namespace eComm_Reporting_Application.Controllers
                     SqlDataReader reader = deleteUserQuery.ExecuteReader();
                     connection.Close();
                 }
+
+                tableData.RemoveAll(x => x.subscriptionID == ID);
 
                 return Json("Success Deleting Subscription: ");
             }
