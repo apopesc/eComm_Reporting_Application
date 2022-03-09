@@ -235,13 +235,19 @@ body {
 
 @media screen and (max-width: 1920px) {
     .main-dropdown {
-        width: 470px;
+        width: 435px;
+    }
+    .banner{
+        margin-left: 48px;
     }
 }
 
 @media screen and (max-width: 1280px) {
     .main-dropdown {
-        width: 407px;
+        width: 370px;
+    }
+    .banner {
+        margin-left: 44px;
     }
 }
 

@@ -774,7 +774,24 @@ namespace eComm_Reporting_Application.Controllers
             }
         }
 
-        
+        [HttpPost]
+        public JsonResult getBannersForReport(ReportModel selectedReport)
+        {
+            try
+            {
+                ReportParameterModel local_reportParams = GetReportParameters(selectedReport);
+
+                //need to create list of banner objects (banner object will have a value and a label)
+                
+                //return the list of banner objects
+                return Json(local_reportParams);
+            }
+            catch (Exception e)
+            {
+                return Json("Error Getting Vendor Data: " + e);
+            }
+        }
+
 
         public Parameter getCascadingDropdownValues(Parameter cascadingParam , SqlCommand storedProcQuery, SqlConnection connection)
         {

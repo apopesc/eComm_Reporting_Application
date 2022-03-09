@@ -16,8 +16,14 @@ $(document).ready(function () {
         nonSelectedText: 'Select a report name...',
         enableCaseInsensitiveFiltering: true
     });
+    $('#marMaxxBannerDropdown').multiselect({
+        nonSelectedText: 'Select a banner...',
+        enableCaseInsensitiveFiltering: true
+    });
 
     $('#marMaxxReportDropdown').multiselect('disable');
+
+    $('#marMaxxBannerDropdown').multiselect('disable');
 
     $("#loadMe").modal({
         backdrop: "static", //remove ability to close modal with click
