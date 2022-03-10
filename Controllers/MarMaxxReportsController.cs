@@ -24,6 +24,8 @@ namespace eComm_Reporting_Application.Controllers
         public static ReportModel selectedReport = new ReportModel();
         public static bool changedReport = false;
 
+        public static List<string> selectedBanners = new List<string>();
+
         public MarMaxxReportsController(IConfiguration config)
         {
             this.configuration = config;
@@ -191,6 +193,7 @@ namespace eComm_Reporting_Application.Controllers
                 reportParams = GetReportParameters(reportData);
                 tableData = new List<ReportTableModel>();
                 selectedReport = reportData;
+                selectedBanners = new List<string>();
 
                 //Adding the static columns to the table (these will appear for every report)
                 Parameter schedule = new Parameter();
@@ -258,6 +261,91 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        public JsonResult GetMarMaxxTableDataByBanner(ReportModel reportData, List<string> bannerVals)
+        {
+            try
+            {
+                reportParams = GetReportParameters(reportData);
+                tableData = new List<ReportTableModel>();
+                selectedReport = reportData;
+                selectedBanners = bannerVals;
+
+                //Adding the static columns to the table (these will appear for every report)
+                Parameter schedule = new Parameter();
+                schedule.name = "Schedule";
+                reportParams.parameters.Insert(0, schedule);
+                Parameter fileFormat = new Parameter();
+                fileFormat.name = "File_Format";
+                reportParams.parameters.Insert(0, fileFormat);
+                Parameter groupID = new Parameter();
+                groupID.name = "Group_ID";
+                reportParams.parameters.Insert(0, groupID);
+                Parameter groupName = new Parameter();
+                groupName.name = "Group_Name";
+                reportParams.parameters.Insert(0, groupName);
+                Parameter reportName = new Parameter();
+                reportName.name = "Report_Name";
+                reportParams.parameters.Insert(0, reportName);
+                Parameter subscriptionName = new Parameter();
+                subscriptionName.name = "Subscription_Name";
+                reportParams.parameters.Insert(0, subscriptionName);
+                Parameter subscriptionID = new Parameter();
+                subscriptionID.name = "Subscription_ID";
+                reportParams.parameters.Insert(0, subscriptionID);
+
+
+                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                SqlConnection connection = new SqlConnection(connectionstring);
+
+                string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Report_Name='" + reportData.reportName + "'";
+
+                SqlCommand getTableData = new SqlCommand(queryString, connection);
+                using (connection)
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = getTableData.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ReportTableModel tableRow = new ReportTableModel();
+                            tableRow.subscriptionID = reader.GetInt32(0);
+                            tableRow.subscriptionName = reader.GetString(1);
+                            tableRow.reportName = reader.GetString(2);
+                            tableRow.groupNames = reader.GetString(3);
+                            tableRow.groupIDs = reader.GetString(4);
+                            tableRow.fileFormat = reader.GetString(6);
+                            tableRow.schedule = reader.GetString(7);
+
+                            string reportParamsJson = reader.GetString(5);
+                            Dictionary<string, string> dynamicReportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(reportParamsJson);
+                            tableRow.dynamicParams = dynamicReportParams;
+
+                            if (tableRow.dynamicParams.ContainsKey("Banner"))
+                            {
+                                List<string> paramEntries = new List<string>(tableRow.dynamicParams["Banner"].Split(','));
+                                bool containsBanner = bannerVals.Intersect(paramEntries).Any();
+
+                                if (containsBanner == true)
+                                {
+                                    tableData.Add(tableRow);
+                                }
+                            }
+                            
+                        }
+                    }
+                    connection.Close();
+                }
+
+                return Json(new { tableParams = reportParams.parameters, rowData = tableData });
+
+            }
+            catch (Exception e)
+            {
+                return Json("Error retrieving table data: " + e);
+            }
+        }
+
+        [HttpPost]
         public JsonResult GetInitialTable()
         {
             try
@@ -290,7 +378,7 @@ namespace eComm_Reporting_Application.Controllers
                     }
                 }
                 
-                return Json(new { tableParams = reportParams.parameters, rowData = tableData, report = selectedReport });
+                return Json(new { tableParams = reportParams.parameters, rowData = tableData, report = selectedReport, banners = selectedBanners });
             }
             catch (Exception e)
             {
@@ -775,16 +863,50 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult getBannersForReport(ReportModel selectedReport)
+        public JsonResult GetBannersForReport(ReportModel reportData)
         {
             try
             {
-                ReportParameterModel local_reportParams = GetReportParameters(selectedReport);
+                ReportParameterModel local_reportParams = GetReportParameters(reportData);
+                bool hasBanner = false;
+               
+                Parameter bannerParam = new Parameter();
+                Parameter populatedBannerParam = new Parameter();
 
-                //need to create list of banner objects (banner object will have a value and a label)
-                
-                //return the list of banner objects
-                return Json(local_reportParams);
+                foreach (Parameter param in local_reportParams.parameters)
+                {
+                    if(param.name == "Banner")
+                    {
+                        bannerParam = param;
+                        hasBanner = true;
+                        break;
+                    }
+                }
+
+                if(hasBanner == true)
+                {
+                    string connectionstring = "";
+                    SqlConnection connection = new SqlConnection();
+
+                    //There are other data sources that need to be mapped here
+                    if (local_reportParams.dataSource == "ReportDataSource")
+                    {
+                        connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                        connection = new SqlConnection(connectionstring);
+                    }
+                    else if (local_reportParams.dataSource == "eCom_ReportDB")
+                    {
+                        connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                        connection = new SqlConnection(connectionstring);
+                    }
+
+                    SqlCommand storedProcQuery = new SqlCommand("par_Banner", connection);
+                    storedProcQuery.CommandType = CommandType.StoredProcedure;
+
+                    populatedBannerParam = getCascadingDropdownValues(bannerParam, storedProcQuery, connection);
+                }
+                                
+                return Json(populatedBannerParam);
             }
             catch (Exception e)
             {
