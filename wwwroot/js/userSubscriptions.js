@@ -20,12 +20,24 @@ $(document).ready(function () {
         masterGroupDropdownValues.push($(this).val());
     });
 
+    var isAllSelected = false;
+
     $('#groupDropdown').multiselect({
         enableCaseInsensitiveFiltering: true,
         enableHTML: true,
         includeSelectAllOption: true,
         buttonText: function (options, select) {
-            if (options.length > 0) {
+            var numberOfOptions = $('#groupDropdown option').length;
+
+            if (options.length == 0) {
+                return 'Select a group...';
+            }
+
+            else if (options.length == numberOfOptions) {
+                return 'All selected ('+numberOfOptions+')';
+            }
+
+            else{
                 var labels = [];
                 options.each(function () {
                     if ($(this).attr('label') !== undefined) {
@@ -36,8 +48,6 @@ $(document).ready(function () {
                     }
                 });
                 return labels.join(', ') + '';
-            } else {
-                return 'Select a group...';
             }
         }
     });
