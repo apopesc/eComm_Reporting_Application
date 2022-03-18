@@ -11,6 +11,7 @@ $(document).ready(function () {
     $('#groupIDDropdown option').each(function () {
         groupIDValues.push($(this).val());
     });
+
     var groupDropdownValues = [];
     $("#groupDropdown option").each(function () {
         groupDropdownValues.push($(this).val());
@@ -19,8 +20,6 @@ $(document).ready(function () {
     $("#masterGroupDropdown option").each(function () {
         masterGroupDropdownValues.push($(this).val());
     });
-
-    var isAllSelected = false;
 
     $('#groupDropdown').multiselect({
         enableCaseInsensitiveFiltering: true,
@@ -91,13 +90,14 @@ $(document).ready(function () {
                 //$('#groupIDDropdown').val(returnedData.selectedGroupIDs);
                 //$('#groupIDDropdown').multiselect('refresh');
 
-                $('#groupDropdown').val(returnedData.selectedGroupIDs);
-                $('#groupDropdown').multiselect('refresh');
-
                 $('#masterGroupDropdown').val(returnedData.selectedMasterGroups);
                 $('#masterGroupDropdown').multiselect('refresh');
 
+                selectedMasterGroup(returnedData.selectedGroupIDs);
+
                 createTable(returnedData.tableData);
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+            } else {
                 setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             }
         }
@@ -304,6 +304,50 @@ $(document).ready(function () {
     }
 
 });
+
+function selectedMasterGroup(selectedVals = []) {
+    if ($('#masterGroupDropdown :selected').length == 0) { //Nothing is selected in the dropdown (last value is deselected)
+
+        var data = [];
+        $("#groupDropdown").multiselect('dataprovider', data);
+        $('#groupDropdown').multiselect('disable');
+
+    } else { //Something is selected in the dropdown
+        var controllerUrl = '/SubscriptionGroups/GetGroupValues';
+        var masterGroupList = $('#masterGroupDropdown').val();
+
+        $.ajax({
+            type: "POST",
+            url: controllerUrl,
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc,
+            data: { 'masterGroupList': masterGroupList }
+        });
+
+        function successFunc(dropdownData) {
+            //var data = [{label: 'Group ID', value: 'demoOption', disabled: true, children: [{ label: 'Group Name', value: '', disabled: true }]}];
+            var data = [];
+
+            for (var groupID in dropdownData) {
+                var dropdownEntry = { label: "<b>ID: </b>" + groupID + " </br><b>Name: </b>" + dropdownData[groupID], value: groupID , title: dropdownData[groupID] };
+                data.push(dropdownEntry);
+            }
+
+            $("#groupDropdown").multiselect('dataprovider', data);
+            $('#groupDropdown').multiselect('enable');
+
+            if (selectedVals.length > 0) {
+                $('#groupDropdown').val(selectedVals);
+                $('#groupDropdown').multiselect('refresh');
+            }
+        }
+
+        function errorFunc(error) {
+            alert("Error Retrieving Report Names: " + error);
+        }
+    }
+}
 
 
 //$('#btnSubmitUser').click(function () {

@@ -19,7 +19,7 @@
     <div class="first-row">
         <div class="main-dropdown">
             <label class="filter-label" for="masterGroupDropdown">Master Group:</label>
-            <select id="masterGroupDropdown" name="masterGroupDropdown" class="user-dropdown" multiple>
+            <select id="masterGroupDropdown" name="masterGroupDropdown" class="user-dropdown" onchange="selectedMasterGroup();" multiple>
                 @foreach (var master_group in @Model.masterGroupsList)
                 {
                     <option value=@master_group> @master_group </option>
@@ -28,11 +28,7 @@
         </div>
         <div class="main-dropdown">
             <label class="filter-label" for="groupIDDropdown">Group:</label>
-            <select id="groupDropdown" name="groupDropdown" class="user-dropdown" multiple>
-                @for (int i = 0; i < Model.groupsIDList.Count; i++)
-                {
-                    <option title="@Model.groupsList[i]" value=@Model.groupsIDList[i] label="<b>ID: </b>@Model.groupsIDList[i]</br> <b>Name: </b>@Model.groupsList[i]"> </option>
-                }
+            <select id="groupDropdown" name="groupDropdown" class="user-dropdown" multiple disabled>
             </select>
         </div>
         <div class="is-active">
