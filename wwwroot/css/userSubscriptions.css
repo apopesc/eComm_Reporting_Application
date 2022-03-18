@@ -61,44 +61,30 @@
 }
 
 .separator-line {
-    top: 268px;
+    top: 230px;
 }
 
 .addNew {
-    margin-top: 75px;
     margin-bottom: 4px;
 }
 
-.btnViewData {
-    margin-top: 16px;
-}
-
-.btn-group{
-    float: right;
+.is-active {
+    width: 162px;
+    margin-left: -47px;
 }
 
 @media screen and (max-width: 1920px) {
     .main-dropdown {
-        width: 420px;
-    }
-
-    .is-active {
-        width: 219px;
+        margin-right: 50px;
     }
 }
 
 @media screen and (max-width: 1280px) {
     .main-dropdown {
-        width: 380px;
-    }
-    .is-active {
-        width: 218px;
+        margin-right: 40px;
     }
 }
 
-.main-dropdown {
-    margin-right: 80px;
-}
 
 
 

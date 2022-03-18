@@ -4,6 +4,7 @@ var expandableRowEntries = [];
 var expandableRowIDs = new Set();
 
 $(document).ready(function () {
+
     $('#MarMaxxReports_Link').addClass('selected-nav-option');
 
     $('#marMaxxFolderDropdown').multiselect({
@@ -15,8 +16,66 @@ $(document).ready(function () {
         nonSelectedText: 'Select a report name...',
         enableCaseInsensitiveFiltering: true
     });
+    $('#marMaxxBannerDropdown').multiselect({
+        nonSelectedText: 'Select a banner...',
+        includeSelectAllOption: true,
+        enableCaseInsensitiveFiltering: true
+    });
 
     $('#marMaxxReportDropdown').multiselect('disable');
+
+    $('#marMaxxBannerDropdown').multiselect('disable');
+
+    $("#loadMe").modal({
+        backdrop: "static", //remove ability to close modal with click
+        keyboard: false, //remove option to close with keyboard
+        show: true //Display loader!
+    });
+
+    //Getting the previously loaded table if there is one
+    var controllerUrl = '/MarMaxxReports/GetInitialTable';
+
+    $.ajax({
+        type: "POST",
+        url: controllerUrl,
+        dataType: "json",
+        success: successFunction,
+        error: errorFunction
+    });
+
+    function successFunction(tableData) {
+        if (typeof tableData === 'string') { //If there is an error pulling it from the database
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+            alert(tableData);
+        } else {
+            if (tableData.tableParams != null) {
+
+                var loadedTableData = {
+                    tableParams: tableData.tableParams,
+                    rowData: tableData.rowData
+                }
+
+                $('#marMaxxFolderDropdown').val(tableData.report.reportFolder);
+                $('#marMaxxFolderDropdown').multiselect('refresh');
+
+                selectedFolder(tableData.report.reportName, tableData.banners);
+
+                // need to load banner dropdown and select its values
+
+                createTable(loadedTableData);
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+            } else {
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+            }
+        }
+    }
+
+    function errorFunction(error) {
+        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+        alert("Error Loading Previously Loaded User Table: " + error);
+    }
+
+    
 
     $('.filter-data').on('change', '#marMaxxReportDropdown', function () {
 
@@ -29,17 +88,98 @@ $(document).ready(function () {
         var selectedReport = $('#marMaxxReportDropdown').val();
         var selectedReportFolder = $('#marMaxxReportDropdown option:selected').prop('title');
 
-        if (selectedReport == null) {
-            alert("Please select a report to view subscription data");
-            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
-        } else {
+        var controllerUrl = '/MarMaxxReports/GetBannersForReport';
 
-            var controllerUrl = '/MarMaxxReports/GetMarMaxxTableData';
+        var reportData = {
+            reportName: selectedReport,
+            reportFolder: selectedReportFolder
+        };
+
+        $.ajax({
+            type: "POST",
+            url: controllerUrl,
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc,
+            data: { 'reportData': reportData }
+        });
+
+        function successFunc(bannerData) {
+            if (bannerData.values != null) {
+                var data = [];
+
+                for (i = 0; i < bannerData.values.length; i++) {
+                    data.push({ label: bannerData.labels[i], value: bannerData.values[i] });
+                }
+
+                $('#marMaxxBannerDropdown').multiselect('dataprovider', data);
+                $('#marMaxxBannerDropdown').multiselect('enable');
+
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+
+            } else {
+
+                var data = [{ label: 'Select a banner...', value: '', disabled: true, selected: true }];
+                $("#marMaxxBannerDropdown").multiselect('dataprovider', data);
+                $('#marMaxxBannerDropdown').multiselect('disable');
+
+                var controllerUrl = '/MarMaxxReports/GetMarMaxxTableData';
+
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: { 'reportData': reportData }
+                });
+
+                function successFunc(tableData) {
+                    if (typeof tableData === 'string') { //If there is an error saving it to the database
+                        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                        alert(tableData);
+                    } else {
+                        createTable(tableData); //Creating the dynamic table and displaying it on the screen
+                        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                    }
+                }
+
+                function errorFunc(error) {
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                    alert("Error Getting Report Subscription Data: " + error);
+                }
+            }
+        }
+
+        function errorFunc(error) {
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+            alert("Error Getting Banner Data: " + error);
+        }
+
+    });
+
+
+    $('.filter-data').on('change', '#marMaxxBannerDropdown', function () {
+        if ($('#marMaxxBannerDropdown :selected').length > 0) { //Nothing is selected in the dropdown (last value is deselected)
+
+            $("#loadMe").modal({
+                backdrop: "static", //remove ability to close modal with click
+                keyboard: false, //remove option to close with keyboard
+                show: true //Display loader!
+            });
+
+            var selectedReport = $('#marMaxxReportDropdown').val();
+            var selectedReportFolder = $('#marMaxxReportDropdown option:selected').prop('title');
 
             var reportData = {
                 reportName: selectedReport,
                 reportFolder: selectedReportFolder
             };
+
+            var bannerVals = $('#marMaxxBannerDropdown').val();
+
+
+            var controllerUrl = '/MarMaxxReports/GetMarMaxxTableDataByBanner';
 
             $.ajax({
                 type: "POST",
@@ -47,7 +187,10 @@ $(document).ready(function () {
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
-                data: { 'reportData': reportData }
+                data: {
+                    'reportData': reportData,
+                    'bannerVals': bannerVals
+                }
             });
 
             function successFunc(tableData) {
@@ -64,7 +207,7 @@ $(document).ready(function () {
                 setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 alert("Error Getting Report Subscription Data: " + error);
             }
-        }
+        } 
     });
 
     
@@ -154,11 +297,16 @@ $(document).ready(function () {
             }
             $(this).addClass("shown_child");
         }
-
     });
+
+    $('#addNewDiv').click(function () {
+        var selectedReportName = $('#marMaxxReportDropdown').val();
+        window.location = "/MarMaxxReports/AddNewReportSub?selectedReportName=" + selectedReportName;
+    });
+
 });
 
-function selectedFolder() {
+function selectedFolder(selectedVal = "", selectedBanners=[]) {
     if ($('#marMaxxFolderDropdown :selected').length == 0) { //Nothing is selected in the dropdown (last value is deselected)
 
         var data = [{ label: 'Select a report name...', value: '', disabled: true, selected: true }];
@@ -188,11 +336,62 @@ function selectedFolder() {
 
             $("#marMaxxReportDropdown").multiselect('dataprovider', data);
             $('#marMaxxReportDropdown').multiselect('enable');
+
+            if (selectedVal != "") {
+                $('#marMaxxReportDropdown').val(selectedVal);
+                $('#marMaxxReportDropdown').multiselect('refresh');
+                if (selectedBanners.length > 0) {
+                    loadBanners(selectedBanners);
+                }
+            }
         }
 
         function errorFunc(error) {
             alert("Error Retrieving Report Names: " + error);
         }
+    }
+}
+
+function loadBanners(selectedVals = []) {
+
+    var selectedReport = $('#marMaxxReportDropdown').val();
+    var selectedReportFolder = $('#marMaxxReportDropdown option:selected').prop('title');
+
+    var controllerUrl = '/MarMaxxReports/GetBannersForReport';
+
+    var reportData = {
+        reportName: selectedReport,
+        reportFolder: selectedReportFolder
+    };
+
+    $.ajax({
+        type: "POST",
+        url: controllerUrl,
+        dataType: "json",
+        success: successFunc,
+        error: errorFunc,
+        data: { 'reportData': reportData }
+    });
+
+    function successFunc(bannerData) {
+       
+        var data = [];
+
+        for (i = 0; i < bannerData.values.length; i++) {
+            data.push({ label: bannerData.labels[i], value: bannerData.values[i] });
+        }
+
+        $('#marMaxxBannerDropdown').multiselect('dataprovider', data);
+        $('#marMaxxBannerDropdown').multiselect('enable');
+
+        $('#marMaxxBannerDropdown').val(selectedVals);
+        $('#marMaxxBannerDropdown').multiselect('refresh');
+        
+    }
+
+    function errorFunc(error) {
+        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+        alert("Error Getting Report Subscription Data: " + error);
     }
 }
 

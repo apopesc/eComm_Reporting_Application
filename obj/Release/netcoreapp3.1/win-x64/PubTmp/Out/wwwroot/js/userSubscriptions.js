@@ -5,31 +5,6 @@ $(document).ready(function () {
 
     var userTable;
 
-    //Getting the previously loaded table if there is one
-    var controllerUrl = '/SubscriptionGroups/GetInitialTable';
-
-    $.ajax({
-        type: "POST",
-        url: controllerUrl,
-        dataType: "json",
-        success: successFunction,
-        error: errorFunction
-    });
-
-    function successFunction(tableData) {
-        if (typeof tableData === 'string') { //If there is an error pulling it from the database
-            alert(tableData);
-        } else {
-            if (tableData != null) {
-                createTable(tableData);
-            }
-        }
-    }
-
-    function errorFunction(error) {
-        alert("Error Loading Previously Loaded User Table: " + error);
-    }
-
     $('#SubscriptionGroups_Link').addClass('selected-nav-option');
 
     var groupIDValues = [];
@@ -37,14 +12,13 @@ $(document).ready(function () {
         groupIDValues.push($(this).val());
     });
     var groupDropdownValues = [];
-    $("#groupDropdown option").each(function(){
+    $("#groupDropdown option").each(function () {
         groupDropdownValues.push($(this).val());
     });
     var masterGroupDropdownValues = [];
     $("#masterGroupDropdown option").each(function () {
         masterGroupDropdownValues.push($(this).val());
     });
-
 
     $('#groupDropdown').multiselect({
         nonSelectedText: 'Select a group...',
@@ -62,7 +36,58 @@ $(document).ready(function () {
         enableCaseInsensitiveFiltering: true,
     });
 
+    $("#loadMe").modal({
+        backdrop: "static", //remove ability to close modal with click
+        keyboard: false, //remove option to close with keyboard
+        show: true //Display loader!
+    });
+
+    //Getting the previously loaded table if there is one
+    var controllerUrl = '/SubscriptionGroups/GetInitialTable';
+
+    $.ajax({
+        type: "POST",
+        url: controllerUrl,
+        dataType: "json",
+        success: successFunction,
+        error: errorFunction
+    });
+
+    function successFunction(returnedData) {
+        if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+            alert(returnedData);
+        } else {
+            if (returnedData != null) {
+
+                $('#groupIDDropdown').val(returnedData.selectedGroupIDs);
+                $('#groupIDDropdown').multiselect('refresh');
+
+                $('#groupDropdown').val(returnedData.selectedGroups);
+                $('#groupDropdown').multiselect('refresh');
+
+                $('#masterGroupDropdown').val(returnedData.selectedMasterGroups);
+                $('#masterGroupDropdown').multiselect('refresh');
+
+                createTable(returnedData.tableData);
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+            }
+        }
+    }
+
+    function errorFunction(error) {
+        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+        alert("Error Loading Previously Loaded User Table: " + error);
+    }
+
+
     $("#btnViewUserData").click(function () {
+
+        $("#loadMe").modal({
+            backdrop: "static", //remove ability to close modal with click
+            keyboard: false, //remove option to close with keyboard
+            show: true //Display loader!
+        });
 
         var selectedGroups = $('#groupDropdown').val();
         var selectedGroupIDs = $('#groupIDDropdown').val();
@@ -81,6 +106,7 @@ $(document).ready(function () {
         }
 
         if (selectedMasterGroups.length == 0 || selectedGroups.length == 0 || selectedGroupIDs.length == 0 || selectedCheckBoxVal == 0) {
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             alert("Please enter a value for Master Group, Group ID, Group, and Is Active");
         } else {
 
@@ -105,13 +131,16 @@ $(document).ready(function () {
 
             function successFunc(tableData) {
                 if (typeof tableData === 'string') { //If there is an error saving it to the database
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     alert(tableData);
                 } else {
                     createTable(tableData);
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 }
             }
 
             function errorFunc(error) {
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 alert("Error Sending Filter Data to the Subscriptions Controller: " + error);
             }
         }

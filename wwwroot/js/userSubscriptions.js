@@ -21,20 +21,38 @@ $(document).ready(function () {
     });
 
     $('#groupDropdown').multiselect({
-        nonSelectedText: 'Select a group...',
-        includeSelectAllOption: true,
         enableCaseInsensitiveFiltering: true,
+        enableHTML: true,
+        includeSelectAllOption: true,
+        buttonText: function (options, select) {
+            if (options.length > 0) {
+                var labels = [];
+                options.each(function () {
+                    if ($(this).attr('label') !== undefined) {
+                        labels.push($(this).attr('value'));
+                    }
+                    else {
+                        labels.push($(this).html());
+                    }
+                });
+                return labels.join(', ') + '';
+            } else {
+                return 'Select a group...';
+            }
+        }
     });
+
     $('#masterGroupDropdown').multiselect({
         nonSelectedText: 'Select a master group...',
         includeSelectAllOption: true,
         enableCaseInsensitiveFiltering: true,
     });
-    $('#groupIDDropdown').multiselect({
-        nonSelectedText: 'Select a group ID...',
-        includeSelectAllOption: true,
-        enableCaseInsensitiveFiltering: true,
-    });
+
+    //$('#groupIDDropdown').multiselect({
+    //    nonSelectedText: 'Select a group ID...',
+    //    includeSelectAllOption: true,
+    //    enableCaseInsensitiveFiltering: true,
+    //});
 
     $("#loadMe").modal({
         backdrop: "static", //remove ability to close modal with click
@@ -60,10 +78,10 @@ $(document).ready(function () {
         } else {
             if (returnedData != null) {
 
-                $('#groupIDDropdown').val(returnedData.selectedGroupIDs);
-                $('#groupIDDropdown').multiselect('refresh');
+                //$('#groupIDDropdown').val(returnedData.selectedGroupIDs);
+                //$('#groupIDDropdown').multiselect('refresh');
 
-                $('#groupDropdown').val(returnedData.selectedGroups);
+                $('#groupDropdown').val(returnedData.selectedGroupIDs);
                 $('#groupDropdown').multiselect('refresh');
 
                 $('#masterGroupDropdown').val(returnedData.selectedMasterGroups);
@@ -89,8 +107,13 @@ $(document).ready(function () {
             show: true //Display loader!
         });
 
-        var selectedGroups = $('#groupDropdown').val();
-        var selectedGroupIDs = $('#groupIDDropdown').val();
+        var selectedGroups = [];
+        $('#groupDropdown').find("option:selected").each(function () {
+            var groupName = $(this).prop('title');
+            selectedGroups.push(groupName);
+        });
+
+        var selectedGroupIDs = $('#groupDropdown').val();
         var selectedMasterGroups = $('#masterGroupDropdown').val();
 
         var selectedCheckBoxVal = 0;

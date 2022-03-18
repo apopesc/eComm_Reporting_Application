@@ -27,32 +27,20 @@
             </select>
         </div>
         <div class="main-dropdown">
-            <label class="filter-label" for="groupIDDropdown">Group ID:</label>
-            <select id="groupIDDropdown" name="groupIDDropdown" class="user-dropdown" multiple>
-                @foreach (var groupID in @Model.groupsIDList)
-                {
-                    <option value=@groupID> @groupID </option>
-                }
-            </select>
-        </div>     
-    </div>
-    
-    <div class="second-row">
-        <div class="main-dropdown">
-            <label class="filter-label" for="groupDropdown">Group:</label>
+            <label class="filter-label" for="groupIDDropdown">Group:</label>
             <select id="groupDropdown" name="groupDropdown" class="user-dropdown" multiple>
-                @foreach (var group in @Model.groupsList)
+                @for (int i = 0; i < Model.groupsIDList.Count; i++)
                 {
-                    <option value=@group> @group </option>
+                    <option title="@Model.groupsList[i]" value=@Model.groupsIDList[i] label="<b>ID: </b>@Model.groupsIDList[i]</br> <b>Name: </b>@Model.groupsList[i]"> </option>
                 }
             </select>
         </div>
         <div class="is-active">
             <p class="radio-label filter-label">Is Active:</p>
             <div class="radio-btns">
-                <input type="checkbox" id="checkYes" class="checkbox-isactive" name="is_active" value="yes" checked/>
+                <input type="checkbox" id="checkYes" class="checkbox-isactive" name="is_active" value="yes" checked />
                 <label id="yesBox" class="yes-box form-check-label" for="yes">Yes</label>
-                <input type="checkbox" id="checkNo" class="checkbox-isactive" name="is_active" value="no" checked/>
+                <input type="checkbox" id="checkNo" class="checkbox-isactive" name="is_active" value="no" checked />
                 <label for="no" class="form-check-label">No</label>
             </div>
         </div>
