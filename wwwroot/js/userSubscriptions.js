@@ -111,12 +111,6 @@ $(document).ready(function () {
 
     $("#btnViewUserData").click(function () {
 
-        $("#loadMe").modal({
-            backdrop: "static", //remove ability to close modal with click
-            keyboard: false, //remove option to close with keyboard
-            show: true //Display loader!
-        });
-
         var selectedGroups = [];
         $('#groupDropdown').find("option:selected").each(function () {
             var groupName = $(this).prop('title');
@@ -139,9 +133,14 @@ $(document).ready(function () {
         }
 
         if (selectedMasterGroups.length == 0 || selectedGroups.length == 0 || selectedGroupIDs.length == 0 || selectedCheckBoxVal == 0) {
-            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             alert("Please enter a value for Master Group, Group ID, Group, and Is Active");
         } else {
+
+            $("#loadMe").modal({
+                backdrop: "static", //remove ability to close modal with click
+                keyboard: false, //remove option to close with keyboard
+                show: true //Display loader!
+            });
 
             //Posting collected filter data back to the SubscriptionsGroupsController
             var controllerUrl = '/SubscriptionGroups/GetTableData';

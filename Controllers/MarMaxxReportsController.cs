@@ -729,6 +729,13 @@ namespace eComm_Reporting_Application.Controllers
 
                 Parameter populatedParam = getCascadingDropdownValues(classParameter, storedProcQuery, connection);
 
+                for(int i = 0; i < populatedParam.values.Count; i++)
+                {
+                    int charLocation = populatedParam.values[i].IndexOf("~");
+                    string parsedClass = populatedParam.values[i].Substring(0, charLocation);
+                    populatedParam.values[i] = parsedClass;
+                }
+
                 return Json(populatedParam);
             }
             catch (Exception e)
@@ -763,6 +770,11 @@ namespace eComm_Reporting_Application.Controllers
 
                 string selectedDepartmentsString = string.Join(",", classModel.selectedDepartments.ToArray());
                 storedProcQuery.Parameters.AddWithValue("@Department_No", selectedDepartmentsString);
+
+                for(int i = 0; i < classModel.selectedClasses.Count; i++)
+                {
+                    classModel.selectedClasses[i] = classModel.selectedClasses[i] + "~";
+                }
 
                 string selectedClassesString = string.Join(",", classModel.selectedClasses.ToArray());
                 storedProcQuery.Parameters.AddWithValue("@Class_Number", selectedClassesString);

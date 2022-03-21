@@ -58,7 +58,7 @@ $(document).ready(function () {
 
     if ($('#folderName').length) { //If the folder name has been pulled successfully
         var selectedFolderName = $('#folderName').val();
-        getDynamicReportParams(selectedReportName, selectedFolderName);
+        getDynamicReportParams(selectedReportName, selectedFolderName);                     //GETTING THE DYNAMIC REPORT PARAMETERS 
     } else {
         alert("Can't find report/folder. Please delete this report subscription record and create a new one to use updated report data.");
     }
@@ -494,7 +494,7 @@ function getDynamicReportParams(selectedReportName, selectedFolderName) {
         } else {
             createParams(paramData);
             if (paramData.parameters.length > 0) {
-                selectDynamicParams();
+                selectDynamicParams();                    //SELECTING THE DYNAMIC PARAMS
             }
             setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
         }
@@ -631,9 +631,6 @@ function createParams(paramData) {
                 }
             });
 
-            if (paramData.parameters[i].name == "Department_No" || paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category") {
-                $('#' + paramData.parameters[i].name).multiselect('disable');
-            }
         }
     }
 
@@ -679,14 +676,143 @@ function selectDynamicParams() {
                         selectedValues = selectedDynamicParamVals[paramName].split(',');
                     }
 
-                    if ($("#" + paramName).prop("disabled")) { //If it is a disabled multi-select (such as Dept, Class, Etc..)
-                        var data = [
-                            { label: selectedDynamicParamVals[paramName], value: selectedDynamicParamVals[paramName]}
-                        ];
-                        $("#" + paramName).multiselect('dataprovider', data);
-                        $("#" + paramName).val(selectedDynamicParamVals[paramName]);
-                        $("#" + paramName).multiselect("refresh");
-                        $("#" + paramName).multiselect('disable');
+                    var selectedReportName = $('#marMaxxReportName option[disabled]:selected').val();
+                    var selectedFolderName = $('#folderName').val();
+
+                    if (paramName == "Department_No") {
+
+                        var selectedBannerValues = selectedDynamicParamVals['Banner'].split(',');
+                        var controllerUrl = '/MarMaxxReports/GetDepartmentData';
+
+                        var reportData = {
+                            reportName: selectedReportName,
+                            reportFolder: selectedFolderName
+                        }
+
+                        $.ajax({
+                            type: "POST",
+                            url: controllerUrl,
+                            dataType: "json",
+                            success: successFunc,
+                            error: errorFunc,
+                            data: {
+                                'reportData': reportData,
+                                'selectedBanners': selectedBannerValues
+                            }
+                        });
+
+                        function successFunc(dropdownData) {
+                            var data = [];
+
+                            data.push({ label: "(ALL)", value: "selectAll" });
+
+                            for (i = 0; i < dropdownData.values.length; i++) {
+                                data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                            }
+
+                            $("#Department_No").multiselect('dataprovider', data);
+                            var values = selectedDynamicParamVals["Department_No"].split(',');
+                            $("#Department_No").val(values);
+                            $("#Department_No").multiselect("refresh");
+                        }
+
+                        function errorFunc(error) {
+                            alert("Error Retrieving Department Numbers: " + error);
+                        }
+
+                    } else if (paramName == "Class_Number") {
+
+                        var selectedDepartmentValues = selectedDynamicParamVals["Department_No"].split(',');
+                        var controllerUrl = '/MarMaxxReports/GetClassData';
+
+                        var reportData = {
+                            reportName: selectedReportName,
+                            reportFolder: selectedFolderName
+                        }
+
+                        var departmentData = {
+                            'reportData': reportData,
+                            'selectedDepartments': selectedDepartmentValues
+                        }
+
+                        var json_DepartmentData = JSON.stringify(departmentData);
+
+                        $.ajax({
+                            type: "POST",
+                            url: controllerUrl,
+                            dataType: "json",
+                            contentType: "application/json",
+                            success: successFunc,
+                            error: errorFunc,
+                            data: json_DepartmentData
+                        });
+
+                        function successFunc(dropdownData) {
+                            var data = [];
+
+                            data.push({ label: "(ALL)", value: "selectAll" });
+
+                            for (i = 0; i < dropdownData.values.length; i++) {
+                                data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                            }
+
+                            $("#Class_Number").multiselect('dataprovider', data);
+                            var values = selectedDynamicParamVals["Class_Number"].split(',');
+                            $("#Class_Number").val(values);
+                            $("#Class_Number").multiselect("refresh");
+                        }
+
+                        function errorFunc(error) {
+                            alert("Error Retrieving Department Numbers: " + error);
+                        }
+                  
+                    } else if (paramName == "Category") {
+
+                        var selectedDepartmentValues = selectedDynamicParamVals["Department_No"].split(',');
+                        var selectedClassValues = selectedDynamicParamVals["Class_Number"].split(',');
+                        var controllerUrl = '/MarMaxxReports/GetCategoryData';
+
+                        var reportData = {
+                            reportName: selectedReportName,
+                            reportFolder: selectedFolderName
+                        }
+
+                        var classData = {
+                            'reportData': reportData,
+                            'selectedDepartments': selectedDepartmentValues,
+                            'selectedClasses': selectedClassValues
+                        };
+
+                        var json_ClassData = JSON.stringify(classData);
+
+                        $.ajax({
+                            type: "POST",
+                            url: controllerUrl,
+                            dataType: "json",
+                            contentType: "application/json",
+                            success: successFunc,
+                            error: errorFunc,
+                            data: json_ClassData
+                        });
+
+                        function successFunc(dropdownData) {
+                            var data = [];
+
+                            data.push({ label: "(ALL)", value: "selectAll" });
+
+                            for (i = 0; i < dropdownData.values.length; i++) {
+                                data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                            }
+
+                            $("#Category").multiselect('dataprovider', data);
+                            var values = selectedDynamicParamVals["Category"].split(',');
+                            $("#Category").val(values);
+                            $("#Category").multiselect("refresh");
+                        }
+
+                        function errorFunc(error) {
+                            alert("Error Retrieving Department Numbers: " + error);
+                        }
 
                     } else { //Not disabled multi-select
                         $("#" + paramName).val(selectedValues);

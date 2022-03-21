@@ -60,8 +60,6 @@ $(document).ready(function () {
 
                 selectedFolder(tableData.report.reportName, tableData.banners);
 
-                // need to load banner dropdown and select its values
-
                 createTable(loadedTableData);
                 setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             } else {
