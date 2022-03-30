@@ -222,92 +222,107 @@ namespace eComm_Reporting_Application.Controllers
                 selectedGroups = filterData.groupsList;
                 selectedMasterGroups = filterData.masterGroupsList;
 
-                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-                SqlConnection connection = new SqlConnection(connectionstring);
-                SqlCommand tableQuery;
-
-                //Setting the isActive value for the query
-                string isActiveString;
-                if (filterData.isActive == 1)
+                if(filterData.groupsIDList == null || filterData.groupsList == null)
                 {
-                    isActiveString = "'Y'";
+                    return Json("Error retrieving table data: Group field is empty");
+                } 
+                else if (filterData.masterGroupsList == null)
+                {
+                    return Json("Error retrieving table data: Master Group field is empty");
                 }
-                else if (filterData.isActive == 2)
+                else if (filterData.isActive == 0)
                 {
-                    isActiveString = "'N'";
+                    return Json("Error retrieving table data: Is Active field is empty");
                 }
-                else //If both are selected, show all data for isActive
+                else
                 {
-                    isActiveString = "'Y', 'N'";
-                }
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                    SqlConnection connection = new SqlConnection(connectionstring);
+                    SqlCommand tableQuery;
 
-                string queryString = "SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND (User_Group LIKE ";
-
-                for(int i = 0; i<filterData.groupsList.Count; i++)
-                {
-                    if (i == 0)
+                    //Setting the isActive value for the query
+                    string isActiveString;
+                    if (filterData.isActive == 1)
                     {
-                        queryString = queryString + "'%"+filterData.groupsList[i]+"%'";
+                        isActiveString = "'Y'";
                     }
-                    else
+                    else if (filterData.isActive == 2)
                     {
-                        queryString = queryString + " OR User_Group LIKE " + "'%" + filterData.groupsList[i] + "%'";
+                        isActiveString = "'N'";
                     }
-                }
-
-                queryString = queryString + ") AND (Group_ID LIKE ";
-
-                for (int i = 0; i < filterData.groupsIDList.Count; i++)
-                {
-                    if (i == 0)
+                    else //If both are selected, show all data for isActive
                     {
-                        queryString = queryString + "'%" + filterData.groupsIDList[i] + "%'";
+                        isActiveString = "'Y', 'N'";
                     }
-                    else
-                    {
-                        queryString = queryString + " OR Group_ID LIKE " + "'%" + filterData.groupsIDList[i] + "%'";
-                    }
-                }
 
-                queryString = queryString + ") AND (Master_Group LIKE ";
+                    string queryString = "SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND (User_Group LIKE ";
 
-                for (int i = 0; i < filterData.masterGroupsList.Count; i++)
-                {
-                    if (i == 0)
+                    for (int i = 0; i < filterData.groupsList.Count; i++)
                     {
-                        queryString = queryString + "'%" + filterData.masterGroupsList[i] + "%'";
-                    }
-                    else
-                    {
-                        queryString = queryString + " OR Master_Group LIKE " + "'%" + filterData.masterGroupsList[i] + "%'";
-                    }
-                }
-
-                queryString = queryString + ");";
-
-                tableQuery = new SqlCommand(queryString, connection);
-                using (connection)
-                {
-                    connection.Open();
-                    using (SqlDataReader reader = tableQuery.ExecuteReader())
-                    {
-                        while (reader.Read())
+                        if (i == 0)
                         {
-                            UserSubscriptionTableModel entry = new UserSubscriptionTableModel();
-                            entry.ID = reader.GetInt32(0);
-                            entry.userEmail = reader.GetString(1);
-                            entry.isActive = reader.GetString(2);
-                            entry.group = reader.GetString(3);
-                            entry.groupID = reader.GetString(4);
-                            entry.masterGroup = reader.GetString(5);
-                            tableData.Add(entry);
+                            queryString = queryString + "'%" + filterData.groupsList[i] + "%'";
+                        }
+                        else
+                        {
+                            queryString = queryString + " OR User_Group LIKE " + "'%" + filterData.groupsList[i] + "%'";
                         }
                     }
-                    connection.Close();
-                }
 
-                //Returning the table data to the front end
-                return Json(tableData);
+                    queryString = queryString + ") AND (Group_ID LIKE ";
+
+                    for (int i = 0; i < filterData.groupsIDList.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                            queryString = queryString + "'%" + filterData.groupsIDList[i] + "%'";
+                        }
+                        else
+                        {
+                            queryString = queryString + " OR Group_ID LIKE " + "'%" + filterData.groupsIDList[i] + "%'";
+                        }
+                    }
+
+                    queryString = queryString + ") AND (Master_Group LIKE ";
+
+                    for (int i = 0; i < filterData.masterGroupsList.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                            queryString = queryString + "'%" + filterData.masterGroupsList[i] + "%'";
+                        }
+                        else
+                        {
+                            queryString = queryString + " OR Master_Group LIKE " + "'%" + filterData.masterGroupsList[i] + "%'";
+                        }
+                    }
+
+                    queryString = queryString + ");";
+
+                    tableQuery = new SqlCommand(queryString, connection);
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = tableQuery.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                UserSubscriptionTableModel entry = new UserSubscriptionTableModel();
+                                entry.ID = reader.GetInt32(0);
+                                entry.userEmail = reader.GetString(1);
+                                entry.isActive = reader.GetString(2);
+                                entry.group = reader.GetString(3);
+                                entry.groupID = reader.GetString(4);
+                                entry.masterGroup = reader.GetString(5);
+                                tableData.Add(entry);
+                            }
+                        }
+                        connection.Close();
+                    }
+
+                    //Returning the table data to the front end
+                    return Json(tableData);
+                }
             }
             catch (Exception e)
             {
@@ -368,21 +383,29 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-                SqlConnection connection = new SqlConnection(connectionstring);
-
-                string queryString = "DELETE FROM UserSubscriptions WHERE ID="+ID;
-
-                SqlCommand deleteUserQuery = new SqlCommand(queryString, connection);
-                using (connection)
+                if(ID != 0)
                 {
-                    connection.Open();
-                    SqlDataReader reader = deleteUserQuery.ExecuteReader();
-                    connection.Close();
-                }
-                tableData.RemoveAll(x => x.ID == ID);
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                    SqlConnection connection = new SqlConnection(connectionstring);
 
-                return Json("Success Deleting User: " );
+                    string queryString = "DELETE FROM UserSubscriptions WHERE ID=" + ID;
+
+                    SqlCommand deleteUserQuery = new SqlCommand(queryString, connection);
+                    using (connection)
+                    {
+                        connection.Open();
+                        SqlDataReader reader = deleteUserQuery.ExecuteReader();
+                        connection.Close();
+                    }
+                    tableData.RemoveAll(x => x.ID == ID);
+
+                    return Json("Success Deleting User: ");
+                }
+                else
+                {
+                    return Json("Error deleting user: ID is null");
+                }
+                
             }
             catch (Exception e)
             {

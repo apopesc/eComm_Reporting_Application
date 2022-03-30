@@ -187,30 +187,32 @@ $(document).ready(function () {
             .find(".userSubscriptionsEntry_Email")
             .text();
 
-        if (confirm('Are you sure you want to delete user: ' + selectedEmail + '?')) {
-            $selectedRow.addClass('selected');
-            var controllerUrl = '/SubscriptionGroups/DeleteUserSub';
+        if (_ID != null && _ID != "") {
+            if (confirm('Are you sure you want to delete user: ' + selectedEmail + '?')) {
+                $selectedRow.addClass('selected');
+                var controllerUrl = '/SubscriptionGroups/DeleteUserSub';
 
-            $.ajax({
-                type: "POST",
-                url: controllerUrl,
-                dataType: "json",
-                success: successFunc,
-                error: errorFunc,
-                data: { 'ID': _ID }
-            });
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: { 'ID': _ID }
+                });
 
-            function successFunc(response) {
-                //$selectedRow.remove();
-                userTable.row('.selected').remove().draw(false);
-                alert(response + selectedEmail);
+                function successFunc(response) {
+                    //$selectedRow.remove();
+                    userTable.row('.selected').remove().draw(false);
+                    alert(response + selectedEmail);
+                }
+
+                function errorFunc(error) {
+                    alert(error);
+                }
+            } else { //User clicks no
+
             }
-
-            function errorFunc(error) {
-                alert (error);
-            }
-        } else { //User clicks no
-
         }
     });
 
@@ -218,7 +220,12 @@ $(document).ready(function () {
         var $selectedRow = $(this).closest("tr");
         var _ID = $selectedRow.attr('id');
 
-        window.location = "/SubscriptionGroups/EditUserSub?ID=" + _ID;
+        if (_ID != null && _ID != "") {
+            window.location = "/SubscriptionGroups/EditUserSub?ID=" + _ID;
+        } else {
+            alert("Can't load edit page: User ID is null. (Try deleting the user and recreating it)")
+        }
+
     });
 
     function createTable(tableData) {
