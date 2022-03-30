@@ -1,4 +1,14 @@
-﻿$(document).ready(function () {
+﻿
+const regex = /^[a-z -]+$/i;
+[
+    'A-B',
+    'ABC XYZ-ASD A',
+    'ABC*',
+    'AB IC-B_',
+    'AB C$%^'
+]
+
+$(document).ready(function () {
     $('#MarMaxxReports_Link').addClass('selected-nav-option');
 
     $('#marMaxxGroup').multiselect({
@@ -150,6 +160,13 @@
 
     $('#saveSubscription').on('click', '#saveMarmaxxSubscription', function () {
         var subscriptionName = $('#subscriptionName').val();
+
+        var isValidString = false;
+
+        if (regex.test(subscriptionName)) {
+            isValidString = true;
+        }
+
         var groupNames = $('#marMaxxGroup').val();
         var reportName = $('#marMaxxReportDropdown').val();
         var groupIDs = [];
@@ -169,6 +186,8 @@
             alert("Please select a value for Group Name");
         } else if (reportName.length == 0) {
             alert("Please select a value for Report Name");
+        } else if (isValidString == false) {
+            alert("Please do not use special characters for the subscription name, only space and hyphen(-) are allowed.");
         } else {
             var isAllDept = false;
             var isAllClass = false;
@@ -260,9 +279,13 @@
             });
 
             function successFunc(returnedData) {
-                alert(returnedData.message + subscriptionName);
-                if (returnedData.result == 'Redirect') {
-                    window.location = returnedData.url;
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
+                    alert(returnedData.message + subscriptionName);
+                    if (returnedData.result == 'Redirect') {
+                        window.location = returnedData.url;
+                    }
                 }
             }
 
