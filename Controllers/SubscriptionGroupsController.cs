@@ -431,39 +431,74 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                bool isValidEmail = false;
 
-                SqlConnection connection = new SqlConnection(connectionstring);
-
-                string editUserQueryString = "UPDATE UserSubscriptions SET User_Email='" + userEmail + "', Is_Active='" + isActive + "', User_Group='" + selectedGroups + "', Group_ID='" + selectedGroupIDs + "', Master_Group='" + selectedMasterGroups + "' " +
-                    "WHERE ID=" + ID + ";";
-
-                SqlCommand editUserQuery = new SqlCommand(editUserQueryString, connection);
-
-                using (connection)
+                if (userEmail != "")
                 {
-                    connection.Open();
-                    using SqlDataReader reader = editUserQuery.ExecuteReader();
-                    connection.Close();
-                }
+                    int substringIndex = userEmail.IndexOf("@");
 
-                UserSubscriptionTableModel editedEntry = new UserSubscriptionTableModel();
-
-                for(int i = 0; i < tableData.Count; i++)
-                {
-                    if(tableData[i].ID == ID)
+                    if (substringIndex != -1)
                     {
-                        tableData[i].userEmail = userEmail;
-                        tableData[i].isActive = isActive;
-                        tableData[i].groupID = selectedGroupIDs;
-                        tableData[i].group = selectedGroups;
-                        tableData[i].masterGroup = selectedMasterGroups;
-                        break;
+                        string emailDomain = userEmail.Substring(substringIndex + 1);
+                        if (emailDomain == "tjx.com" || emailDomain == "tjxcanada.ca" || emailDomain == "tjxeurope.com")
+                        {
+                            isValidEmail = true;
+                        }
                     }
 
                 }
 
-                return Json(new { result = "Redirect", url = Url.Action("Index", "SubscriptionGroups") });
+                if (isValidEmail == false)
+                {
+                    return Json("Error Saving to Database: User Email field is empty, or not a TJX email.");
+                }
+                else if (isActive == "")
+                {
+                    return Json("Error Saving to Database: Is Active field is empty.");
+                }
+                else if (selectedGroupIDs == "" || selectedGroups == "")
+                {
+                    return Json("Error Saving to Database: Group field is empty.");
+                }
+                else if (selectedMasterGroups == "")
+                {
+                    return Json("Error Saving to Database: Master Group field is empty.");
+                }
+                else
+                {
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+
+                    SqlConnection connection = new SqlConnection(connectionstring);
+
+                    string editUserQueryString = "UPDATE UserSubscriptions SET User_Email='" + userEmail + "', Is_Active='" + isActive + "', User_Group='" + selectedGroups + "', Group_ID='" + selectedGroupIDs + "', Master_Group='" + selectedMasterGroups + "' " +
+                        "WHERE ID=" + ID + ";";
+
+                    SqlCommand editUserQuery = new SqlCommand(editUserQueryString, connection);
+
+                    using (connection)
+                    {
+                        connection.Open();
+                        using SqlDataReader reader = editUserQuery.ExecuteReader();
+                        connection.Close();
+                    }
+
+                    UserSubscriptionTableModel editedEntry = new UserSubscriptionTableModel();
+
+                    for (int i = 0; i < tableData.Count; i++)
+                    {
+                        if (tableData[i].ID == ID)
+                        {
+                            tableData[i].userEmail = userEmail;
+                            tableData[i].isActive = isActive;
+                            tableData[i].groupID = selectedGroupIDs;
+                            tableData[i].group = selectedGroups;
+                            tableData[i].masterGroup = selectedMasterGroups;
+                            break;
+                        }
+
+                    }
+                    return Json(new { result = "Redirect", url = Url.Action("Index", "SubscriptionGroups") });
+                }
             }
             catch (Exception e)
             {
