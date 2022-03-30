@@ -58,7 +58,7 @@ $(document).ready(function () {
 
     if ($('#folderName').length) { //If the folder name has been pulled successfully
         var selectedFolderName = $('#folderName').val();
-        getDynamicReportParams(selectedReportName, selectedFolderName);
+        getDynamicReportParams(selectedReportName, selectedFolderName);                     //GETTING THE DYNAMIC REPORT PARAMETERS 
     } else {
         alert("Can't find report/folder. Please delete this report subscription record and create a new one to use updated report data.");
     }
@@ -494,9 +494,10 @@ function getDynamicReportParams(selectedReportName, selectedFolderName) {
         } else {
             createParams(paramData);
             if (paramData.parameters.length > 0) {
-                selectDynamicParams();
+                selectDynamicParams();                    //SELECTING THE DYNAMIC PARAMS
+            } else {
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             }
-            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
         }
     }
 
@@ -631,9 +632,6 @@ function createParams(paramData) {
                 }
             });
 
-            if (paramData.parameters[i].name == "Department_No" || paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category") {
-                $('#' + paramData.parameters[i].name).multiselect('disable');
-            }
         }
     }
 
@@ -655,6 +653,7 @@ function createParams(paramData) {
 }
 
 function selectDynamicParams() {
+
     var selectedDynamicParamVals = {};
 
     //Getting the selected dynamic parameter values from hidden
@@ -679,16 +678,7 @@ function selectDynamicParams() {
                         selectedValues = selectedDynamicParamVals[paramName].split(',');
                     }
 
-                    if ($("#" + paramName).prop("disabled")) { //If it is a disabled multi-select (such as Dept, Class, Etc..)
-                        var data = [
-                            { label: selectedDynamicParamVals[paramName], value: selectedDynamicParamVals[paramName]}
-                        ];
-                        $("#" + paramName).multiselect('dataprovider', data);
-                        $("#" + paramName).val(selectedDynamicParamVals[paramName]);
-                        $("#" + paramName).multiselect("refresh");
-                        $("#" + paramName).multiselect('disable');
-
-                    } else { //Not disabled multi-select
+                    if (paramName != "Department_No" && paramName != "Class_Number" && paramName != "Category") { //Not disabled multi-select
                         $("#" + paramName).val(selectedValues);
                         $("#" + paramName).multiselect('refresh');
                     }
@@ -702,5 +692,190 @@ function selectDynamicParams() {
                 $("#" + paramName).val(selectedDynamicParamVals[paramName]);
             }
         }
+    }
+
+    var selectedReportName = $('#marMaxxReportName option[disabled]:selected').val();
+    var selectedFolderName = $('#folderName').val();
+
+    if ("Department_No" in selectedDynamicParamVals) {
+
+        var selectedBannerValues = selectedDynamicParamVals['Banner'].split(',');
+        var controllerUrl = '/MarMaxxReports/GetDepartmentData';
+
+        var reportData = {
+            reportName: selectedReportName,
+            reportFolder: selectedFolderName
+        }
+
+        $.ajax({
+            type: "POST",
+            url: controllerUrl,
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc,
+            data: {
+                'reportData': reportData,
+                'selectedBanners': selectedBannerValues
+            }
+        });
+
+        function successFunc(dropdownData) {
+            var data = [];
+
+            data.push({ label: "(ALL)", value: "selectAll" });
+
+            for (i = 0; i < dropdownData.values.length; i++) {
+                data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+            }
+
+            $("#Department_No").multiselect('dataprovider', data);
+            var values = selectedDynamicParamVals["Department_No"].split(',');
+
+            if (values != null && values[0] == "ALL") {
+                values = "selectAll";
+            }
+
+            $("#Department_No").val(values);
+            $("#Department_No").multiselect("refresh");
+
+            if ("Class_Number" in selectedDynamicParamVals) {
+                var selectedDepartmentValues = selectedDynamicParamVals["Department_No"].split(',');
+
+                if (selectedDepartmentValues.includes('ALL')) {
+                    $("#Department_No option").each(function () {
+                        var thisOptionValue = $(this).val();
+                        if (thisOptionValue != 'selectAll') {
+                            selectedDepartmentValues.push(thisOptionValue);
+                        }
+                    });
+                }
+
+                var controllerUrl = '/MarMaxxReports/GetClassData';
+
+                var reportData = {
+                    reportName: selectedReportName,
+                    reportFolder: selectedFolderName
+                }
+
+                var departmentData = {
+                    'reportData': reportData,
+                    'selectedDepartments': selectedDepartmentValues
+                }
+
+                var json_DepartmentData = JSON.stringify(departmentData);
+
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: json_DepartmentData
+                });
+
+                function successFunc(dropdownData) {
+                    var data = [];
+
+                    data.push({ label: "(ALL)", value: "selectAll" });
+
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Class_Number").multiselect('dataprovider', data);
+                    var values = selectedDynamicParamVals["Class_Number"].split(',');
+
+                    if (values != null && values[0] == "ALL") {
+                        values = "selectAll";
+                    }
+
+                    $("#Class_Number").val(values);
+                    $("#Class_Number").multiselect("refresh");
+
+                    if ("Category" in selectedDynamicParamVals) {
+                        var selectedClassValues = selectedDynamicParamVals["Class_Number"].split(',');
+
+                        if (selectedClassValues.includes('ALL')) {
+                            $("#Class_Number option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    selectedClassValues.push(thisOptionValue);
+                                }
+                            });
+                        }
+
+                        var controllerUrl = '/MarMaxxReports/GetCategoryData';
+
+                        var reportData = {
+                            reportName: selectedReportName,
+                            reportFolder: selectedFolderName
+                        }
+
+                        var classData = {
+                            'reportData': reportData,
+                            'selectedDepartments': selectedDepartmentValues,
+                            'selectedClasses': selectedClassValues
+                        };
+
+                        var json_ClassData = JSON.stringify(classData);
+
+                        $.ajax({
+                            type: "POST",
+                            url: controllerUrl,
+                            dataType: "json",
+                            contentType: "application/json",
+                            success: successFunc,
+                            error: errorFunc,
+                            data: json_ClassData
+                        });
+
+                        function successFunc(dropdownData) {
+                            var data = [];
+
+                            data.push({ label: "(ALL)", value: "selectAll" });
+
+                            for (i = 0; i < dropdownData.values.length; i++) {
+                                data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                            }
+
+                            $("#Category").multiselect('dataprovider', data);
+                            var values = selectedDynamicParamVals["Category"].split(',');
+
+                            if (values != null && values[0] == "ALL") {
+                                values = "selectAll";
+                            }
+
+                            $("#Category").val(values);
+                            $("#Category").multiselect("refresh");
+
+                            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                        }
+
+                        function errorFunc(error) {
+                            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                            alert("Error Retrieving Categories: " + error);
+                        }
+                    } else {
+                        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                    }
+
+                }
+
+                function errorFunc(error) {
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                    alert("Error Retrieving Classes: " + error);
+                }
+            } else {
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+            }
+        }
+
+        function errorFunc(error) {
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+            alert("Error Retrieving Department Numbers: " + error);
+        }
+    } else {
+        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
     }
 }

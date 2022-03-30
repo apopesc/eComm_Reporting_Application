@@ -144,10 +144,14 @@ C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Appli
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\lib\jquery\dist\jquery.min.js
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\lib\jquery\dist\jquery.min.map
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\lib\jquery\LICENSE.txt
-C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Videos\Add report subscription.mp4
-C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Videos\Add user to subscription group.mp4
-C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Videos\Verify report subscriptions.mp4
-C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Videos\Verify subscription group.mp4
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Videos\Adding a new master group or group.mp4
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Videos\Adding a report subscription.mp4
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Videos\Adding a user.mp4
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Videos\copying a report subscription.mp4
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Videos\editing a report subscription.mp4
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Videos\how to edit a user.mp4
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Videos\verify users in group.mp4
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\Videos\viewing report subscriptions.mp4
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\appsettings.Development.json
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\appsettings.json
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\JSON Report Parameter Mapping - Sierra.json

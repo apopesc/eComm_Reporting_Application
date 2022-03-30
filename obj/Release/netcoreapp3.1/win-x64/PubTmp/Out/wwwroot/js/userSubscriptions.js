@@ -11,6 +11,7 @@ $(document).ready(function () {
     $('#groupIDDropdown option').each(function () {
         groupIDValues.push($(this).val());
     });
+
     var groupDropdownValues = [];
     $("#groupDropdown option").each(function () {
         groupDropdownValues.push($(this).val());
@@ -21,20 +22,46 @@ $(document).ready(function () {
     });
 
     $('#groupDropdown').multiselect({
-        nonSelectedText: 'Select a group...',
-        includeSelectAllOption: true,
         enableCaseInsensitiveFiltering: true,
+        enableHTML: true,
+        includeSelectAllOption: true,
+        buttonText: function (options, select) {
+            var numberOfOptions = $('#groupDropdown option').length;
+
+            if (options.length == 0) {
+                return 'Select a group...';
+            }
+
+            else if (options.length == numberOfOptions) {
+                return 'All selected ('+numberOfOptions+')';
+            }
+
+            else{
+                var labels = [];
+                options.each(function () {
+                    if ($(this).attr('label') !== undefined) {
+                        labels.push($(this).attr('value'));
+                    }
+                    else {
+                        labels.push($(this).html());
+                    }
+                });
+                return labels.join(', ') + '';
+            }
+        }
     });
+
     $('#masterGroupDropdown').multiselect({
         nonSelectedText: 'Select a master group...',
         includeSelectAllOption: true,
         enableCaseInsensitiveFiltering: true,
     });
-    $('#groupIDDropdown').multiselect({
-        nonSelectedText: 'Select a group ID...',
-        includeSelectAllOption: true,
-        enableCaseInsensitiveFiltering: true,
-    });
+
+    //$('#groupIDDropdown').multiselect({
+    //    nonSelectedText: 'Select a group ID...',
+    //    includeSelectAllOption: true,
+    //    enableCaseInsensitiveFiltering: true,
+    //});
 
     $("#loadMe").modal({
         backdrop: "static", //remove ability to close modal with click
@@ -60,16 +87,17 @@ $(document).ready(function () {
         } else {
             if (returnedData != null) {
 
-                $('#groupIDDropdown').val(returnedData.selectedGroupIDs);
-                $('#groupIDDropdown').multiselect('refresh');
-
-                $('#groupDropdown').val(returnedData.selectedGroups);
-                $('#groupDropdown').multiselect('refresh');
+                //$('#groupIDDropdown').val(returnedData.selectedGroupIDs);
+                //$('#groupIDDropdown').multiselect('refresh');
 
                 $('#masterGroupDropdown').val(returnedData.selectedMasterGroups);
                 $('#masterGroupDropdown').multiselect('refresh');
 
+                selectedMasterGroup(returnedData.selectedGroupIDs);
+
                 createTable(returnedData.tableData);
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+            } else {
                 setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             }
         }
@@ -83,14 +111,13 @@ $(document).ready(function () {
 
     $("#btnViewUserData").click(function () {
 
-        $("#loadMe").modal({
-            backdrop: "static", //remove ability to close modal with click
-            keyboard: false, //remove option to close with keyboard
-            show: true //Display loader!
+        var selectedGroups = [];
+        $('#groupDropdown').find("option:selected").each(function () {
+            var groupName = $(this).prop('title');
+            selectedGroups.push(groupName);
         });
 
-        var selectedGroups = $('#groupDropdown').val();
-        var selectedGroupIDs = $('#groupIDDropdown').val();
+        var selectedGroupIDs = $('#groupDropdown').val();
         var selectedMasterGroups = $('#masterGroupDropdown').val();
 
         var selectedCheckBoxVal = 0;
@@ -106,9 +133,14 @@ $(document).ready(function () {
         }
 
         if (selectedMasterGroups.length == 0 || selectedGroups.length == 0 || selectedGroupIDs.length == 0 || selectedCheckBoxVal == 0) {
-            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             alert("Please enter a value for Master Group, Group ID, Group, and Is Active");
         } else {
+
+            $("#loadMe").modal({
+                backdrop: "static", //remove ability to close modal with click
+                keyboard: false, //remove option to close with keyboard
+                show: true //Display loader!
+            });
 
             //Posting collected filter data back to the SubscriptionsGroupsController
             var controllerUrl = '/SubscriptionGroups/GetTableData';
@@ -271,6 +303,50 @@ $(document).ready(function () {
     }
 
 });
+
+function selectedMasterGroup(selectedVals = []) {
+    if ($('#masterGroupDropdown :selected').length == 0) { //Nothing is selected in the dropdown (last value is deselected)
+
+        var data = [];
+        $("#groupDropdown").multiselect('dataprovider', data);
+        $('#groupDropdown').multiselect('disable');
+
+    } else { //Something is selected in the dropdown
+        var controllerUrl = '/SubscriptionGroups/GetGroupValues';
+        var masterGroupList = $('#masterGroupDropdown').val();
+
+        $.ajax({
+            type: "POST",
+            url: controllerUrl,
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc,
+            data: { 'masterGroupList': masterGroupList }
+        });
+
+        function successFunc(dropdownData) {
+            //var data = [{label: 'Group ID', value: 'demoOption', disabled: true, children: [{ label: 'Group Name', value: '', disabled: true }]}];
+            var data = [];
+
+            for (var groupID in dropdownData) {
+                var dropdownEntry = { label: "<b>ID: </b>" + groupID + " </br><b>Name: </b>" + dropdownData[groupID], value: groupID , title: dropdownData[groupID] };
+                data.push(dropdownEntry);
+            }
+
+            $("#groupDropdown").multiselect('dataprovider', data);
+            $('#groupDropdown').multiselect('enable');
+
+            if (selectedVals.length > 0) {
+                $('#groupDropdown').val(selectedVals);
+                $('#groupDropdown').multiselect('refresh');
+            }
+        }
+
+        function errorFunc(error) {
+            alert("Error Retrieving Report Names: " + error);
+        }
+    }
+}
 
 
 //$('#btnSubmitUser').click(function () {
