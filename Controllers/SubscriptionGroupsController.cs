@@ -124,50 +124,87 @@ namespace eComm_Reporting_Application.Controllers
             try
             {
                 int userID = 0;
+                bool isValidEmail = false;
 
-                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-
-                SqlConnection connection = new SqlConnection(connectionstring);
-
-                string addUserQueryString = "INSERT INTO UserSubscriptions (User_Email, Is_Active, User_Group, Group_ID, Master_Group) " +
-                    "VALUES ('" + userEmail + "', '" + isActive + "', '" + selectedGroups + "', '" + selectedGroupIDs + "', '" + selectedMasterGroups + "');";
-
-                SqlCommand addUserQuery = new SqlCommand(addUserQueryString, connection);
-
-                string getUserIDString = "SELECT TOP 1* FROM UserSubscriptions ORDER BY ID Desc;"; //Getting the ID by getting the most recently added row
-
-                SqlCommand getUserID = new SqlCommand(getUserIDString, connection);
-
-                using (connection)
+                if(userEmail != "")
                 {
-                    connection.Open();
-                    using SqlDataReader reader = addUserQuery.ExecuteReader();
-                    connection.Close();
+                    int substringIndex = userEmail.IndexOf("@");
 
-                    connection.Open();
-                    using (SqlDataReader reader_ID = getUserID.ExecuteReader())
+                    if(substringIndex != -1)
                     {
-                        while (reader_ID.Read())
+                        string emailDomain = userEmail.Substring(substringIndex + 1);
+                        if (emailDomain == "tjx.com" || emailDomain == "tjxcanada.ca" || emailDomain == "tjxeurope.com")
                         {
-                            var id = reader_ID.GetInt32(0);
-                            userID = id;
+                            isValidEmail = true;
                         }
                     }
 
-                    connection.Close();
                 }
 
-                UserSubscriptionTableModel newEntry = new UserSubscriptionTableModel();
-                newEntry.ID = userID;
-                newEntry.userEmail = userEmail;
-                newEntry.isActive = isActive;
-                newEntry.groupID = selectedGroupIDs;
-                newEntry.group = selectedGroups;
-                newEntry.masterGroup = selectedMasterGroups;
+                if(isValidEmail == false)
+                {
+                    return Json("Error Saving to Database: User Email field is empty, or not a TJX email.");
+                }
+                else if(isActive == "")
+                {
+                    return Json("Error Saving to Database: Is Active field is empty.");
+                }
+                else if(selectedGroupIDs == "" || selectedGroups == "")
+                {
+                    return Json("Error Saving to Database: Group field is empty.");
+                }
+                else if (selectedMasterGroups == "")
+                {
+                    return Json("Error Saving to Database: Master Group field is empty.");
+                }
+                else
+                {
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
 
-                tableData.Insert(0, newEntry); //Adding new user to start of table
+                    SqlConnection connection = new SqlConnection(connectionstring);
 
-                return Json(new { result = "Redirect", url = Url.Action("Index", "SubscriptionGroups") });
+                    string addUserQueryString = "INSERT INTO UserSubscriptions (User_Email, Is_Active, User_Group, Group_ID, Master_Group) " +
+                        "VALUES ('" + userEmail + "', '" + isActive + "', '" + selectedGroups + "', '" + selectedGroupIDs + "', '" + selectedMasterGroups + "');";
+
+                    SqlCommand addUserQuery = new SqlCommand(addUserQueryString, connection);
+
+                    string getUserIDString = "SELECT TOP 1* FROM UserSubscriptions ORDER BY ID Desc;"; //Getting the ID by getting the most recently added row
+
+                    SqlCommand getUserID = new SqlCommand(getUserIDString, connection);
+
+                    using (connection)
+                    {
+                        connection.Open();
+                        using SqlDataReader reader = addUserQuery.ExecuteReader();
+                        connection.Close();
+
+                        connection.Open();
+                        using (SqlDataReader reader_ID = getUserID.ExecuteReader())
+                        {
+                            while (reader_ID.Read())
+                            {
+                                var id = reader_ID.GetInt32(0);
+                                userID = id;
+                            }
+                        }
+
+                        connection.Close();
+                    }
+
+                    UserSubscriptionTableModel newEntry = new UserSubscriptionTableModel();
+                    newEntry.ID = userID;
+                    newEntry.userEmail = userEmail;
+                    newEntry.isActive = isActive;
+                    newEntry.groupID = selectedGroupIDs;
+                    newEntry.group = selectedGroups;
+                    newEntry.masterGroup = selectedMasterGroups;
+
+                    tableData.Insert(0, newEntry); //Adding new user to start of table
+
+                    return Json(new { result = "Redirect", url = Url.Action("Index", "SubscriptionGroups") });
+                }
+
+               
             }
             catch (Exception e)
             {
