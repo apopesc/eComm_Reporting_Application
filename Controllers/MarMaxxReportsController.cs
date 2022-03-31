@@ -394,122 +394,130 @@ namespace eComm_Reporting_Application.Controllers
             //ReportServerDB = ReportDatabase
             try
             {
-                reportParams = GetReportParameters(reportData);
+                if(reportData != null && reportData.reportName != "" && reportData.reportFolder != "")
+                {
+                    reportParams = GetReportParameters(reportData);
 
-                if(reportData.reportName != selectedReport.reportName)
-                {
-                    selectedReport = reportData;
-                    changedReport = true;
-                }
-
-                string connectionstring = "";
-
-                //There are other data sources that need to be mapped here
-                if (reportParams.dataSource == "ReportDataSource")
-                {
-                    connectionstring = configuration.GetConnectionString("NetSuite_DB");
-                }
-                else if (reportParams.dataSource == "eCom_ReportDB")
-                {
-                    connectionstring = configuration.GetConnectionString("eCom_ReportDB");
-                }
-                else if (reportParams.dataSource == "ReportServerDB")
-                {
-                    connectionstring = configuration.GetConnectionString("ReportServer");
-                }
-                else if (reportParams.dataSource == "eCom_WMSDB")
-                {
-                    connectionstring = configuration.GetConnectionString("eCom_WMSDB");
-                }
-                else if (reportParams.dataSource == "Transportation")
-                {
-                    connectionstring = configuration.GetConnectionString("Transportation");
-                }
-                else if (reportParams.dataSource == "VCTool")
-                {
-                    connectionstring = configuration.GetConnectionString("VCTool");
-                }
-                else if (reportParams.dataSource == "eCom_RefDB")
-                {
-                    connectionstring = configuration.GetConnectionString("eCom_RefDB");
-                }
-                else if (reportParams.dataSource == "ECD")
-                {
-                    connectionstring = configuration.GetConnectionString("ECD");
-                }
-                else if (reportParams.dataSource == "TJX_MFP_Marmaxx")
-                {
-                    connectionstring = configuration.GetConnectionString("TJX_MFP_Marmaxx");
-                }
-
-                for (int i = 0; i < reportParams.parameters.Count; i++)
-                {
-                    if ( (reportParams.parameters[i].type == "Dropdown" || reportParams.parameters[i].type == "Textbox" || reportParams.parameters[i].type == "MultiDropdown") && (reportParams.parameters[i].queryType == "Stored Procedure" || reportParams.parameters[i].queryType == "In Line"))
+                    if (reportData.reportName != selectedReport.reportName)
                     {
-                        SqlConnection connection = new SqlConnection(connectionstring);
-                        SqlCommand storedProcQuery = new SqlCommand(reportParams.parameters[i].query, connection);
+                        selectedReport = reportData;
+                        changedReport = true;
+                    }
 
-                        if (reportParams.parameters[i].queryType == "Stored Procedure")
-                        {
-                            storedProcQuery.CommandType = CommandType.StoredProcedure;
-                        }
-                        
-                        using (connection)
-                        {
-                            List<string> dropdownValues = new List<string>();
-                            List<string> dropdownLabels = new List<string>();
+                    string connectionstring = "";
 
-                            if(reportParams.parameters[i].name != "Department_No" && reportParams.parameters[i].name != "Class_Number" && reportParams.parameters[i].name != "Category") //these parameters take values from banner and each other to return data.
+                    //There are other data sources that need to be mapped here
+                    if (reportParams.dataSource == "ReportDataSource")
+                    {
+                        connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                    }
+                    else if (reportParams.dataSource == "eCom_ReportDB")
+                    {
+                        connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                    }
+                    else if (reportParams.dataSource == "ReportServerDB")
+                    {
+                        connectionstring = configuration.GetConnectionString("ReportServer");
+                    }
+                    else if (reportParams.dataSource == "eCom_WMSDB")
+                    {
+                        connectionstring = configuration.GetConnectionString("eCom_WMSDB");
+                    }
+                    else if (reportParams.dataSource == "Transportation")
+                    {
+                        connectionstring = configuration.GetConnectionString("Transportation");
+                    }
+                    else if (reportParams.dataSource == "VCTool")
+                    {
+                        connectionstring = configuration.GetConnectionString("VCTool");
+                    }
+                    else if (reportParams.dataSource == "eCom_RefDB")
+                    {
+                        connectionstring = configuration.GetConnectionString("eCom_RefDB");
+                    }
+                    else if (reportParams.dataSource == "ECD")
+                    {
+                        connectionstring = configuration.GetConnectionString("ECD");
+                    }
+                    else if (reportParams.dataSource == "TJX_MFP_Marmaxx")
+                    {
+                        connectionstring = configuration.GetConnectionString("TJX_MFP_Marmaxx");
+                    }
+
+                    for (int i = 0; i < reportParams.parameters.Count; i++)
+                    {
+                        if ((reportParams.parameters[i].type == "Dropdown" || reportParams.parameters[i].type == "Textbox" || reportParams.parameters[i].type == "MultiDropdown") && (reportParams.parameters[i].queryType == "Stored Procedure" || reportParams.parameters[i].queryType == "In Line"))
+                        {
+                            SqlConnection connection = new SqlConnection(connectionstring);
+                            SqlCommand storedProcQuery = new SqlCommand(reportParams.parameters[i].query, connection);
+
+                            if (reportParams.parameters[i].queryType == "Stored Procedure")
                             {
-                                connection.Open();
-                                using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
-                                {
-                                    while (stored_proc_reader.Read())
-                                    {
-                                        var proc_data_length = stored_proc_reader.FieldCount;
-
-                                        if (proc_data_length > 1)
-                                        {
-                                            for (int j = 0; j < proc_data_length; j++)
-                                            {
-                                                var proc_data_name = stored_proc_reader.GetName(j);
-                                                if (proc_data_name == reportParams.parameters[i].values[0])
-                                                {
-                                                    var proc_val = stored_proc_reader.GetValue(j);
-
-                                                    string dropdownVal = proc_val.ToString();
-                                                    dropdownValues.Add(dropdownVal);
-                                                }
-
-                                                if (proc_data_name == reportParams.parameters[i].labels[0])
-                                                {
-                                                    var proc_label = stored_proc_reader.GetValue(j);
-
-                                                    string dropdownLab = proc_label.ToString();
-                                                    dropdownLabels.Add(dropdownLab);
-                                                }
-                                            }
-                                        }
-                                        else //if only one column is returned from the stored procedure, put in both labels and values
-                                        {
-                                            var proc_val = stored_proc_reader.GetValue(0);
-
-                                            string dropdownEntry = proc_val.ToString();
-                                            dropdownValues.Add(dropdownEntry);
-                                            dropdownLabels.Add(dropdownEntry);
-                                        }
-                                    }
-                                }
-                                connection.Close();
+                                storedProcQuery.CommandType = CommandType.StoredProcedure;
                             }
 
-                            reportParams.parameters[i].values = dropdownValues;
-                            reportParams.parameters[i].labels = dropdownLabels; 
+                            using (connection)
+                            {
+                                List<string> dropdownValues = new List<string>();
+                                List<string> dropdownLabels = new List<string>();
+
+                                if (reportParams.parameters[i].name != "Department_No" && reportParams.parameters[i].name != "Class_Number" && reportParams.parameters[i].name != "Category") //these parameters take values from banner and each other to return data.
+                                {
+                                    connection.Open();
+                                    using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                                    {
+                                        while (stored_proc_reader.Read())
+                                        {
+                                            var proc_data_length = stored_proc_reader.FieldCount;
+
+                                            if (proc_data_length > 1)
+                                            {
+                                                for (int j = 0; j < proc_data_length; j++)
+                                                {
+                                                    var proc_data_name = stored_proc_reader.GetName(j);
+                                                    if (proc_data_name == reportParams.parameters[i].values[0])
+                                                    {
+                                                        var proc_val = stored_proc_reader.GetValue(j);
+
+                                                        string dropdownVal = proc_val.ToString();
+                                                        dropdownValues.Add(dropdownVal);
+                                                    }
+
+                                                    if (proc_data_name == reportParams.parameters[i].labels[0])
+                                                    {
+                                                        var proc_label = stored_proc_reader.GetValue(j);
+
+                                                        string dropdownLab = proc_label.ToString();
+                                                        dropdownLabels.Add(dropdownLab);
+                                                    }
+                                                }
+                                            }
+                                            else //if only one column is returned from the stored procedure, put in both labels and values
+                                            {
+                                                var proc_val = stored_proc_reader.GetValue(0);
+
+                                                string dropdownEntry = proc_val.ToString();
+                                                dropdownValues.Add(dropdownEntry);
+                                                dropdownLabels.Add(dropdownEntry);
+                                            }
+                                        }
+                                    }
+                                    connection.Close();
+                                }
+
+                                reportParams.parameters[i].values = dropdownValues;
+                                reportParams.parameters[i].labels = dropdownLabels;
+                            }
                         }
                     }
-                }
 
-                return Json(reportParams);
+                    return Json(reportParams);
+                } 
+                else
+                {
+                    return Json("Error retrieving report parameters: Report Name or Report Folder is empty");
+                }
+               
             }
             catch (Exception e)
             {
@@ -682,35 +690,46 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                ReportParameterModel local_reportParams = GetReportParameters(reportData);
-                string connectionstring = "";
-
-                //There are other data sources that need to be mapped here
-                if (local_reportParams.dataSource == "ReportDataSource")
+                if(selectedBanners.Count == 0)
                 {
-                    connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                    return Json("Error Getting Department Data: Banner field is empty");
                 }
-                else if (local_reportParams.dataSource == "eCom_ReportDB")
+                else if(reportData == null || reportData.reportName == "" || reportData.reportFolder == "")
                 {
-                    connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                    return Json("Error Getting Department Data: Report Name or Report Folder is empty");
                 }
+                else
+                {
+                    ReportParameterModel local_reportParams = GetReportParameters(reportData);
+                    string connectionstring = "";
 
-                Parameter departmentParameter = local_reportParams.parameters.Find(x => x.name == "Department_No");
+                    //There are other data sources that need to be mapped here
+                    if (local_reportParams.dataSource == "ReportDataSource")
+                    {
+                        connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                    }
+                    else if (local_reportParams.dataSource == "eCom_ReportDB")
+                    {
+                        connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                    }
 
-                SqlConnection connection = new SqlConnection(connectionstring);
-                SqlCommand storedProcQuery = new SqlCommand(departmentParameter.query, connection);
-                storedProcQuery.CommandType = CommandType.StoredProcedure;
+                    Parameter departmentParameter = local_reportParams.parameters.Find(x => x.name == "Department_No");
 
-                string selectedBannersString = string.Join(",", selectedBanners.ToArray());
-                storedProcQuery.Parameters.AddWithValue("@Banner", selectedBannersString);
+                    SqlConnection connection = new SqlConnection(connectionstring);
+                    SqlCommand storedProcQuery = new SqlCommand(departmentParameter.query, connection);
+                    storedProcQuery.CommandType = CommandType.StoredProcedure;
 
-                Parameter populatedParam = getCascadingDropdownValues(departmentParameter, storedProcQuery, connection);
-                
-                return Json(populatedParam);
+                    string selectedBannersString = string.Join(",", selectedBanners.ToArray());
+                    storedProcQuery.Parameters.AddWithValue("@Banner", selectedBannersString);
+
+                    Parameter populatedParam = getCascadingDropdownValues(departmentParameter, storedProcQuery, connection);
+
+                    return Json(populatedParam);
+                }
             }
             catch (Exception e)
             {
-                return Json("Error Deleting Subscription: " + e);
+                return Json("Error Getting Department Data: " + e);
             }
         }
 
@@ -719,42 +738,53 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                ReportParameterModel local_reportParams = GetReportParameters(departmentModel.reportData);
-                string connectionstring = "";
-
-                //There are other data sources that need to be mapped here
-                if (local_reportParams.dataSource == "ReportDataSource")
+                if (departmentModel.selectedDepartments.Count == 0)
                 {
-                    connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                    return Json("Error Getting Class Data: Department field is empty");
                 }
-                else if (local_reportParams.dataSource == "eCom_ReportDB")
+                else if (departmentModel.reportData == null || departmentModel.reportData.reportName == "" || departmentModel.reportData.reportFolder == "")
                 {
-                    connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                    return Json("Error Getting Class Data: Report Name or Report Folder is empty");
                 }
-
-                Parameter classParameter = local_reportParams.parameters.Find(x => x.name == "Class_Number");
-
-                SqlConnection connection = new SqlConnection(connectionstring);
-                SqlCommand storedProcQuery = new SqlCommand(classParameter.query, connection);
-                storedProcQuery.CommandType = CommandType.StoredProcedure;
-
-                string selectedDepartmentsString = string.Join(",", departmentModel.selectedDepartments.ToArray());
-                storedProcQuery.Parameters.AddWithValue("@Department_No", selectedDepartmentsString);
-
-                Parameter populatedParam = getCascadingDropdownValues(classParameter, storedProcQuery, connection);
-
-                for(int i = 0; i < populatedParam.values.Count; i++)
+                else
                 {
-                    int charLocation = populatedParam.values[i].IndexOf("~");
-                    string parsedClass = populatedParam.values[i].Substring(0, charLocation);
-                    populatedParam.values[i] = parsedClass;
-                }
+                    ReportParameterModel local_reportParams = GetReportParameters(departmentModel.reportData);
+                    string connectionstring = "";
 
-                return Json(populatedParam);
+                    //There are other data sources that need to be mapped here
+                    if (local_reportParams.dataSource == "ReportDataSource")
+                    {
+                        connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                    }
+                    else if (local_reportParams.dataSource == "eCom_ReportDB")
+                    {
+                        connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                    }
+
+                    Parameter classParameter = local_reportParams.parameters.Find(x => x.name == "Class_Number");
+
+                    SqlConnection connection = new SqlConnection(connectionstring);
+                    SqlCommand storedProcQuery = new SqlCommand(classParameter.query, connection);
+                    storedProcQuery.CommandType = CommandType.StoredProcedure;
+
+                    string selectedDepartmentsString = string.Join(",", departmentModel.selectedDepartments.ToArray());
+                    storedProcQuery.Parameters.AddWithValue("@Department_No", selectedDepartmentsString);
+
+                    Parameter populatedParam = getCascadingDropdownValues(classParameter, storedProcQuery, connection);
+
+                    for (int i = 0; i < populatedParam.values.Count; i++)
+                    {
+                        int charLocation = populatedParam.values[i].IndexOf("~");
+                        string parsedClass = populatedParam.values[i].Substring(0, charLocation);
+                        populatedParam.values[i] = parsedClass;
+                    }
+
+                    return Json(populatedParam);
+                } 
             }
             catch (Exception e)
             {
-                return Json("Error Deleting Subscription: " + e);
+                return Json("Error Getting Class Data: " + e);
             }
         }
 
@@ -763,40 +793,55 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                ReportParameterModel local_reportParams = GetReportParameters(classModel.reportData);
-                string connectionstring = "";
-
-                //There are other data sources that need to be mapped here
-                if (local_reportParams.dataSource == "ReportDataSource")
+                if(classModel.selectedDepartments.Count == 0)
                 {
-                    connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                    return Json("Error Getting Category Data: Department field is empty");
                 }
-                else if (local_reportParams.dataSource == "eCom_ReportDB")
+                else if(classModel.selectedClasses.Count == 0)
                 {
-                    connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                    return Json("Error Getting Category Data: Class field is empty");
                 }
-
-                Parameter categoryParameter = local_reportParams.parameters.Find(x => x.name == "Category");
-
-                SqlConnection connection = new SqlConnection(connectionstring);
-                SqlCommand storedProcQuery = new SqlCommand(categoryParameter.query, connection);
-                storedProcQuery.CommandType = CommandType.StoredProcedure;
-
-                string selectedDepartmentsString = string.Join(",", classModel.selectedDepartments.ToArray());
-                storedProcQuery.Parameters.AddWithValue("@Department_No", selectedDepartmentsString);
-
-                for(int i = 0; i < classModel.selectedClasses.Count; i++)
+                else if (classModel.reportData == null || classModel.reportData.reportName == "" || classModel.reportData.reportFolder == "")
                 {
-                    classModel.selectedClasses[i] = classModel.selectedClasses[i] + "~";
+                    return Json("Error Getting Category Data: Report Name or Report Folder is empty");
                 }
+                else
+                {
+                    ReportParameterModel local_reportParams = GetReportParameters(classModel.reportData);
+                    string connectionstring = "";
 
-                string selectedClassesString = string.Join(",", classModel.selectedClasses.ToArray());
-                storedProcQuery.Parameters.AddWithValue("@Class_Number", selectedClassesString);
-                storedProcQuery.CommandTimeout = 350;
+                    //There are other data sources that need to be mapped here
+                    if (local_reportParams.dataSource == "ReportDataSource")
+                    {
+                        connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                    }
+                    else if (local_reportParams.dataSource == "eCom_ReportDB")
+                    {
+                        connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                    }
 
-                Parameter populatedParam = getCascadingDropdownValues(categoryParameter, storedProcQuery, connection);
+                    Parameter categoryParameter = local_reportParams.parameters.Find(x => x.name == "Category");
 
-                return Json(populatedParam);
+                    SqlConnection connection = new SqlConnection(connectionstring);
+                    SqlCommand storedProcQuery = new SqlCommand(categoryParameter.query, connection);
+                    storedProcQuery.CommandType = CommandType.StoredProcedure;
+
+                    string selectedDepartmentsString = string.Join(",", classModel.selectedDepartments.ToArray());
+                    storedProcQuery.Parameters.AddWithValue("@Department_No", selectedDepartmentsString);
+
+                    for (int i = 0; i < classModel.selectedClasses.Count; i++)
+                    {
+                        classModel.selectedClasses[i] = classModel.selectedClasses[i] + "~";
+                    }
+
+                    string selectedClassesString = string.Join(",", classModel.selectedClasses.ToArray());
+                    storedProcQuery.Parameters.AddWithValue("@Class_Number", selectedClassesString);
+                    storedProcQuery.CommandTimeout = 350;
+
+                    Parameter populatedParam = getCascadingDropdownValues(categoryParameter, storedProcQuery, connection);
+
+                    return Json(populatedParam);
+                }
             }
             catch (Exception e)
             {
@@ -809,36 +854,47 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                ReportParameterModel local_reportParams = GetReportParameters(brandModel.reportData);
-                
-                string connectionstring = "";
-                SqlConnection connection = new SqlConnection();
-                SqlCommand storedProcQuery = new SqlCommand();
-                
-
-                //There are other data sources that need to be mapped here
-                if (local_reportParams.dataSource == "ReportDataSource")
+                if (brandModel.brandPattern == "")
                 {
-                    connectionstring = configuration.GetConnectionString("NetSuite_DB");
-                    connection = new SqlConnection(connectionstring);
-                    storedProcQuery = new SqlCommand("par_Brands", connection);
+                    return Json("Error Getting Brand Data: Brand_Pattern field is empty");
                 }
-                else if (local_reportParams.dataSource == "eCom_ReportDB")
+                else if (brandModel.reportData == null || brandModel.reportData.reportName == "" || brandModel.reportData.reportFolder == "")
                 {
-                    connectionstring = configuration.GetConnectionString("eCom_ReportDB");
-                    connection = new SqlConnection(connectionstring);
-                    storedProcQuery = new SqlCommand("par_rpt_Brands", connection);
+                    return Json("Error Getting Brand Data: Report Name or Report Folder is empty");
                 }
+                else
+                {
+                    ReportParameterModel local_reportParams = GetReportParameters(brandModel.reportData);
 
-                storedProcQuery.CommandType = CommandType.StoredProcedure;
+                    string connectionstring = "";
+                    SqlConnection connection = new SqlConnection();
+                    SqlCommand storedProcQuery = new SqlCommand();
 
-                storedProcQuery.Parameters.AddWithValue("@Brand_Pattern", brandModel.brandPattern);
 
-                Parameter brandParameter = local_reportParams.parameters.Find(x => x.name == "Brand");
+                    //There are other data sources that need to be mapped here
+                    if (local_reportParams.dataSource == "ReportDataSource")
+                    {
+                        connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                        connection = new SqlConnection(connectionstring);
+                        storedProcQuery = new SqlCommand("par_Brands", connection);
+                    }
+                    else if (local_reportParams.dataSource == "eCom_ReportDB")
+                    {
+                        connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                        connection = new SqlConnection(connectionstring);
+                        storedProcQuery = new SqlCommand("par_rpt_Brands", connection);
+                    }
 
-                Parameter populatedParam = getCascadingDropdownValues(brandParameter, storedProcQuery, connection);
+                    storedProcQuery.CommandType = CommandType.StoredProcedure;
 
-                return Json(populatedParam);
+                    storedProcQuery.Parameters.AddWithValue("@Brand_Pattern", brandModel.brandPattern);
+
+                    Parameter brandParameter = local_reportParams.parameters.Find(x => x.name == "Brand");
+
+                    Parameter populatedParam = getCascadingDropdownValues(brandParameter, storedProcQuery, connection);
+
+                    return Json(populatedParam);
+                }
             }
             catch (Exception e)
             {
@@ -851,36 +907,47 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                ReportParameterModel local_reportParams = GetReportParameters(vendorModel.reportData);
-
-                string connectionstring = "";
-                SqlConnection connection = new SqlConnection();
-                SqlCommand storedProcQuery = new SqlCommand();
-
-
-                //There are other data sources that need to be mapped here
-                if (local_reportParams.dataSource == "ReportDataSource")
+                if (vendorModel.vendorPattern == "")
                 {
-                    connectionstring = configuration.GetConnectionString("NetSuite_DB");
-                    connection = new SqlConnection(connectionstring);
-                    storedProcQuery = new SqlCommand("par_Vendors", connection);
+                    return Json("Error Getting Brand Data: Brand_Pattern field is empty");
                 }
-                else if (local_reportParams.dataSource == "eCom_ReportDB")
+                else if (vendorModel.reportData == null || vendorModel.reportData.reportName == "" || vendorModel.reportData.reportFolder == "")
                 {
-                    connectionstring = configuration.GetConnectionString("eCom_ReportDB");
-                    connection = new SqlConnection(connectionstring);
-                    storedProcQuery = new SqlCommand("par_rpt_Vendors", connection);
+                    return Json("Error Getting Brand Data: Report Name or Report Folder is empty");
                 }
+                else
+                {
+                    ReportParameterModel local_reportParams = GetReportParameters(vendorModel.reportData);
 
-                storedProcQuery.CommandType = CommandType.StoredProcedure;
+                    string connectionstring = "";
+                    SqlConnection connection = new SqlConnection();
+                    SqlCommand storedProcQuery = new SqlCommand();
 
-                storedProcQuery.Parameters.AddWithValue("@Vendor_Pattern", vendorModel.vendorPattern);
 
-                Parameter vendorParameter = local_reportParams.parameters.Find(x => x.name == "Vendor");
+                    //There are other data sources that need to be mapped here
+                    if (local_reportParams.dataSource == "ReportDataSource")
+                    {
+                        connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                        connection = new SqlConnection(connectionstring);
+                        storedProcQuery = new SqlCommand("par_Vendors", connection);
+                    }
+                    else if (local_reportParams.dataSource == "eCom_ReportDB")
+                    {
+                        connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                        connection = new SqlConnection(connectionstring);
+                        storedProcQuery = new SqlCommand("par_rpt_Vendors", connection);
+                    }
 
-                Parameter populatedParam = getCascadingDropdownValues(vendorParameter, storedProcQuery, connection);
+                    storedProcQuery.CommandType = CommandType.StoredProcedure;
 
-                return Json(populatedParam);
+                    storedProcQuery.Parameters.AddWithValue("@Vendor_Pattern", vendorModel.vendorPattern);
+
+                    Parameter vendorParameter = local_reportParams.parameters.Find(x => x.name == "Vendor");
+
+                    Parameter populatedParam = getCascadingDropdownValues(vendorParameter, storedProcQuery, connection);
+
+                    return Json(populatedParam);
+                }
             }
             catch (Exception e)
             {
