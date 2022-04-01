@@ -2,15 +2,6 @@
 url = new URL(url_string);
 var isCopyScreen = url.searchParams.get("copy");
 
-const regex = /^[a-z -]+$/i;
-[
-    'A-B',
-    'ABC XYZ-ASD A',
-    'ABC*',
-    'AB IC-B_',
-    'AB C$%^'
-]
-
 $(document).ready(function () {
     
     $('#MarMaxxReports_Link').addClass('selected-nav-option');
@@ -439,7 +430,7 @@ $(document).ready(function () {
 
         var isValidString = false;
 
-        if (regex.test(subscriptionName)) {
+        if (/^[a-zA-Z0-9- ]*$/.test(subscriptionName)) {
             isValidString = true;
         }
 
@@ -463,7 +454,7 @@ $(document).ready(function () {
         } else if (groupNames.length == 0) {
             alert("Please select a value for Group Name");
         } else if (isValidString == false) {
-            alert("Please do not use special characters for the subscription name, only space and hyphen(-) are allowed.");
+            alert("Subscription Name contains special characters, you can only enter values a-z, A-Z, 0-9, space( ), and hyphen(-).");
         } else {
             var isAllDept = false;
             var isAllClass = false;
