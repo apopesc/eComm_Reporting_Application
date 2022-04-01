@@ -82,8 +82,8 @@ $(document).ready(function () {
 
     function successFunction(returnedData) {
         if (typeof returnedData === 'string') { //If there is an error pulling it from the database
-            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             alert(returnedData);
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
         } else {
             if (returnedData != null) {
 
@@ -104,8 +104,8 @@ $(document).ready(function () {
     }
 
     function errorFunction(error) {
-        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
         alert("Error Loading Previously Loaded User Table: " + error);
+        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
     }
 
 
@@ -163,8 +163,8 @@ $(document).ready(function () {
 
             function successFunc(tableData) {
                 if (typeof tableData === 'string') { //If there is an error saving it to the database
-                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     alert(tableData);
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 } else {
                     createTable(tableData);
                     setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
@@ -172,8 +172,8 @@ $(document).ready(function () {
             }
 
             function errorFunc(error) {
-                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 alert("Error Sending Filter Data to the Subscriptions Controller: " + error);
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             }
         }
     });
@@ -203,8 +203,13 @@ $(document).ready(function () {
 
                 function successFunc(response) {
                     //$selectedRow.remove();
-                    userTable.row('.selected').remove().draw(false);
-                    alert(response + selectedEmail);
+                    if (response.success == 'true') {
+                        userTable.row('.selected').remove().draw(false);
+                        alert(response.message + selectedEmail);
+                    } else {
+                        alert(response.message);
+                    }
+                    
                 }
 
                 function errorFunc(error) {
@@ -213,6 +218,8 @@ $(document).ready(function () {
             } else { //User clicks no
 
             }
+        } else {
+            alert("Could not delete user: ID is null");
         }
     });
 

@@ -76,8 +76,8 @@ $(document).ready(function () {
 
         function successFunc(paramData) {
             if (typeof paramData === 'string') { //If there is an error saving it to the database
-                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 alert(paramData);
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             } else {
 
                 $('#marMaxxFolderDropdown').val(initialSelectedFolder);
@@ -92,8 +92,8 @@ $(document).ready(function () {
         }
 
         function errorFunc(error) {
-            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             alert("Error Getting Report Parameters: " + error);
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
         }
     }
 
@@ -134,8 +134,8 @@ $(document).ready(function () {
 
             function successFunc(paramData) {
                 if (typeof paramData === 'string') { //If there is an error saving it to the database
-                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     alert(paramData);
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 } else {
                     createParams(paramData);
                     setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
@@ -143,8 +143,8 @@ $(document).ready(function () {
             }
 
             function errorFunc(error) {
-                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 alert("Error Getting Report Parameters: " + error);
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             }
         }
     });
@@ -415,8 +415,8 @@ $(document).ready(function () {
 
                 function successFunc(dropdownData) {
                     if (typeof returnedData === 'string') { //If there is an error pulling it from the database
-                        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                         alert(returnedData);
+                        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     } else {
                         var data = [];
 
@@ -434,8 +434,8 @@ $(document).ready(function () {
                 }
 
                 function errorFunc(error) {
-                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     alert("Error Retrieving Classes: " + error);
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 }
             }
         } else {
@@ -532,8 +532,8 @@ $(document).ready(function () {
 
                 function successFunc(dropdownData) {
                     if (typeof returnedData === 'string') { //If there is an error pulling it from the database
-                        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                         alert(returnedData);
+                        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     } else {
                         var data = [];
 
@@ -549,8 +549,8 @@ $(document).ready(function () {
                 }
 
                 function errorFunc(error) {
-                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     alert("Error Retrieving Categories: " + error);
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 }
             }
         }

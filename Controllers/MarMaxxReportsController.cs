@@ -190,69 +190,78 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                reportParams = GetReportParameters(reportData);
-                tableData = new List<ReportTableModel>();
-                selectedReport = reportData;
-                selectedBanners = new List<string>();
-
-                //Adding the static columns to the table (these will appear for every report)
-                Parameter schedule = new Parameter();
-                schedule.name = "Schedule";
-                reportParams.parameters.Insert(0, schedule);
-                Parameter fileFormat = new Parameter();
-                fileFormat.name = "File_Format";
-                reportParams.parameters.Insert(0, fileFormat);
-                Parameter groupID = new Parameter();
-                groupID.name = "Group_ID";
-                reportParams.parameters.Insert(0, groupID);
-                Parameter groupName = new Parameter();
-                groupName.name = "Group_Name";
-                reportParams.parameters.Insert(0, groupName);
-                Parameter reportName = new Parameter();
-                reportName.name = "Report_Name";
-                reportParams.parameters.Insert(0, reportName);
-                Parameter subscriptionName = new Parameter();
-                subscriptionName.name = "Subscription_Name";
-                reportParams.parameters.Insert(0, subscriptionName);
-                Parameter subscriptionID = new Parameter();
-                subscriptionID.name = "Subscription_ID";
-                reportParams.parameters.Insert(0, subscriptionID);
-                
-
-                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-                SqlConnection connection = new SqlConnection(connectionstring);
-
-                string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Report_Name='" + reportData.reportName + "'";
-
-                SqlCommand getTableData = new SqlCommand(queryString, connection);
-                using (connection)
+                if (reportData.reportName == null || reportData.reportName == "")
                 {
-                    connection.Open();
-                    using (SqlDataReader reader = getTableData.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            ReportTableModel tableRow = new ReportTableModel();
-                            tableRow.subscriptionID = reader.GetInt32(0);
-                            tableRow.subscriptionName = reader.GetString(1);
-                            tableRow.reportName = reader.GetString(2);
-                            tableRow.groupNames = reader.GetString(3);
-                            tableRow.groupIDs = reader.GetString(4);
-                            tableRow.fileFormat = reader.GetString(6);
-                            tableRow.schedule = reader.GetString(7);
-
-                            string reportParamsJson = reader.GetString(5);
-                            Dictionary<string, string> dynamicReportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(reportParamsJson);
-                            tableRow.dynamicParams = dynamicReportParams;
-
-                            tableData.Add(tableRow);
-                        }
-                    }
-                    connection.Close();
+                    return Json("Error retrieving table data: Report Name is empty");
                 }
+                else if (reportData.reportFolder == null || reportData.reportFolder == "")
+                {
+                    return Json("Error retrieving table data: Report Folder is empty");
+                }
+                else {
+                    reportParams = GetReportParameters(reportData);
+                    tableData = new List<ReportTableModel>();
+                    selectedReport = reportData;
+                    selectedBanners = new List<string>();
 
-                return Json(new { tableParams = reportParams.parameters, rowData = tableData});
+                    //Adding the static columns to the table (these will appear for every report)
+                    Parameter schedule = new Parameter();
+                    schedule.name = "Schedule";
+                    reportParams.parameters.Insert(0, schedule);
+                    Parameter fileFormat = new Parameter();
+                    fileFormat.name = "File_Format";
+                    reportParams.parameters.Insert(0, fileFormat);
+                    Parameter groupID = new Parameter();
+                    groupID.name = "Group_ID";
+                    reportParams.parameters.Insert(0, groupID);
+                    Parameter groupName = new Parameter();
+                    groupName.name = "Group_Name";
+                    reportParams.parameters.Insert(0, groupName);
+                    Parameter reportName = new Parameter();
+                    reportName.name = "Report_Name";
+                    reportParams.parameters.Insert(0, reportName);
+                    Parameter subscriptionName = new Parameter();
+                    subscriptionName.name = "Subscription_Name";
+                    reportParams.parameters.Insert(0, subscriptionName);
+                    Parameter subscriptionID = new Parameter();
+                    subscriptionID.name = "Subscription_ID";
+                    reportParams.parameters.Insert(0, subscriptionID);
 
+
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                    SqlConnection connection = new SqlConnection(connectionstring);
+
+                    string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Report_Name='" + reportData.reportName + "'";
+
+                    SqlCommand getTableData = new SqlCommand(queryString, connection);
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = getTableData.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ReportTableModel tableRow = new ReportTableModel();
+                                tableRow.subscriptionID = reader.GetInt32(0);
+                                tableRow.subscriptionName = reader.GetString(1);
+                                tableRow.reportName = reader.GetString(2);
+                                tableRow.groupNames = reader.GetString(3);
+                                tableRow.groupIDs = reader.GetString(4);
+                                tableRow.fileFormat = reader.GetString(6);
+                                tableRow.schedule = reader.GetString(7);
+
+                                string reportParamsJson = reader.GetString(5);
+                                Dictionary<string, string> dynamicReportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(reportParamsJson);
+                                tableRow.dynamicParams = dynamicReportParams;
+
+                                tableData.Add(tableRow);
+                            }
+                        }
+                        connection.Close();
+                    }
+
+                    return Json(new { tableParams = reportParams.parameters, rowData = tableData });
+                }
             }
             catch (Exception e)
             {
@@ -265,79 +274,93 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                reportParams = GetReportParameters(reportData);
-                tableData = new List<ReportTableModel>();
-                selectedReport = reportData;
-                selectedBanners = bannerVals;
 
-                //Adding the static columns to the table (these will appear for every report)
-                Parameter schedule = new Parameter();
-                schedule.name = "Schedule";
-                reportParams.parameters.Insert(0, schedule);
-                Parameter fileFormat = new Parameter();
-                fileFormat.name = "File_Format";
-                reportParams.parameters.Insert(0, fileFormat);
-                Parameter groupID = new Parameter();
-                groupID.name = "Group_ID";
-                reportParams.parameters.Insert(0, groupID);
-                Parameter groupName = new Parameter();
-                groupName.name = "Group_Name";
-                reportParams.parameters.Insert(0, groupName);
-                Parameter reportName = new Parameter();
-                reportName.name = "Report_Name";
-                reportParams.parameters.Insert(0, reportName);
-                Parameter subscriptionName = new Parameter();
-                subscriptionName.name = "Subscription_Name";
-                reportParams.parameters.Insert(0, subscriptionName);
-                Parameter subscriptionID = new Parameter();
-                subscriptionID.name = "Subscription_ID";
-                reportParams.parameters.Insert(0, subscriptionID);
-
-
-                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-                SqlConnection connection = new SqlConnection(connectionstring);
-
-                string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Report_Name='" + reportData.reportName + "'";
-
-                SqlCommand getTableData = new SqlCommand(queryString, connection);
-                using (connection)
+                if (reportData.reportName == null || reportData.reportName == "")
                 {
-                    connection.Open();
-                    using (SqlDataReader reader = getTableData.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            ReportTableModel tableRow = new ReportTableModel();
-                            tableRow.subscriptionID = reader.GetInt32(0);
-                            tableRow.subscriptionName = reader.GetString(1);
-                            tableRow.reportName = reader.GetString(2);
-                            tableRow.groupNames = reader.GetString(3);
-                            tableRow.groupIDs = reader.GetString(4);
-                            tableRow.fileFormat = reader.GetString(6);
-                            tableRow.schedule = reader.GetString(7);
-
-                            string reportParamsJson = reader.GetString(5);
-                            Dictionary<string, string> dynamicReportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(reportParamsJson);
-                            tableRow.dynamicParams = dynamicReportParams;
-
-                            if (tableRow.dynamicParams.ContainsKey("Banner"))
-                            {
-                                List<string> paramEntries = new List<string>(tableRow.dynamicParams["Banner"].Split(','));
-                                bool containsBanner = bannerVals.Intersect(paramEntries).Any();
-
-                                if (containsBanner == true)
-                                {
-                                    tableData.Add(tableRow);
-                                }
-                            }
-                            
-                        }
-                    }
-                    connection.Close();
+                    return Json("Error retrieving table data: Report Name is empty");
                 }
+                else if (reportData.reportFolder == null || reportData.reportFolder == "")
+                {
+                    return Json("Error retrieving table data: Report Folder is empty");
+                }
+                else if (bannerVals.Count == 0)
+                {
+                    return Json("Error retrieving table data: Banner is empty");
+                }
+                else {
+                    reportParams = GetReportParameters(reportData);
+                    tableData = new List<ReportTableModel>();
+                    selectedReport = reportData;
+                    selectedBanners = bannerVals;
 
-                return Json(new { tableParams = reportParams.parameters, rowData = tableData });
+                    //Adding the static columns to the table (these will appear for every report)
+                    Parameter schedule = new Parameter();
+                    schedule.name = "Schedule";
+                    reportParams.parameters.Insert(0, schedule);
+                    Parameter fileFormat = new Parameter();
+                    fileFormat.name = "File_Format";
+                    reportParams.parameters.Insert(0, fileFormat);
+                    Parameter groupID = new Parameter();
+                    groupID.name = "Group_ID";
+                    reportParams.parameters.Insert(0, groupID);
+                    Parameter groupName = new Parameter();
+                    groupName.name = "Group_Name";
+                    reportParams.parameters.Insert(0, groupName);
+                    Parameter reportName = new Parameter();
+                    reportName.name = "Report_Name";
+                    reportParams.parameters.Insert(0, reportName);
+                    Parameter subscriptionName = new Parameter();
+                    subscriptionName.name = "Subscription_Name";
+                    reportParams.parameters.Insert(0, subscriptionName);
+                    Parameter subscriptionID = new Parameter();
+                    subscriptionID.name = "Subscription_ID";
+                    reportParams.parameters.Insert(0, subscriptionID);
 
+
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                    SqlConnection connection = new SqlConnection(connectionstring);
+
+                    string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Report_Name='" + reportData.reportName + "'";
+
+                    SqlCommand getTableData = new SqlCommand(queryString, connection);
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = getTableData.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ReportTableModel tableRow = new ReportTableModel();
+                                tableRow.subscriptionID = reader.GetInt32(0);
+                                tableRow.subscriptionName = reader.GetString(1);
+                                tableRow.reportName = reader.GetString(2);
+                                tableRow.groupNames = reader.GetString(3);
+                                tableRow.groupIDs = reader.GetString(4);
+                                tableRow.fileFormat = reader.GetString(6);
+                                tableRow.schedule = reader.GetString(7);
+
+                                string reportParamsJson = reader.GetString(5);
+                                Dictionary<string, string> dynamicReportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(reportParamsJson);
+                                tableRow.dynamicParams = dynamicReportParams;
+
+                                if (tableRow.dynamicParams.ContainsKey("Banner"))
+                                {
+                                    List<string> paramEntries = new List<string>(tableRow.dynamicParams["Banner"].Split(','));
+                                    bool containsBanner = bannerVals.Intersect(paramEntries).Any();
+
+                                    if (containsBanner == true)
+                                    {
+                                        tableData.Add(tableRow);
+                                    }
+                                }
+
+                            }
+                        }
+                        connection.Close();
+                    }
+
+                    return Json(new { tableParams = reportParams.parameters, rowData = tableData });
+                }
             }
             catch (Exception e)
             {
@@ -377,7 +400,7 @@ namespace eComm_Reporting_Application.Controllers
                         reportParams.parameters.Insert(0, subscriptionID);
                     }
                 }
-                
+
                 return Json(new { tableParams = reportParams.parameters, rowData = tableData, report = selectedReport, banners = selectedBanners });
             }
             catch (Exception e)
@@ -662,26 +685,33 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-                SqlConnection connection = new SqlConnection(connectionstring);
-
-                string queryString = "DELETE FROM MarMaxxReportSubscriptions WHERE Subscription_ID=" + ID;
-
-                SqlCommand deleteUserQuery = new SqlCommand(queryString, connection);
-                using (connection)
+                if(ID == 0)
                 {
-                    connection.Open();
-                    SqlDataReader reader = deleteUserQuery.ExecuteReader();
-                    connection.Close();
+                    return Json(new { success = "false", message = "Error Deleting Subscription: ID is empty" });
+                } 
+                else
+                {
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                    SqlConnection connection = new SqlConnection(connectionstring);
+
+                    string queryString = "DELETE FROM MarMaxxReportSubscriptions WHERE Subscription_ID=" + ID;
+
+                    SqlCommand deleteUserQuery = new SqlCommand(queryString, connection);
+                    using (connection)
+                    {
+                        connection.Open();
+                        SqlDataReader reader = deleteUserQuery.ExecuteReader();
+                        connection.Close();
+                    }
+
+                    tableData.RemoveAll(x => x.subscriptionID == ID);
+
+                    return Json(new { success = "true", message = "Success Deleting Subscription: " });
                 }
-
-                tableData.RemoveAll(x => x.subscriptionID == ID);
-
-                return Json("Success Deleting Subscription: ");
             }
             catch (Exception e)
             {
-                return Json("Error Deleting Subscription: " + e);
+                return Json(new { success = "false", message = "Error Deleting Subscription: " + e});
             }
         }
 
