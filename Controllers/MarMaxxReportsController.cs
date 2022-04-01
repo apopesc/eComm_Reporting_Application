@@ -687,7 +687,7 @@ namespace eComm_Reporting_Application.Controllers
             {
                 if(ID == 0)
                 {
-                    return Json(new { success = "false", message = "Error Deleting Subscription: ID is empty" });
+                    return Json(new { success = false, message = "Error Deleting Subscription: ID is empty" });
                 } 
                 else
                 {
@@ -706,12 +706,12 @@ namespace eComm_Reporting_Application.Controllers
 
                     tableData.RemoveAll(x => x.subscriptionID == ID);
 
-                    return Json(new { success = "true", message = "Success Deleting Subscription: " });
+                    return Json(new { success = true, message = "Success Deleting Subscription: " });
                 }
             }
             catch (Exception e)
             {
-                return Json(new { success = "false", message = "Error Deleting Subscription: " + e});
+                return Json(new { success = false, message = "Error Deleting Subscription: " + e});
             }
         }
 

@@ -239,7 +239,7 @@ $(document).ready(function () {
 
                 function successFunc(response) {
                     //$selectedRow.remove();
-                    if (response.success == 'true') {
+                    if (response.success == true) {
                         marMaxxTable.row('.selected').remove().draw(false);
                         alert(response.message + selectedSubscription);
                     } else {

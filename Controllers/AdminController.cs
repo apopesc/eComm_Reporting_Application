@@ -88,30 +88,44 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-
-                SqlConnection connection = new SqlConnection(connectionstring);
-
-                string addGroupQueryString = "INSERT INTO Groups (GroupID, GroupName, MasterGroup) " +
-                    "VALUES ('" + groupID + "', '" + groupName + "', '" + masterGroup + "');";
-
-                SqlCommand addGroupQuery = new SqlCommand(addGroupQueryString, connection);
-                using (connection)
+                if (masterGroup == null || masterGroup == "")
                 {
-                    connection.Open();
-                    using SqlDataReader reader = addGroupQuery.ExecuteReader();
-                    connection.Close();
-
+                    return Json(new { success = false, errorMsg = "Error saving new group: Master Group is empty." });
                 }
+                else if (groupID == null || groupID == "")
+                {
+                    return Json(new { success = false, errorMsg = "Error saving new group: Group ID is empty." });
+                }
+                else if (groupName == null || groupName == "")
+                {
+                    return Json(new { success = false, errorMsg = "Error saving new group: Group is empty." });
+                }
+                else {
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
 
-                GroupModel newGroup = new GroupModel();
-                newGroup.masterGroup = masterGroup;
-                newGroup.groupID = groupID;
-                newGroup.groupName = groupName;
+                    SqlConnection connection = new SqlConnection(connectionstring);
 
-                adminModel.groupsList.Insert(0,newGroup);
+                    string addGroupQueryString = "INSERT INTO Groups (GroupID, GroupName, MasterGroup) " +
+                        "VALUES ('" + groupID + "', '" + groupName + "', '" + masterGroup + "');";
 
-                return Json(new { success = true, saved_masterGroup = masterGroup, new_groupID = groupID, new_groupName = groupName});
+                    SqlCommand addGroupQuery = new SqlCommand(addGroupQueryString, connection);
+                    using (connection)
+                    {
+                        connection.Open();
+                        using SqlDataReader reader = addGroupQuery.ExecuteReader();
+                        connection.Close();
+
+                    }
+
+                    GroupModel newGroup = new GroupModel();
+                    newGroup.masterGroup = masterGroup;
+                    newGroup.groupID = groupID;
+                    newGroup.groupName = groupName;
+
+                    adminModel.groupsList.Insert(0, newGroup);
+
+                    return Json(new { success = true, saved_masterGroup = masterGroup, new_groupID = groupID, new_groupName = groupName });
+                }
             }
             catch (Exception e)
             {
@@ -132,23 +146,29 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-                SqlConnection connection = new SqlConnection(connectionstring);
-
-                string queryString = "DELETE FROM Groups WHERE GroupID='" + groupID +"';";
-
-                SqlCommand deleteGroupQuery = new SqlCommand(queryString, connection);
-                using (connection)
+                if (groupID == null || groupID == "")
                 {
-                    connection.Open();
-                    SqlDataReader reader = deleteGroupQuery.ExecuteReader();
-                    connection.Close();
+                    return Json(new { success = false, message = "Error Deleting Group: Group ID is empty" });
                 }
-                return Json("Success deleting group: ");
+                else {
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                    SqlConnection connection = new SqlConnection(connectionstring);
+
+                    string queryString = "DELETE FROM Groups WHERE GroupID='" + groupID + "';";
+
+                    SqlCommand deleteGroupQuery = new SqlCommand(queryString, connection);
+                    using (connection)
+                    {
+                        connection.Open();
+                        SqlDataReader reader = deleteGroupQuery.ExecuteReader();
+                        connection.Close();
+                    }
+                    return Json(new { success = true, message = "Success Deleting Group: " });
+                }
             }
             catch (Exception e)
             {
-                return Json("Error deleting group: " + e);
+                return Json(new { success = false, message = "Error Deleting Group: " + e });
             } 
         }
 
@@ -157,25 +177,32 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-
-                SqlConnection connection = new SqlConnection(connectionstring);
-
-                string addMasterGroupQueryString = "INSERT INTO MasterGroups (MasterGroup) " +
-                    "VALUES ('" + masterGroup + "');";
-
-                SqlCommand addMasterGroupQuery = new SqlCommand(addMasterGroupQueryString, connection);
-                using (connection)
+                if(masterGroup == null || masterGroup == "")
                 {
-                    connection.Open();
-                    using SqlDataReader reader = addMasterGroupQuery.ExecuteReader();
-                    connection.Close();
-
+                    return Json(new { success = false, errorMsg = "Error saving new group: The entered Master Group is empty." });
                 }
+                else
+                {
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
 
-                adminModel.masterGroupsList.Insert(0, masterGroup);
+                    SqlConnection connection = new SqlConnection(connectionstring);
 
-                return Json(new { success = true, saved_masterGroup = masterGroup});
+                    string addMasterGroupQueryString = "INSERT INTO MasterGroups (MasterGroup) " +
+                        "VALUES ('" + masterGroup + "');";
+
+                    SqlCommand addMasterGroupQuery = new SqlCommand(addMasterGroupQueryString, connection);
+                    using (connection)
+                    {
+                        connection.Open();
+                        using SqlDataReader reader = addMasterGroupQuery.ExecuteReader();
+                        connection.Close();
+
+                    }
+
+                    adminModel.masterGroupsList.Insert(0, masterGroup);
+
+                    return Json(new { success = true, saved_masterGroup = masterGroup });
+                }
             }
             catch (Exception e)
             {
@@ -196,6 +223,10 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
+                if (masterGroup == null || masterGroup == "")
+                {
+                    return Json(new { success = false, message = "Error Deleting Master Group: Master Group is empty" });
+                }
                 string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                 SqlConnection connection = new SqlConnection(connectionstring);
 
@@ -208,11 +239,11 @@ namespace eComm_Reporting_Application.Controllers
                     SqlDataReader reader = deleteMasterGroupQuery.ExecuteReader();
                     connection.Close();
                 }
-                return Json("Success deleting group: ");
+                return Json(new { success = true, message = "Success Deleting Master Group: " });
             }
             catch (Exception e)
             {
-                return Json("Error deleting group: " + e);
+                return Json(new { success = false, message = "Error Deleting Master Group: " + e });
             }
         }
 

@@ -399,17 +399,17 @@ namespace eComm_Reporting_Application.Controllers
                     }
                     tableData.RemoveAll(x => x.ID == ID);
 
-                    return Json(new { success = "true", message = "Success Deleting User: " });
+                    return Json(new { success = true, message = "Success Deleting User: " });
                 }
                 else
                 {
-                    return Json(new { success = "false", message = "Error Deleting User: ID is empty" });
+                    return Json(new { success = false, message = "Error Deleting User: ID is empty" });
                 }
                 
             }
             catch (Exception e)
             {
-                return Json(new { success = "false", message = "Error Deleting Subscription: " + e });
+                return Json(new { success = false, message = "Error Deleting Subscription: " + e });
             }
         }
 
