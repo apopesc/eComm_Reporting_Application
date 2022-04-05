@@ -5,6 +5,7 @@ using eComm_Reporting_Application.Models;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace eComm_Reporting_Application.Controllers
 {
@@ -12,15 +13,17 @@ namespace eComm_Reporting_Application.Controllers
     public class SubscriptionGroupsController : Controller
     {
         private readonly IConfiguration configuration;
+        private readonly ILogger<SubscriptionGroupsController> _logger;
 
         public static List<UserSubscriptionTableModel> tableData = new List<UserSubscriptionTableModel>();
         public static List<string> selectedMasterGroups = new List<string>();
         public static List<string> selectedGroups = new List<string>();
         public static List<string> selectedGroupIDs = new List<string>();
 
-        public SubscriptionGroupsController(IConfiguration config)
+        public SubscriptionGroupsController(IConfiguration config, ILogger<SubscriptionGroupsController> logger)
         {
             this.configuration = config;
+            _logger = logger;
         }
 
         public IActionResult Error(string errorMsg)
@@ -208,6 +211,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error Saving to Database: " + e);
                 return Json("Error Saving to Database: " + e);
             }
         }
@@ -217,7 +221,7 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                tableData = new List<UserSubscriptionTableModel>();//Resetting the table each time we want to get new data
+                tableData = new List<UserSubscriptionTableModel>(); //Resetting the table each time we want to get new data
                 selectedGroupIDs = filterData.groupsIDList;
                 selectedGroups = filterData.groupsList;
                 selectedMasterGroups = filterData.masterGroupsList;
@@ -326,6 +330,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error retrieving table data: " + e);
                 return Json("Error retrieving table data: " + e);
             }
             
@@ -340,6 +345,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error retrieving table data: " + e);
                 return Json("Error retrieving table data: " + e);
             }
         }
@@ -374,6 +380,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error editing user: " + e);
                 return Json("Error editing user: " + e);
             }
         }
@@ -409,6 +416,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error Deleting Report Subscription: " + e);
                 return Json(new { success = false, message = "Error Deleting Subscription: " + e });
             }
         }

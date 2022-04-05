@@ -9,6 +9,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using System.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace eComm_Reporting_Application.Controllers
 {
@@ -16,6 +17,8 @@ namespace eComm_Reporting_Application.Controllers
     public class MarMaxxReportsController : Controller
     {
         private readonly IConfiguration configuration;
+        private readonly ILogger<MarMaxxReportsController> _logger;
+
         private static string myJsonString = System.IO.File.ReadAllText("JSON Report Parameter Mapping.json");
         private static JObject jsonObject = JObject.Parse(myJsonString);
 
@@ -26,9 +29,10 @@ namespace eComm_Reporting_Application.Controllers
 
         public static List<string> selectedBanners = new List<string>();
 
-        public MarMaxxReportsController(IConfiguration config)
+        public MarMaxxReportsController(IConfiguration config, ILogger<MarMaxxReportsController> logger)
         {
             this.configuration = config;
+            _logger = logger;
         }
 
         public IActionResult Error(string errorMsg)
@@ -265,7 +269,8 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
-                return Json("Error retrieving table data: " + e);
+                _logger.LogError("Error retrieving MarMaxx table data:  " + e);
+                return Json("Error retrieving MarMaxx table data: " + e);
             }
         }
 
@@ -364,7 +369,8 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
-                return Json("Error retrieving table data: " + e);
+                _logger.LogError("Error retrieving MarMaxx table data:  " + e);
+                return Json("Error retrieving MarMaxx table data: " + e);
             }
         }
 
@@ -405,7 +411,8 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
-                return Json("Error retrieving table data: " + e);
+                _logger.LogError("Error retrieving MarMaxx table data:  " + e);
+                return Json("Error retrieving MarMaxx table data: " + e);
             }
         }
 
@@ -544,6 +551,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error retrieving report parameters:  " + e);
                 return Json("Error retrieving report parameters: " + e);
             }
 
@@ -627,6 +635,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error Saving Marmaxx Report Subscription:  " + e);
                 return Json("Error Saving Marmaxx Report Subscription: " + e);
             }
         }
@@ -676,6 +685,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error Saving Marmaxx Report Subscription:  " + e);
                 return Json("Error Saving Marmaxx Report Subscription: " + e);
             }
         }
@@ -711,6 +721,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error Deleting Subscription: " + e);
                 return Json(new { success = false, message = "Error Deleting Subscription: " + e});
             }
         }
@@ -759,6 +770,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error Getting Department Data: " + e);
                 return Json("Error Getting Department Data: " + e);
             }
         }
@@ -814,6 +826,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error Getting Class Data: " + e);
                 return Json("Error Getting Class Data: " + e);
             }
         }
@@ -875,6 +888,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error Getting Category Data: " + e);
                 return Json("Error Getting Category Data: " + e);
             }
         }
@@ -928,6 +942,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error Getting Brand Data: " + e);
                 return Json("Error Getting Brand Data: " + e);
             }
         }
@@ -981,6 +996,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error Getting Vendor Data: " + e);
                 return Json("Error Getting Vendor Data: " + e);
             }
         }
@@ -1033,6 +1049,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error Getting Vendor Data: " + e);
                 return Json("Error Getting Vendor Data: " + e);
             }
         }
