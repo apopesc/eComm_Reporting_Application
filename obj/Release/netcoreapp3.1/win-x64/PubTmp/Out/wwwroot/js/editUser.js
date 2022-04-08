@@ -71,6 +71,18 @@
         var enteredEmail = $("#userEmail").val();
         var isValidEmail = ValidateEmail(enteredEmail);
 
+        var isTJXEmail = false;
+
+        if (isValidEmail == true) {
+            var substringIndex = enteredEmail.indexOf("@") + 1;
+            var emailDomain = enteredEmail.substring(substringIndex, enteredEmail.length);
+
+            if (emailDomain == "tjx.com" || emailDomain == "tjxcanada.ca" || emailDomain == "tjxeurope.com") {
+                isTJXEmail = true;
+            }
+
+        }
+
         var enteredGroups = $('#edit_groupDropdown').val();
         var enteredMasterGroups = $('#edit_masterGroupDropdown').val();
         var enteredGroupIDs = [];
@@ -103,6 +115,8 @@
             alert("Please enter a value for Is Active.");
         } else if (enteredGroupIDs.length == 0 || enteredGroups.length == 0 || enteredMasterGroups.length == 0) {
             alert("Please enter a value for Group ID, Group, and MasterGroup");
+        } else if (isTJXEmail == false) {
+            alert("Only users with a TJX email address can be saved. (@tjx.com, @tjxcanada.ca, or @tjxeurope.com)")
         } else {
 
             //Posting the collected data to the SubscriptionsGroupsController

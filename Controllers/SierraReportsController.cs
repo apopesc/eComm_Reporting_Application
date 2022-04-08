@@ -9,6 +9,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using System.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace eComm_Reporting_Application.Controllers
 {
@@ -16,12 +17,20 @@ namespace eComm_Reporting_Application.Controllers
     public class SierraReportsController : Controller
     {
         private readonly IConfiguration configuration;
+        private readonly ILogger<SierraReportsController> _logger;
+
         private static string myJsonString = System.IO.File.ReadAllText("JSON Report Parameter Mapping - Sierra.json");
         private static JObject jsonObject = JObject.Parse(myJsonString);
 
-        public SierraReportsController(IConfiguration config)
+        public static List<ReportTableModel> tableData = new List<ReportTableModel>();
+        public static ReportParameterModel reportParams = new ReportParameterModel();
+        public static ReportModel selectedReport = new ReportModel();
+        public static bool changedReport = false;
+
+        public SierraReportsController(IConfiguration config, ILogger<SierraReportsController> logger)
         {
             this.configuration = config;
+            _logger = logger;
         }
 
         public IActionResult Error(string errorMsg)
@@ -98,6 +107,133 @@ namespace eComm_Reporting_Application.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult GetSierraTableData(ReportModel reportData)
+        {
+            try
+            {
+                if (reportData.reportName == null || reportData.reportName == "")
+                {
+                    return Json("Error retrieving table data: Report Name is empty");
+                }
+                else if (reportData.reportFolder == null || reportData.reportFolder == "")
+                {
+                    return Json("Error retrieving table data: Report Folder is empty");
+                }
+                else
+                {
+                    reportParams = GetReportParameters(reportData);
+                    tableData = new List<ReportTableModel>();
+                    selectedReport = reportData;
+
+                    //Adding the static columns to the table (these will appear for every report)
+                    Parameter schedule = new Parameter();
+                    schedule.name = "Schedule";
+                    reportParams.parameters.Insert(0, schedule);
+                    Parameter fileFormat = new Parameter();
+                    fileFormat.name = "File_Format";
+                    reportParams.parameters.Insert(0, fileFormat);
+                    Parameter groupID = new Parameter();
+                    groupID.name = "Group_ID";
+                    reportParams.parameters.Insert(0, groupID);
+                    Parameter groupName = new Parameter();
+                    groupName.name = "Group_Name";
+                    reportParams.parameters.Insert(0, groupName);
+                    Parameter reportName = new Parameter();
+                    reportName.name = "Report_Name";
+                    reportParams.parameters.Insert(0, reportName);
+                    Parameter subscriptionName = new Parameter();
+                    subscriptionName.name = "Subscription_Name";
+                    reportParams.parameters.Insert(0, subscriptionName);
+                    Parameter subscriptionID = new Parameter();
+                    subscriptionID.name = "Subscription_ID";
+                    reportParams.parameters.Insert(0, subscriptionID);
+
+
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                    SqlConnection connection = new SqlConnection(connectionstring);
+
+                    string queryString = "SELECT * FROM SierraReportSubscriptions WHERE Report_Name='" + reportData.reportName + "'";
+
+                    SqlCommand getTableData = new SqlCommand(queryString, connection);
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = getTableData.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ReportTableModel tableRow = new ReportTableModel();
+                                tableRow.subscriptionID = reader.GetInt32(0);
+                                tableRow.subscriptionName = reader.GetString(1);
+                                tableRow.reportName = reader.GetString(2);
+                                tableRow.groupNames = reader.GetString(3);
+                                tableRow.groupIDs = reader.GetString(4);
+                                tableRow.fileFormat = reader.GetString(6);
+                                tableRow.schedule = reader.GetString(7);
+
+                                string reportParamsJson = reader.GetString(5);
+                                Dictionary<string, string> dynamicReportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(reportParamsJson);
+                                tableRow.dynamicParams = dynamicReportParams;
+
+                                tableData.Add(tableRow);
+                            }
+                        }
+                        connection.Close();
+                    }
+
+                    return Json(new { tableParams = reportParams.parameters, rowData = tableData });
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error retrieving Sierra table data:  " + e);
+                return Json("Error retrieving Sierra table data: " + e);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetInitialTable()
+        {
+            try
+            {
+                if (reportParams.parameters != null)
+                {
+                    if (reportParams.parameters.Count == 0 || reportParams.parameters[0].name != "Subscription_ID")
+                    {
+                        Parameter schedule = new Parameter();
+                        schedule.name = "Schedule";
+                        reportParams.parameters.Insert(0, schedule);
+                        Parameter fileFormat = new Parameter();
+                        fileFormat.name = "File_Format";
+                        reportParams.parameters.Insert(0, fileFormat);
+                        Parameter groupID = new Parameter();
+                        groupID.name = "Group_ID";
+                        reportParams.parameters.Insert(0, groupID);
+                        Parameter groupName = new Parameter();
+                        groupName.name = "Group_Name";
+                        reportParams.parameters.Insert(0, groupName);
+                        Parameter reportName = new Parameter();
+                        reportName.name = "Report_Name";
+                        reportParams.parameters.Insert(0, reportName);
+                        Parameter subscriptionName = new Parameter();
+                        subscriptionName.name = "Subscription_Name";
+                        reportParams.parameters.Insert(0, subscriptionName);
+                        Parameter subscriptionID = new Parameter();
+                        subscriptionID.name = "Subscription_ID";
+                        reportParams.parameters.Insert(0, subscriptionID);
+                    }
+                }
+
+                return Json(new { tableParams = reportParams.parameters, rowData = tableData, report = selectedReport});
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error retrieving Sierra table data:  " + e);
+                return Json("Error retrieving Sierra table data: " + e);
+            }
+        }
+
         public ReportPageDropdownModel GetFoldersForDropdown()
         {
             ReportPageDropdownModel dropdownModel = new ReportPageDropdownModel();
@@ -117,9 +253,89 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
-                //Redirect to error page and pass forward exception e once error page is set up.
+                _logger.LogError("Error retrieving folders: " + e);
             }
             return dropdownModel;
+        }
+
+        public ReportParameterModel GetReportParameters(ReportModel reportData)
+        {
+
+            ReportParameterModel ReportParameters = new ReportParameterModel();
+            try
+            {
+                var json_folders = jsonObject["folders"];
+                var reportFolder = json_folders[reportData.reportFolder];
+                var json_reports = reportFolder["reports"];
+                var report = json_reports[reportData.reportName];
+
+                ReportParameters.reportName = reportData.reportName;
+                List<Parameter> parameters = new List<Parameter>();
+
+                foreach (JProperty x in report)
+                {
+                    string param_name = x.Name;
+                    if (param_name == "data_source")
+                    {
+                        JToken param_json = x.Value;
+                        string data_source = param_json.Value<string>();
+                        ReportParameters.dataSource = data_source;
+
+                    }
+                    else if (param_name == "parameters")
+                    {
+                        var json_params = report["parameters"];
+
+                        //iterating through the parameters in the list
+                        foreach (JProperty t in json_params)
+                        {
+                            Parameter reportParam = new Parameter();
+                            reportParam.name = t.Name;
+                            var param = json_params[reportParam.name];
+
+                            foreach (JProperty z in param)
+                            {
+                                var name = z.Name;
+                                JToken param_json = z.Value;
+                                string param_value = param_json.Value<string>();
+
+                                switch (name)
+                                {
+                                    case "type":
+                                        reportParam.type = param_value;
+                                        break;
+                                    case "query_type":
+                                        reportParam.queryType = param_value;
+                                        break;
+                                    case "query":
+                                        reportParam.query = param_value;
+                                        break;
+                                    case "value":
+                                        string[] val_array = param_value.Split(",");
+                                        List<string> val_list = new List<string>(val_array);
+                                        reportParam.values = val_list;
+                                        break;
+                                    case "label":
+                                        string[] lab_array = param_value.Split(",");
+                                        List<string> lab_list = new List<string>(lab_array);
+                                        reportParam.labels = lab_list;
+                                        break;
+                                    case "default_val":
+                                        reportParam.defaultVal = param_value;
+                                        break;
+                                }
+                            }
+                            parameters.Add(reportParam);
+                        }
+                    }
+                }
+                ReportParameters.parameters = parameters;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error retrieving Sierra report parameters: " + e);
+            }
+            return ReportParameters;
         }
 
         private UserSubscriptionDropdownModel GetGroups()
@@ -155,7 +371,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
-
+                _logger.LogError("Error retrieving groups: " + e);
             }
 
             UserSubscriptionDropdownModel groupModel = new UserSubscriptionDropdownModel()
@@ -166,6 +382,8 @@ namespace eComm_Reporting_Application.Controllers
 
             return groupModel;
         }
+
+       
 
         private bool isAuthenticatedUser()
         {

@@ -103,16 +103,20 @@ $(document).ready(function () {
                 });
 
                 function successFunc(dropdownData) {
-                    var data = [];
+                    if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                        alert(returnedData);
+                    } else {
+                        var data = [];
 
-                    data.push({ label: "(ALL)", value: "selectAll" });
+                        data.push({ label: "(ALL)", value: "selectAll" });
 
-                    for (i = 0; i < dropdownData.values.length; i++) {
-                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                        for (i = 0; i < dropdownData.values.length; i++) {
+                            data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                        }
+
+                        $("#Department_No").multiselect('dataprovider', data);
+                        $('#Department_No').multiselect('enable');
                     }
-
-                    $("#Department_No").multiselect('dataprovider', data);
-                    $('#Department_No').multiselect('enable');
                 }
 
                 function errorFunc(error) {
@@ -186,23 +190,28 @@ $(document).ready(function () {
                 });
 
                 function successFunc(dropdownData) {
-                    var data = [];
+                    if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                        alert(returnedData);
+                        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                    } else {
+                        var data = [];
 
-                    data.push({ label: "(ALL)", value: "selectAll" });
+                        data.push({ label: "(ALL)", value: "selectAll" });
 
-                    for (i = 0; i < dropdownData.values.length; i++) {
-                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                        for (i = 0; i < dropdownData.values.length; i++) {
+                            data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                        }
+
+                        $("#Class_Number").multiselect('dataprovider', data);
+                        $('#Class_Number').multiselect('enable');
+
+                        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     }
-
-                    $("#Class_Number").multiselect('dataprovider', data);
-                    $('#Class_Number').multiselect('enable');
-
-                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 }
 
                 function errorFunc(error) {
-                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     alert("Error Retrieving Classes: " + error);
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 }
             }
         }
@@ -279,6 +288,65 @@ $(document).ready(function () {
                 });
 
                 function successFunc(dropdownData) {
+                    if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                        alert(returnedData);
+                        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                    } else {
+                        var data = [];
+
+                        data.push({ label: "(ALL)", value: "selectAll" });
+                        for (i = 0; i < dropdownData.values.length; i++) {
+                            data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                        }
+
+                        $("#Category").multiselect('dataprovider', data);
+                        $('#Category').multiselect('enable');
+                        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                    }
+                }
+
+                function errorFunc(error) {
+                    alert("Error Retrieving Categories: " + error);
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                }
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Brand_Pattern', function () {
+
+        var brand_pattern = $('#Brand_Pattern').val();
+
+        if (brand_pattern.trim() != "") {
+            var controllerUrl = '/MarMaxxReports/GetBrandData';
+
+            var reportData = {
+                reportName: $('#marMaxxReportName option[disabled]:selected').val(),
+                reportFolder: $('#folderName').val()
+            };
+
+            var brandData = {
+                'reportData': reportData,
+                'brandPattern': brand_pattern
+            };
+
+            var json_BrandData = JSON.stringify(brandData);
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                dataType: "json",
+                contentType: "application/json",
+                success: successFunc,
+                error: errorFunc,
+                data: json_BrandData
+            });
+
+            function successFunc(dropdownData) {
+
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
                     var data = [];
 
                     data.push({ label: "(ALL)", value: "selectAll" });
@@ -286,17 +354,67 @@ $(document).ready(function () {
                         data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
                     }
 
-                    $("#Category").multiselect('dataprovider', data);
-                    $('#Category').multiselect('enable');
-                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
-                }
-
-                function errorFunc(error) {
-                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
-                    alert("Error Retrieving Categories: " + error);
+                    $("#Brand").multiselect('dataprovider', data);
+                    $('#Brand').multiselect('enable');
                 }
             }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Brands: " + error);
+            }
         }
+    });
+
+
+    $('#dynamicParams').on('change', '#Vendor_Pattern', function () {
+        var vendor_pattern = $('#Vendor_Pattern').val();
+
+        if (vendor_pattern.trim() != "") {
+            var controllerUrl = '/MarMaxxReports/GetVendorData';
+
+            var reportData = {
+                reportName: $('#marMaxxReportName option[disabled]:selected').val(),
+                reportFolder: $('#folderName').val()
+            };
+
+            var vendorData = {
+                'reportData': reportData,
+                'vendorPattern': vendor_pattern
+            };
+
+            var json_VendorData = JSON.stringify(vendorData);
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                dataType: "json",
+                contentType: "application/json",
+                success: successFunc,
+                error: errorFunc,
+                data: json_VendorData
+            });
+
+            function successFunc(dropdownData) {
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
+                    var data = [];
+
+                    data.push({ label: "(ALL)", value: "selectAll" });
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Vendor").multiselect('dataprovider', data);
+                    $('#Vendor').multiselect('enable');
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Vendors: " + error);
+            }
+        }
+
     });
 
     $('#saveSubscription').on('click', '#saveMarmaxxSubscription', function () {
@@ -309,6 +427,12 @@ $(document).ready(function () {
         }
 
         var subscriptionName = $('#subscriptionName').val();
+
+        var isValidString = false;
+
+        if (/^[a-zA-Z0-9- ]*$/.test(subscriptionName)) {
+            isValidString = true;
+        }
 
         var groupNames = [];
         $('#marMaxxGroup').find("option:selected").each(function () {
@@ -329,6 +453,8 @@ $(document).ready(function () {
             alert("Please select a value for Group ID");
         } else if (groupNames.length == 0) {
             alert("Please select a value for Group Name");
+        } else if (isValidString == false) {
+            alert("Subscription Name contains special characters, you can only enter values a-z, A-Z, 0-9, space( ), and hyphen(-).");
         } else {
             var isAllDept = false;
             var isAllClass = false;
@@ -479,31 +605,37 @@ function getDynamicReportParams(selectedReportName, selectedFolderName) {
         reportFolder: selectedFolderName
     }
 
-    $.ajax({
-        type: "POST",
-        url: controllerUrl,
-        dataType: "json",
-        success: successFunc,
-        error: errorFunc,
-        data: { 'reportData': reportData }
-    });
+    if (selectedReportName == null || selectedReportName == "") {
+        alert("Could not load report parameters: Report Name is empty.");
+    } else if (selectedFolderName == null || selectedFolderName == "") {
+        alert("Could not load report parameters: Folder is empty.");
+    } else {
+        $.ajax({
+            type: "POST",
+            url: controllerUrl,
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc,
+            data: { 'reportData': reportData }
+        });
 
-    function successFunc(paramData) {
-        if (typeof paramData === 'string') { //If there is an error saving it to the database
-            alert(paramData);
-        } else {
-            createParams(paramData);
-            if (paramData.parameters.length > 0) {
-                selectDynamicParams();                    //SELECTING THE DYNAMIC PARAMS
+        function successFunc(paramData) {
+            if (typeof paramData === 'string') { //If there is an error saving it to the database
+                alert(paramData);
             } else {
-                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                createParams(paramData);
+                if (paramData.parameters.length > 0) {
+                    selectDynamicParams();                    //SELECTING THE DYNAMIC PARAMS
+                } else {
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                }
             }
         }
-    }
 
-    function errorFunc(error) {
-        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
-        alert("Error Getting Report Parameters: " + error);
+        function errorFunc(error) {
+            alert("Error Getting Report Parameters: " + error);
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+        }
     }
 }
 

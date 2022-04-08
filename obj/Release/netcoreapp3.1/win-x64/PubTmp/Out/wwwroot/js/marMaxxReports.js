@@ -45,8 +45,8 @@ $(document).ready(function () {
 
     function successFunction(tableData) {
         if (typeof tableData === 'string') { //If there is an error pulling it from the database
-            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             alert(tableData);
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
         } else {
             if (tableData.tableParams != null) {
 
@@ -69,11 +69,11 @@ $(document).ready(function () {
     }
 
     function errorFunction(error) {
-        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
         alert("Error Loading Previously Loaded User Table: " + error);
+        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
     }
 
-    
+
 
     $('.filter-data').on('change', '#marMaxxReportDropdown', function () {
 
@@ -86,74 +86,79 @@ $(document).ready(function () {
         var selectedReport = $('#marMaxxReportDropdown').val();
         var selectedReportFolder = $('#marMaxxReportDropdown option:selected').prop('title');
 
-        var controllerUrl = '/MarMaxxReports/GetBannersForReport';
+        if (selectedReport == null || selectedReport == "") {
+            alert("Can't get banner values, the value for the selected report is null");
+        } else if (selectedReportFolder == null || selectedReportFolder == "") {
+            alert("Can't get banner values, the value for the selected report folder is null");
+        } else {
+            var controllerUrl = '/MarMaxxReports/GetBannersForReport';
 
-        var reportData = {
-            reportName: selectedReport,
-            reportFolder: selectedReportFolder
-        };
+            var reportData = {
+                reportName: selectedReport,
+                reportFolder: selectedReportFolder
+            };
 
-        $.ajax({
-            type: "POST",
-            url: controllerUrl,
-            dataType: "json",
-            success: successFunc,
-            error: errorFunc,
-            data: { 'reportData': reportData }
-        });
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc,
+                data: { 'reportData': reportData }
+            });
 
-        function successFunc(bannerData) {
-            if (bannerData.values != null) {
-                var data = [];
+            function successFunc(bannerData) {
+                if (bannerData.values != null) {
+                    var data = [];
 
-                for (i = 0; i < bannerData.values.length; i++) {
-                    data.push({ label: bannerData.labels[i], value: bannerData.values[i] });
-                }
+                    for (i = 0; i < bannerData.values.length; i++) {
+                        data.push({ label: bannerData.labels[i], value: bannerData.values[i] });
+                    }
 
-                $('#marMaxxBannerDropdown').multiselect('dataprovider', data);
-                $('#marMaxxBannerDropdown').multiselect('enable');
+                    $('#marMaxxBannerDropdown').multiselect('dataprovider', data);
+                    $('#marMaxxBannerDropdown').multiselect('enable');
 
-                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
 
-            } else {
+                } else {
 
-                var data = [{ label: 'Select a banner...', value: '', disabled: true, selected: true }];
-                $("#marMaxxBannerDropdown").multiselect('dataprovider', data);
-                $('#marMaxxBannerDropdown').multiselect('disable');
+                    var data = [{ label: 'Select a banner...', value: '', disabled: true, selected: true }];
+                    $("#marMaxxBannerDropdown").multiselect('dataprovider', data);
+                    $('#marMaxxBannerDropdown').multiselect('disable');
 
-                var controllerUrl = '/MarMaxxReports/GetMarMaxxTableData';
+                    var controllerUrl = '/MarMaxxReports/GetMarMaxxTableData';
 
-                $.ajax({
-                    type: "POST",
-                    url: controllerUrl,
-                    dataType: "json",
-                    success: successFunc,
-                    error: errorFunc,
-                    data: { 'reportData': reportData }
-                });
+                    $.ajax({
+                        type: "POST",
+                        url: controllerUrl,
+                        dataType: "json",
+                        success: successFunc,
+                        error: errorFunc,
+                        data: { 'reportData': reportData }
+                    });
 
-                function successFunc(tableData) {
-                    if (typeof tableData === 'string') { //If there is an error saving it to the database
-                        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
-                        alert(tableData);
-                    } else {
-                        createTable(tableData); //Creating the dynamic table and displaying it on the screen
+                    function successFunc(tableData) {
+                        if (typeof tableData === 'string') { //If there is an error saving it to the database
+                            alert(tableData);
+                            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                        } else {
+                            createTable(tableData); //Creating the dynamic table and displaying it on the screen
+                            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                        }
+                    }
+
+                    function errorFunc(error) {
+                        alert("Error Getting Report Subscription Data: " + error);
                         setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     }
                 }
+            }
 
-                function errorFunc(error) {
-                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
-                    alert("Error Getting Report Subscription Data: " + error);
-                }
+            function errorFunc(error) {
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                alert("Error Getting Banner Data: " + error);
             }
         }
-
-        function errorFunc(error) {
-            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
-            alert("Error Getting Banner Data: " + error);
-        }
-
     });
 
 
@@ -193,8 +198,8 @@ $(document).ready(function () {
 
             function successFunc(tableData) {
                 if (typeof tableData === 'string') { //If there is an error saving it to the database
-                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                     alert(tableData);
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 } else {
                     createTable(tableData); //Creating the dynamic table and displaying it on the screen
                     setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
@@ -202,13 +207,13 @@ $(document).ready(function () {
             }
 
             function errorFunc(error) {
-                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 alert("Error Getting Report Subscription Data: " + error);
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             }
-        } 
+        }
     });
 
-    
+
 
     $('#marMaxxSubscriptionData').on('click', '.deleteBtn', function () {
         var $selectedRow = $(this).closest("tr");
@@ -218,31 +223,41 @@ $(document).ready(function () {
             .find(".marMaxxSubscriptionsEntry_SubscriptionName")
             .text();
 
-        if (confirm('Are you sure you want to delete subscription: ' + selectedSubscription + '?')) {
-            $selectedRow.addClass('selected');
-            var controllerUrl = '/MarMaxxReports/DeleteMarmaxxReportSubscription';
+        if (_ID != null && _ID != "") {
+            if (confirm('Are you sure you want to delete subscription: ' + selectedSubscription + '?')) {
+                $selectedRow.addClass('selected');
+                var controllerUrl = '/MarMaxxReports/DeleteMarmaxxReportSubscription';
 
-            $.ajax({
-                type: "POST",
-                url: controllerUrl,
-                dataType: "json",
-                success: successFunc,
-                error: errorFunc,
-                data: { 'ID': _ID }
-            });
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: { 'ID': _ID }
+                });
 
-            function successFunc(response) {
-                //$selectedRow.remove();
-                marMaxxTable.row('.selected').remove().draw(false);
-                alert(response + selectedSubscription);
+                function successFunc(response) {
+                    //$selectedRow.remove();
+                    if (response.success == true) {
+                        marMaxxTable.row('.selected').remove().draw(false);
+                        alert(response.message + selectedSubscription);
+                    } else {
+                        alert(response.message);
+                    }
+                    
+                }
+
+                function errorFunc(error) {
+                    alert(error);
+                }
+            } else { //User clicks no
+
             }
-
-            function errorFunc(error) {
-                alert(error);
-            }
-        } else { //User clicks no
-
+        } else {
+            alert("Could not delete report subscription: ID is null");
         }
+
     });
 
     $('#marMaxxSubscriptionData').on('click', '.editBtn', function () {
@@ -284,7 +299,7 @@ $(document).ready(function () {
                         var paramName = expandableRowEntries[g].parameter_name;
 
                         if (paramName == selectedParameter) {
-                            var childEntry = '<tr id="' + paramName + '"><td><b>'+paramName+':</b> ' + expandableRowEntries[g].data + '</td></tr>';
+                            var childEntry = '<tr id="' + paramName + '"><td><b>' + paramName + ':</b> ' + expandableRowEntries[g].data + '</td></tr>';
                             childRows = childRows + childEntry;
                         }
                     }
@@ -304,12 +319,16 @@ $(document).ready(function () {
 
 });
 
-function selectedFolder(selectedVal = "", selectedBanners=[]) {
+function selectedFolder(selectedVal = "", selectedBanners = []) {
     if ($('#marMaxxFolderDropdown :selected').length == 0) { //Nothing is selected in the dropdown (last value is deselected)
 
         var data = [{ label: 'Select a report name...', value: '', disabled: true, selected: true }];
         $("#marMaxxReportDropdown").multiselect('dataprovider', data);
         $('#marMaxxReportDropdown').multiselect('disable');
+
+        var data = [{ label: 'Select a banner...', value: '', disabled: true, selected: true }];
+        $("#marMaxxBannerDropdown").multiselect('dataprovider', data);
+        $('#marMaxxBannerDropdown').multiselect('disable');
 
     } else { //Something is selected in the dropdown
         var controllerUrl = '/MarMaxxReports/GetReportNameValues';
@@ -327,7 +346,7 @@ function selectedFolder(selectedVal = "", selectedBanners=[]) {
 
         function successFunc(dropdownData) {
             //manage the list of dropdown values in the front end -> just use controller to get the dropdown values for each selected folder
-            var data = [{label: 'Select a report name...', value:'', disabled:true, selected:true}];
+            var data = [{ label: 'Select a report name...', value: '', disabled: true, selected: true }];
             for (i = 0; i < dropdownData.length; i++) {
                 data.push({ label: dropdownData[i].reportName, value: dropdownData[i].reportName, title: dropdownData[i].reportFolder });
             }
@@ -372,7 +391,7 @@ function loadBanners(selectedVals = []) {
     });
 
     function successFunc(bannerData) {
-       
+
         var data = [];
 
         for (i = 0; i < bannerData.values.length; i++) {
@@ -384,7 +403,7 @@ function loadBanners(selectedVals = []) {
 
         $('#marMaxxBannerDropdown').val(selectedVals);
         $('#marMaxxBannerDropdown').multiselect('refresh');
-        
+
     }
 
     function errorFunc(error) {
@@ -415,7 +434,7 @@ function createTable(tableData) {
     header.append(Hrow);
     subTable.append(header); //Adding the row to the table
 
-    
+
 
     let body = $('<tbody>');
     //Adding the data under the headers
@@ -444,7 +463,7 @@ function createTable(tableData) {
         copyIcon.append(copyLink);
         tableEntry_Icons.append(copyIcon);
 
-        row.append(tableEntry_Icons); 
+        row.append(tableEntry_Icons);
 
         let tableEntry1 = $('<td>').addClass('marMaxxSubscriptionsEntry_SubscriptionID subscriptionsTableEntry').text(tableData.rowData[j].subscriptionID);
         row.append(tableEntry1); //adding element to the row

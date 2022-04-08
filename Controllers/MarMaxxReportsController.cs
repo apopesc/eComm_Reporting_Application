@@ -1131,7 +1131,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
-                //Redirect to error page and pass forward exception e once error page is set up.
+                _logger.LogError("Error retrieving folders: " + e);
             }
             return dropdownModel;
         }
@@ -1211,7 +1211,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
-                //Redirect to error page and pass forward exception e once error page is set up.
+                _logger.LogError("Error retrieving MarMaxx report parameters: " + e);
             }
             return ReportParameters;
         }
@@ -1249,7 +1249,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
-                
+                _logger.LogError("Error retrieving groups: " + e);
             }
 
             UserSubscriptionDropdownModel groupModel = new UserSubscriptionDropdownModel()

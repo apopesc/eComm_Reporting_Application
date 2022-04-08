@@ -76,32 +76,43 @@
             .find(".groupIDEntry")
             .text();
 
-        if (confirm('Are you sure you want to delete group: ' + selectedGroup + '? You will no longer be able to view user data tied to this group.')) {
+        if (selectedGroupID != null && selectedGroupID != "") {
+            if (confirm('Are you sure you want to delete group: ' + selectedGroup + '? You will no longer be able to view user data tied to this group.')) {
 
-            $selectedRow.addClass('selected');
-            var controllerUrl = '/Admin/DeleteGroup';
+                $selectedRow.addClass('selected');
+                var controllerUrl = '/Admin/DeleteGroup';
 
-            $.ajax({
-                type: "POST",
-                url: controllerUrl,
-                dataType: "json",
-                success: successFunc,
-                error: errorFunc,
-                data: { 'groupID': selectedGroupID }
-            });
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: { 'groupID': selectedGroupID }
+                });
 
-            function successFunc(response) {
-                //$selectedRow.remove();
-                groupTable.row('.selected').remove().draw(false);
-                alert(response + selectedGroup);
+                function successFunc(response) {
+                    //$selectedRow.remove();
+                    if (response.success == true) {
+                        groupTable.row('.selected').remove().draw(false);
+                        alert(response.message + selectedGroup);
+                    } else {
+                        alert(response.message);
+                    }
+
+                }
+
+                function errorFunc(error) {
+                    alert(error);
+                }
+            } else { //User clicks no
+
             }
-
-            function errorFunc(error) {
-                alert(error);
-            }
-        } else { //User clicks no
-
+        } else {
+            alert("Could not delete group: group ID is null");
         }
+
+        
     });
 
     $('#addMasterGroupSubmit').click(function () {
@@ -155,33 +166,42 @@
             .find(".new_masterGroupEntry")
             .text();
 
-        if (confirm('Are you sure you want to delete master group: ' + selectedMasterGroup + '? You will no longer be able to view user data tied to this group.')) {
+        if (selectedMasterGroup != null || selectedMasterGroup == "") {
+            if (confirm('Are you sure you want to delete master group: ' + selectedMasterGroup + '? You will no longer be able to view user data tied to this group.')) {
 
-            $selectedRow.addClass('selected');
-            var controllerUrl = '/Admin/DeleteMasterGroup';
+                $selectedRow.addClass('selected');
+                var controllerUrl = '/Admin/DeleteMasterGroup';
 
-            $.ajax({
-                type: "POST",
-                url: controllerUrl,
-                dataType: "json",
-                success: successFunc,
-                error: errorFunc,
-                data: { 'masterGroup': selectedMasterGroup }
-            });
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: { 'masterGroup': selectedMasterGroup }
+                });
 
-            function successFunc(response) {
-                masterGroupTable.row('.selected').remove().draw(false);
-                $('#addNewMasterGroup option[value="' + selectedMasterGroup + '"]').remove();
-                $('#addNewMasterGroup').multiselect('rebuild');
+                function successFunc(response) {
+                    if (response.success == true) {
+                        masterGroupTable.row('.selected').remove().draw(false);
+                        $('#addNewMasterGroup option[value="' + selectedMasterGroup + '"]').remove();
+                        $('#addNewMasterGroup').multiselect('rebuild');
 
-                alert(response + selectedGroup);
+                        alert(response.message + selectedMasterGroup);
+                    } else {
+                        alert(response.message);
+                    }
+                    
+                }
+
+                function errorFunc(error) {
+                    alert(error);
+                }
+            } else { //User clicks no
+
             }
-
-            function errorFunc(error) {
-                alert(error);
-            }
-        } else { //User clicks no
-
+        } else {
+            alert("Could not delete master group: the master group field is null");
         }
     });
 });
