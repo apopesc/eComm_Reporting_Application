@@ -270,13 +270,11 @@ $(document).ready(function () {
             });
 
             function successFunc(returnedData) {
-                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
-                    alert(returnedData);
-                } else {
+                if (returnedData.result == 'Redirect') {
                     alert(returnedData.message + subscriptionName);
-                    if (returnedData.result == 'Redirect') {
-                        window.location = returnedData.url;
-                    }
+                    window.location = returnedData.url;
+                } else if (returnedData.result == 'Error') {
+                    alert(returnedData.message);
                 }
             }
 

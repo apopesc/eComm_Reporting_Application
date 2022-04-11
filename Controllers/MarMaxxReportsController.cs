@@ -564,16 +564,16 @@ namespace eComm_Reporting_Application.Controllers
             {
                 if(reportSub.subscriptionName == "")
                 {
-                    return Json("Error Saving Marmaxx Report Subscription: Subscription Name field is empty");
-                } 
+                    return Json(new { message = "Error Saving Marmaxx Report Subscription: Subscription Name field is empty", result = "Error" });
+                }
                 else if (reportSub.reportName == "")
                 {
-                    return Json("Error Saving Marmaxx Report Subscription: Report Name field is empty");
+                    return Json(new { message = "Error Saving Marmaxx Report Subscription: Report Name field is empty", result = "Error" });
                 }
                 else if (reportSub.groupIDs == "" || reportSub.groupNames == "")
                 {
-                    return Json("Error Saving Marmaxx Report Subscription: Group field is empty");
-                } 
+                    return Json(new { message = "Error Saving Marmaxx Report Subscription: Group field is empty", result = "Error" });
+                }
                 else
                 {
                     int subscriptionID = 0;
@@ -620,7 +620,7 @@ namespace eComm_Reporting_Application.Controllers
 
                     if (usersInGroup < groupIDList.Count)
                     {
-                        return Json("One or more groups that have been selected have no users tied to them. You can add a user to a group on the User Subscriptions Groups screen.");
+                        return Json(new { message = "One or more groups that have been selected have no users tied to them. You can add a user to a group on the User Subscriptions Groups screen.", result = "Error" });
                     }
                     else
                     {
@@ -685,43 +685,98 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                string paramJson = JsonConvert.SerializeObject(reportSub.dynamicParams);
-                //Add query here to store in database, store group ID in their respective columns, and paramJson in the last column
 
-                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-
-                SqlConnection connection = new SqlConnection(connectionstring);
-
-                string editUserQueryString = "UPDATE MarMaxxReportSubscriptions SET Subscription_Name='" + reportSub.subscriptionName + "', Report_Name='" + reportSub.reportName + "', Group_Name='" + reportSub.groupNames + "', Group_ID='" + reportSub.groupIDs + "', Report_Params='" + paramJson + "', File_Format='" + reportSub.fileFormat + "', Schedule='" + reportSub.schedule + "' " +
-                    "WHERE Subscription_ID="+ reportSub.subscriptionID+";";
-
-                SqlCommand editUserQuery = new SqlCommand(editUserQueryString, connection);
-
-                using (connection)
+                if (reportSub.subscriptionName == "")
                 {
-                    connection.Open();
-                    using SqlDataReader reader = editUserQuery.ExecuteReader();
-                    connection.Close();
+                    return Json(new { message = "Error Saving Marmaxx Report Subscription: Subscription Name field is empty", result = "Error"});
                 }
-
-                for (int i = 0; i < tableData.Count; i++)
+                else if (reportSub.reportName == "")
                 {
-                    if (tableData[i].subscriptionID == reportSub.subscriptionID)
+                    return Json(new { message = "Error Saving Marmaxx Report Subscription: Report Name field is empty", result = "Error" });
+                }
+                else if (reportSub.groupIDs == "" || reportSub.groupNames == "")
+                {
+                    return Json(new { message = "Error Saving Marmaxx Report Subscription: Group field is empty", result = "Error" });
+                }
+                else
+                {
+                    string paramJson = JsonConvert.SerializeObject(reportSub.dynamicParams);
+                    //Add query here to store in database, store group ID in their respective columns, and paramJson in the last column
+
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                    SqlConnection connection = new SqlConnection(connectionstring);
+
+                    //Checking if the group has at least one email tied to it, if not, return error.
+
+                    string userGroupQueryString = "SELECT COUNT(*) FROM UserSubscriptions WHERE Group_ID IN('";
+                    List<string> groupIDList = new List<string>(reportSub.groupIDs.Split(","));
+
+                    for (int i = 0; i < groupIDList.Count; i++)
                     {
-                        tableData[i].subscriptionName = reportSub.subscriptionName;
-                        tableData[i].reportName = reportSub.reportName;
-                        tableData[i].groupNames = reportSub.groupNames;
-                        tableData[i].groupIDs = reportSub.groupIDs;
-                        tableData[i].fileFormat = reportSub.fileFormat;
-                        tableData[i].schedule = reportSub.schedule;
-                        tableData[i].dynamicParams = reportSub.dynamicParams;
 
-                        break;
+                        if (i < groupIDList.Count - 1)
+                        {
+                            userGroupQueryString = userGroupQueryString + groupIDList[i] + "','";
+                        }
+                        else
+                        {
+                            userGroupQueryString = userGroupQueryString + groupIDList[i] + "');";
+                        }
+
                     }
+                    SqlCommand usersInGroupQuery = new SqlCommand(userGroupQueryString, connection);
 
-                }
+                    int usersInGroup = 0;
 
-                return Json(new { message = "Success editing subscription: ", result = "Redirect", url = Url.Action("Index", "MarMaxxReports") });
+                    connection.Open();
+                    using (SqlDataReader reader = usersInGroupQuery.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var temp_userCount = reader.GetInt32(0);
+                            usersInGroup = temp_userCount;
+                        }
+                    }
+                    connection.Close();
+
+                    if (usersInGroup < groupIDList.Count)
+                    {
+                        return Json(new { message = "One or more groups that have been selected have no users tied to them. You can add a user to a group on the User Subscriptions Groups screen.", result = "Error" });
+                    }
+                    else
+                    {
+                        string editUserQueryString = "UPDATE MarMaxxReportSubscriptions SET Subscription_Name='" + reportSub.subscriptionName + "', Report_Name='" + reportSub.reportName + "', Group_Name='" + reportSub.groupNames + "', Group_ID='" + reportSub.groupIDs + "', Report_Params='" + paramJson + "', File_Format='" + reportSub.fileFormat + "', Schedule='" + reportSub.schedule + "' " +
+                        "WHERE Subscription_ID=" + reportSub.subscriptionID + ";";
+
+                        SqlCommand editUserQuery = new SqlCommand(editUserQueryString, connection);
+
+                        using (connection)
+                        {
+                            connection.Open();
+                            using SqlDataReader reader = editUserQuery.ExecuteReader();
+                            connection.Close();
+                        }
+
+                        for (int i = 0; i < tableData.Count; i++)
+                        {
+                            if (tableData[i].subscriptionID == reportSub.subscriptionID)
+                            {
+                                tableData[i].subscriptionName = reportSub.subscriptionName;
+                                tableData[i].reportName = reportSub.reportName;
+                                tableData[i].groupNames = reportSub.groupNames;
+                                tableData[i].groupIDs = reportSub.groupIDs;
+                                tableData[i].fileFormat = reportSub.fileFormat;
+                                tableData[i].schedule = reportSub.schedule;
+                                tableData[i].dynamicParams = reportSub.dynamicParams;
+
+                                break;
+                            }
+
+                        }
+
+                        return Json(new { message = "Success editing subscription: ", result = "Redirect", url = Url.Action("Index", "MarMaxxReports") });
+                    }
+                }   
             }
             catch (Exception e)
             {
