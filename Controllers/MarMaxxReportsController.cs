@@ -585,52 +585,92 @@ namespace eComm_Reporting_Application.Controllers
 
                     SqlConnection connection = new SqlConnection(connectionstring);
 
-                    string addUserQueryString = "INSERT INTO MarMaxxReportSubscriptions (Subscription_Name, Report_Name, Group_Name, Group_ID, Report_Params, File_Format, Schedule) " +
+
+                    //Checking if the group has at least one email tied to it, if not, return error.
+
+                    string userGroupQueryString = "SELECT COUNT(*) FROM UserSubscriptions WHERE Group_ID IN('";
+                    List<string> groupIDList = new List<string>(reportSub.groupIDs.Split(","));
+
+                    for(int i = 0; i < groupIDList.Count; i++) {
+
+                        if(i < groupIDList.Count - 1)
+                        {
+                            userGroupQueryString = userGroupQueryString + groupIDList[i] + "','";
+                        }
+                        else
+                        {
+                            userGroupQueryString = userGroupQueryString + groupIDList[i] + "');";
+                        }
+                        
+                    }
+                    SqlCommand usersInGroupQuery = new SqlCommand(userGroupQueryString, connection);
+
+                    int usersInGroup = 0;
+
+                    connection.Open();
+                    using (SqlDataReader reader = usersInGroupQuery.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var temp_userCount = reader.GetInt32(0);
+                            usersInGroup = temp_userCount;
+                        }
+                    }
+                    connection.Close();
+
+                    if (usersInGroup < groupIDList.Count)
+                    {
+                        return Json("One or more groups that have been selected have no users tied to them. You can add a user to a group on the User Subscriptions Groups screen.");
+                    }
+                    else
+                    {
+                        string addUserQueryString = "INSERT INTO MarMaxxReportSubscriptions (Subscription_Name, Report_Name, Group_Name, Group_ID, Report_Params, File_Format, Schedule) " +
                         "VALUES ('" + reportSub.subscriptionName + "', '" + reportSub.reportName + "', '" + reportSub.groupNames + "', '" + reportSub.groupIDs + "', '" + paramJson + "', '" + reportSub.fileFormat + "', '" + reportSub.schedule + "');";
 
-                    SqlCommand addUserQuery = new SqlCommand(addUserQueryString, connection);
+                        SqlCommand addUserQuery = new SqlCommand(addUserQueryString, connection);
 
-                    string getSubIDString = "SELECT TOP 1* FROM MarMaxxReportSubscriptions ORDER BY Subscription_ID Desc;"; //Getting the ID by getting the most recently added row
-                    SqlCommand getSubID = new SqlCommand(getSubIDString, connection);
+                        string getSubIDString = "SELECT TOP 1* FROM MarMaxxReportSubscriptions ORDER BY Subscription_ID Desc;"; //Getting the ID by getting the most recently added row
+                        SqlCommand getSubID = new SqlCommand(getSubIDString, connection);
 
-                    using (connection)
-                    {
-                        connection.Open();
-                        using SqlDataReader reader = addUserQuery.ExecuteReader();
-                        connection.Close();
-
-                        connection.Open();
-                        using (SqlDataReader reader_ID = getSubID.ExecuteReader())
+                        using (connection)
                         {
-                            while (reader_ID.Read())
+                            connection.Open();
+                            using SqlDataReader reader = addUserQuery.ExecuteReader();
+                            connection.Close();
+
+                            connection.Open();
+                            using (SqlDataReader reader_ID = getSubID.ExecuteReader())
                             {
-                                var id = reader_ID.GetInt32(0);
-                                subscriptionID = id;
+                                while (reader_ID.Read())
+                                {
+                                    var id = reader_ID.GetInt32(0);
+                                    subscriptionID = id;
+                                }
                             }
+                            connection.Close();
                         }
-                        connection.Close();
+
+
+                        ReportTableModel newEntry = new ReportTableModel();
+                        newEntry.subscriptionID = subscriptionID;
+                        newEntry.subscriptionName = reportSub.subscriptionName;
+                        newEntry.reportName = reportSub.reportName;
+                        newEntry.groupNames = reportSub.groupNames;
+                        newEntry.groupIDs = reportSub.groupIDs;
+                        newEntry.fileFormat = reportSub.fileFormat;
+                        newEntry.schedule = reportSub.schedule;
+                        newEntry.dynamicParams = reportSub.dynamicParams;
+
+                        if (changedReport == true)
+                        {
+                            tableData = new List<ReportTableModel>();
+                            changedReport = false;
+                        }
+
+                        tableData.Insert(0, newEntry); //Adding new subscription to start of table
+
+                        return Json(new { message = "Success saving subscription: ", result = "Redirect", url = Url.Action("Index", "MarMaxxReports") });
                     }
-
-
-                    ReportTableModel newEntry = new ReportTableModel();
-                    newEntry.subscriptionID = subscriptionID;
-                    newEntry.subscriptionName = reportSub.subscriptionName;
-                    newEntry.reportName = reportSub.reportName;
-                    newEntry.groupNames = reportSub.groupNames;
-                    newEntry.groupIDs = reportSub.groupIDs;
-                    newEntry.fileFormat = reportSub.fileFormat;
-                    newEntry.schedule = reportSub.schedule;
-                    newEntry.dynamicParams = reportSub.dynamicParams;
-
-                    if (changedReport == true)
-                    {
-                        tableData = new List<ReportTableModel>();
-                        changedReport = false;
-                    }
-
-                    tableData.Insert(0, newEntry); //Adding new subscription to start of table
-
-                    return Json(new { message = "Success saving subscription: ", result = "Redirect", url = Url.Action("Index", "MarMaxxReports") });
                 }
             }
             catch (Exception e)
