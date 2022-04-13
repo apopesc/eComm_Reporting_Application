@@ -112,6 +112,10 @@ $(document).ready(function () {
         }
     });
 
+    $('#addNewDiv').click(function () {
+        var selectedReportName = $('#sierraReportDropdown').val();
+        window.location = "/SierraReports/AddNewReportSub?selectedReportName=" + selectedReportName;
+    });
 
 });
 

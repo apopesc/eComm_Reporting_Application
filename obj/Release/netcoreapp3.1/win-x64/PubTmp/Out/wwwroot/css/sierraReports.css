@@ -57,7 +57,7 @@
     z-index: 10;
 }
 
-.sierraSubscriptionsEntry_SubscriptionID, .sierraSubscriptionsEntry_SubscriptionName, .sierraSubscriptionsEntry_ReportName, .sierraSubscriptionsEntry_GroupName, .marMaxxSubscriptionsEntry_GroupID, .sierraSubscriptionEntry_Dynamic, .sierraSubscriptionsEntry_FileFormat, .sierraSubscriptionsEntry_Schedule {
+.sierraSubscriptionsEntry_SubscriptionID, .sierraSubscriptionsEntry_SubscriptionName, .sierraSubscriptionsEntry_ReportName, .sierraSubscriptionsEntry_GroupName, .sierraSubscriptionsEntry_GroupID, .sierraSubscriptionEntry_Dynamic, .sierraSubscriptionsEntry_FileFormat, .sierraSubscriptionsEntry_Schedule {
     text-align: center;
 }
 

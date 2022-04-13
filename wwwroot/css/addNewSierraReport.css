@@ -89,6 +89,12 @@
     max-height:225px;
 }
 
+.selected-nav-option {
+    color: #f28c20 !important;
+}
 
+.nav-item a:hover {
+    color: #f28c20 !important;
+}
 
 

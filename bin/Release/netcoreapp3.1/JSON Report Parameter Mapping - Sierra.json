@@ -49,12 +49,19 @@
               }
             },
             "parameters": {
-              "Fiscal_Month": {
-                "type": "MultiDropdown",
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month",
-                "value": "Display",
-                "label": "Display"
+              "Start_Date": {
+                "type": "DateTime",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
+              },
+              "End_Date": {
+                "type": "DateTime",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
               }
             }
           },

@@ -439,12 +439,9 @@ $(document).ready(function () {
             var groupName = $(this).prop('title');
             groupNames.push(groupName);
         });
-            
         var groupIDs = $('#marMaxxGroup').val();
-
         var fileFormat = $('#fileFormat').val();
         var schedule = $('#schedule').val();
-        
         var dynamicParams = {};
 
         if (subscriptionName == '') {
@@ -549,9 +546,12 @@ $(document).ready(function () {
             });
 
             function successFunc(returnedData) {
-                alert(returnedData.message + subscriptionName);
+                
                 if (returnedData.result == 'Redirect') {
+                    alert(returnedData.message + subscriptionName);
                     window.location = returnedData.url;
+                } else if (returnedData.result == 'Error') {
+                    alert(returnedData.message);
                 }
             }
 

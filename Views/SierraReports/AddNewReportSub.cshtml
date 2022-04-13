@@ -8,6 +8,11 @@
 }
 <link rel="stylesheet" href="~/css/addNewSierraReport.css" />
 
+<div class="initial-hidden-selected-report">
+    @Html.HiddenFor(selectedFolderName => Model.selectedFolder)
+    @Html.HiddenFor(selectedReportName => Model.selectedReport)
+</div>
+
 <div class="page-header">
     <div class="page-title">
         <h1 class="title-text">Add New Sierra Report Subscription</h1>

@@ -56,7 +56,7 @@ namespace eComm_Reporting_Application.Controllers
             return View(sierraDropdownModel);
         }
 
-        public IActionResult AddNewReportSub()
+        public IActionResult AddNewReportSub(string selectedReportName)
         {
             bool isAuthenticated = isAuthenticatedUser();
 
@@ -71,6 +71,19 @@ namespace eComm_Reporting_Application.Controllers
             UserSubscriptionDropdownModel groupModel = GetGroups();
 
             AddNewReportSubDropdownModel addNewDropdownModel = new AddNewReportSubDropdownModel();
+
+            if (selectedReportName == "null")
+            {
+                tableData = new List<ReportTableModel>();
+                reportParams = new ReportParameterModel();
+                selectedReport = new ReportModel();
+            }
+            else
+            {
+                addNewDropdownModel.selectedFolder = selectedReport.reportFolder;
+                addNewDropdownModel.selectedReport = selectedReport.reportName;
+            }
+
             addNewDropdownModel.folders = folderModel.folders;
             addNewDropdownModel.groupIDs = groupModel.groupsIDList;
             addNewDropdownModel.groupNames = groupModel.groupsList;
@@ -233,6 +246,113 @@ namespace eComm_Reporting_Application.Controllers
                 return Json("Error retrieving Sierra table data: " + e);
             }
         }
+
+        [HttpPost]
+        public JsonResult GetSierraReportParameters(ReportModel reportData)
+        {
+            try
+            {
+                if (reportData != null && reportData.reportName != "" && reportData.reportFolder != "")
+                {
+                    reportParams = GetReportParameters(reportData);
+
+                    if (reportData.reportName != selectedReport.reportName)
+                    {
+                        selectedReport = reportData;
+                        changedReport = true;
+                    }
+
+                    string connectionstring = "";
+
+                    //There are other data sources that need to be mapped here
+                    if (reportParams.dataSource == "STP_CMS_DW")
+                    {
+                        connectionstring = configuration.GetConnectionString("STP_CMS_DW");
+                    }
+
+                    for (int i = 0; i < reportParams.parameters.Count; i++)
+                    {
+                        if ((reportParams.parameters[i].type == "Dropdown" || reportParams.parameters[i].type == "Textbox" || reportParams.parameters[i].type == "MultiDropdown") && (reportParams.parameters[i].queryType == "Stored Procedure" || reportParams.parameters[i].queryType == "In Line"))
+                        {
+                            SqlConnection connection = new SqlConnection(connectionstring);
+                            SqlCommand storedProcQuery = new SqlCommand(reportParams.parameters[i].query, connection);
+
+                            if (reportParams.parameters[i].queryType == "Stored Procedure")
+                            {
+                                storedProcQuery.CommandType = CommandType.StoredProcedure;
+                            }
+
+                            using (connection)
+                            {
+                                List<string> dropdownValues = new List<string>();
+                                List<string> dropdownLabels = new List<string>();
+
+                                if (reportParams.parameters[i].name != "Department_No" && reportParams.parameters[i].name != "Class_Number" && reportParams.parameters[i].name != "Category") //these parameters take values from banner and each other to return data.
+                                {
+                                    connection.Open();
+                                    using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                                    {
+                                        while (stored_proc_reader.Read())
+                                        {
+                                            var proc_data_length = stored_proc_reader.FieldCount;
+
+                                            if (proc_data_length > 1)
+                                            {
+                                                for (int j = 0; j < proc_data_length; j++)
+                                                {
+                                                    var proc_data_name = stored_proc_reader.GetName(j);
+                                                    if (proc_data_name == reportParams.parameters[i].values[0])
+                                                    {
+                                                        var proc_val = stored_proc_reader.GetValue(j);
+
+                                                        string dropdownVal = proc_val.ToString();
+                                                        dropdownValues.Add(dropdownVal);
+                                                    }
+
+                                                    if (proc_data_name == reportParams.parameters[i].labels[0])
+                                                    {
+                                                        var proc_label = stored_proc_reader.GetValue(j);
+
+                                                        string dropdownLab = proc_label.ToString();
+                                                        dropdownLabels.Add(dropdownLab);
+                                                    }
+                                                }
+                                            }
+                                            else //if only one column is returned from the stored procedure, put in both labels and values
+                                            {
+                                                var proc_val = stored_proc_reader.GetValue(0);
+
+                                                string dropdownEntry = proc_val.ToString();
+                                                dropdownValues.Add(dropdownEntry);
+                                                dropdownLabels.Add(dropdownEntry);
+                                            }
+                                        }
+                                    }
+                                    connection.Close();
+                                }
+
+                                reportParams.parameters[i].values = dropdownValues;
+                                reportParams.parameters[i].labels = dropdownLabels;
+                            }
+                        }
+                    }
+
+                    return Json(reportParams);
+                }
+                else
+                {
+                    return Json("Error retrieving report parameters: Report Name or Report Folder is empty");
+                }
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error retrieving report parameters:  " + e);
+                return Json("Error retrieving report parameters: " + e);
+            }
+
+        }
+
 
         public ReportPageDropdownModel GetFoldersForDropdown()
         {
