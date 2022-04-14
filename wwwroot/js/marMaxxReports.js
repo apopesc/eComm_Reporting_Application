@@ -299,7 +299,7 @@ $(document).ready(function () {
                         var paramName = expandableRowEntries[g].parameter_name;
 
                         if (paramName == selectedParameter) {
-                            var childEntry = '<tr id="' + paramName + '"><td><b>' + paramName + ':</b> ' + expandableRowEntries[g].data + '</td></tr>';
+                            var childEntry = '<tr id="' + paramName + '"><td class="expanded_row"><b>' + paramName + ':</b> ' + expandableRowEntries[g].data + '</td></tr>';
                             childRows = childRows + childEntry;
                         }
                     }

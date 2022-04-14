@@ -112,6 +112,43 @@ $(document).ready(function () {
         }
     });
 
+    $('#sierraSubscriptionData').on('click', '#expandBtn', function () {
+        var $selectedRow = $(this).closest("tr");
+        var dataTable_row = sierraTable.row($selectedRow);
+
+        var selectedParameter = $(this).attr('class');
+
+        if ($(this).hasClass("shown_child")) {
+
+            $('table > tbody  > tr > td > #expandBtn').each(function () {
+                $(this).removeClass("shown_child");
+            });
+
+            dataTable_row.child.hide();
+
+        } else {
+            for (const rowID of expandableRowIDs) {
+
+                let childRows = "";
+
+                for (let g = 0; g < expandableRowEntries.length; g++) {
+                    if (expandableRowEntries[g].rowID == rowID) {
+                        var paramName = expandableRowEntries[g].parameter_name;
+
+                        if (paramName == selectedParameter) {
+                            var childEntry = '<tr id="' + paramName + '"><td class="expanded_row"><b>' + paramName + ':</b>' + expandableRowEntries[g].data + '</td></tr>';
+                            childRows = childRows + childEntry;
+                        }
+                    }
+                }
+
+                sierraTable.row($selectedRow).child(childRows, 'child-row').show();
+
+            }
+            $(this).addClass("shown_child");
+        }
+    });
+
     $('#addNewDiv').click(function () {
         var selectedReportName = $('#sierraReportDropdown').val();
         window.location = "/SierraReports/AddNewReportSub?selectedReportName=" + selectedReportName;

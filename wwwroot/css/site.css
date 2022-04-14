@@ -496,3 +496,7 @@ table.dataTable.no-footer{
     cursor: pointer;
     font-weight: bold;
 }
+
+.expanded_row{
+    word-break: break-word;
+}
