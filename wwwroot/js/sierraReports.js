@@ -275,3 +275,7 @@ function createTable(tableData) {
         "lengthMenu": [5, 8, 15, 25]
     });
 }
+
+function getPosition(string, subString, index) {
+    return string.split(subString, index).join(subString).length;
+}

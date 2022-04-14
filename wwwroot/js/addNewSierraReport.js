@@ -148,6 +148,97 @@
         }
     });
 
+    $('#saveSubscription').on('click', '#saveSierraSubscription', function () {
+        var subscriptionName = $('#subscriptionName').val();
+
+        var isValidString = false;
+
+        if (/^[a-zA-Z0-9- ]*$/.test(subscriptionName)) {
+            isValidString = true;
+        }
+
+        var groupNames = $('#sierraGroup').val();
+        var reportName = $('#sierraReportDropdown').val();
+        var groupIDs = [];
+        $('#sierraGroup').find("option:selected").each(function () {
+            var groupID = $(this).prop('title');
+            groupIDs.push(groupID)
+        });
+        var fileFormat = $('#fileFormat').val();
+        var schedule = $('#schedule').val();
+        var dynamicParams = {};
+
+        if (subscriptionName == '') {
+            alert("Please enter a value for Subscription Name");
+        } else if (groupIDs.length == 0) {
+            alert("Please select a value for Group ID");
+        } else if (groupNames.length == 0) {
+            alert("Please select a value for Group Name");
+        } else if (reportName.length == 0) {
+            alert("Please select a value for Report Name");
+        } else if (isValidString == false) {
+            alert("Subscription Name contains special characters, you can only enter values a-z, A-Z, 0-9, space( ), and hyphen(-).");
+        } else {
+
+            $('#hiddenParamNames > input').each(function () {
+                var inputID = this.value;
+                var dynamicParamVal = $('#' + inputID).val();
+
+                if (dynamicParamVal !== null) {
+
+                    if (dynamicParamVal.includes('selectAll')) {
+                        dynamicParams[inputID] = 'ALL';
+                    } else {
+                        dynamicParams[inputID] = dynamicParamVal.toString();
+                    }
+
+                } else {
+                    dynamicParams[inputID] = dynamicParamVal;
+                }
+
+            });
+
+            var groupNames_String = groupNames.toString();
+            var groupIDs_String = groupIDs.toString();
+
+            var controllerUrl = '/SierraReports/SaveSierraReportSubscription';
+
+            var savedReportSubModel = {
+                subscriptionID: 0,
+                subscriptionName: subscriptionName,
+                reportName: reportName,
+                groupNames: groupNames_String,
+                groupIDs: groupIDs_String,
+                fileFormat: fileFormat,
+                schedule: schedule,
+                dynamicParams: dynamicParams
+            };
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc,
+                data: { 'reportSub': savedReportSubModel }
+            });
+
+            function successFunc(returnedData) {
+                if (returnedData.result == 'Redirect') {
+                    alert(returnedData.message + subscriptionName);
+                    window.location = returnedData.url;
+                } else if (returnedData.result == 'Error') {
+                    alert(returnedData.message);
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Getting Report Subscription Data: " + error);
+            }
+        }
+
+    });
+
 });
 
 function selectedFolder(selectedVal = "") {
@@ -236,9 +327,7 @@ function createParams(paramData) {
                 dropdown.append(defaultDropdownOption);
             }
 
-            else if (paramData.parameters[i].type == "MultiDropdown" && (paramData.parameters[i].name != "Banner" && paramData.parameters[i].name != "Department_No" && paramData.parameters[i].name != "Class_Number" && paramData.parameters[i].name != "Category" && paramData.parameters[i].name != "Brand" && paramData.parameters[i].name != "Vendor")) {
-                var allDropdownOption = $('<option value="selectAll">').text("(ALL)");
-                dropdown.append(allDropdownOption);
+            else if (paramData.parameters[i].type == "MultiDropdown") {
                 dropdown.addClass('multiselect_dynamic');
             }
 
@@ -290,41 +379,15 @@ function createParams(paramData) {
         if (paramData.parameters[i].type == "MultiDropdown") {
 
             $('#' + paramData.parameters[i].name).multiselect({
+                nonSelectedText: 'Select a value...',
                 enableCaseInsensitiveFiltering: true,
-                buttonText: function (options, select) {
-                    if (options.length > 0) {
-                        var labels = [];
-                        options.each(function () {
-                            if ($(this).attr('label') !== undefined) {
-
-                                if ($(this).attr('value') == "selectAll") {
-                                    labels = [];
-                                    labels.push('(ALL)');
-                                    return false;
-                                } else {
-                                    labels.push($(this).attr('label'));
-                                }
-                            }
-                            else {
-                                labels.push($(this).html());
-                            }
-                        });
-                        return labels.join(', ') + '';
-                    } else {
-                        return 'Select a Value...';
-                    }
-                }
+                includeSelectAllOption: true
             });
-
-            if (paramData.parameters[i].name == "Department_No" || paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category") {
-                $('#' + paramData.parameters[i].name).multiselect('disable');
-            }
         }
         if (paramData.parameters[i].defaultVal != null) {
             $('#' + paramData.parameters[i].name).val(paramData.parameters[i].defaultVal);
             $('#' + paramData.parameters[i].name).multiselect('refresh');
         }
-
     }
 
     var saveSubscriptionBtn = $('<button>').addClass('btnAddPage').text("Save Sierra Report Subscription");
