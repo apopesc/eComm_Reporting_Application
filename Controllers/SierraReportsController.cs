@@ -477,6 +477,41 @@ namespace eComm_Reporting_Application.Controllers
             }
         }
 
+        public JsonResult DeleteSierraReportSubscription(int ID)
+        {
+            try
+            {
+                if (ID == 0)
+                {
+                    return Json(new { success = false, message = "Error Deleting Subscription: ID is empty" });
+                }
+                else
+                {
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                    SqlConnection connection = new SqlConnection(connectionstring);
+
+                    string queryString = "DELETE FROM SierraReportSubscriptions WHERE Subscription_ID=" + ID;
+
+                    SqlCommand deleteUserQuery = new SqlCommand(queryString, connection);
+                    using (connection)
+                    {
+                        connection.Open();
+                        SqlDataReader reader = deleteUserQuery.ExecuteReader();
+                        connection.Close();
+                    }
+
+                    tableData.RemoveAll(x => x.subscriptionID == ID);
+
+                    return Json(new { success = true, message = "Success Deleting Subscription: " });
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error Deleting Subscription: " + e);
+                return Json(new { success = false, message = "Error Deleting Subscription: " + e });
+            }
+        }
+
         public ReportPageDropdownModel GetFoldersForDropdown()
         {
             ReportPageDropdownModel dropdownModel = new ReportPageDropdownModel();

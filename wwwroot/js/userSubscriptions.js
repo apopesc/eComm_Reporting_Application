@@ -83,7 +83,7 @@ $(document).ready(function () {
     function successFunction(returnedData) {
         if (typeof returnedData === 'string') { //If there is an error pulling it from the database
             alert(returnedData);
-            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 1000);
         } else {
             if (returnedData != null) {
 
@@ -96,9 +96,9 @@ $(document).ready(function () {
                 selectedMasterGroup(returnedData.selectedGroupIDs);
 
                 createTable(returnedData.tableData);
-                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 1000);
             } else {
-                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 1000);
             }
         }
     }

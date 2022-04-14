@@ -112,6 +112,49 @@ $(document).ready(function () {
         }
     });
 
+    $('#sierraSubscriptionData').on('click', '.deleteBtn', function () {
+        var $selectedRow = $(this).closest("tr");
+        var _ID = $selectedRow.attr('id');
+
+        let selectedSubscription = $selectedRow
+            .find(".sierraSubscriptionsEntry_SubscriptionName")
+            .text();
+
+        if (_ID != null && _ID != "") {
+            if (confirm('Are you sure you want to delete subscription: ' + selectedSubscription + '?')) {
+                $selectedRow.addClass('selected');
+                var controllerUrl = '/SierraReports/DeleteSierraReportSubscription';
+
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: { 'ID': _ID }
+                });
+
+                function successFunc(response) {
+                    //$selectedRow.remove();
+                    if (response.success == true) {
+                        sierraTable.row('.selected').remove().draw(false);
+                        alert(response.message + selectedSubscription);
+                    } else {
+                        alert(response.message);
+                    }
+                }
+
+                function errorFunc(error) {
+                    alert(error);
+                }
+            } else { //User clicks no
+
+            }
+        } else {
+            alert("Could not delete report subscription: ID is null");
+        }
+    });
+
     $('#sierraSubscriptionData').on('click', '#expandBtn', function () {
         var $selectedRow = $(this).closest("tr");
         var dataTable_row = sierraTable.row($selectedRow);
