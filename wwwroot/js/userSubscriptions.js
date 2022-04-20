@@ -340,20 +340,25 @@ function selectedMasterGroup(selectedVals = []) {
 
         function successFunc(dropdownData) {
             //var data = [{label: 'Group ID', value: 'demoOption', disabled: true, children: [{ label: 'Group Name', value: '', disabled: true }]}];
-            var data = [];
+            if (dropdownData.success == true) {
+                var data = [];
 
-            for (var groupID in dropdownData) {
-                var dropdownEntry = { label: "<b>ID: </b>" + groupID + " </br><b>Name: </b>" + dropdownData[groupID], value: groupID , title: dropdownData[groupID] };
-                data.push(dropdownEntry);
+                for (var groupID in dropdownData.groups) {
+                    var dropdownEntry = { label: "<b>ID: </b>" + groupID + " </br><b>Name: </b>" + dropdownData.groups[groupID], value: groupID, title: dropdownData.groups[groupID] };
+                    data.push(dropdownEntry);
+                }
+
+                $("#groupDropdown").multiselect('dataprovider', data);
+                $('#groupDropdown').multiselect('enable');
+
+                if (selectedVals.length > 0) {
+                    $('#groupDropdown').val(selectedVals);
+                    $('#groupDropdown').multiselect('refresh');
+                }
+            } else {
+                alert("Error Retrieving Groups" + dropdownData.message);
             }
-
-            $("#groupDropdown").multiselect('dataprovider', data);
-            $('#groupDropdown').multiselect('enable');
-
-            if (selectedVals.length > 0) {
-                $('#groupDropdown').val(selectedVals);
-                $('#groupDropdown').multiselect('refresh');
-            }
+            
         }
 
         function errorFunc(error) {

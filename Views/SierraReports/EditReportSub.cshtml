@@ -1,0 +1,145 @@
+﻿@model eComm_Reporting_Application.Models.EditReportSubscriptionModel
+@{
+    ViewData["Title"] = "Edit Report Subscription";
+}
+
+@section Scripts{
+    <script src="~/js/editSierraReport.js"></script>
+}
+<link rel="stylesheet" href="~/css/editSierraReport.css" />
+
+<div class="page-header">
+    <div class="page-title">
+        @if (Model.isCopy == false)
+        {
+            <h1 class="title-text">Edit Sierra Report Subscription</h1>
+        }
+        else
+        {
+            <h1 class="title-text">Copy Sierra Report Subscription</h1>
+        }
+    </div>
+</div>
+
+<div class="hidden-selected-groups">
+    @Html.HiddenFor(selectedGroupNames => Model.selectedGroupNames)
+    @Html.HiddenFor(selectedGroupIDs => Model.selectedGroupIDs)
+</div>
+
+<div class="hidden-dynamic-params">
+    @if (Model.dynamicParams != null)
+    {
+        @foreach (var parameter in Model.dynamicParams)
+        {
+            @Html.Hidden(parameter.Key, parameter.Value, new { @id = "selectedParamVal" });
+        }
+    }
+</div>
+
+<div class="hidden-folder-name">
+    @Html.HiddenFor(selectedFolderName => Model.folderName)
+</div>
+
+<div id="hiddenParamNames">
+</div>
+
+<div class="filter-data">
+    @if (Model.isCopy == false)
+    {
+        <div class="addnew-row textbox">
+            <div class="addnew-textbox">
+                <label class="filter-label" for="subscription-id">Subscription ID: </label>
+                <input type="text" id="subscriptionID" class="subscription-textbox" name="subscription-id" disabled value="@Model.subscriptionID" />
+            </div>
+        </div>
+    }
+
+    <div class="addnew-row textbox">
+        <div class="addnew-textbox">
+            <label class="filter-label" for="subscription-name">Subscription Name: </label>
+            <input type="text" id="subscriptionName" class="subscription-textbox" name="subscription-name" value="@Model.subscriptionName" />
+        </div>
+    </div>
+
+    <div class="addnew-row">
+        <div class="addnew-dropdown">
+            <label class="filter-label" for="sierraReportName">Report Name: </label>
+            <select id="sierraReportName" name="sierraReportName" disabled>
+                <option value="@Model.reportName" disabled selected>@Model.reportName</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="addnew-row">
+        <div class="addnew-dropdown">
+            <label class="filter-label" for="sierraGroup">Group:</label>
+            <select id="sierraGroup" name="sierraGroup" multiple>
+                @for (int i = 0; i < Model.groupIDs.Count; i++)
+                {
+                    <option title="@Model.groupNames[i]" value=@Model.groupIDs[i] label="<b>ID: </b>@Model.groupIDs[i]</br> <b>Name: </b>@Model.groupNames[i]"> </option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="addnew-row">
+        <div class="addnew-dropdown">
+            <label class="filter-label" for="fileFormat">File Format:</label>
+            <select id="fileFormat" name="fileFormat">
+                <option value="EXCELOPENXML">EXCELOPENXML</option>
+                @if (Model.selectedFileFormat == "PDF")
+                {
+                    <option value="PDF" selected>PDF</option>
+                    <option value="CSV">CSV</option>
+                }
+                else if (Model.selectedFileFormat == "CSV")
+                {
+                    <option value="PDF">PDF</option>
+                    <option value="CSV" selected>CSV</option>
+                }
+                else
+                {
+                    <option value="PDF">PDF</option>
+                    <option value="CSV">CSV</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="addnew-row">
+        <div class="addnew-dropdown">
+            <label class="filter-label" for="schedule">Schedule:</label>
+            <select id="schedule" name="schedule">
+                <option value="Daily">Daily</option>
+
+                @if (Model.selectedSchedule == "Weekly")
+                {
+                    <option value="Weekly" selected>Weekly</option>
+                    <option value="Quarterly">Quarterly</option>
+                }
+                else if (Model.selectedSchedule == "Quarterly")
+                {
+                    <option value="Weekly">Weekly</option>
+                    <option value="Quarterly" selected>Quarterly</option>
+                }
+                else
+                {
+                    <option value="Weekly">Weekly</option>
+                    <option value="Quarterly">Quarterly</option>
+                }
+            </select>
+        </div>
+    </div>
+</div>
+
+<div id="addNewDynamic" class="dynamic-div">
+    <div class="dynamic-params-div">
+        <div id="dynamicParams">
+        </div>
+    </div>
+    <button id="backToSierra" class="btnAddPage" type="button" onclick="location.href='@Url.Action("Index", "SierraReports")'">Back</button>
+    <div id="saveSubscription" class="save-subscription">
+    </div>
+</div>
+
+

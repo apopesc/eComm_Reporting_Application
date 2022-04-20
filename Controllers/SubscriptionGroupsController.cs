@@ -426,34 +426,49 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                IDictionary<string, string> groups = new Dictionary<string, string>();
-
-                string masterGroupsListString = String.Join("', '", masterGroupList.ToArray());
-                masterGroupsListString = "'" + masterGroupsListString + "'";
-
-                string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-                SqlConnection connection = new SqlConnection(connectionstring);
-
-                string groupsQueryString = "SELECT GroupID,GroupName FROM Groups WHERE MasterGroup IN (" + masterGroupsListString + ")";
-                SqlCommand groupsQuery = new SqlCommand(groupsQueryString, connection);
-                using (connection)
+                if(masterGroupList.Count < 1)
                 {
-                    connection.Open();
-                    using (SqlDataReader reader = groupsQuery.ExecuteReader())
+                    _logger.LogError("Error getting group values: Master Group is Empty");
+                    return Json(new { success = false, message = "Error getting group values: Master Group is Empty" });
+                } 
+                else
+                {
+                    IDictionary<string, string> groups = new Dictionary<string, string>();
+
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                    SqlConnection connection = new SqlConnection(connectionstring);
+
+                    var masterGroupParams = new string[masterGroupList.Count];
+                    SqlCommand groupsQuery = new SqlCommand();
+                    for (int i = 0; i < masterGroupList.Count; i++)
                     {
-                        while (reader.Read())
+                        masterGroupParams[i] = string.Format("@MasterGroup{0}", i);
+                        groupsQuery.Parameters.AddWithValue(masterGroupParams[i], masterGroupList[i]);
+                    }
+
+                    groupsQuery.CommandText = string.Format("SELECT GroupID,GroupName FROM Groups WHERE MasterGroup IN ({0})", string.Join(",", masterGroupParams));
+                    groupsQuery.Connection = connection;
+
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = groupsQuery.ExecuteReader())
                         {
-                            var groupID = reader.GetString(0);
-                            var groupName = reader.GetString(1);
-                            groups.Add(groupID, groupName);
+                            while (reader.Read())
+                            {
+                                var groupID = reader.GetString(0);
+                                var groupName = reader.GetString(1);
+                                groups.Add(groupID, groupName);
+                            }
                         }
                     }
+                    return Json(new { success = true, groups = groups });
                 }
-                return Json(groups);
             }
             catch (Exception e)
             {
-                return Json("Error getting group values");
+                _logger.LogError("Error getting group values: " + e);
+                return Json(new { success = false, message = "Error getting group values: " + e });
             }
         }
 
