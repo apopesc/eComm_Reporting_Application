@@ -154,9 +154,12 @@ namespace eComm_Reporting_Application.Controllers
                     string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                     SqlConnection connection = new SqlConnection(connectionstring);
 
-                    string queryString = "DELETE FROM Groups WHERE GroupID='" + groupID + "';";
+                    string queryString = "DELETE FROM Groups WHERE GroupID=@groupID;";
 
                     SqlCommand deleteGroupQuery = new SqlCommand(queryString, connection);
+
+                    deleteGroupQuery.Parameters.AddWithValue("@groupID", groupID);
+
                     using (connection)
                     {
                         connection.Open();
@@ -230,9 +233,12 @@ namespace eComm_Reporting_Application.Controllers
                 string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                 SqlConnection connection = new SqlConnection(connectionstring);
 
-                string queryString = "DELETE FROM MasterGroups WHERE MasterGroup='" + masterGroup + "';";
+                string queryString = "DELETE FROM MasterGroups WHERE MasterGroup=@masterGroup;";
 
                 SqlCommand deleteMasterGroupQuery = new SqlCommand(queryString, connection);
+
+                deleteMasterGroupQuery.Parameters.AddWithValue("@masterGroup", masterGroup);
+
                 using (connection)
                 {
                     connection.Open();
