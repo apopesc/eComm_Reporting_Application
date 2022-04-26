@@ -4,6 +4,7 @@ C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Appli
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\addNewUser.css
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\admin.css
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\editMarMaxxReport.css
+C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\editSierraReport.css
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\help.css
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\marMaxxReports.css
 C:\Users\and06572\source\repos\eComm_Reporting_Application\eComm_Reporting_Application\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\sierraReports.css

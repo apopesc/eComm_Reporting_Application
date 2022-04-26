@@ -155,6 +155,20 @@ $(document).ready(function () {
         }
     });
 
+    $('#sierraSubscriptionData').on('click', '.editBtn', function () {
+        var $selectedRow = $(this).closest("tr");
+        var _ID = $selectedRow.attr('id');
+
+        window.location = "/SierraReports/EditReportSub?ID=" + _ID + "&copy=false";
+    });
+
+    $('#sierraSubscriptionData').on('click', '.copyBtn', function () {
+        var $selectedRow = $(this).closest("tr");
+        var _ID = $selectedRow.attr('id');
+
+        window.location = "/SierraReports/EditReportSub?ID=" + _ID + "&copy=true";
+    });
+
     $('#sierraSubscriptionData').on('click', '#expandBtn', function () {
         var $selectedRow = $(this).closest("tr");
         var dataTable_row = sierraTable.row($selectedRow);
@@ -179,7 +193,7 @@ $(document).ready(function () {
                         var paramName = expandableRowEntries[g].parameter_name;
 
                         if (paramName == selectedParameter) {
-                            var childEntry = '<tr id="' + paramName + '"><td class="expanded_row"><b>' + paramName + ':</b>' + expandableRowEntries[g].data + '</td></tr>';
+                            var childEntry = '<tr id="' + paramName + '"><td class="expanded_row"><b>' + paramName + ': </b>' + expandableRowEntries[g].data + '</td></tr>';
                             childRows = childRows + childEntry;
                         }
                     }

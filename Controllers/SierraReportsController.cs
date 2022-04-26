@@ -91,6 +91,73 @@ namespace eComm_Reporting_Application.Controllers
             return View(addNewDropdownModel);
         }
 
+        public IActionResult EditReportSub(int ID, bool copy)
+        {
+            bool isAuthenticated = isAuthenticatedUser();
+
+            if (isAuthenticated == false)
+            {
+                string userName = User.Identity.Name;
+                string error = "User " + userName + " does not have sufficient permissions to access this application. Please contact an administrator.";
+                return RedirectToAction("Error", new { errorMsg = error });
+            }
+
+            EditReportSubscriptionModel reportSubModel = new EditReportSubscriptionModel();
+
+            reportSubModel.isCopy = copy;
+
+            string queryString = "SELECT * FROM SierraReportSubscriptions WHERE Subscription_ID='" + ID + "'";
+
+            string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+            SqlConnection connection = new SqlConnection(connectionstring);
+            SqlCommand getSubscriptionData = new SqlCommand(queryString, connection);
+            using (connection)
+            {
+                connection.Open();
+                using (SqlDataReader reader = getSubscriptionData.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        reportSubModel.subscriptionID = reader.GetInt32(0);
+                        reportSubModel.subscriptionName = reader.GetString(1);
+                        reportSubModel.reportName = reader.GetString(2);
+                        reportSubModel.selectedGroupNames = reader.GetString(3);
+                        reportSubModel.selectedGroupIDs = reader.GetString(4);
+                        reportSubModel.selectedFileFormat = reader.GetString(6);
+                        reportSubModel.selectedSchedule = reader.GetString(7);
+
+                        string report_params_json = reader.GetString(5);
+                        Dictionary<string, string> dynamicReportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(report_params_json);
+                        reportSubModel.dynamicParams = dynamicReportParams;
+                    }
+                }
+                connection.Close();
+            }
+
+            UserSubscriptionDropdownModel dropdownData = GetGroups();
+            reportSubModel.groupNames = dropdownData.groupsList;
+            reportSubModel.groupIDs = dropdownData.groupsIDList;
+
+            var json_folders = jsonObject["folders"];
+            foreach (JProperty x in json_folders)
+            {
+                string folderName = x.Name;
+
+                var reportFolder = json_folders[folderName];
+                var json_reports = reportFolder["reports"];
+                foreach (JProperty y in json_reports)
+                {
+                    string temp_report_name = y.Name;
+                    if (temp_report_name == reportSubModel.reportName)
+                    {
+                        reportSubModel.folderName = folderName;
+                    }
+                }
+            }
+
+            return View(reportSubModel);
+        }
+
         [HttpPost]
         public JsonResult GetReportNameValues(List<string> folderPathList)
         {
@@ -472,8 +539,113 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError("Error Saving Marmaxx Report Subscription:  " + e);
-                return Json("Error Saving Marmaxx Report Subscription: " + e);
+                _logger.LogError("Error Saving Sierra Report Subscription:  " + e);
+                return Json("Error Saving Sierra Report Subscription: " + e);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult SaveEditedSierraReportSubscription(ReportTableModel reportSub)
+        {
+            try
+            {
+
+                if (reportSub.subscriptionName == "")
+                {
+                    return Json(new { message = "Error Saving Sierra Report Subscription: Subscription Name field is empty", result = "Error" });
+                }
+                else if (reportSub.reportName == "")
+                {
+                    return Json(new { message = "Error Saving Sierra Report Subscription: Report Name field is empty", result = "Error" });
+                }
+                else if (reportSub.groupIDs == "" || reportSub.groupNames == "")
+                {
+                    return Json(new { message = "Error Saving Sierra Report Subscription: Group field is empty", result = "Error" });
+                }
+                else
+                {
+                    string paramJson = JsonConvert.SerializeObject(reportSub.dynamicParams);
+                    //Add query here to store in database, store group ID in their respective columns, and paramJson in the last column
+
+                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+                    SqlConnection connection = new SqlConnection(connectionstring);
+
+                    //Checking if the group has at least one email tied to it, if not, return error.
+
+                    string userGroupQueryString = "SELECT COUNT(*) FROM UserSubscriptions WHERE Group_ID IN('";
+                    List<string> groupIDList = new List<string>(reportSub.groupIDs.Split(","));
+
+                    for (int i = 0; i < groupIDList.Count; i++)
+                    {
+
+                        if (i < groupIDList.Count - 1)
+                        {
+                            userGroupQueryString = userGroupQueryString + groupIDList[i] + "','";
+                        }
+                        else
+                        {
+                            userGroupQueryString = userGroupQueryString + groupIDList[i] + "');";
+                        }
+
+                    }
+                    SqlCommand usersInGroupQuery = new SqlCommand(userGroupQueryString, connection);
+
+                    int usersInGroup = 0;
+
+                    connection.Open();
+                    using (SqlDataReader reader = usersInGroupQuery.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var temp_userCount = reader.GetInt32(0);
+                            usersInGroup = temp_userCount;
+                        }
+                    }
+                    connection.Close();
+
+                    if (usersInGroup < groupIDList.Count)
+                    {
+                        return Json(new { message = "One or more groups that have been selected have no users tied to them. You can add a user to a group on the User Subscriptions Groups screen.", result = "Error" });
+                    }
+                    else
+                    {
+                        string editUserQueryString = "UPDATE SierraReportSubscriptions SET Subscription_Name='" + reportSub.subscriptionName + "', Report_Name='" + reportSub.reportName + "', Group_Name='" + reportSub.groupNames + "', Group_ID='" + reportSub.groupIDs + "', Report_Params='" + paramJson + "', File_Format='" + reportSub.fileFormat + "', Schedule='" + reportSub.schedule + "' " +
+                        "WHERE Subscription_ID=" + reportSub.subscriptionID + ";";
+
+                        SqlCommand editUserQuery = new SqlCommand(editUserQueryString, connection);
+
+                        using (connection)
+                        {
+                            connection.Open();
+                            using SqlDataReader reader = editUserQuery.ExecuteReader();
+                            connection.Close();
+                        }
+
+                        for (int i = 0; i < tableData.Count; i++)
+                        {
+                            if (tableData[i].subscriptionID == reportSub.subscriptionID)
+                            {
+                                tableData[i].subscriptionName = reportSub.subscriptionName;
+                                tableData[i].reportName = reportSub.reportName;
+                                tableData[i].groupNames = reportSub.groupNames;
+                                tableData[i].groupIDs = reportSub.groupIDs;
+                                tableData[i].fileFormat = reportSub.fileFormat;
+                                tableData[i].schedule = reportSub.schedule;
+                                tableData[i].dynamicParams = reportSub.dynamicParams;
+
+                                break;
+                            }
+
+                        }
+
+                        return Json(new { message = "Success editing subscription: ", result = "Redirect", url = Url.Action("Index", "SierraReports") });
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error Saving Sierra Report Subscription:  " + e);
+                return Json("Error Saving Sierra Report Subscription: " + e);
             }
         }
 

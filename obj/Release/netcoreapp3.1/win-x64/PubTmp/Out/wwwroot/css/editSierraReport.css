@@ -1,34 +1,24 @@
-﻿.btn-group {
-    float: right;
-}
-
-.page-header {
-    background-color: #f28c20;
-}
-
-#viewReportParams {
-    width: 200px;
-    background-color: #f28c20;
-    color: white;
-    font-weight: 700;
-}
-
-#saveSierraSubscription {
-    background-color: #f28c20;
-    color: white;
-    font-weight: 700;
-    float: right;
-    margin-right: 0px;
+﻿.filter-data {
+    float: left;
 }
 
 .addnew-dropdown {
     width: 440px;
 }
 
+.btn-group {
+    float: right;
+}
+
+#saveSierraSubscription {
+    background-color: #9E0000;
+    color: white;
+    font-weight: 700;
+    float: right;
+    margin-right: 0px;
+}
+
 @media screen and (max-width: 1920px) {
-    #viewReportParams {
-        margin-left: 124px;
-    }
     .dynamic-params-div {
         max-height: 620px;
     }
@@ -45,9 +35,6 @@
 }
 
 @media screen and (max-width: 1280px) {
-    #viewReportParams {
-        margin-left: 85px;
-    }
     .dynamic-params-div {
         max-height: 288px;
     }
@@ -57,44 +44,37 @@
     .filter-data {
         width: 45%;
     }
-    .addnew-row-last{
-        margin-top: 11px;
-    }
     #saveSierraSubscription {
         margin-top: 22px;
         width: 305px;
     }
 }
 
-.filter-data{
-    float: left;
-}
-
-.date-input{
-    padding-top:5px;
+.date-input {
+    padding-top: 5px;
 }
 
 .dynamic-params-div {
-    min-height: 215px;
     overflow-y: scroll;
     width: 100%;
 }
 
 .dynamic-div {
-    margin-top: 21px;
+    margin-top: 20px;
     display: inline-block;
 }
 
-.multiselect-container{
-    max-height:225px;
+.multiselect-container {
+    max-height: 225px;
+}
+.textbox{
+    margin-top: 15px;
 }
 
-.selected-nav-option {
-    color: #f28c20 !important;
+.first-row{
+    margin-top: -5px;
 }
 
-.nav-item a:hover {
-    color: #f28c20 !important;
+#backToSierra{
+    margin-top: 22px;
 }
-
-

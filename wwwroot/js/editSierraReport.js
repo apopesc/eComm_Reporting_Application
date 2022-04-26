@@ -1,4 +1,9 @@
-﻿$(document).ready(function () {
+﻿var url_string = window.location.href;
+url = new URL(url_string);
+var isCopyScreen = url.searchParams.get("copy");
+
+$(document).ready(function () {
+
     $('#SierraReports_Link').addClass('selected-nav-option');
 
     $('#sierraGroup').multiselect({
@@ -9,7 +14,7 @@
                 var labels = [];
                 options.each(function () {
                     if ($(this).attr('label') !== undefined) {
-                        labels.push($(this).attr('value'));
+                        labels.push($(this).attr('title'));
                     }
                     else {
                         labels.push($(this).html());
@@ -22,13 +27,7 @@
         }
     });
 
-    $('#sierraFolderDropdown').multiselect({
-        nonSelectedText: 'Select a folder...',
-        includeSelectAllOption: true,
-        enableCaseInsensitiveFiltering: true
-    });
-
-    $('#sierraReportDropdown').multiselect({
+    $('#sierraReportName').multiselect({
         nonSelectedText: 'Select a report name...',
         enableCaseInsensitiveFiltering: true
     });
@@ -41,114 +40,38 @@
         enableCaseInsensitiveFiltering: true
     });
 
-    $('#sierraReportDropdown').multiselect('disable');
-
-    var initialSelectedReport = $('#selectedReport').val();
-    var initialSelectedFolder = $('#selectedFolder').val();
-
-    if (initialSelectedReport != "" && initialSelectedFolder != "") {
-        $("#loadMe").modal({
-            backdrop: "static", //remove ability to close modal with click
-            keyboard: false, //remove option to close with keyboard
-            show: true //Display loader!
-        });
-
-        //adding the selected report name
-        $('#hiddenSelectedReport').attr('name', initialSelectedReport);
-        $('#hiddenSelectedReport').attr('folder', initialSelectedFolder);
-
-        var controllerUrl = '/SierraReports/GetSierraReportParameters';
-
-        var reportData = {
-            reportName: initialSelectedReport,
-            reportFolder: initialSelectedFolder
-        }
-
-        $.ajax({
-            type: "POST",
-            url: controllerUrl,
-            dataType: "json",
-            success: successFunc,
-            error: errorFunc,
-            data: { 'reportData': reportData }
-        });
-
-        function successFunc(paramData) {
-            if (typeof paramData === 'string') { //If there is an error saving it to the database
-                alert(paramData);
-                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
-            } else {
-
-                $('#sierraFolderDropdown').val(initialSelectedFolder);
-                $('#sierraFolderDropdown').multiselect('refresh');
-
-                selectedFolder(initialSelectedReport);
-
-                createParams(paramData);
-
-                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
-            }
-        }
-
-        function errorFunc(error) {
-            alert("Error Getting Report Parameters: " + error);
-            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
-        }
-    }
-
-    $('.filter-data').on('change', '#sierraReportDropdown', function () {
-        $("#loadMe").modal({
-            backdrop: "static", //remove ability to close modal with click
-            keyboard: false, //remove option to close with keyboard
-            show: true //Display loader!
-        });
-
-        var selectedReport = $('#sierraReportDropdown').val();
-        var selectedReportFolder = $('#sierraReportDropdown option:selected').prop('title');
-
-        //adding the selected report name
-        $('#hiddenSelectedReport').attr('name', selectedReport);
-        $('#hiddenSelectedReport').attr('folder', selectedReportFolder);
-
-        if (selectedReport == null) {
-            alert("Please select a folder, then a report to view it's parameters.");
-            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
-        } else {
-
-            var controllerUrl = '/SierraReports/GetSierraReportParameters';
-
-            var reportData = {
-                reportName: selectedReport,
-                reportFolder: selectedReportFolder
-            }
-
-            $.ajax({
-                type: "POST",
-                url: controllerUrl,
-                dataType: "json",
-                success: successFunc,
-                error: errorFunc,
-                data: { 'reportData': reportData }
-            });
-
-            function successFunc(paramData) {
-                if (typeof paramData === 'string') { //If there is an error saving it to the database
-                    alert(paramData);
-                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
-                } else {
-                    createParams(paramData);
-                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
-                }
-            }
-
-            function errorFunc(error) {
-                alert("Error Getting Report Parameters: " + error);
-                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
-            }
+    //Getting group IDs and Names from hidden parameters
+    var selectedGroupIDsString = "";
+    $('.hidden-selected-groups input').each(function () {
+        if ($(this).attr("id") == "selectedGroupIDs") {
+            selectedGroupIDsString = $(this).val();
         }
     });
 
+    //setting selected values of group IDs and group names in the dropdowns
+    var selectedGroupIDs = selectedGroupIDsString.split(",");
+
+    $('#sierraGroup').val(selectedGroupIDs);
+    $('#sierraGroup').multiselect('refresh');
+
+    var selectedReportName = $('#sierraReportName option[disabled]:selected').val();
+
+    if ($('#folderName').length) { //If the folder name has been pulled successfully
+        var selectedFolderName = $('#folderName').val();
+        getDynamicReportParams(selectedReportName, selectedFolderName);                     //GETTING THE DYNAMIC REPORT PARAMETERS 
+    } else {
+        alert("Can't find report/folder. Please delete this report subscription record and create a new one to use updated report data.");
+    }
+
     $('#saveSubscription').on('click', '#saveSierraSubscription', function () {
+        var subscriptionID;
+
+        if (isCopyScreen == 'false') {
+            subscriptionID = $('#subscriptionID').val();
+        } else {
+            subscriptionID = "0";
+        }
+
         var subscriptionName = $('#subscriptionName').val();
 
         var isValidString = false;
@@ -157,13 +80,12 @@
             isValidString = true;
         }
 
-        var groupNames = $('#sierraGroup').val();
-        var reportName = $('#sierraReportDropdown').val();
-        var groupIDs = [];
+        var groupNames = [];
         $('#sierraGroup').find("option:selected").each(function () {
-            var groupID = $(this).prop('title');
-            groupIDs.push(groupID)
+            var groupName = $(this).prop('title');
+            groupNames.push(groupName);
         });
+        var groupIDs = $('#sierraGroup').val();
         var fileFormat = $('#fileFormat').val();
         var schedule = $('#schedule').val();
         var dynamicParams = {};
@@ -174,24 +96,15 @@
             alert("Please select a value for Group ID");
         } else if (groupNames.length == 0) {
             alert("Please select a value for Group Name");
-        } else if (reportName.length == 0) {
-            alert("Please select a value for Report Name");
         } else if (isValidString == false) {
             alert("Subscription Name contains special characters, you can only enter values a-z, A-Z, 0-9, space( ), and hyphen(-).");
         } else {
-
             $('#hiddenParamNames > input').each(function () {
                 var inputID = this.value;
                 var dynamicParamVal = $('#' + inputID).val();
 
                 if (dynamicParamVal !== null) {
-
-                    if (dynamicParamVal.includes('selectAll')) {
-                        dynamicParams[inputID] = 'ALL';
-                    } else {
-                        dynamicParams[inputID] = dynamicParamVal.toString();
-                    }
-
+                    dynamicParams[inputID] = dynamicParamVal.toString();
                 } else {
                     dynamicParams[inputID] = dynamicParamVal;
                 }
@@ -201,12 +114,16 @@
             var groupNames_String = groupNames.toString();
             var groupIDs_String = groupIDs.toString();
 
-            var controllerUrl = '/SierraReports/SaveSierraReportSubscription';
+            if (isCopyScreen == 'false') {
+                var controllerUrl = '/SierraReports/SaveEditedSierraReportSubscription';
+            } else {
+                var controllerUrl = '/SierraReports/SaveSierraReportSubscription';
+            }
 
-            var savedReportSubModel = {
-                subscriptionID: 0,
+            var editedReportSubModel = {
+                subscriptionID: parseInt(subscriptionID),
                 subscriptionName: subscriptionName,
-                reportName: reportName,
+                reportName: selectedReportName,
                 groupNames: groupNames_String,
                 groupIDs: groupIDs_String,
                 fileFormat: fileFormat,
@@ -220,10 +137,11 @@
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
-                data: { 'reportSub': savedReportSubModel }
+                data: { 'reportSub': editedReportSubModel }
             });
 
             function successFunc(returnedData) {
+
                 if (returnedData.result == 'Redirect') {
                     alert(returnedData.message + subscriptionName);
                     window.location = returnedData.url;
@@ -233,52 +151,58 @@
             }
 
             function errorFunc(error) {
-                alert("Error Getting Report Subscription Data: " + error);
+                alert("Error Saving Report Subscription Data: " + error);
             }
         }
-
     });
 
 });
 
-function selectedFolder(selectedVal = "") {
-    if ($('#sierraFolderDropdown :selected').length == 0) { //Nothing is selected in the dropdown (last value is deselected)
-        var data = [{ label: 'Select a report name...', value: '', disabled: true, selected: true }];
-        $("#sierraReportDropdown").multiselect('dataprovider', data);
-        $('#sierraReportDropdown').multiselect('disable');
 
-    } else { //Something is selected in the dropdown
-        var controllerUrl = '/SierraReports/GetReportNameValues';
+function getDynamicReportParams(selectedReportName, selectedFolderName) {
+    $("#loadMe").modal({
+        backdrop: "static", //remove ability to close modal with click
+        keyboard: false, //remove option to close with keyboard
+        show: true //Display loader!
+    });
 
-        var folderPathList = $('#sierraFolderDropdown').val();
+    var controllerUrl = '/SierraReports/GetSierraReportParameters';
 
+    var reportData = {
+        reportName: selectedReportName,
+        reportFolder: selectedFolderName
+    }
+
+    if (selectedReportName == null || selectedReportName == "") {
+        alert("Could not load report parameters: Report Name is empty.");
+    } else if (selectedFolderName == null || selectedFolderName == "") {
+        alert("Could not load report parameters: Folder is empty.");
+    } else {
         $.ajax({
             type: "POST",
             url: controllerUrl,
             dataType: "json",
             success: successFunc,
             error: errorFunc,
-            data: { 'folderPathList': folderPathList }
+            data: { 'reportData': reportData }
         });
 
-        function successFunc(dropdownData) {
-            //manage the list of dropdown values in the front end -> just use controller to get the dropdown values for each selected folder
-            var data = [{ label: 'Select a report name...', value: '', disabled: true, selected: true }];
-            for (i = 0; i < dropdownData.length; i++) {
-                data.push({ label: dropdownData[i].reportName, value: dropdownData[i].reportName, title: dropdownData[i].reportFolder });
-            }
-
-            $("#sierraReportDropdown").multiselect('dataprovider', data);
-            $('#sierraReportDropdown').multiselect('enable');
-
-            if (selectedVal != "") {
-                $('#sierraReportDropdown').val(selectedVal);
-                $('#sierraReportDropdown').multiselect('refresh');
+        function successFunc(paramData) {
+            if (typeof paramData === 'string') { //If there is an error saving it to the database
+                alert(paramData);
+            } else {
+                createParams(paramData);
+                if (paramData.parameters.length > 0) {
+                    selectDynamicParams();                    //SELECTING THE DYNAMIC PARAMS
+                } else {
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                }
             }
         }
 
         function errorFunc(error) {
-            alert("Error Retrieving Report Names: " + error);
+            alert("Error Getting Report Parameters: " + error);
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
         }
     }
 }
@@ -296,6 +220,9 @@ function createParams(paramData) {
 
         //Building out the dynamic dropdowns
         var row = $('<div>').addClass('addnew-row');
+        if (i == 0) {
+            row.addClass('first-row');
+        }
 
         if (paramData.parameters[i].type == "Dropdown" || paramData.parameters[i].type == "MultiDropdown") {
 
@@ -349,8 +276,7 @@ function createParams(paramData) {
             var textboxLabel = $('<label>').addClass('filter-label').text(paramData.parameters[i].name);
             textboxLabel.prop('for', paramData.parameters[i].name);
 
-            //values at 0 because textboxes will have a list only with one val in it.
-            var textbox = $('<input type=text>').addClass('subscription-textbox').val(paramData.parameters[i].values[0]);
+            var textbox = $('<input type=text>').addClass('subscription-textbox');
             textbox.prop('id', paramData.parameters[i].name);
             textbox.prop('name', paramData.parameters[i].name);
 
@@ -384,14 +310,16 @@ function createParams(paramData) {
                 includeSelectAllOption: true
             });
         }
-        if (paramData.parameters[i].defaultVal != null) {
-            $('#' + paramData.parameters[i].name).val(paramData.parameters[i].defaultVal);
-            $('#' + paramData.parameters[i].name).multiselect('refresh');
-        }
     }
 
-    var saveSubscriptionBtn = $('<button>').addClass('btnAddPage').text("Save Sierra Report Subscription");
+    var saveSubscriptionBtn = $('<button>').addClass('btnAddPage');
     saveSubscriptionBtn.prop('id', 'saveSierraSubscription');
+
+    if (isCopyScreen == 'false') {
+        saveSubscriptionBtn.text("Save Edited Sierra Report Subscription");
+    } else {
+        saveSubscriptionBtn.text("Save New Sierra Report Subscription");
+    }
 
     $('#saveSubscription').append(saveSubscriptionBtn);
 
@@ -399,4 +327,41 @@ function createParams(paramData) {
         nonSelectedText: 'Select a Value...',
         enableCaseInsensitiveFiltering: true
     });
+}
+
+function selectDynamicParams() {
+
+    var selectedDynamicParamVals = {};
+
+    //Getting the selected dynamic parameter values from hidden
+    $('.hidden-dynamic-params input').each(function () {
+        var paramName = $(this).attr("name");
+        var paramValue = $(this).val();
+        selectedDynamicParamVals[paramName] = paramValue;
+    });
+
+    for (var paramName in selectedDynamicParamVals) {
+
+        if ($("#" + paramName).length) {
+            if ($("#" + paramName).is("select")) {
+
+                if ($("#" + paramName).prop("multiple")) { // Multi Select Box
+
+                    var selectedValues = selectedDynamicParamVals[paramName].split(',');
+
+                    $("#" + paramName).val(selectedValues);
+                    $("#" + paramName).multiselect('refresh');
+
+                } else { // Single Select Box
+                    $("#" + paramName).val(selectedDynamicParamVals[paramName]);
+                    $("#" + paramName).multiselect('refresh');
+                }
+
+            } else if ($("#" + paramName).is("input")) { //Text box or date box
+                $("#" + paramName).val(selectedDynamicParamVals[paramName]);
+            }
+        }
+    }
+
+    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
 }

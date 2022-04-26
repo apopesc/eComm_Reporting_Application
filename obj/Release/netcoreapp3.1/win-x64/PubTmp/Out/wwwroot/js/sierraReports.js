@@ -112,6 +112,90 @@ $(document).ready(function () {
         }
     });
 
+    $('#sierraSubscriptionData').on('click', '.deleteBtn', function () {
+        var $selectedRow = $(this).closest("tr");
+        var _ID = $selectedRow.attr('id');
+
+        let selectedSubscription = $selectedRow
+            .find(".sierraSubscriptionsEntry_SubscriptionName")
+            .text();
+
+        if (_ID != null && _ID != "") {
+            if (confirm('Are you sure you want to delete subscription: ' + selectedSubscription + '?')) {
+                $selectedRow.addClass('selected');
+                var controllerUrl = '/SierraReports/DeleteSierraReportSubscription';
+
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: { 'ID': _ID }
+                });
+
+                function successFunc(response) {
+                    //$selectedRow.remove();
+                    if (response.success == true) {
+                        sierraTable.row('.selected').remove().draw(false);
+                        alert(response.message + selectedSubscription);
+                    } else {
+                        alert(response.message);
+                    }
+                }
+
+                function errorFunc(error) {
+                    alert(error);
+                }
+            } else { //User clicks no
+
+            }
+        } else {
+            alert("Could not delete report subscription: ID is null");
+        }
+    });
+
+    $('#sierraSubscriptionData').on('click', '#expandBtn', function () {
+        var $selectedRow = $(this).closest("tr");
+        var dataTable_row = sierraTable.row($selectedRow);
+
+        var selectedParameter = $(this).attr('class');
+
+        if ($(this).hasClass("shown_child")) {
+
+            $('table > tbody  > tr > td > #expandBtn').each(function () {
+                $(this).removeClass("shown_child");
+            });
+
+            dataTable_row.child.hide();
+
+        } else {
+            for (const rowID of expandableRowIDs) {
+
+                let childRows = "";
+
+                for (let g = 0; g < expandableRowEntries.length; g++) {
+                    if (expandableRowEntries[g].rowID == rowID) {
+                        var paramName = expandableRowEntries[g].parameter_name;
+
+                        if (paramName == selectedParameter) {
+                            var childEntry = '<tr id="' + paramName + '"><td class="expanded_row"><b>' + paramName + ':</b>' + expandableRowEntries[g].data + '</td></tr>';
+                            childRows = childRows + childEntry;
+                        }
+                    }
+                }
+
+                sierraTable.row($selectedRow).child(childRows, 'child-row').show();
+
+            }
+            $(this).addClass("shown_child");
+        }
+    });
+
+    $('#addNewDiv').click(function () {
+        var selectedReportName = $('#sierraReportDropdown').val();
+        window.location = "/SierraReports/AddNewReportSub?selectedReportName=" + selectedReportName;
+    });
 
 });
 
@@ -270,4 +354,8 @@ function createTable(tableData) {
     sierraTable = $('#sierraSubscriptionsTable').DataTable({
         "lengthMenu": [5, 8, 15, 25]
     });
+}
+
+function getPosition(string, subString, index) {
+    return string.split(subString, index).join(subString).length;
 }
