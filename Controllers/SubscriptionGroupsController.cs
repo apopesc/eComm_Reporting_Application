@@ -84,10 +84,12 @@ namespace eComm_Reporting_Application.Controllers
             SqlConnection connection = new SqlConnection(connectionstring);
 
             string masterGroupsQueryString = "SELECT DISTINCT MasterGroup FROM Groups WHERE MasterGroup IS NOT NULL";
-            string userQueryString = "SELECT * FROM UserSubscriptions WHERE ID=" + ID;
+            string userQueryString = "SELECT * FROM UserSubscriptions WHERE ID=@ID";
 
             SqlCommand masterGroupsQuery = new SqlCommand(masterGroupsQueryString, connection);
             SqlCommand userQuery = new SqlCommand(userQueryString, connection);
+
+            userQuery.Parameters.AddWithValue("@ID", ID);
 
             using (connection)
             {
@@ -167,9 +169,14 @@ namespace eComm_Reporting_Application.Controllers
                     SqlConnection connection = new SqlConnection(connectionstring);
 
                     string addUserQueryString = "INSERT INTO UserSubscriptions (User_Email, Is_Active, User_Group, Group_ID, Master_Group) " +
-                        "VALUES ('" + userEmail + "', '" + isActive + "', '" + selectedGroups + "', '" + selectedGroupIDs + "', '" + selectedMasterGroups + "');";
+                        "VALUES (@userEmail, @isActive, @selectedGroups, @selectedGroupIDs, @selectedMasterGroups);";
 
                     SqlCommand addUserQuery = new SqlCommand(addUserQueryString, connection);
+                    addUserQuery.Parameters.AddWithValue("@userEmail", userEmail);
+                    addUserQuery.Parameters.AddWithValue("@isActive", isActive);
+                    addUserQuery.Parameters.AddWithValue("@selectedGroups", selectedGroups);
+                    addUserQuery.Parameters.AddWithValue("@selectedGroupIDs", selectedGroupIDs);
+                    addUserQuery.Parameters.AddWithValue("@selectedMasterGroups", selectedMasterGroups);
 
                     string getUserIDString = "SELECT TOP 1* FROM UserSubscriptions ORDER BY ID Desc;"; //Getting the ID by getting the most recently added row
 
@@ -362,10 +369,17 @@ namespace eComm_Reporting_Application.Controllers
                     string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                     SqlConnection connection = new SqlConnection(connectionstring);
 
-                    string queryString = "Update UserSubscriptions SET User_Email='" + editedUsersList[i].userEmail + "', Is_Active='" + editedUsersList[i].isActive + "', User_Group='" + editedUsersList[i].group +
-                        "', Group_ID='" + editedUsersList[i].groupID + "', Master_Group='" + editedUsersList[i].masterGroup + "' WHERE ID=" + editedUsersList[i].ID + ";";
+                    string queryString = "Update UserSubscriptions SET User_Email=@userEmail, Is_Active=@isActive, User_Group=@group" +
+                        ", Group_ID=@groupID, Master_Group=@masterGroup WHERE ID=@ID;";
 
                     SqlCommand editUserQuery = new SqlCommand(queryString, connection);
+                    editUserQuery.Parameters.AddWithValue("@userEmail", editedUsersList[i].userEmail);
+                    editUserQuery.Parameters.AddWithValue("@isActive", editedUsersList[i].isActive);
+                    editUserQuery.Parameters.AddWithValue("@group", editedUsersList[i].group);
+                    editUserQuery.Parameters.AddWithValue("@groupID", editedUsersList[i].groupID);
+                    editUserQuery.Parameters.AddWithValue("@masterGroup", editedUsersList[i].masterGroup);
+                    editUserQuery.Parameters.AddWithValue("@ID", editedUsersList[i].ID);
+
                     using (connection)
                     {
                         connection.Open();
@@ -395,9 +409,11 @@ namespace eComm_Reporting_Application.Controllers
                     string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                     SqlConnection connection = new SqlConnection(connectionstring);
 
-                    string queryString = "DELETE FROM UserSubscriptions WHERE ID=" + ID;
+                    string queryString = "DELETE FROM UserSubscriptions WHERE ID=@ID";
 
                     SqlCommand deleteUserQuery = new SqlCommand(queryString, connection);
+                    deleteUserQuery.Parameters.AddWithValue("@ID", ID);
+
                     using (connection)
                     {
                         connection.Open();
@@ -560,8 +576,9 @@ namespace eComm_Reporting_Application.Controllers
 
             string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
             SqlConnection connection = new SqlConnection(connectionstring);
-            string authUserQueryString = "SELECT COUNT(*) FROM [dbo].[User] WHERE UserName='" + userName + "';";
+            string authUserQueryString = "SELECT COUNT(*) FROM [dbo].[User] WHERE UserName=@userName;";
             SqlCommand authUserQuery = new SqlCommand(authUserQueryString, connection);
+            authUserQuery.Parameters.AddWithValue("@userName", userName);
 
             connection.Open();
             using (SqlDataReader reader = authUserQuery.ExecuteReader())

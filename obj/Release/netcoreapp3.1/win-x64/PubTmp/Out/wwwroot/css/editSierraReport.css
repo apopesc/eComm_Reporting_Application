@@ -2,6 +2,27 @@
     float: left;
 }
 
+.page-header {
+    background-color: #f28c20;
+}
+
+.selected-nav-option {
+    color: #f28c20 !important;
+}
+
+.nav-item a:hover {
+    color: #f28c20 !important;
+}
+
+#saveSierraSubscription {
+    background-color: #f28c20;
+    color: white;
+    font-weight: 700;
+    float: right;
+    margin-right: 0px;
+}
+
+
 .addnew-dropdown {
     width: 440px;
 }
@@ -10,13 +31,6 @@
     float: right;
 }
 
-#saveSierraSubscription {
-    background-color: #9E0000;
-    color: white;
-    font-weight: 700;
-    float: right;
-    margin-right: 0px;
-}
 
 @media screen and (max-width: 1920px) {
     .dynamic-params-div {
@@ -57,6 +71,7 @@
 .dynamic-params-div {
     overflow-y: scroll;
     width: 100%;
+    min-height: 140px;
 }
 
 .dynamic-div {

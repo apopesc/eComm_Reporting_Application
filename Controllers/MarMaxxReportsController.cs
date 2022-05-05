@@ -108,11 +108,14 @@ namespace eComm_Reporting_Application.Controllers
 
             reportSubModel.isCopy = copy;
 
-            string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Subscription_ID='" + ID + "'";
+            string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Subscription_ID=@ID;";
 
             string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
             SqlConnection connection = new SqlConnection(connectionstring);
             SqlCommand getSubscriptionData = new SqlCommand(queryString, connection);
+            
+            getSubscriptionData.Parameters.AddWithValue("@ID", ID);
+
             using (connection)
             {
                 connection.Open();
@@ -235,9 +238,11 @@ namespace eComm_Reporting_Application.Controllers
                     string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                     SqlConnection connection = new SqlConnection(connectionstring);
 
-                    string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Report_Name='" + reportData.reportName + "'";
+                    string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Report_Name=@reportName";
 
                     SqlCommand getTableData = new SqlCommand(queryString, connection);
+                    getTableData.Parameters.AddWithValue("@reportName", reportData.reportName);
+
                     using (connection)
                     {
                         connection.Open();
@@ -325,9 +330,10 @@ namespace eComm_Reporting_Application.Controllers
                     string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                     SqlConnection connection = new SqlConnection(connectionstring);
 
-                    string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Report_Name='" + reportData.reportName + "'";
+                    string queryString = "SELECT * FROM MarMaxxReportSubscriptions WHERE Report_Name=@reportName";
 
                     SqlCommand getTableData = new SqlCommand(queryString, connection);
+                    getTableData.Parameters.AddWithValue("@reportName", reportData.reportName);
                     using (connection)
                     {
                         connection.Open();
@@ -579,44 +585,40 @@ namespace eComm_Reporting_Application.Controllers
                     int subscriptionID = 0;
 
                     string paramJson = JsonConvert.SerializeObject(reportSub.dynamicParams);
-                    //Add query here to store in database, store group ID in their respective columns, and paramJson in the last column
 
                     string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
 
                     SqlConnection connection = new SqlConnection(connectionstring);
 
+                    List<string> groupIDList = new List<string>(reportSub.groupIDs.Split(","));
+                    var groupIDParams = new string[groupIDList.Count];
+                    SqlCommand usersInGroupQuery = new SqlCommand();
+
+                    for (int i = 0; i < groupIDList.Count; i++)
+                    {
+                        groupIDParams[i] = string.Format("@GroupID{0}", i);
+                        usersInGroupQuery.Parameters.AddWithValue(groupIDParams[i], groupIDList[i]);
+                    }
 
                     //Checking if the group has at least one email tied to it, if not, return error.
-
-                    string userGroupQueryString = "SELECT COUNT(*) FROM UserSubscriptions WHERE Group_ID IN('";
-                    List<string> groupIDList = new List<string>(reportSub.groupIDs.Split(","));
-
-                    for(int i = 0; i < groupIDList.Count; i++) {
-
-                        if(i < groupIDList.Count - 1)
-                        {
-                            userGroupQueryString = userGroupQueryString + groupIDList[i] + "','";
-                        }
-                        else
-                        {
-                            userGroupQueryString = userGroupQueryString + groupIDList[i] + "');";
-                        }
-                        
-                    }
-                    SqlCommand usersInGroupQuery = new SqlCommand(userGroupQueryString, connection);
+                    usersInGroupQuery.CommandText = string.Format("SELECT COUNT(*) FROM UserSubscriptions WHERE Group_ID IN ({0})", string.Join(",", groupIDParams));
+                    usersInGroupQuery.Connection = connection;
 
                     int usersInGroup = 0;
 
-                    connection.Open();
-                    using (SqlDataReader reader = usersInGroupQuery.ExecuteReader())
+                    using (connection)
                     {
-                        while (reader.Read())
+                        connection.Open();
+                        using (SqlDataReader reader = usersInGroupQuery.ExecuteReader())
                         {
-                            var temp_userCount = reader.GetInt32(0);
-                            usersInGroup = temp_userCount;
+                            while (reader.Read())
+                            {
+                                var temp_userCount = reader.GetInt32(0);
+                                usersInGroup = temp_userCount;
+                            }
                         }
+                        connection.Close();
                     }
-                    connection.Close();
 
                     if (usersInGroup < groupIDList.Count)
                     {
@@ -624,10 +626,20 @@ namespace eComm_Reporting_Application.Controllers
                     }
                     else
                     {
+                        connection = new SqlConnection(connectionstring);
+
                         string addUserQueryString = "INSERT INTO MarMaxxReportSubscriptions (Subscription_Name, Report_Name, Group_Name, Group_ID, Report_Params, File_Format, Schedule) " +
-                        "VALUES ('" + reportSub.subscriptionName + "', '" + reportSub.reportName + "', '" + reportSub.groupNames + "', '" + reportSub.groupIDs + "', '" + paramJson + "', '" + reportSub.fileFormat + "', '" + reportSub.schedule + "');";
+                        "VALUES (@subscriptionName, @reportName, @groupNames, @groupIDs, @paramJson, @fileFormat, @schedule);";
 
                         SqlCommand addUserQuery = new SqlCommand(addUserQueryString, connection);
+                        addUserQuery.Parameters.AddWithValue("@subscriptionName", reportSub.subscriptionName);
+                        addUserQuery.Parameters.AddWithValue("@reportName", reportSub.reportName);
+                        addUserQuery.Parameters.AddWithValue("@groupNames", reportSub.groupNames);
+                        addUserQuery.Parameters.AddWithValue("@groupIDs", reportSub.groupIDs);
+                        addUserQuery.Parameters.AddWithValue("@paramJson", paramJson);
+                        addUserQuery.Parameters.AddWithValue("@fileFormat", reportSub.fileFormat);
+                        addUserQuery.Parameters.AddWithValue("@schedule", reportSub.schedule);
+
 
                         string getSubIDString = "SELECT TOP 1* FROM MarMaxxReportSubscriptions ORDER BY Subscription_ID Desc;"; //Getting the ID by getting the most recently added row
                         SqlCommand getSubID = new SqlCommand(getSubIDString, connection);
@@ -701,43 +713,39 @@ namespace eComm_Reporting_Application.Controllers
                 else
                 {
                     string paramJson = JsonConvert.SerializeObject(reportSub.dynamicParams);
-                    //Add query here to store in database, store group ID in their respective columns, and paramJson in the last column
 
                     string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                     SqlConnection connection = new SqlConnection(connectionstring);
 
-                    //Checking if the group has at least one email tied to it, if not, return error.
-
-                    string userGroupQueryString = "SELECT COUNT(*) FROM UserSubscriptions WHERE Group_ID IN('";
                     List<string> groupIDList = new List<string>(reportSub.groupIDs.Split(","));
+                    var groupIDParams = new string[groupIDList.Count];
+                    SqlCommand usersInGroupQuery = new SqlCommand();
 
                     for (int i = 0; i < groupIDList.Count; i++)
                     {
-
-                        if (i < groupIDList.Count - 1)
-                        {
-                            userGroupQueryString = userGroupQueryString + groupIDList[i] + "','";
-                        }
-                        else
-                        {
-                            userGroupQueryString = userGroupQueryString + groupIDList[i] + "');";
-                        }
-
+                        groupIDParams[i] = string.Format("@GroupID{0}", i);
+                        usersInGroupQuery.Parameters.AddWithValue(groupIDParams[i], groupIDList[i]);
                     }
-                    SqlCommand usersInGroupQuery = new SqlCommand(userGroupQueryString, connection);
+
+                    //Checking if the group has at least one email tied to it, if not, return error.
+                    usersInGroupQuery.CommandText = string.Format("SELECT COUNT(*) FROM UserSubscriptions WHERE Group_ID IN ({0})", string.Join(",", groupIDParams));
+                    usersInGroupQuery.Connection = connection;
 
                     int usersInGroup = 0;
 
-                    connection.Open();
-                    using (SqlDataReader reader = usersInGroupQuery.ExecuteReader())
+                    using (connection)
                     {
-                        while (reader.Read())
+                        connection.Open();
+                        using (SqlDataReader reader = usersInGroupQuery.ExecuteReader())
                         {
-                            var temp_userCount = reader.GetInt32(0);
-                            usersInGroup = temp_userCount;
+                            while (reader.Read())
+                            {
+                                var temp_userCount = reader.GetInt32(0);
+                                usersInGroup = temp_userCount;
+                            }
                         }
+                        connection.Close();
                     }
-                    connection.Close();
 
                     if (usersInGroup < groupIDList.Count)
                     {
@@ -745,10 +753,21 @@ namespace eComm_Reporting_Application.Controllers
                     }
                     else
                     {
-                        string editUserQueryString = "UPDATE MarMaxxReportSubscriptions SET Subscription_Name='" + reportSub.subscriptionName + "', Report_Name='" + reportSub.reportName + "', Group_Name='" + reportSub.groupNames + "', Group_ID='" + reportSub.groupIDs + "', Report_Params='" + paramJson + "', File_Format='" + reportSub.fileFormat + "', Schedule='" + reportSub.schedule + "' " +
-                        "WHERE Subscription_ID=" + reportSub.subscriptionID + ";";
+                        connection = new SqlConnection(connectionstring);
+
+                        string editUserQueryString = "UPDATE MarMaxxReportSubscriptions SET Subscription_Name=@subscriptionName, Report_Name=@reportName, Group_Name=@groupNames, Group_ID=@groupIDs, Report_Params=@paramJson, File_Format=@fileFormat, Schedule=@schedule " +
+                        "WHERE Subscription_ID=@subscriptionID;";
+
 
                         SqlCommand editUserQuery = new SqlCommand(editUserQueryString, connection);
+                        editUserQuery.Parameters.AddWithValue("@subscriptionName", reportSub.subscriptionName);
+                        editUserQuery.Parameters.AddWithValue("@reportName", reportSub.reportName);
+                        editUserQuery.Parameters.AddWithValue("@groupNames", reportSub.groupNames);
+                        editUserQuery.Parameters.AddWithValue("@groupIDs", reportSub.groupIDs);
+                        editUserQuery.Parameters.AddWithValue("@paramJson", paramJson);
+                        editUserQuery.Parameters.AddWithValue("@fileFormat", reportSub.fileFormat);
+                        editUserQuery.Parameters.AddWithValue("@schedule", reportSub.schedule);
+                        editUserQuery.Parameters.AddWithValue("@subscriptionID", reportSub.subscriptionID);
 
                         using (connection)
                         {
@@ -799,9 +818,11 @@ namespace eComm_Reporting_Application.Controllers
                     string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                     SqlConnection connection = new SqlConnection(connectionstring);
 
-                    string queryString = "DELETE FROM MarMaxxReportSubscriptions WHERE Subscription_ID=" + ID;
+                    string queryString = "DELETE FROM MarMaxxReportSubscriptions WHERE Subscription_ID=@ID";
 
                     SqlCommand deleteUserQuery = new SqlCommand(queryString, connection);
+                    deleteUserQuery.Parameters.AddWithValue("@ID", ID);
+
                     using (connection)
                     {
                         connection.Open();
@@ -1364,8 +1385,9 @@ namespace eComm_Reporting_Application.Controllers
 
             string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
             SqlConnection connection = new SqlConnection(connectionstring);
-            string authUserQueryString = "SELECT COUNT(*) FROM [dbo].[User] WHERE UserName='" + userName + "';";
+            string authUserQueryString = "SELECT COUNT(*) FROM [dbo].[User] WHERE UserName=@userName;";
             SqlCommand authUserQuery = new SqlCommand(authUserQueryString, connection);
+            authUserQuery.Parameters.AddWithValue("@userName", userName);
 
             connection.Open();
             using (SqlDataReader reader = authUserQuery.ExecuteReader())

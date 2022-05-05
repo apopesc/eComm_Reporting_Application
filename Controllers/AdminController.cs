@@ -106,9 +106,14 @@ namespace eComm_Reporting_Application.Controllers
                     SqlConnection connection = new SqlConnection(connectionstring);
 
                     string addGroupQueryString = "INSERT INTO Groups (GroupID, GroupName, MasterGroup) " +
-                        "VALUES ('" + groupID + "', '" + groupName + "', '" + masterGroup + "');";
+                        "VALUES (@groupID, @groupName, @masterGroup);";
 
                     SqlCommand addGroupQuery = new SqlCommand(addGroupQueryString, connection);
+
+                    addGroupQuery.Parameters.AddWithValue("@groupID", groupID);
+                    addGroupQuery.Parameters.AddWithValue("@groupName", groupName);
+                    addGroupQuery.Parameters.AddWithValue("@masterGroup", masterGroup);
+
                     using (connection)
                     {
                         connection.Open();
@@ -191,9 +196,11 @@ namespace eComm_Reporting_Application.Controllers
                     SqlConnection connection = new SqlConnection(connectionstring);
 
                     string addMasterGroupQueryString = "INSERT INTO MasterGroups (MasterGroup) " +
-                        "VALUES ('" + masterGroup + "');";
+                        "VALUES (@masterGroup);";
 
                     SqlCommand addMasterGroupQuery = new SqlCommand(addMasterGroupQueryString, connection);
+                    addMasterGroupQuery.Parameters.AddWithValue("@masterGroup", masterGroup);
+
                     using (connection)
                     {
                         connection.Open();
@@ -261,8 +268,9 @@ namespace eComm_Reporting_Application.Controllers
 
             string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
             SqlConnection connection = new SqlConnection(connectionstring);
-            string authUserQueryString = "SELECT COUNT(*) FROM [dbo].[User] WHERE UserName='" + userName + "';";
+            string authUserQueryString = "SELECT COUNT(*) FROM [dbo].[User] WHERE UserName=@userName;";
             SqlCommand authUserQuery = new SqlCommand(authUserQueryString, connection);
+            authUserQuery.Parameters.AddWithValue("@userName", userName);
 
             connection.Open();
             using (SqlDataReader reader = authUserQuery.ExecuteReader())
