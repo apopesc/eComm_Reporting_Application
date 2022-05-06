@@ -249,68 +249,64 @@ namespace eComm_Reporting_Application.Controllers
                 {
                     string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
                     SqlConnection connection = new SqlConnection(connectionstring);
-                    SqlCommand tableQuery;
+                    SqlCommand tableQuery = new SqlCommand();
 
-                    //Setting the isActive value for the query
-                    string isActiveString;
+                    string queryString = "SELECT * FROM UserSubscriptions WHERE Is_Active IN ";
+
                     if (filterData.isActive == 1)
                     {
-                        isActiveString = "'Y'";
+                        queryString = queryString + "('Y')";
                     }
                     else if (filterData.isActive == 2)
                     {
-                        isActiveString = "'N'";
+                        queryString = queryString + "('N')";
                     }
                     else //If both are selected, show all data for isActive
                     {
-                        isActiveString = "'Y', 'N'";
+                        queryString = queryString + "('Y', 'N')";
                     }
 
-                    string queryString = "SELECT * FROM UserSubscriptions WHERE Is_Active IN (" + isActiveString + ") AND (User_Group LIKE ";
-
-                    for (int i = 0; i < filterData.groupsList.Count; i++)
-                    {
-                        if (i == 0)
-                        {
-                            queryString = queryString + "'%" + filterData.groupsList[i] + "%'";
-                        }
-                        else
-                        {
-                            queryString = queryString + " OR User_Group LIKE " + "'%" + filterData.groupsList[i] + "%'";
-                        }
-                    }
-
-                    queryString = queryString + ") AND (Group_ID LIKE ";
+                   queryString = queryString + " AND (Group_ID LIKE ";
 
                     for (int i = 0; i < filterData.groupsIDList.Count; i++)
                     {
+                        string currentParam = string.Format("@GroupID{0}", i);
+
                         if (i == 0)
                         {
-                            queryString = queryString + "'%" + filterData.groupsIDList[i] + "%'";
+                            queryString = queryString + currentParam;
                         }
                         else
                         {
-                            queryString = queryString + " OR Group_ID LIKE " + "'%" + filterData.groupsIDList[i] + "%'";
+                            queryString = queryString + " OR Group_ID LIKE " + currentParam; 
                         }
+
+                        tableQuery.Parameters.AddWithValue(currentParam, "%" + filterData.groupsIDList[i] + "%");
                     }
 
                     queryString = queryString + ") AND (Master_Group LIKE ";
 
                     for (int i = 0; i < filterData.masterGroupsList.Count; i++)
                     {
+                        string currentParam = string.Format("@MasterGroup{0}", i);
+
                         if (i == 0)
                         {
-                            queryString = queryString + "'%" + filterData.masterGroupsList[i] + "%'";
+                            queryString = queryString + currentParam;
                         }
                         else
                         {
-                            queryString = queryString + " OR Master_Group LIKE " + "'%" + filterData.masterGroupsList[i] + "%'";
+                            queryString = queryString + " OR Master_Group LIKE " + currentParam;
                         }
+
+                        tableQuery.Parameters.AddWithValue(currentParam, "%" + filterData.masterGroupsList[i] + "%");
                     }
 
                     queryString = queryString + ");";
 
-                    tableQuery = new SqlCommand(queryString, connection);
+                    tableQuery.CommandText = queryString;
+                    tableQuery.Connection = connection;
+
                     using (connection)
                     {
                         connection.Open();
