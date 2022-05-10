@@ -74,8 +74,8 @@
         });
 
         function successFunc(paramData) {
-            if (typeof paramData === 'string') { //If there is an error saving it to the database
-                alert(paramData);
+            if (paramData.success == false) { //If there is an error saving it to the database
+                alert(paramData.message);
                 setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             } else {
 
@@ -84,7 +84,7 @@
 
                 selectedFolder(initialSelectedReport);
 
-                createParams(paramData);
+                createParams(paramData.reportParams);
 
                 setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             }
@@ -132,11 +132,11 @@
             });
 
             function successFunc(paramData) {
-                if (typeof paramData === 'string') { //If there is an error saving it to the database
-                    alert(paramData);
+                if (paramData.success == false) { //If there is an error saving it to the database
+                    alert(paramData.message);
                     setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 } else {
-                    createParams(paramData);
+                    createParams(paramData.reportParams);
                     setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                 }
             }

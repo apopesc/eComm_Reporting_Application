@@ -188,11 +188,12 @@ function getDynamicReportParams(selectedReportName, selectedFolderName) {
         });
 
         function successFunc(paramData) {
-            if (typeof paramData === 'string') { //If there is an error saving it to the database
-                alert(paramData);
+            if (paramData.success == false) { //If there is an error saving it to the database
+                alert(paramData.message);
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
             } else {
-                createParams(paramData);
-                if (paramData.parameters.length > 0) {
+                createParams(paramData.reportParams);
+                if (paramData.reportParams.parameters.length > 0) {
                     selectDynamicParams();                    //SELECTING THE DYNAMIC PARAMS
                 } else {
                     setTimeout(function () { $("#loadMe").modal("hide"); }, 500);

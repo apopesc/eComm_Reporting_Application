@@ -482,15 +482,16 @@ namespace eComm_Reporting_Application.Controllers
 
                     for (int i = 0; i < reportParams.parameters.Count; i++)
                     {
-                        if ((reportParams.parameters[i].type == "Dropdown" || reportParams.parameters[i].type == "Textbox" || reportParams.parameters[i].type == "MultiDropdown") && (reportParams.parameters[i].queryType == "Stored Procedure" || reportParams.parameters[i].queryType == "In Line"))
+                        if ((reportParams.parameters[i].type == "Dropdown" || reportParams.parameters[i].type == "Textbox" || reportParams.parameters[i].type == "MultiDropdown") && (reportParams.parameters[i].queryType == "Stored Procedure"))
                         {
                             SqlConnection connection = new SqlConnection(connectionstring);
-                            SqlCommand storedProcQuery = new SqlCommand(reportParams.parameters[i].query, connection);
 
-                            if (reportParams.parameters[i].queryType == "Stored Procedure")
-                            {
-                                storedProcQuery.CommandType = CommandType.StoredProcedure;
-                            }
+                            string procQueryString = "EXEC @storedProc";
+
+                            SqlCommand storedProcQuery = new SqlCommand(procQueryString, connection);
+                            storedProcQuery.Parameters.AddWithValue("@storedProc", reportParams.parameters[i].query);
+
+                            //storedProcQuery.CommandType = CommandType.StoredProcedure;
 
                             using (connection)
                             {
@@ -859,27 +860,82 @@ namespace eComm_Reporting_Application.Controllers
                 {
                     ReportParameterModel local_reportParams = GetReportParameters(reportData);
                     string connectionstring = "";
+                    SqlConnection connection = new SqlConnection();
+                    SqlCommand storedProcQuery = new SqlCommand();
 
                     //There are other data sources that need to be mapped here
                     if (local_reportParams.dataSource == "ReportDataSource")
                     {
                         connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                        connection = new SqlConnection(connectionstring);
+                        storedProcQuery = new SqlCommand("Par_rpt_Departments_by_Banner", connection);
                     }
                     else if (local_reportParams.dataSource == "eCom_ReportDB")
                     {
                         connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                        connection = new SqlConnection(connectionstring);
+                        storedProcQuery = new SqlCommand("Par_rpt_Departments_by_Banner", connection);
                     }
 
                     Parameter departmentParameter = local_reportParams.parameters.Find(x => x.name == "Department_No");
-
-                    SqlConnection connection = new SqlConnection(connectionstring);
-                    SqlCommand storedProcQuery = new SqlCommand(departmentParameter.query, connection);
                     storedProcQuery.CommandType = CommandType.StoredProcedure;
 
                     string selectedBannersString = string.Join(",", selectedBanners.ToArray());
                     storedProcQuery.Parameters.AddWithValue("@Banner", selectedBannersString);
 
-                    Parameter populatedParam = getCascadingDropdownValues(departmentParameter, storedProcQuery, connection);
+                    //Parameter populatedParam = getCascadingDropdownValues(departmentParameter, storedProcQuery, connection);
+
+                    List<string> dropdownValues = new List<string>();
+                    List<string> dropdownLabels = new List<string>();
+
+                    Parameter populatedParam = departmentParameter;
+
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                        {
+                            while (stored_proc_reader.Read())
+                            {
+                                var proc_data_length = stored_proc_reader.FieldCount;
+
+                                if (proc_data_length > 1)
+                                {
+                                    for (int j = 0; j < proc_data_length; j++)
+                                    {
+                                        var proc_data_name = stored_proc_reader.GetName(j);
+                                        if (proc_data_name == departmentParameter.values[0])
+                                        {
+                                            var proc_val = stored_proc_reader.GetValue(j);
+
+                                            string dropdownVal = proc_val.ToString();
+                                            dropdownValues.Add(dropdownVal);
+                                        }
+
+                                        if (proc_data_name == departmentParameter.labels[0])
+                                        {
+                                            var proc_label = stored_proc_reader.GetValue(j);
+
+                                            string dropdownLab = proc_label.ToString();
+                                            dropdownLabels.Add(dropdownLab);
+                                        }
+                                    }
+                                }
+                                else //if only one column is returned from the stored procedure, put in both labels and values
+                                {
+                                    var proc_val = stored_proc_reader.GetValue(0);
+
+                                    string dropdownEntry = proc_val.ToString();
+                                    dropdownValues.Add(dropdownEntry);
+                                    dropdownLabels.Add(dropdownEntry);
+                                }
+                            }
+                        }
+                        connection.Close();
+                    }
+
+                    populatedParam.values = dropdownValues;
+                    populatedParam.labels = dropdownLabels;
 
                     return Json(populatedParam);
                 }
@@ -908,27 +964,83 @@ namespace eComm_Reporting_Application.Controllers
                 {
                     ReportParameterModel local_reportParams = GetReportParameters(departmentModel.reportData);
                     string connectionstring = "";
+                    SqlConnection connection = new SqlConnection();
+                    SqlCommand storedProcQuery = new SqlCommand();
 
                     //There are other data sources that need to be mapped here
                     if (local_reportParams.dataSource == "ReportDataSource")
                     {
                         connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                        connection = new SqlConnection(connectionstring);
+                        storedProcQuery = new SqlCommand("par_Class_Details_by_Banner", connection);
                     }
                     else if (local_reportParams.dataSource == "eCom_ReportDB")
                     {
                         connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                        connection = new SqlConnection(connectionstring);
+                        storedProcQuery = new SqlCommand("par_rpt_Class_By_Banner", connection);
                     }
 
                     Parameter classParameter = local_reportParams.parameters.Find(x => x.name == "Class_Number");
 
-                    SqlConnection connection = new SqlConnection(connectionstring);
-                    SqlCommand storedProcQuery = new SqlCommand(classParameter.query, connection);
                     storedProcQuery.CommandType = CommandType.StoredProcedure;
 
                     string selectedDepartmentsString = string.Join(",", departmentModel.selectedDepartments.ToArray());
                     storedProcQuery.Parameters.AddWithValue("@Department_No", selectedDepartmentsString);
 
-                    Parameter populatedParam = getCascadingDropdownValues(classParameter, storedProcQuery, connection);
+                    //Parameter populatedParam = getCascadingDropdownValues(classParameter, storedProcQuery, connection);
+
+                    List<string> dropdownValues = new List<string>();
+                    List<string> dropdownLabels = new List<string>();
+
+                    Parameter populatedParam = classParameter;
+
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                        {
+                            while (stored_proc_reader.Read())
+                            {
+                                var proc_data_length = stored_proc_reader.FieldCount;
+
+                                if (proc_data_length > 1)
+                                {
+                                    for (int j = 0; j < proc_data_length; j++)
+                                    {
+                                        var proc_data_name = stored_proc_reader.GetName(j);
+                                        if (proc_data_name == classParameter.values[0])
+                                        {
+                                            var proc_val = stored_proc_reader.GetValue(j);
+
+                                            string dropdownVal = proc_val.ToString();
+                                            dropdownValues.Add(dropdownVal);
+                                        }
+
+                                        if (proc_data_name == classParameter.labels[0])
+                                        {
+                                            var proc_label = stored_proc_reader.GetValue(j);
+
+                                            string dropdownLab = proc_label.ToString();
+                                            dropdownLabels.Add(dropdownLab);
+                                        }
+                                    }
+                                }
+                                else //if only one column is returned from the stored procedure, put in both labels and values
+                                {
+                                    var proc_val = stored_proc_reader.GetValue(0);
+
+                                    string dropdownEntry = proc_val.ToString();
+                                    dropdownValues.Add(dropdownEntry);
+                                    dropdownLabels.Add(dropdownEntry);
+                                }
+                            }
+                        }
+                        connection.Close();
+                    }
+
+                    populatedParam.values = dropdownValues;
+                    populatedParam.labels = dropdownLabels;
 
                     for (int i = 0; i < populatedParam.values.Count; i++)
                     {
@@ -968,21 +1080,24 @@ namespace eComm_Reporting_Application.Controllers
                 {
                     ReportParameterModel local_reportParams = GetReportParameters(classModel.reportData);
                     string connectionstring = "";
+                    SqlConnection connection = new SqlConnection();
+                    SqlCommand storedProcQuery = new SqlCommand();
 
                     //There are other data sources that need to be mapped here
                     if (local_reportParams.dataSource == "ReportDataSource")
                     {
                         connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                        connection = new SqlConnection(connectionstring);
+                        storedProcQuery = new SqlCommand("par_Category_by_Banner", connection);
                     }
                     else if (local_reportParams.dataSource == "eCom_ReportDB")
                     {
                         connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                        connection = new SqlConnection(connectionstring);
+                        storedProcQuery = new SqlCommand("par_rpt_Category_by_Banner", connection);
                     }
 
                     Parameter categoryParameter = local_reportParams.parameters.Find(x => x.name == "Category");
-
-                    SqlConnection connection = new SqlConnection(connectionstring);
-                    SqlCommand storedProcQuery = new SqlCommand(categoryParameter.query, connection);
                     storedProcQuery.CommandType = CommandType.StoredProcedure;
 
                     string selectedDepartmentsString = string.Join(",", classModel.selectedDepartments.ToArray());
@@ -997,7 +1112,60 @@ namespace eComm_Reporting_Application.Controllers
                     storedProcQuery.Parameters.AddWithValue("@Class_Number", selectedClassesString);
                     storedProcQuery.CommandTimeout = 350;
 
-                    Parameter populatedParam = getCascadingDropdownValues(categoryParameter, storedProcQuery, connection);
+                    //Parameter populatedParam = getCascadingDropdownValues(categoryParameter, storedProcQuery, connection);
+                    
+                    List<string> dropdownValues = new List<string>();
+                    List<string> dropdownLabels = new List<string>();
+
+                    Parameter populatedParam = categoryParameter;
+
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                        {
+                            while (stored_proc_reader.Read())
+                            {
+                                var proc_data_length = stored_proc_reader.FieldCount;
+
+                                if (proc_data_length > 1)
+                                {
+                                    for (int j = 0; j < proc_data_length; j++)
+                                    {
+                                        var proc_data_name = stored_proc_reader.GetName(j);
+                                        if (proc_data_name == categoryParameter.values[0])
+                                        {
+                                            var proc_val = stored_proc_reader.GetValue(j);
+
+                                            string dropdownVal = proc_val.ToString();
+                                            dropdownValues.Add(dropdownVal);
+                                        }
+
+                                        if (proc_data_name == categoryParameter.labels[0])
+                                        {
+                                            var proc_label = stored_proc_reader.GetValue(j);
+
+                                            string dropdownLab = proc_label.ToString();
+                                            dropdownLabels.Add(dropdownLab);
+                                        }
+                                    }
+                                }
+                                else //if only one column is returned from the stored procedure, put in both labels and values
+                                {
+                                    var proc_val = stored_proc_reader.GetValue(0);
+
+                                    string dropdownEntry = proc_val.ToString();
+                                    dropdownValues.Add(dropdownEntry);
+                                    dropdownLabels.Add(dropdownEntry);
+                                }
+                            }
+                        }
+                        connection.Close();
+                    }
+
+                    populatedParam.values = dropdownValues;
+                    populatedParam.labels = dropdownLabels;
+
 
                     return Json(populatedParam);
                 }
@@ -1051,7 +1219,59 @@ namespace eComm_Reporting_Application.Controllers
 
                     Parameter brandParameter = local_reportParams.parameters.Find(x => x.name == "Brand");
 
-                    Parameter populatedParam = getCascadingDropdownValues(brandParameter, storedProcQuery, connection);
+                    //Parameter populatedParam = getCascadingDropdownValues(brandParameter, storedProcQuery, connection);
+
+                    List<string> dropdownValues = new List<string>();
+                    List<string> dropdownLabels = new List<string>();
+
+                    Parameter populatedParam = brandParameter;
+
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                        {
+                            while (stored_proc_reader.Read())
+                            {
+                                var proc_data_length = stored_proc_reader.FieldCount;
+
+                                if (proc_data_length > 1)
+                                {
+                                    for (int j = 0; j < proc_data_length; j++)
+                                    {
+                                        var proc_data_name = stored_proc_reader.GetName(j);
+                                        if (proc_data_name == brandParameter.values[0])
+                                        {
+                                            var proc_val = stored_proc_reader.GetValue(j);
+
+                                            string dropdownVal = proc_val.ToString();
+                                            dropdownValues.Add(dropdownVal);
+                                        }
+
+                                        if (proc_data_name == brandParameter.labels[0])
+                                        {
+                                            var proc_label = stored_proc_reader.GetValue(j);
+
+                                            string dropdownLab = proc_label.ToString();
+                                            dropdownLabels.Add(dropdownLab);
+                                        }
+                                    }
+                                }
+                                else //if only one column is returned from the stored procedure, put in both labels and values
+                                {
+                                    var proc_val = stored_proc_reader.GetValue(0);
+
+                                    string dropdownEntry = proc_val.ToString();
+                                    dropdownValues.Add(dropdownEntry);
+                                    dropdownLabels.Add(dropdownEntry);
+                                }
+                            }
+                        }
+                        connection.Close();
+                    }
+
+                    populatedParam.values = dropdownValues;
+                    populatedParam.labels = dropdownLabels;
 
                     return Json(populatedParam);
                 }
@@ -1105,7 +1325,59 @@ namespace eComm_Reporting_Application.Controllers
 
                     Parameter vendorParameter = local_reportParams.parameters.Find(x => x.name == "Vendor");
 
-                    Parameter populatedParam = getCascadingDropdownValues(vendorParameter, storedProcQuery, connection);
+                    //Parameter populatedParam = getCascadingDropdownValues(vendorParameter, storedProcQuery, connection);
+
+                    List<string> dropdownValues = new List<string>();
+                    List<string> dropdownLabels = new List<string>();
+
+                    Parameter populatedParam = vendorParameter;
+
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                        {
+                            while (stored_proc_reader.Read())
+                            {
+                                var proc_data_length = stored_proc_reader.FieldCount;
+
+                                if (proc_data_length > 1)
+                                {
+                                    for (int j = 0; j < proc_data_length; j++)
+                                    {
+                                        var proc_data_name = stored_proc_reader.GetName(j);
+                                        if (proc_data_name == vendorParameter.values[0])
+                                        {
+                                            var proc_val = stored_proc_reader.GetValue(j);
+
+                                            string dropdownVal = proc_val.ToString();
+                                            dropdownValues.Add(dropdownVal);
+                                        }
+
+                                        if (proc_data_name == vendorParameter.labels[0])
+                                        {
+                                            var proc_label = stored_proc_reader.GetValue(j);
+
+                                            string dropdownLab = proc_label.ToString();
+                                            dropdownLabels.Add(dropdownLab);
+                                        }
+                                    }
+                                }
+                                else //if only one column is returned from the stored procedure, put in both labels and values
+                                {
+                                    var proc_val = stored_proc_reader.GetValue(0);
+
+                                    string dropdownEntry = proc_val.ToString();
+                                    dropdownValues.Add(dropdownEntry);
+                                    dropdownLabels.Add(dropdownEntry);
+                                }
+                            }
+                        }
+                        connection.Close();
+                    }
+
+                    populatedParam.values = dropdownValues;
+                    populatedParam.labels = dropdownLabels;
 
                     return Json(populatedParam);
                 }
@@ -1126,7 +1398,7 @@ namespace eComm_Reporting_Application.Controllers
                 bool hasBanner = false;
                
                 Parameter bannerParam = new Parameter();
-                Parameter populatedBannerParam = new Parameter();
+                Parameter populatedParam = new Parameter();
 
                 foreach (Parameter param in local_reportParams.parameters)
                 {
@@ -1158,74 +1430,68 @@ namespace eComm_Reporting_Application.Controllers
                     SqlCommand storedProcQuery = new SqlCommand("par_Banner", connection);
                     storedProcQuery.CommandType = CommandType.StoredProcedure;
 
-                    populatedBannerParam = getCascadingDropdownValues(bannerParam, storedProcQuery, connection);
-                }
-                                
-                return Json(populatedBannerParam);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Error Getting Vendor Data: " + e);
-                return Json("Error Getting Vendor Data: " + e);
-            }
-        }
+                    List<string> dropdownValues = new List<string>();
+                    List<string> dropdownLabels = new List<string>();
 
+                    populatedParam = bannerParam;
 
-        public Parameter getCascadingDropdownValues(Parameter cascadingParam , SqlCommand storedProcQuery, SqlConnection connection)
-        {
-            List<string> dropdownValues = new List<string>();
-            List<string> dropdownLabels = new List<string>();
-
-            Parameter populatedParam = cascadingParam;
-
-            using (connection)
-            {
-                connection.Open();
-                using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
-                {
-                    while (stored_proc_reader.Read())
+                    //populatedBannerParam = getCascadingDropdownValues(bannerParam, storedProcQuery, connection);
+                    using (connection)
                     {
-                        var proc_data_length = stored_proc_reader.FieldCount;
-
-                        if (proc_data_length > 1)
+                        connection.Open();
+                        using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
                         {
-                            for (int j = 0; j < proc_data_length; j++)
+                            while (stored_proc_reader.Read())
                             {
-                                var proc_data_name = stored_proc_reader.GetName(j);
-                                if (proc_data_name == cascadingParam.values[0])
-                                {
-                                    var proc_val = stored_proc_reader.GetValue(j);
+                                var proc_data_length = stored_proc_reader.FieldCount;
 
-                                    string dropdownVal = proc_val.ToString();
-                                    dropdownValues.Add(dropdownVal);
+                                if (proc_data_length > 1)
+                                {
+                                    for (int j = 0; j < proc_data_length; j++)
+                                    {
+                                        var proc_data_name = stored_proc_reader.GetName(j);
+                                        if (proc_data_name == bannerParam.values[0])
+                                        {
+                                            var proc_val = stored_proc_reader.GetValue(j);
+
+                                            string dropdownVal = proc_val.ToString();
+                                            dropdownValues.Add(dropdownVal);
+                                        }
+
+                                        if (proc_data_name == bannerParam.labels[0])
+                                        {
+                                            var proc_label = stored_proc_reader.GetValue(j);
+
+                                            string dropdownLab = proc_label.ToString();
+                                            dropdownLabels.Add(dropdownLab);
+                                        }
+                                    }
                                 }
-
-                                if (proc_data_name == cascadingParam.labels[0])
+                                else //if only one column is returned from the stored procedure, put in both labels and values
                                 {
-                                    var proc_label = stored_proc_reader.GetValue(j);
+                                    var proc_val = stored_proc_reader.GetValue(0);
 
-                                    string dropdownLab = proc_label.ToString();
-                                    dropdownLabels.Add(dropdownLab);
+                                    string dropdownEntry = proc_val.ToString();
+                                    dropdownValues.Add(dropdownEntry);
+                                    dropdownLabels.Add(dropdownEntry);
                                 }
                             }
                         }
-                        else //if only one column is returned from the stored procedure, put in both labels and values
-                        {
-                            var proc_val = stored_proc_reader.GetValue(0);
-
-                            string dropdownEntry = proc_val.ToString();
-                            dropdownValues.Add(dropdownEntry);
-                            dropdownLabels.Add(dropdownEntry);
-                        }
+                        connection.Close();
                     }
+
+                    populatedParam.values = dropdownValues;
+                    populatedParam.labels = dropdownLabels;
+
                 }
-                connection.Close();
+                                
+                return Json(populatedParam);
             }
-
-            populatedParam.values = dropdownValues;
-            populatedParam.labels = dropdownLabels;
-
-            return populatedParam;
+            catch (Exception e)
+            {
+                _logger.LogError("Error Getting Banner Data: " + e);
+                return Json("Error Getting Banner Data: " + e);
+            }
         }
 
         public ReportPageDropdownModel GetFoldersForDropdown()
@@ -1409,5 +1675,63 @@ namespace eComm_Reporting_Application.Controllers
                 return true;
             }
         }
+
+
+        //public Parameter getCascadingDropdownValues(Parameter cascadingParam , SqlCommand storedProcQuery, SqlConnection connection)
+        //{
+        //    List<string> dropdownValues = new List<string>();
+        //    List<string> dropdownLabels = new List<string>();
+
+        //    Parameter populatedParam = cascadingParam;
+
+        //    using (connection)
+        //    {
+        //        connection.Open();
+        //        using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+        //        {
+        //            while (stored_proc_reader.Read())
+        //            {
+        //                var proc_data_length = stored_proc_reader.FieldCount;
+
+        //                if (proc_data_length > 1)
+        //                {
+        //                    for (int j = 0; j < proc_data_length; j++)
+        //                    {
+        //                        var proc_data_name = stored_proc_reader.GetName(j);
+        //                        if (proc_data_name == cascadingParam.values[0])
+        //                        {
+        //                            var proc_val = stored_proc_reader.GetValue(j);
+
+        //                            string dropdownVal = proc_val.ToString();
+        //                            dropdownValues.Add(dropdownVal);
+        //                        }
+
+        //                        if (proc_data_name == cascadingParam.labels[0])
+        //                        {
+        //                            var proc_label = stored_proc_reader.GetValue(j);
+
+        //                            string dropdownLab = proc_label.ToString();
+        //                            dropdownLabels.Add(dropdownLab);
+        //                        }
+        //                    }
+        //                }
+        //                else //if only one column is returned from the stored procedure, put in both labels and values
+        //                {
+        //                    var proc_val = stored_proc_reader.GetValue(0);
+
+        //                    string dropdownEntry = proc_val.ToString();
+        //                    dropdownValues.Add(dropdownEntry);
+        //                    dropdownLabels.Add(dropdownEntry);
+        //                }
+        //            }
+        //        }
+        //        connection.Close();
+        //    }
+
+        //    populatedParam.values = dropdownValues;
+        //    populatedParam.labels = dropdownLabels;
+
+        //    return populatedParam;
+        //}
     }
 }

@@ -178,15 +178,20 @@ function selectedMasterGroup() {
 
         function successFunc(dropdownData) {
             //var data = [{label: 'Group ID', value: 'demoOption', disabled: true, children: [{ label: 'Group Name', value: '', disabled: true }]}];
-            var data = [];
+            if (dropdownData.success == true) {
+                var data = [];
 
-            for (var groupID in dropdownData) {
-                var dropdownEntry = { label: "<b>ID: </b>" + groupID + " </br><b>Name: </b>" + dropdownData[groupID], value: dropdownData[groupID], title: groupID };
-                data.push(dropdownEntry);
+                for (var groupID in dropdownData.groups) {
+                    var dropdownEntry = { label: "<b>ID: </b>" + groupID + " </br><b>Name: </b>" + dropdownData.groups[groupID], value: dropdownData.groups[groupID], title: groupID };
+                    data.push(dropdownEntry);
+                }
+
+                $("#edit_groupDropdown").multiselect('dataprovider', data);
+                $('#edit_groupDropdown').multiselect('enable');
+            } else {
+                alert("Error Retrieving Groups" + dropdownData.message);
             }
 
-            $("#edit_groupDropdown").multiselect('dataprovider', data);
-            $('#edit_groupDropdown').multiselect('enable');
         }
 
         function errorFunc(error) {

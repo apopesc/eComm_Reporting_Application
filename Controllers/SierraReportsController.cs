@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using System.Text.RegularExpressions;
 
 namespace eComm_Reporting_Application.Controllers
 {
@@ -344,15 +345,17 @@ namespace eComm_Reporting_Application.Controllers
 
                     for (int i = 0; i < reportParams.parameters.Count; i++)
                     {
-                        if ((reportParams.parameters[i].type == "Dropdown" || reportParams.parameters[i].type == "Textbox" || reportParams.parameters[i].type == "MultiDropdown") && (reportParams.parameters[i].queryType == "Stored Procedure" || reportParams.parameters[i].queryType == "In Line"))
+                        if ((reportParams.parameters[i].type == "Dropdown" || reportParams.parameters[i].type == "Textbox" || reportParams.parameters[i].type == "MultiDropdown") && (reportParams.parameters[i].queryType == "Stored Procedure"))
                         {
-                            SqlConnection connection = new SqlConnection(connectionstring);
-                            SqlCommand storedProcQuery = new SqlCommand(reportParams.parameters[i].query, connection);
 
-                            if (reportParams.parameters[i].queryType == "Stored Procedure")
-                            {
-                                storedProcQuery.CommandType = CommandType.StoredProcedure;
-                            }
+                            SqlConnection connection = new SqlConnection(connectionstring);
+
+                            string procQueryString = "EXEC @storedProc";
+
+                            SqlCommand storedProcQuery = new SqlCommand(procQueryString, connection);
+                            storedProcQuery.Parameters.AddWithValue("@storedProc", reportParams.parameters[i].query);
+
+                            //storedProcQuery.CommandType = CommandType.StoredProcedure;
 
                             using (connection)
                             {
@@ -406,21 +409,22 @@ namespace eComm_Reporting_Application.Controllers
                                 reportParams.parameters[i].values = dropdownValues;
                                 reportParams.parameters[i].labels = dropdownLabels;
                             }
+
                         }
                     }
 
-                    return Json(reportParams);
+                    return Json(new { success = true, reportParams = reportParams });
                 }
                 else
                 {
-                    return Json("Error retrieving report parameters: Report Name or Report Folder is empty");
+                    return Json(new { success = false, message = "Error retrieving report parameters: Report Name or Report Folder is empty" });
                 }
 
             }
             catch (Exception e)
             {
                 _logger.LogError("Error retrieving report parameters:  " + e);
-                return Json("Error retrieving report parameters: " + e);
+                return Json(new { success = false, message = "Error retrieving report parameters: " + e });
             }
 
         }

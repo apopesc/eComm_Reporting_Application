@@ -528,10 +528,16 @@ namespace eComm_Reporting_Application.Controllers
 
                     SqlConnection connection = new SqlConnection(connectionstring);
 
-                    string editUserQueryString = "UPDATE UserSubscriptions SET User_Email='" + userEmail + "', Is_Active='" + isActive + "', User_Group='" + selectedGroups + "', Group_ID='" + selectedGroupIDs + "', Master_Group='" + selectedMasterGroups + "' " +
-                        "WHERE ID=" + ID + ";";
+                    string editUserQueryString = "UPDATE UserSubscriptions SET User_Email=@userEmail, Is_Active=@isActive, User_Group=@group, Group_ID=@groupID, Master_Group=@masterGroup " +
+                        "WHERE ID=@ID;";
 
                     SqlCommand editUserQuery = new SqlCommand(editUserQueryString, connection);
+                    editUserQuery.Parameters.AddWithValue("@userEmail", userEmail);
+                    editUserQuery.Parameters.AddWithValue("@isActive", isActive);
+                    editUserQuery.Parameters.AddWithValue("@group", selectedGroups);
+                    editUserQuery.Parameters.AddWithValue("@groupID", selectedGroupIDs);
+                    editUserQuery.Parameters.AddWithValue("@masterGroup", selectedMasterGroups);
+                    editUserQuery.Parameters.AddWithValue("@ID", ID);
 
                     using (connection)
                     {
