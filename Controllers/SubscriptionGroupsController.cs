@@ -224,7 +224,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetTableData(UserSubscriptionDropdownModel filterData)
+        public JsonResult GetTableData([Bind("isActive,groupsIDList,groupsList,masterGroupsList")] UserSubscriptionDropdownModel filterData)
         {
             try
             {

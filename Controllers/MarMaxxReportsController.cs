@@ -193,7 +193,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetMarMaxxTableData(ReportModel reportData)
+        public JsonResult GetMarMaxxTableData([Bind("reportName,reportFolder")]ReportModel reportData)
         {
             try
             {
@@ -280,7 +280,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetMarMaxxTableDataByBanner(ReportModel reportData, List<string> bannerVals)
+        public JsonResult GetMarMaxxTableDataByBanner([Bind("reportName,reportFolder")]ReportModel reportData, List<string> bannerVals)
         {
             try
             {
@@ -423,7 +423,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetMarMaxxReportParameters(ReportModel reportData)
+        public JsonResult GetMarMaxxReportParameters([Bind("reportName,reportFolder")] ReportModel reportData)
         {
             //ReportDataSource = Netsuite_ODS
             //eCom_ReportDB = eCom_ReportDB
@@ -565,7 +565,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult SaveMarmaxxReportSubscription(ReportTableModel reportSub)
+        public JsonResult SaveMarmaxxReportSubscription([Bind("subscriptionID,subscriptionName,reportName,groupNames,groupIDs,fileFormat,schedule,dynamicParams")] ReportTableModel reportSub)
         {
             try
             {
@@ -694,7 +694,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult SaveEditedMarmaxxReportSubscription(ReportTableModel reportSub)
+        public JsonResult SaveEditedMarmaxxReportSubscription([Bind("subscriptionID,subscriptionName,reportName,groupNames,groupIDs,fileFormat,schedule,dynamicParams")] ReportTableModel reportSub)
         {
             try
             {
@@ -844,7 +844,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetDepartmentData(ReportModel reportData, List<string> selectedBanners)
+        public JsonResult GetDepartmentData([Bind("reportName,reportFolder")] ReportModel reportData, List<string> selectedBanners)
         {
             try
             {
@@ -948,7 +948,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetClassData([FromBody] DepartmentModel departmentModel)
+        public JsonResult GetClassData([FromBody][Bind("reportData,selectedDepartments")] DepartmentModel departmentModel)
         {
             try
             {
@@ -1060,7 +1060,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetCategoryData([FromBody]ClassModel classModel)
+        public JsonResult GetCategoryData([FromBody][Bind("reportData,selectedDepartments,selectedClasses")] ClassModel classModel)
         {
             try
             {
@@ -1178,7 +1178,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetBrandData([FromBody] BrandModel brandModel)
+        public JsonResult GetBrandData([FromBody][Bind("reportData,brandPattern")] BrandModel brandModel)
         {
             try
             {
@@ -1284,7 +1284,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetVendorData([FromBody] VendorModel vendorModel)
+        public JsonResult GetVendorData([FromBody][Bind("reportData,vendorPattern")] VendorModel vendorModel)
         {
             try
             {
@@ -1390,7 +1390,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetBannersForReport(ReportModel reportData)
+        public JsonResult GetBannersForReport([Bind("reportName,reportFolder")] ReportModel reportData)
         {
             try
             {

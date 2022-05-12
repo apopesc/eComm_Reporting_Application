@@ -192,7 +192,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetSierraTableData(ReportModel reportData)
+        public JsonResult GetSierraTableData([Bind("reportName,reportFolder")] ReportModel reportData)
         {
             try
             {
@@ -321,7 +321,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetSierraReportParameters(ReportModel reportData)
+        public JsonResult GetSierraReportParameters([Bind("reportName,reportFolder")] ReportModel reportData)
         {
             try
             {
@@ -430,7 +430,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult SaveSierraReportSubscription(ReportTableModel reportSub)
+        public JsonResult SaveSierraReportSubscription([Bind("subscriptionID,subscriptionName,reportName,groupNames,groupIDs,fileFormat,schedule,dynamicParams")] ReportTableModel reportSub)
         {
             try
             {
@@ -555,7 +555,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
-        public JsonResult SaveEditedSierraReportSubscription(ReportTableModel reportSub)
+        public JsonResult SaveEditedSierraReportSubscription([Bind("subscriptionID,subscriptionName,reportName,groupNames,groupIDs,fileFormat,schedule,dynamicParams")] ReportTableModel reportSub)
         {
             try
             {

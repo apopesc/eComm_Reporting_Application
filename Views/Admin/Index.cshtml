@@ -1,4 +1,6 @@
 ﻿@model eComm_Reporting_Application.Models.AdminPageModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+
 @{
     ViewData["Title"] = "Admin";
 }
@@ -14,6 +16,9 @@
 </div>
 
 <div class="groups-div">
+
+    <input type ="hidden" id="RequestVerificationToken" name="RequestVerificationToken" value="@Xsrf.GetAndStoreTokens(Context).RequestToken" />
+
     <div class="sub-header">
         <div class="page-title">
             <h1 class="title-text sub">Add New Group</h1>

@@ -84,6 +84,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult AddNewGroup(string masterGroup, string groupID, string groupName)
         {
             try

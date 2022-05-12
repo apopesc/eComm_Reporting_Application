@@ -35,9 +35,12 @@
         } else {
             var controllerUrl = '/Admin/AddNewGroup';
 
+            var token = $("#RequestVerificationToken").val();
+
             $.ajax({
                 type: "POST",
                 url: controllerUrl,
+                headers: {'RequestVerificationToken': token},
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
