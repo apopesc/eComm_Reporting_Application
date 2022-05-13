@@ -83,6 +83,8 @@
             //Posting the collected data to the SubscriptionsGroupsController
             var controllerUrl = '/SubscriptionGroups/AddUserSubToDB';
 
+            var token = $("#RequestVerificationToken").val();
+
             var groupNames_String = enteredGroups.toString();
             var groupIDs_String = enteredGroupIDs.toString();
             var masterGroups_String = enteredMasterGroups.toString();
@@ -90,6 +92,7 @@
             $.ajax({
                 type: "POST",
                 url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
@@ -127,9 +130,12 @@ function selectedMasterGroup() {
         var controllerUrl = '/SubscriptionGroups/GetGroupValues';
         var masterGroupList = $('#addNew_masterGroupDropdown').val();
 
+        var token = $("#RequestVerificationToken").val();
+
         $.ajax({
             type: "POST",
             url: controllerUrl,
+            headers: { 'RequestVerificationToken': token },
             dataType: "json",
             success: successFunc,
             error: errorFunc,

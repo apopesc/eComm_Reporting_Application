@@ -163,6 +163,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetReportNameValues(List<string> folderPathList)
         {
             try
@@ -192,6 +193,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetSierraTableData([Bind("reportName,reportFolder")] ReportModel reportData)
         {
             try
@@ -279,6 +281,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetInitialTable()
         {
             try
@@ -321,6 +324,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetSierraReportParameters([Bind("reportName,reportFolder")] ReportModel reportData)
         {
             try
@@ -430,6 +434,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult SaveSierraReportSubscription([Bind("subscriptionID,subscriptionName,reportName,groupNames,groupIDs,fileFormat,schedule,dynamicParams")] ReportTableModel reportSub)
         {
             try
@@ -555,6 +560,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult SaveEditedSierraReportSubscription([Bind("subscriptionID,subscriptionName,reportName,groupNames,groupIDs,fileFormat,schedule,dynamicParams")] ReportTableModel reportSub)
         {
             try

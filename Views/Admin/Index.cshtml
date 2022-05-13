@@ -15,9 +15,9 @@
     </div>
 </div>
 
-<div class="groups-div">
+<input type="hidden" id="RequestVerificationToken" name="RequestVerificationToken" value="@Xsrf.GetAndStoreTokens(Context).RequestToken" />
 
-    <input type ="hidden" id="RequestVerificationToken" name="RequestVerificationToken" value="@Xsrf.GetAndStoreTokens(Context).RequestToken" />
+<div class="groups-div">
 
     <div class="sub-header">
         <div class="page-title">

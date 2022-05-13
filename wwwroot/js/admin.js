@@ -83,11 +83,15 @@
             if (confirm('Are you sure you want to delete group: ' + selectedGroup + '? You will no longer be able to view user data tied to this group.')) {
 
                 $selectedRow.addClass('selected');
+
                 var controllerUrl = '/Admin/DeleteGroup';
+
+                var token = $("#RequestVerificationToken").val();
 
                 $.ajax({
                     type: "POST",
                     url: controllerUrl,
+                    headers: { 'RequestVerificationToken': token },
                     dataType: "json",
                     success: successFunc,
                     error: errorFunc,
@@ -130,9 +134,12 @@
         } else {
             var controllerUrl = '/Admin/AddNewMasterGroup';
 
+            var token = $("#RequestVerificationToken").val();
+
             $.ajax({
                 type: "POST",
                 url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
@@ -175,9 +182,12 @@
                 $selectedRow.addClass('selected');
                 var controllerUrl = '/Admin/DeleteMasterGroup';
 
+                var token = $("#RequestVerificationToken").val();
+
                 $.ajax({
                     type: "POST",
                     url: controllerUrl,
+                    headers: { 'RequestVerificationToken': token },
                     dataType: "json",
                     success: successFunc,
                     error: errorFunc,

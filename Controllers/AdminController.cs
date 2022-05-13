@@ -5,6 +5,7 @@ using eComm_Reporting_Application.Models;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace eComm_Reporting_Application.Controllers
 {
@@ -13,12 +14,15 @@ namespace eComm_Reporting_Application.Controllers
     {
 
         private readonly IConfiguration configuration;
+        private readonly ILogger<AdminController> _logger;
+
         public static AdminPageModel adminModel = new AdminPageModel();
 
 
-        public AdminController(IConfiguration config)
+        public AdminController(IConfiguration config, ILogger<AdminController> logger)
         {
             this.configuration = config;
+            _logger = logger;
         }
 
         public IActionResult Error(string errorMsg)
@@ -142,12 +146,14 @@ namespace eComm_Reporting_Application.Controllers
                 }
                 else
                 {
+                    _logger.LogError("Error saving new group: " + e);
                     return Json(new { success = false, errorMsg = "Error saving new group: " + e});
                 }
             }
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult DeleteGroup(string groupID)
         {
             try
@@ -177,11 +183,13 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error Deleting Group: " + e);
                 return Json(new { success = false, message = "Error Deleting Group: " + e });
             } 
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult AddNewMasterGroup(string masterGroup)
         {
             try
@@ -224,12 +232,14 @@ namespace eComm_Reporting_Application.Controllers
                 }
                 else
                 {
-                    return Json(new { success = false, errorMsg = "Error saving new group: " + e });
+                    _logger.LogError("Error saving new master group: " + e);
+                    return Json(new { success = false, errorMsg = "Error saving new master group: " + e });
                 }
             }
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult DeleteMasterGroup(string masterGroup)
         {
             try
@@ -257,6 +267,7 @@ namespace eComm_Reporting_Application.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError("Error Deleting Master Group: " + e);
                 return Json(new { success = false, message = "Error Deleting Master Group: " + e });
             }
         }

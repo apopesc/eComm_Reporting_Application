@@ -1,4 +1,5 @@
 ﻿@model eComm_Reporting_Application.Models.EditReportSubscriptionModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @{
     ViewData["Title"] = "Edit Report Subscription";
 }
@@ -20,6 +21,8 @@
         }
     </div>
 </div>
+
+<input type="hidden" id="RequestVerificationToken" name="RequestVerificationToken" value="@Xsrf.GetAndStoreTokens(Context).RequestToken" />
 
 <div class="hidden-selected-groups">
     @Html.HiddenFor(selectedGroupNames => Model.selectedGroupNames)

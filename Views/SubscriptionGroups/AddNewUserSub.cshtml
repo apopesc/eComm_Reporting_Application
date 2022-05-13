@@ -1,4 +1,5 @@
 ﻿@model eComm_Reporting_Application.Models.UserSubscriptionDropdownModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 
 @{
     ViewData["Title"] = "Add New User";
@@ -16,6 +17,7 @@
     </div>
 </div>
 
+<input type="hidden" id="RequestVerificationToken" name="RequestVerificationToken" value="@Xsrf.GetAndStoreTokens(Context).RequestToken" />
 
 <div class="filter-data">
     <div class="addnew-row">

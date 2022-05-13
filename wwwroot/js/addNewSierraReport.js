@@ -59,6 +59,8 @@
 
         var controllerUrl = '/SierraReports/GetSierraReportParameters';
 
+        var token = $("#RequestVerificationToken").val();
+
         var reportData = {
             reportName: initialSelectedReport,
             reportFolder: initialSelectedFolder
@@ -67,6 +69,7 @@
         $.ajax({
             type: "POST",
             url: controllerUrl,
+            headers: { 'RequestVerificationToken': token },
             dataType: "json",
             success: successFunc,
             error: errorFunc,
@@ -117,6 +120,8 @@
 
             var controllerUrl = '/SierraReports/GetSierraReportParameters';
 
+            var token = $("#RequestVerificationToken").val();
+
             var reportData = {
                 reportName: selectedReport,
                 reportFolder: selectedReportFolder
@@ -125,6 +130,7 @@
             $.ajax({
                 type: "POST",
                 url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
@@ -203,6 +209,8 @@
 
             var controllerUrl = '/SierraReports/SaveSierraReportSubscription';
 
+            var token = $("#RequestVerificationToken").val();
+
             var savedReportSubModel = {
                 subscriptionID: 0,
                 subscriptionName: subscriptionName,
@@ -217,6 +225,7 @@
             $.ajax({
                 type: "POST",
                 url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
@@ -252,9 +261,12 @@ function selectedFolder(selectedVal = "") {
 
         var folderPathList = $('#sierraFolderDropdown').val();
 
+        var token = $("#RequestVerificationToken").val();
+
         $.ajax({
             type: "POST",
             url: controllerUrl,
+            headers: { 'RequestVerificationToken': token },
             dataType: "json",
             success: successFunc,
             error: errorFunc,

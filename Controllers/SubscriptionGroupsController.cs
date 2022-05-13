@@ -124,6 +124,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddUserSubToDB(string userEmail, string isActive, string selectedGroupIDs, string selectedGroups, string selectedMasterGroups)
         {
             try
@@ -224,6 +225,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetTableData([Bind("isActive,groupsIDList,groupsList,masterGroupsList")] UserSubscriptionDropdownModel filterData)
         {
             try
@@ -340,6 +342,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetInitialTable()
         {
             try
@@ -353,49 +356,51 @@ namespace eComm_Reporting_Application.Controllers
             }
         }
 
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public JsonResult EditUserSub(List<UserSubscriptionTableModel> editedUsersList)
+        //{
+        //    try
+        //    {
+        //        string successString = "Success editing users: ";
+
+        //        for (int i = 0; i < editedUsersList.Count; i++)
+        //        {
+        //            string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
+        //            SqlConnection connection = new SqlConnection(connectionstring);
+
+        //            string queryString = "Update UserSubscriptions SET User_Email=@userEmail, Is_Active=@isActive, User_Group=@group" +
+        //                ", Group_ID=@groupID, Master_Group=@masterGroup WHERE ID=@ID;";
+
+        //            SqlCommand editUserQuery = new SqlCommand(queryString, connection);
+        //            editUserQuery.Parameters.AddWithValue("@userEmail", editedUsersList[i].userEmail);
+        //            editUserQuery.Parameters.AddWithValue("@isActive", editedUsersList[i].isActive);
+        //            editUserQuery.Parameters.AddWithValue("@group", editedUsersList[i].group);
+        //            editUserQuery.Parameters.AddWithValue("@groupID", editedUsersList[i].groupID);
+        //            editUserQuery.Parameters.AddWithValue("@masterGroup", editedUsersList[i].masterGroup);
+        //            editUserQuery.Parameters.AddWithValue("@ID", editedUsersList[i].ID);
+
+        //            using (connection)
+        //            {
+        //                connection.Open();
+        //                SqlDataReader reader = editUserQuery.ExecuteReader();
+        //                connection.Close();
+        //            }
+        //            successString = successString + editedUsersList[i].userEmail + ", ";
+        //        }
+
+        //        successString = successString.Substring(0, successString.Length - 2);
+        //        return Json(successString);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError("Error editing user: " + e);
+        //        return Json("Error editing user: " + e);
+        //    }
+        //}
+
         [HttpPost]
-        public JsonResult EditUserSub(List<UserSubscriptionTableModel> editedUsersList)
-        {
-            try
-            {
-                string successString = "Success editing users: ";
-
-                for (int i = 0; i < editedUsersList.Count; i++)
-                {
-                    string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
-                    SqlConnection connection = new SqlConnection(connectionstring);
-
-                    string queryString = "Update UserSubscriptions SET User_Email=@userEmail, Is_Active=@isActive, User_Group=@group" +
-                        ", Group_ID=@groupID, Master_Group=@masterGroup WHERE ID=@ID;";
-
-                    SqlCommand editUserQuery = new SqlCommand(queryString, connection);
-                    editUserQuery.Parameters.AddWithValue("@userEmail", editedUsersList[i].userEmail);
-                    editUserQuery.Parameters.AddWithValue("@isActive", editedUsersList[i].isActive);
-                    editUserQuery.Parameters.AddWithValue("@group", editedUsersList[i].group);
-                    editUserQuery.Parameters.AddWithValue("@groupID", editedUsersList[i].groupID);
-                    editUserQuery.Parameters.AddWithValue("@masterGroup", editedUsersList[i].masterGroup);
-                    editUserQuery.Parameters.AddWithValue("@ID", editedUsersList[i].ID);
-
-                    using (connection)
-                    {
-                        connection.Open();
-                        SqlDataReader reader = editUserQuery.ExecuteReader();
-                        connection.Close();
-                    }
-                    successString = successString + editedUsersList[i].userEmail + ", ";
-                }
-
-                successString = successString.Substring(0, successString.Length - 2);
-                return Json(successString);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Error editing user: " + e);
-                return Json("Error editing user: " + e);
-            }
-        }
-
-        [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult DeleteUserSub(int ID)
         {
             try
@@ -434,6 +439,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetGroupValues(List<string> masterGroupList)
         {
             try
@@ -485,6 +491,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult EditUserSubToDB(int ID, string userEmail, string isActive, string selectedGroupIDs, string selectedGroups, string selectedMasterGroups)
         {
             try

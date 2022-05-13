@@ -85,6 +85,8 @@ $(document).ready(function () {
 
                 var controllerUrl = '/MarMaxxReports/GetDepartmentData';
 
+                var token = $("#RequestVerificationToken").val();
+
                 var reportData = {
                     reportName: selectedReportName,
                     reportFolder: selectedFolderName
@@ -93,6 +95,7 @@ $(document).ready(function () {
                 $.ajax({
                     type: "POST",
                     url: controllerUrl,
+                    headers: { 'RequestVerificationToken': token },
                     dataType: "json",
                     success: successFunc,
                     error: errorFunc,
@@ -167,6 +170,8 @@ $(document).ready(function () {
 
                 var controllerUrl = '/MarMaxxReports/GetClassData';
 
+                var token = $("#RequestVerificationToken").val();
+
                 var reportData = {
                     reportName: selectedReportName,
                     reportFolder: selectedFolderName
@@ -182,6 +187,7 @@ $(document).ready(function () {
                 $.ajax({
                     type: "POST",
                     url: controllerUrl,
+                    headers: { 'RequestVerificationToken': token },
                     dataType: "json",
                     contentType: "application/json",
                     success: successFunc,
@@ -264,6 +270,8 @@ $(document).ready(function () {
 
                 var controllerUrl = '/MarMaxxReports/GetCategoryData';
 
+                var token = $("#RequestVerificationToken").val();
+
                 var reportData = {
                     reportName: selectedReportName,
                     reportFolder: selectedFolderName
@@ -280,6 +288,7 @@ $(document).ready(function () {
                 $.ajax({
                     type: "POST",
                     url: controllerUrl,
+                    headers: { 'RequestVerificationToken': token },
                     dataType: "json",
                     contentType: "application/json",
                     success: successFunc,
@@ -320,6 +329,8 @@ $(document).ready(function () {
         if (brand_pattern.trim() != "") {
             var controllerUrl = '/MarMaxxReports/GetBrandData';
 
+            var token = $("#RequestVerificationToken").val();
+
             var reportData = {
                 reportName: $('#marMaxxReportName option[disabled]:selected').val(),
                 reportFolder: $('#folderName').val()
@@ -335,6 +346,7 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
                 dataType: "json",
                 contentType: "application/json",
                 success: successFunc,
@@ -372,6 +384,8 @@ $(document).ready(function () {
         if (vendor_pattern.trim() != "") {
             var controllerUrl = '/MarMaxxReports/GetVendorData';
 
+            var token = $("#RequestVerificationToken").val();
+
             var reportData = {
                 reportName: $('#marMaxxReportName option[disabled]:selected').val(),
                 reportFolder: $('#folderName').val()
@@ -387,6 +401,7 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
                 dataType: "json",
                 contentType: "application/json",
                 success: successFunc,
@@ -525,6 +540,8 @@ $(document).ready(function () {
                 var controllerUrl = '/MarMaxxReports/SaveMarmaxxReportSubscription';
             }
 
+            var token = $("#RequestVerificationToken").val();
+
             var editedReportSubModel = {
                 subscriptionID: parseInt(subscriptionID),
                 subscriptionName: subscriptionName,
@@ -539,6 +556,7 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
@@ -600,6 +618,8 @@ function getDynamicReportParams(selectedReportName, selectedFolderName) {
 
     var controllerUrl = '/MarMaxxReports/GetMarMaxxReportParameters';
 
+    var token = $("#RequestVerificationToken").val();
+
     var reportData = {
         reportName: selectedReportName,
         reportFolder: selectedFolderName
@@ -613,6 +633,7 @@ function getDynamicReportParams(selectedReportName, selectedFolderName) {
         $.ajax({
             type: "POST",
             url: controllerUrl,
+            headers: { 'RequestVerificationToken': token },
             dataType: "json",
             success: successFunc,
             error: errorFunc,
@@ -834,6 +855,8 @@ function selectDynamicParams() {
         var selectedBannerValues = selectedDynamicParamVals['Banner'].split(',');
         var controllerUrl = '/MarMaxxReports/GetDepartmentData';
 
+        var token = $("#RequestVerificationToken").val();
+
         var reportData = {
             reportName: selectedReportName,
             reportFolder: selectedFolderName
@@ -842,6 +865,7 @@ function selectDynamicParams() {
         $.ajax({
             type: "POST",
             url: controllerUrl,
+            headers: { 'RequestVerificationToken': token },
             dataType: "json",
             success: successFunc,
             error: errorFunc,
@@ -884,6 +908,8 @@ function selectDynamicParams() {
 
                 var controllerUrl = '/MarMaxxReports/GetClassData';
 
+                var token = $("#RequestVerificationToken").val();
+
                 var reportData = {
                     reportName: selectedReportName,
                     reportFolder: selectedFolderName
@@ -899,6 +925,7 @@ function selectDynamicParams() {
                 $.ajax({
                     type: "POST",
                     url: controllerUrl,
+                    headers: { 'RequestVerificationToken': token },
                     dataType: "json",
                     contentType: "application/json",
                     success: successFunc,
@@ -939,6 +966,8 @@ function selectDynamicParams() {
 
                         var controllerUrl = '/MarMaxxReports/GetCategoryData';
 
+                        var token = $("#RequestVerificationToken").val();
+
                         var reportData = {
                             reportName: selectedReportName,
                             reportFolder: selectedFolderName
@@ -955,6 +984,7 @@ function selectDynamicParams() {
                         $.ajax({
                             type: "POST",
                             url: controllerUrl,
+                            headers: { 'RequestVerificationToken': token },
                             dataType: "json",
                             contentType: "application/json",
                             success: successFunc,

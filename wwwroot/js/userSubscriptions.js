@@ -72,9 +72,12 @@ $(document).ready(function () {
     //Getting the previously loaded table if there is one
     var controllerUrl = '/SubscriptionGroups/GetInitialTable';
 
+    var token = $("#RequestVerificationToken").val();
+
     $.ajax({
         type: "POST",
         url: controllerUrl,
+        headers: { 'RequestVerificationToken': token },
         dataType: "json",
         success: successFunction,
         error: errorFunction
@@ -145,6 +148,8 @@ $(document).ready(function () {
             //Posting collected filter data back to the SubscriptionsGroupsController
             var controllerUrl = '/SubscriptionGroups/GetTableData';
 
+            var token = $("#RequestVerificationToken").val();
+
             var filterData = {
                 isActive: selectedCheckBoxVal,
                 groupsIDList: selectedGroupIDs,
@@ -155,6 +160,7 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
@@ -192,9 +198,12 @@ $(document).ready(function () {
                 $selectedRow.addClass('selected');
                 var controllerUrl = '/SubscriptionGroups/DeleteUserSub';
 
+                var token = $("#RequestVerificationToken").val();
+
                 $.ajax({
                     type: "POST",
                     url: controllerUrl,
+                    headers: { 'RequestVerificationToken': token },
                     dataType: "json",
                     success: successFunc,
                     error: errorFunc,
@@ -329,9 +338,12 @@ function selectedMasterGroup(selectedVals = []) {
         var controllerUrl = '/SubscriptionGroups/GetGroupValues';
         var masterGroupList = $('#masterGroupDropdown').val();
 
+        var token = $("#RequestVerificationToken").val();
+
         $.ajax({
             type: "POST",
             url: controllerUrl,
+            headers: { 'RequestVerificationToken': token },
             dataType: "json",
             success: successFunc,
             error: errorFunc,

@@ -1,11 +1,12 @@
 ﻿@model eComm_Reporting_Application.Models.UserSubscriptionDropdownModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 
 @{
     ViewData["Title"] = "User Subscriptions Groups";
 }
 
-@section Scripts{ 
-    <script src ="~/js/userSubscriptions.js"></script>
+@section Scripts{
+    <script src="~/js/userSubscriptions.js"></script>
 }
 <link rel="stylesheet" href="~/css/userSubscriptions.css" />
 
@@ -14,6 +15,8 @@
         <h1 class="title-text">User Subscription Groups</h1>
     </div>
 </div>
+
+<input type="hidden" id="RequestVerificationToken" name="RequestVerificationToken" value="@Xsrf.GetAndStoreTokens(Context).RequestToken" />
 
 <div class="filter-data">
     <div class="first-row">

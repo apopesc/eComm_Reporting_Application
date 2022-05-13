@@ -1,4 +1,5 @@
 ﻿@model eComm_Reporting_Application.Models.ReportPageDropdownModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 
 @{
     ViewData["Title"] = "MarMaxx Reports Subscriptions";
@@ -16,8 +17,10 @@
     </div>
 </div>
 
+<input type="hidden" id="RequestVerificationToken" name="RequestVerificationToken" value="@Xsrf.GetAndStoreTokens(Context).RequestToken" />
+
 <div class="filter-data">
-    
+
     <div class="first-row">
         <div class="main-dropdown">
             <label class="filter-label" for="marMaxxFolderDropdown">Folder:</label>
@@ -39,7 +42,7 @@
             </select>
         </div>
     </div>
-    
+
     <button id="btnViewMarmaxxData" class="btnViewData" type="button" hidden>View Data</button>
 </div>
 

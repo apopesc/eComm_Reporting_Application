@@ -164,6 +164,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetReportNameValues(List<string> folderPathList)
         {
             try
@@ -193,6 +194,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetMarMaxxTableData([Bind("reportName,reportFolder")]ReportModel reportData)
         {
             try
@@ -280,6 +282,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetMarMaxxTableDataByBanner([Bind("reportName,reportFolder")]ReportModel reportData, List<string> bannerVals)
         {
             try
@@ -381,6 +384,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetInitialTable()
         {
             try
@@ -423,6 +427,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetMarMaxxReportParameters([Bind("reportName,reportFolder")] ReportModel reportData)
         {
             //ReportDataSource = Netsuite_ODS
@@ -565,6 +570,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult SaveMarmaxxReportSubscription([Bind("subscriptionID,subscriptionName,reportName,groupNames,groupIDs,fileFormat,schedule,dynamicParams")] ReportTableModel reportSub)
         {
             try
@@ -694,6 +700,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult SaveEditedMarmaxxReportSubscription([Bind("subscriptionID,subscriptionName,reportName,groupNames,groupIDs,fileFormat,schedule,dynamicParams")] ReportTableModel reportSub)
         {
             try
@@ -806,6 +813,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult DeleteMarmaxxReportSubscription(int ID)
         {
             try
@@ -844,6 +852,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetDepartmentData([Bind("reportName,reportFolder")] ReportModel reportData, List<string> selectedBanners)
         {
             try
@@ -948,6 +957,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetClassData([FromBody][Bind("reportData,selectedDepartments")] DepartmentModel departmentModel)
         {
             try
@@ -1060,6 +1070,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetCategoryData([FromBody][Bind("reportData,selectedDepartments,selectedClasses")] ClassModel classModel)
         {
             try
@@ -1178,6 +1189,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetBrandData([FromBody][Bind("reportData,brandPattern")] BrandModel brandModel)
         {
             try
@@ -1284,6 +1296,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetVendorData([FromBody][Bind("reportData,vendorPattern")] VendorModel vendorModel)
         {
             try
@@ -1390,6 +1403,7 @@ namespace eComm_Reporting_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult GetBannersForReport([Bind("reportName,reportFolder")] ReportModel reportData)
         {
             try

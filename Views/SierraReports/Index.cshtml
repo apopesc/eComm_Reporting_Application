@@ -1,4 +1,5 @@
 ﻿@model eComm_Reporting_Application.Models.ReportPageDropdownModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @{
     ViewData["Title"] = "Sierra Reports Subscriptions";
 }
@@ -12,6 +13,8 @@
         <h1 class="title-text">Sierra Reports Subscriptions</h1>
     </div>
 </div>
+
+<input type="hidden" id="RequestVerificationToken" name="RequestVerificationToken" value="@Xsrf.GetAndStoreTokens(Context).RequestToken" />
 
 <div class="filter-data">
 

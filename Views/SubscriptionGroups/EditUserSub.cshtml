@@ -1,4 +1,5 @@
 ﻿@model eComm_Reporting_Application.Models.EditUserDropdownModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 
 @{
     ViewData["Title"] = "Edit User";
@@ -15,6 +16,8 @@
         <h1 class="title-text">Edit User</h1>
     </div>
 </div>
+
+<input type="hidden" id="RequestVerificationToken" name="RequestVerificationToken" value="@Xsrf.GetAndStoreTokens(Context).RequestToken" />
 
 <div class="hidden-selected-items">
     @Html.HiddenFor(selectedMasterGroups => Model.selectedMasterGroups)
@@ -35,7 +38,7 @@
     <div class="addnew-row">
         <div class="email">
             <label class="filter-label" for="email-input">Email: </label>
-            <input type="text" id="userEmail" class="email-input" name="email-input" value="@Model.userEmail"/>
+            <input type="text" id="userEmail" class="email-input" name="email-input" value="@Model.userEmail" />
         </div>
     </div>
 
