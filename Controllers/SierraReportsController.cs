@@ -212,6 +212,14 @@ namespace eComm_Reporting_Application.Controllers
                     tableData = new List<ReportTableModel>();
                     selectedReport = reportData;
 
+                    ReportParameterModel reportSpecificParams = new ReportParameterModel();
+                    reportSpecificParams.parameters = new List<Parameter>();
+
+                    foreach (Parameter r_param in reportParams.parameters)
+                    {
+                        reportSpecificParams.parameters.Add(r_param);
+                    }
+
                     //Adding the static columns to the table (these will appear for every report)
                     Parameter schedule = new Parameter();
                     schedule.name = "Schedule";
@@ -262,6 +270,15 @@ namespace eComm_Reporting_Application.Controllers
 
                                 string reportParamsJson = reader.GetString(5);
                                 Dictionary<string, string> dynamicReportParams = JsonConvert.DeserializeObject<Dictionary<string, string>>(reportParamsJson);
+
+                                for (int i = 0; i < reportSpecificParams.parameters.Count; i++)
+                                {
+                                    if (!(dynamicReportParams.ContainsKey(reportSpecificParams.parameters[i].name)))
+                                    {
+                                        dynamicReportParams[reportSpecificParams.parameters[i].name] = "";
+                                    }
+                                }
+
                                 tableRow.dynamicParams = dynamicReportParams;
 
                                 tableData.Add(tableRow);

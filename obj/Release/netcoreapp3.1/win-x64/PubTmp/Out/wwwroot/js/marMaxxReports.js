@@ -35,9 +35,12 @@ $(document).ready(function () {
     //Getting the previously loaded table if there is one
     var controllerUrl = '/MarMaxxReports/GetInitialTable';
 
+    var token = $("#RequestVerificationToken").val();
+
     $.ajax({
         type: "POST",
         url: controllerUrl,
+        headers: { 'RequestVerificationToken': token },
         dataType: "json",
         success: successFunction,
         error: errorFunction
@@ -93,6 +96,8 @@ $(document).ready(function () {
         } else {
             var controllerUrl = '/MarMaxxReports/GetBannersForReport';
 
+            var token = $("#RequestVerificationToken").val();
+
             var reportData = {
                 reportName: selectedReport,
                 reportFolder: selectedReportFolder
@@ -101,6 +106,7 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
@@ -128,9 +134,12 @@ $(document).ready(function () {
 
                     var controllerUrl = '/MarMaxxReports/GetMarMaxxTableData';
 
+                    var token = $("#RequestVerificationToken").val();
+
                     $.ajax({
                         type: "POST",
                         url: controllerUrl,
+                        headers: { 'RequestVerificationToken': token },
                         dataType: "json",
                         success: successFunc,
                         error: errorFunc,
@@ -138,7 +147,7 @@ $(document).ready(function () {
                     });
 
                     function successFunc(tableData) {
-                        if (typeof tableData === 'string') { //If there is an error saving it to the database
+                        if (typeof tableData === 'string') { 
                             alert(tableData);
                             setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
                         } else {
@@ -184,9 +193,12 @@ $(document).ready(function () {
 
             var controllerUrl = '/MarMaxxReports/GetMarMaxxTableDataByBanner';
 
+            var token = $("#RequestVerificationToken").val();
+
             $.ajax({
                 type: "POST",
                 url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
@@ -228,9 +240,12 @@ $(document).ready(function () {
                 $selectedRow.addClass('selected');
                 var controllerUrl = '/MarMaxxReports/DeleteMarmaxxReportSubscription';
 
+                var token = $("#RequestVerificationToken").val();
+
                 $.ajax({
                     type: "POST",
                     url: controllerUrl,
+                    headers: { 'RequestVerificationToken': token },
                     dataType: "json",
                     success: successFunc,
                     error: errorFunc,
@@ -334,10 +349,12 @@ function selectedFolder(selectedVal = "", selectedBanners = []) {
         var controllerUrl = '/MarMaxxReports/GetReportNameValues';
 
         var folderPathList = $('#marMaxxFolderDropdown').val();
+        var token = $("#RequestVerificationToken").val();
 
         $.ajax({
             type: "POST",
             url: controllerUrl,
+            headers: { 'RequestVerificationToken': token },
             dataType: "json",
             success: successFunc,
             error: errorFunc,
@@ -376,6 +393,8 @@ function loadBanners(selectedVals = []) {
 
     var controllerUrl = '/MarMaxxReports/GetBannersForReport';
 
+    var token = $("#RequestVerificationToken").val();
+
     var reportData = {
         reportName: selectedReport,
         reportFolder: selectedReportFolder
@@ -384,6 +403,7 @@ function loadBanners(selectedVals = []) {
     $.ajax({
         type: "POST",
         url: controllerUrl,
+        headers: { 'RequestVerificationToken': token },
         dataType: "json",
         success: successFunc,
         error: errorFunc,

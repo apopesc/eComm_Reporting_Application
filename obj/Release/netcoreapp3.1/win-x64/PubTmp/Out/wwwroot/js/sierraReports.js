@@ -26,9 +26,12 @@ $(document).ready(function () {
     //Getting the previously loaded table if there is one
     var controllerUrl = '/SierraReports/GetInitialTable';
 
+    var token = $("#RequestVerificationToken").val();
+
     $.ajax({
         type: "POST",
         url: controllerUrl,
+        headers: { 'RequestVerificationToken': token },
         dataType: "json",
         success: successFunction,
         error: errorFunction
@@ -83,10 +86,12 @@ $(document).ready(function () {
             };
 
             var controllerUrl = '/SierraReports/GetSierraTableData';
+            var token = $("#RequestVerificationToken").val();
 
             $.ajax({
                 type: "POST",
                 url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
@@ -224,10 +229,12 @@ function selectedFolder(selectedVal = "") {
         var controllerUrl = '/SierraReports/GetReportNameValues';
 
         var folderPathList = $('#sierraFolderDropdown').val();
+        var token = $("#RequestVerificationToken").val();
 
         $.ajax({
             type: "POST",
             url: controllerUrl,
+            headers: { 'RequestVerificationToken': token },
             dataType: "json",
             success: successFunc,
             error: errorFunc,

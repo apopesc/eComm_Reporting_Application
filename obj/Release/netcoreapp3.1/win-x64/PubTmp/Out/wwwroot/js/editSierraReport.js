@@ -120,6 +120,8 @@ $(document).ready(function () {
                 var controllerUrl = '/SierraReports/SaveSierraReportSubscription';
             }
 
+            var token = $("#RequestVerificationToken").val();
+
             var editedReportSubModel = {
                 subscriptionID: parseInt(subscriptionID),
                 subscriptionName: subscriptionName,
@@ -134,6 +136,7 @@ $(document).ready(function () {
             $.ajax({
                 type: "POST",
                 url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
                 dataType: "json",
                 success: successFunc,
                 error: errorFunc,
@@ -168,6 +171,8 @@ function getDynamicReportParams(selectedReportName, selectedFolderName) {
 
     var controllerUrl = '/SierraReports/GetSierraReportParameters';
 
+    var token = $("#RequestVerificationToken").val();
+
     var reportData = {
         reportName: selectedReportName,
         reportFolder: selectedFolderName
@@ -181,6 +186,7 @@ function getDynamicReportParams(selectedReportName, selectedFolderName) {
         $.ajax({
             type: "POST",
             url: controllerUrl,
+            headers: { 'RequestVerificationToken': token },
             dataType: "json",
             success: successFunc,
             error: errorFunc,
