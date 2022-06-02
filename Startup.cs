@@ -27,6 +27,10 @@ namespace eComm_Reporting_Application
             services.AddControllersWithViews();
             services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
                 .AddNegotiate();
+            services.AddSession(appSession =>
+            {
+                appSession.IdleTimeout = TimeSpan.FromMinutes(20);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +49,7 @@ namespace eComm_Reporting_Application
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();

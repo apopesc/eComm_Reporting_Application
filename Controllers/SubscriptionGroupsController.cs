@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
+using eComm_Reporting_Application.Extensions;
 
 namespace eComm_Reporting_Application.Controllers
 {
@@ -15,10 +17,11 @@ namespace eComm_Reporting_Application.Controllers
         private readonly IConfiguration configuration;
         private readonly ILogger<SubscriptionGroupsController> _logger;
 
-        public static List<UserSubscriptionTableModel> tableData = new List<UserSubscriptionTableModel>();
+        //public static List<UserSubscriptionTableModel> tableData = new List<UserSubscriptionTableModel>();
         public static List<string> selectedMasterGroups = new List<string>();
         public static List<string> selectedGroups = new List<string>();
         public static List<string> selectedGroupIDs = new List<string>();
+
 
         public SubscriptionGroupsController(IConfiguration config, ILogger<SubscriptionGroupsController> logger)
         {
@@ -210,7 +213,14 @@ namespace eComm_Reporting_Application.Controllers
                     newEntry.group = selectedGroups;
                     newEntry.masterGroup = selectedMasterGroups;
 
-                    tableData.Insert(0, newEntry); //Adding new user to start of table
+
+                    List<UserSubscriptionTableModel> currentTable = HttpContext.Session.GetObjectFromJson<List<UserSubscriptionTableModel>>("userSubTableData");
+
+                    //tableData.Insert(0, newEntry); //Adding new user to start of table
+
+                    currentTable.Insert(0, newEntry); //Adding new user to start of table
+
+                    HttpContext.Session.SetObjectAsJson<List<UserSubscriptionTableModel>>("userSubTableData", currentTable);
 
                     return Json(new { result = "Redirect", url = Url.Action("Index", "SubscriptionGroups") });
                 }
@@ -230,7 +240,10 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                tableData = new List<UserSubscriptionTableModel>(); //Resetting the table each time we want to get new data
+                //tableData = new List<UserSubscriptionTableModel>(); //Resetting the table each time we want to get new data
+
+                List<UserSubscriptionTableModel> newUserTableData = new List<UserSubscriptionTableModel>();
+
                 selectedGroupIDs = filterData.groupsIDList;
                 selectedGroups = filterData.groupsList;
                 selectedMasterGroups = filterData.masterGroupsList;
@@ -323,14 +336,17 @@ namespace eComm_Reporting_Application.Controllers
                                 entry.group = reader.GetString(3);
                                 entry.groupID = reader.GetString(4);
                                 entry.masterGroup = reader.GetString(5);
-                                tableData.Add(entry);
+                                //tableData.Add(entry);
+                                newUserTableData.Add(entry);
                             }
                         }
                         connection.Close();
                     }
 
+                    HttpContext.Session.SetObjectAsJson<List<UserSubscriptionTableModel>>("userSubTableData", newUserTableData);
+
                     //Returning the table data to the front end
-                    return Json(tableData);
+                    return Json(newUserTableData);
                 }
             }
             catch (Exception e)
@@ -347,6 +363,13 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
+                List<UserSubscriptionTableModel> tableData = HttpContext.Session.GetObjectFromJson<List<UserSubscriptionTableModel>>("userSubTableData");
+
+                if(tableData == null)
+                {
+                    tableData = new List<UserSubscriptionTableModel>();
+                }
+
                 return Json(new { tableData, selectedGroupIDs, selectedGroups, selectedMasterGroups } );
             }
             catch (Exception e)
@@ -421,7 +444,11 @@ namespace eComm_Reporting_Application.Controllers
                         SqlDataReader reader = deleteUserQuery.ExecuteReader();
                         connection.Close();
                     }
-                    tableData.RemoveAll(x => x.ID == ID);
+                    //tableData.RemoveAll(x => x.ID == ID);
+
+                    List<UserSubscriptionTableModel> currentTable = HttpContext.Session.GetObjectFromJson<List<UserSubscriptionTableModel>>("userSubTableData");
+                    currentTable.RemoveAll(x => x.ID == ID);
+                    HttpContext.Session.SetObjectAsJson<List<UserSubscriptionTableModel>>("userSubTableData", currentTable);
 
                     return Json(new { success = true, message = "Success Deleting User: " });
                 }
@@ -553,21 +580,35 @@ namespace eComm_Reporting_Application.Controllers
                         connection.Close();
                     }
 
-                    UserSubscriptionTableModel editedEntry = new UserSubscriptionTableModel();
+                    //for (int i = 0; i < tableData.Count; i++)
+                    //{
+                    //    if (tableData[i].ID == ID)
+                    //    {
+                    //        tableData[i].userEmail = userEmail;
+                    //        tableData[i].isActive = isActive;
+                    //        tableData[i].groupID = selectedGroupIDs;
+                    //        tableData[i].group = selectedGroups;
+                    //        tableData[i].masterGroup = selectedMasterGroups;
+                    //        break;
+                    //    }
+                    //}
 
-                    for (int i = 0; i < tableData.Count; i++)
+                    List<UserSubscriptionTableModel> currentTable = HttpContext.Session.GetObjectFromJson<List<UserSubscriptionTableModel>>("userSubTableData");
+                    for (int i = 0; i < currentTable.Count; i++)
                     {
-                        if (tableData[i].ID == ID)
+                        if (currentTable[i].ID == ID)
                         {
-                            tableData[i].userEmail = userEmail;
-                            tableData[i].isActive = isActive;
-                            tableData[i].groupID = selectedGroupIDs;
-                            tableData[i].group = selectedGroups;
-                            tableData[i].masterGroup = selectedMasterGroups;
+                            currentTable[i].userEmail = userEmail;
+                            currentTable[i].isActive = isActive;
+                            currentTable[i].groupID = selectedGroupIDs;
+                            currentTable[i].group = selectedGroups;
+                            currentTable[i].masterGroup = selectedMasterGroups;
                             break;
                         }
-
                     }
+                    HttpContext.Session.SetObjectAsJson<List<UserSubscriptionTableModel>>("userSubTableData", currentTable);
+
+
                     return Json(new { result = "Redirect", url = Url.Action("Index", "SubscriptionGroups") });
                 }
             }

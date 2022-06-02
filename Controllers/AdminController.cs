@@ -134,6 +134,7 @@ namespace eComm_Reporting_Application.Controllers
 
                     adminModel.groupsList.Insert(0, newGroup);
 
+                    _logger.LogTrace("New Subscription Group Added. Group ID:" + groupID + ", Group Name:" + groupName + ", Associated Master Group:" + masterGroup);
                     return Json(new { success = true, saved_masterGroup = masterGroup, new_groupID = groupID, new_groupName = groupName });
                 }
             }
