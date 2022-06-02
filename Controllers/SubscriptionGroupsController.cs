@@ -18,9 +18,9 @@ namespace eComm_Reporting_Application.Controllers
         private readonly ILogger<SubscriptionGroupsController> _logger;
 
         //public static List<UserSubscriptionTableModel> tableData = new List<UserSubscriptionTableModel>();
-        public static List<string> selectedMasterGroups = new List<string>();
-        public static List<string> selectedGroups = new List<string>();
-        public static List<string> selectedGroupIDs = new List<string>();
+        //public static List<string> selectedMasterGroups = new List<string>();
+        //public static List<string> selectedGroups = new List<string>();
+        //public static List<string> selectedGroupIDs = new List<string>();
 
 
         public SubscriptionGroupsController(IConfiguration config, ILogger<SubscriptionGroupsController> logger)
@@ -240,13 +240,12 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                //tableData = new List<UserSubscriptionTableModel>(); //Resetting the table each time we want to get new data
 
                 List<UserSubscriptionTableModel> newUserTableData = new List<UserSubscriptionTableModel>();
 
-                selectedGroupIDs = filterData.groupsIDList;
-                selectedGroups = filterData.groupsList;
-                selectedMasterGroups = filterData.masterGroupsList;
+                HttpContext.Session.SetObjectAsJson<List<string>>("userGroupIDsList", filterData.groupsIDList);
+                HttpContext.Session.SetObjectAsJson<List<string>>("userGroupsList", filterData.groupsList);
+                HttpContext.Session.SetObjectAsJson<List<string>>("userMasterGroupsList", filterData.masterGroupsList);
 
                 if(filterData.groupsIDList == null || filterData.groupsList == null)
                 {
@@ -336,7 +335,6 @@ namespace eComm_Reporting_Application.Controllers
                                 entry.group = reader.GetString(3);
                                 entry.groupID = reader.GetString(4);
                                 entry.masterGroup = reader.GetString(5);
-                                //tableData.Add(entry);
                                 newUserTableData.Add(entry);
                             }
                         }
@@ -364,11 +362,15 @@ namespace eComm_Reporting_Application.Controllers
             try
             {
                 List<UserSubscriptionTableModel> tableData = HttpContext.Session.GetObjectFromJson<List<UserSubscriptionTableModel>>("userSubTableData");
+                List<string> selectedMasterGroups = HttpContext.Session.GetObjectFromJson<List<string>>("userMasterGroupsList");
+                List<string> selectedGroups = HttpContext.Session.GetObjectFromJson<List<string>>("userGroupsList");
+                List<string> selectedGroupIDs = HttpContext.Session.GetObjectFromJson<List<string>>("userGroupIDsList");
 
-                if(tableData == null)
+                if (tableData == null)
                 {
                     tableData = new List<UserSubscriptionTableModel>();
                 }
+
 
                 return Json(new { tableData, selectedGroupIDs, selectedGroups, selectedMasterGroups } );
             }
@@ -444,7 +446,6 @@ namespace eComm_Reporting_Application.Controllers
                         SqlDataReader reader = deleteUserQuery.ExecuteReader();
                         connection.Close();
                     }
-                    //tableData.RemoveAll(x => x.ID == ID);
 
                     List<UserSubscriptionTableModel> currentTable = HttpContext.Session.GetObjectFromJson<List<UserSubscriptionTableModel>>("userSubTableData");
                     currentTable.RemoveAll(x => x.ID == ID);
@@ -579,19 +580,6 @@ namespace eComm_Reporting_Application.Controllers
                         using SqlDataReader reader = editUserQuery.ExecuteReader();
                         connection.Close();
                     }
-
-                    //for (int i = 0; i < tableData.Count; i++)
-                    //{
-                    //    if (tableData[i].ID == ID)
-                    //    {
-                    //        tableData[i].userEmail = userEmail;
-                    //        tableData[i].isActive = isActive;
-                    //        tableData[i].groupID = selectedGroupIDs;
-                    //        tableData[i].group = selectedGroups;
-                    //        tableData[i].masterGroup = selectedMasterGroups;
-                    //        break;
-                    //    }
-                    //}
 
                     List<UserSubscriptionTableModel> currentTable = HttpContext.Session.GetObjectFromJson<List<UserSubscriptionTableModel>>("userSubTableData");
                     for (int i = 0; i < currentTable.Count; i++)
