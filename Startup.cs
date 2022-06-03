@@ -29,7 +29,7 @@ namespace eComm_Reporting_Application
                 .AddNegotiate();
             services.AddSession(appSession =>
             {
-                appSession.IdleTimeout = TimeSpan.FromMinutes(20);
+                appSession.IdleTimeout = TimeSpan.FromMinutes(15);
             });
         }
 

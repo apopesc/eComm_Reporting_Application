@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using eComm_Reporting_Application.Extensions;
 
 namespace eComm_Reporting_Application.Controllers
 {
@@ -16,8 +17,7 @@ namespace eComm_Reporting_Application.Controllers
         private readonly IConfiguration configuration;
         private readonly ILogger<AdminController> _logger;
 
-        public static AdminPageModel adminModel = new AdminPageModel();
-
+        //public static AdminPageModel adminModel = new AdminPageModel();
 
         public AdminController(IConfiguration config, ILogger<AdminController> logger)
         {
@@ -82,8 +82,13 @@ namespace eComm_Reporting_Application.Controllers
                 connection.Close();
             }
 
+            AdminPageModel adminModel = new AdminPageModel();
+
             adminModel.masterGroupsList = masterGroupsList;
             adminModel.groupsList = groupsList;
+
+            HttpContext.Session.SetObjectAsJson<AdminPageModel>("adminPageModel", adminModel);
+
             return View(adminModel);
         }
 
@@ -132,9 +137,10 @@ namespace eComm_Reporting_Application.Controllers
                     newGroup.groupID = groupID;
                     newGroup.groupName = groupName;
 
+                    AdminPageModel adminModel = HttpContext.Session.GetObjectFromJson<AdminPageModel>("adminPageModel");
                     adminModel.groupsList.Insert(0, newGroup);
+                    HttpContext.Session.SetObjectAsJson<AdminPageModel>("adminPageModel", adminModel);
 
-                    _logger.LogTrace("New Subscription Group Added. Group ID:" + groupID + ", Group Name:" + groupName + ", Associated Master Group:" + masterGroup);
                     return Json(new { success = true, saved_masterGroup = masterGroup, new_groupID = groupID, new_groupName = groupName });
                 }
             }
@@ -219,7 +225,9 @@ namespace eComm_Reporting_Application.Controllers
 
                     }
 
+                    AdminPageModel adminModel = HttpContext.Session.GetObjectFromJson<AdminPageModel>("adminPageModel");
                     adminModel.masterGroupsList.Insert(0, masterGroup);
+                    HttpContext.Session.SetObjectAsJson<AdminPageModel>("adminPageModel", adminModel);
 
                     return Json(new { success = true, saved_masterGroup = masterGroup });
                 }
