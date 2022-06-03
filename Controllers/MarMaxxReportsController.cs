@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using eComm_Reporting_Application.Extensions;
 
 namespace eComm_Reporting_Application.Controllers
 {
@@ -22,12 +23,11 @@ namespace eComm_Reporting_Application.Controllers
         private static string myJsonString = System.IO.File.ReadAllText("JSON Report Parameter Mapping.json");
         private static JObject jsonObject = JObject.Parse(myJsonString);
 
-        public static List<ReportTableModel> tableData = new List<ReportTableModel>();
-        public static ReportParameterModel reportParams = new ReportParameterModel();
-        public static ReportModel selectedReport = new ReportModel();
-        public static bool changedReport = false;
-
-        public static List<string> selectedBanners = new List<string>();
+        //public static List<ReportTableModel> tableData = new List<ReportTableModel>();
+        //public static ReportParameterModel reportParams = new ReportParameterModel();
+        //public static ReportModel selectedReport = new ReportModel();
+        //public static bool changedReport = false;
+        //public static List<string> selectedBanners = new List<string>();
 
         public MarMaxxReportsController(IConfiguration config, ILogger<MarMaxxReportsController> logger)
         {
@@ -76,12 +76,18 @@ namespace eComm_Reporting_Application.Controllers
 
             if(selectedReportName == "null")
             {
-                tableData = new List<ReportTableModel>();
-                reportParams = new ReportParameterModel();
-                selectedReport = new ReportModel();
+                List<ReportTableModel> tableData = new List<ReportTableModel>();
+                HttpContext.Session.SetObjectAsJson<List<ReportTableModel>>("marMaxxSubTableData", tableData);
+
+                ReportParameterModel reportParams = new ReportParameterModel();
+                HttpContext.Session.SetObjectAsJson<ReportParameterModel>("marMaxxReportParams", reportParams);
+
+                ReportModel selectedReport = new ReportModel();
+                HttpContext.Session.SetObjectAsJson<ReportModel>("selectedMarMaxxReport", selectedReport);
             }
             else
             {
+                ReportModel selectedReport = HttpContext.Session.GetObjectFromJson<ReportModel>("selectedMarMaxxReport");
                 addNewDropdownModel.selectedFolder = selectedReport.reportFolder;
                 addNewDropdownModel.selectedReport = selectedReport.reportName;
             }
@@ -208,15 +214,18 @@ namespace eComm_Reporting_Application.Controllers
                     return Json("Error retrieving table data: Report Folder is empty");
                 }
                 else {
-                    reportParams = GetReportParameters(reportData);
-                    tableData = new List<ReportTableModel>();
-                    selectedReport = reportData;
-                    selectedBanners = new List<string>();
+                    ReportParameterModel marMaxxReportParams = GetReportParameters(reportData);
+
+                    List<ReportTableModel> newMarMaxxTableData = new List<ReportTableModel>();
+                    HttpContext.Session.SetObjectAsJson<ReportModel>("selectedMarMaxxReport", reportData);
+
+                    List<string> selectedBanners = new List<string>();
+                    HttpContext.Session.SetObjectAsJson<List<string>>("selectedBanners", selectedBanners);
 
                     ReportParameterModel reportSpecificParams = new ReportParameterModel();
                     reportSpecificParams.parameters = new List<Parameter>();
 
-                    foreach (Parameter r_param in reportParams.parameters)
+                    foreach (Parameter r_param in marMaxxReportParams.parameters)
                     {
                         reportSpecificParams.parameters.Add(r_param);
                     }
@@ -224,25 +233,25 @@ namespace eComm_Reporting_Application.Controllers
                     //Adding the static columns to the table (these will appear for every report)
                     Parameter schedule = new Parameter();
                     schedule.name = "Schedule";
-                    reportParams.parameters.Insert(0, schedule);
+                    marMaxxReportParams.parameters.Insert(0, schedule);
                     Parameter fileFormat = new Parameter();
                     fileFormat.name = "File_Format";
-                    reportParams.parameters.Insert(0, fileFormat);
+                    marMaxxReportParams.parameters.Insert(0, fileFormat);
                     Parameter groupID = new Parameter();
                     groupID.name = "Group_ID";
-                    reportParams.parameters.Insert(0, groupID);
+                    marMaxxReportParams.parameters.Insert(0, groupID);
                     Parameter groupName = new Parameter();
                     groupName.name = "Group_Name";
-                    reportParams.parameters.Insert(0, groupName);
+                    marMaxxReportParams.parameters.Insert(0, groupName);
                     Parameter reportName = new Parameter();
                     reportName.name = "Report_Name";
-                    reportParams.parameters.Insert(0, reportName);
+                    marMaxxReportParams.parameters.Insert(0, reportName);
                     Parameter subscriptionName = new Parameter();
                     subscriptionName.name = "Subscription_Name";
-                    reportParams.parameters.Insert(0, subscriptionName);
+                    marMaxxReportParams.parameters.Insert(0, subscriptionName);
                     Parameter subscriptionID = new Parameter();
                     subscriptionID.name = "Subscription_ID";
-                    reportParams.parameters.Insert(0, subscriptionID);
+                    marMaxxReportParams.parameters.Insert(0, subscriptionID);
 
 
                     string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
@@ -282,13 +291,17 @@ namespace eComm_Reporting_Application.Controllers
 
                                 tableRow.dynamicParams = dynamicReportParams;
 
-                                tableData.Add(tableRow);
+                                newMarMaxxTableData.Add(tableRow);
                             }
                         }
                         connection.Close();
                     }
 
-                    return Json(new { tableParams = reportParams.parameters, rowData = tableData });
+                    HttpContext.Session.SetObjectAsJson<List<ReportTableModel>>("marMaxxSubTableData", newMarMaxxTableData);
+                    HttpContext.Session.SetObjectAsJson<ReportParameterModel>("marMaxxReportParams", marMaxxReportParams);
+
+
+                    return Json(new { tableParams = marMaxxReportParams.parameters, rowData = newMarMaxxTableData });
                 }
             }
             catch (Exception e)
@@ -318,15 +331,17 @@ namespace eComm_Reporting_Application.Controllers
                     return Json("Error retrieving table data: Banner is empty");
                 }
                 else {
-                    reportParams = GetReportParameters(reportData);
-                    tableData = new List<ReportTableModel>();
-                    selectedReport = reportData;
-                    selectedBanners = bannerVals;
+                    ReportParameterModel marMaxxReportParams = GetReportParameters(reportData);
+
+                    List<ReportTableModel> newMarMaxxTableData = new List<ReportTableModel>();
+
+                    HttpContext.Session.SetObjectAsJson<ReportModel>("selectedMarMaxxReport", reportData);
+                    HttpContext.Session.SetObjectAsJson<List<string>>("selectedBanners", bannerVals);
 
                     ReportParameterModel reportSpecificParams = new ReportParameterModel();
                     reportSpecificParams.parameters = new List<Parameter>();
                     
-                    foreach (Parameter r_param in reportParams.parameters)
+                    foreach (Parameter r_param in marMaxxReportParams.parameters)
                     {
                         reportSpecificParams.parameters.Add(r_param);
                     }
@@ -334,25 +349,25 @@ namespace eComm_Reporting_Application.Controllers
                     //Adding the static columns to the table (these will appear for every report)
                     Parameter schedule = new Parameter();
                     schedule.name = "Schedule";
-                    reportParams.parameters.Insert(0, schedule);
+                    marMaxxReportParams.parameters.Insert(0, schedule);
                     Parameter fileFormat = new Parameter();
                     fileFormat.name = "File_Format";
-                    reportParams.parameters.Insert(0, fileFormat);
+                    marMaxxReportParams.parameters.Insert(0, fileFormat);
                     Parameter groupID = new Parameter();
                     groupID.name = "Group_ID";
-                    reportParams.parameters.Insert(0, groupID);
+                    marMaxxReportParams.parameters.Insert(0, groupID);
                     Parameter groupName = new Parameter();
                     groupName.name = "Group_Name";
-                    reportParams.parameters.Insert(0, groupName);
+                    marMaxxReportParams.parameters.Insert(0, groupName);
                     Parameter reportName = new Parameter();
                     reportName.name = "Report_Name";
-                    reportParams.parameters.Insert(0, reportName);
+                    marMaxxReportParams.parameters.Insert(0, reportName);
                     Parameter subscriptionName = new Parameter();
                     subscriptionName.name = "Subscription_Name";
-                    reportParams.parameters.Insert(0, subscriptionName);
+                    marMaxxReportParams.parameters.Insert(0, subscriptionName);
                     Parameter subscriptionID = new Parameter();
                     subscriptionID.name = "Subscription_ID";
-                    reportParams.parameters.Insert(0, subscriptionID);
+                    marMaxxReportParams.parameters.Insert(0, subscriptionID);
 
 
                     string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
@@ -398,7 +413,7 @@ namespace eComm_Reporting_Application.Controllers
 
                                     if (containsBanner == true)
                                     {
-                                        tableData.Add(tableRow);
+                                        newMarMaxxTableData.Add(tableRow);
                                     }
                                 }
 
@@ -407,7 +422,10 @@ namespace eComm_Reporting_Application.Controllers
                         connection.Close();
                     }
 
-                    return Json(new { tableParams = reportParams.parameters, rowData = tableData });
+                    HttpContext.Session.SetObjectAsJson<List<ReportTableModel>>("marMaxxSubTableData", newMarMaxxTableData);
+                    HttpContext.Session.SetObjectAsJson<ReportParameterModel>("marMaxxReportParams", marMaxxReportParams);
+
+                    return Json(new { tableParams = marMaxxReportParams.parameters, rowData = newMarMaxxTableData });
                 }
             }
             catch (Exception e)
@@ -423,7 +441,23 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
-                if(reportParams.parameters != null)
+
+                List<ReportTableModel> tableData = HttpContext.Session.GetObjectFromJson<List<ReportTableModel>>("marMaxxSubTableData");
+                ReportParameterModel reportParams = HttpContext.Session.GetObjectFromJson<ReportParameterModel>("marMaxxReportParams");
+                ReportModel selectedReport = HttpContext.Session.GetObjectFromJson<ReportModel>("selectedMarMaxxReport");
+                List<string> selectedBanners = HttpContext.Session.GetObjectFromJson<List<string>>("selectedBanners");
+
+                if (tableData == null)
+                {
+                    tableData = new List<ReportTableModel>();
+                }
+
+                if(reportParams == null)
+                {
+                    reportParams = new ReportParameterModel();
+                }
+
+                if (reportParams.parameters != null)
                 {
                     if (reportParams.parameters.Count == 0 || reportParams.parameters[0].name != "Subscription_ID")
                     {
@@ -471,64 +505,65 @@ namespace eComm_Reporting_Application.Controllers
             {
                 if(reportData != null && reportData.reportName != "" && reportData.reportFolder != "")
                 {
-                    reportParams = GetReportParameters(reportData);
+                    ReportParameterModel marMaxxReportParams = GetReportParameters(reportData);
+                    ReportModel selectedMarMaxxReport = HttpContext.Session.GetObjectFromJson<ReportModel>("selectedMarMaxxReport");
 
-                    if (reportData.reportName != selectedReport.reportName)
+                    if (reportData.reportName != selectedMarMaxxReport.reportName)
                     {
-                        selectedReport = reportData;
-                        changedReport = true;
+                        HttpContext.Session.SetObjectAsJson<ReportModel>("selectedMarMaxxReport", reportData);
+                        HttpContext.Session.SetObjectAsJson<bool>("changedMarmaxxReport", true);
                     }
 
                     string connectionstring = "";
 
                     //There are other data sources that need to be mapped here
-                    if (reportParams.dataSource == "ReportDataSource")
+                    if (marMaxxReportParams.dataSource == "ReportDataSource")
                     {
                         connectionstring = configuration.GetConnectionString("NetSuite_DB");
                     }
-                    else if (reportParams.dataSource == "eCom_ReportDB")
+                    else if (marMaxxReportParams.dataSource == "eCom_ReportDB")
                     {
                         connectionstring = configuration.GetConnectionString("eCom_ReportDB");
                     }
-                    else if (reportParams.dataSource == "ReportServerDB")
+                    else if (marMaxxReportParams.dataSource == "ReportServerDB")
                     {
                         connectionstring = configuration.GetConnectionString("ReportServer");
                     }
-                    else if (reportParams.dataSource == "eCom_WMSDB")
+                    else if (marMaxxReportParams.dataSource == "eCom_WMSDB")
                     {
                         connectionstring = configuration.GetConnectionString("eCom_WMSDB");
                     }
-                    else if (reportParams.dataSource == "Transportation")
+                    else if (marMaxxReportParams.dataSource == "Transportation")
                     {
                         connectionstring = configuration.GetConnectionString("Transportation");
                     }
-                    else if (reportParams.dataSource == "VCTool")
+                    else if (marMaxxReportParams.dataSource == "VCTool")
                     {
                         connectionstring = configuration.GetConnectionString("VCTool");
                     }
-                    else if (reportParams.dataSource == "eCom_RefDB")
+                    else if (marMaxxReportParams.dataSource == "eCom_RefDB")
                     {
                         connectionstring = configuration.GetConnectionString("eCom_RefDB");
                     }
-                    else if (reportParams.dataSource == "ECD")
+                    else if (marMaxxReportParams.dataSource == "ECD")
                     {
                         connectionstring = configuration.GetConnectionString("ECD");
                     }
-                    else if (reportParams.dataSource == "TJX_MFP_Marmaxx")
+                    else if (marMaxxReportParams.dataSource == "TJX_MFP_Marmaxx")
                     {
                         connectionstring = configuration.GetConnectionString("TJX_MFP_Marmaxx");
                     }
 
-                    for (int i = 0; i < reportParams.parameters.Count; i++)
+                    for (int i = 0; i < marMaxxReportParams.parameters.Count; i++)
                     {
-                        if ((reportParams.parameters[i].type == "Dropdown" || reportParams.parameters[i].type == "Textbox" || reportParams.parameters[i].type == "MultiDropdown") && (reportParams.parameters[i].queryType == "Stored Procedure"))
+                        if ((marMaxxReportParams.parameters[i].type == "Dropdown" || marMaxxReportParams.parameters[i].type == "Textbox" || marMaxxReportParams.parameters[i].type == "MultiDropdown") && (marMaxxReportParams.parameters[i].queryType == "Stored Procedure"))
                         {
                             SqlConnection connection = new SqlConnection(connectionstring);
 
                             string procQueryString = "EXEC @storedProc";
 
                             SqlCommand storedProcQuery = new SqlCommand(procQueryString, connection);
-                            storedProcQuery.Parameters.AddWithValue("@storedProc", reportParams.parameters[i].query);
+                            storedProcQuery.Parameters.AddWithValue("@storedProc", marMaxxReportParams.parameters[i].query);
 
                             //storedProcQuery.CommandType = CommandType.StoredProcedure;
 
@@ -537,7 +572,7 @@ namespace eComm_Reporting_Application.Controllers
                                 List<string> dropdownValues = new List<string>();
                                 List<string> dropdownLabels = new List<string>();
 
-                                if (reportParams.parameters[i].name != "Department_No" && reportParams.parameters[i].name != "Class_Number" && reportParams.parameters[i].name != "Category") //these parameters take values from banner and each other to return data.
+                                if (marMaxxReportParams.parameters[i].name != "Department_No" && marMaxxReportParams.parameters[i].name != "Class_Number" && marMaxxReportParams.parameters[i].name != "Category") //these parameters take values from banner and each other to return data.
                                 {
                                     connection.Open();
                                     using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
@@ -551,7 +586,7 @@ namespace eComm_Reporting_Application.Controllers
                                                 for (int j = 0; j < proc_data_length; j++)
                                                 {
                                                     var proc_data_name = stored_proc_reader.GetName(j);
-                                                    if (proc_data_name == reportParams.parameters[i].values[0])
+                                                    if (proc_data_name == marMaxxReportParams.parameters[i].values[0])
                                                     {
                                                         var proc_val = stored_proc_reader.GetValue(j);
 
@@ -559,7 +594,7 @@ namespace eComm_Reporting_Application.Controllers
                                                         dropdownValues.Add(dropdownVal);
                                                     }
 
-                                                    if (proc_data_name == reportParams.parameters[i].labels[0])
+                                                    if (proc_data_name == marMaxxReportParams.parameters[i].labels[0])
                                                     {
                                                         var proc_label = stored_proc_reader.GetValue(j);
 
@@ -581,13 +616,13 @@ namespace eComm_Reporting_Application.Controllers
                                     connection.Close();
                                 }
 
-                                reportParams.parameters[i].values = dropdownValues;
-                                reportParams.parameters[i].labels = dropdownLabels;
+                                marMaxxReportParams.parameters[i].values = dropdownValues;
+                                marMaxxReportParams.parameters[i].labels = dropdownLabels;
                             }
                         }
                     }
-
-                    return Json(reportParams);
+                    HttpContext.Session.SetObjectAsJson<ReportParameterModel>("marMaxxReportParams", marMaxxReportParams);
+                    return Json(marMaxxReportParams);
                 } 
                 else
                 {
@@ -714,13 +749,19 @@ namespace eComm_Reporting_Application.Controllers
                         newEntry.schedule = reportSub.schedule;
                         newEntry.dynamicParams = reportSub.dynamicParams;
 
+                        bool changedReport = HttpContext.Session.GetObjectFromJson<bool>("changedMarmaxxReport");
+
                         if (changedReport == true)
                         {
-                            tableData = new List<ReportTableModel>();
-                            changedReport = false;
+                            List<ReportTableModel> marMaxxTableData = new List<ReportTableModel>();
+                            HttpContext.Session.SetObjectAsJson<List<ReportTableModel>>("marMaxxSubTableData", marMaxxTableData);
+                            HttpContext.Session.SetObjectAsJson<bool>("changedMarmaxxReport", false);
                         }
 
-                        tableData.Insert(0, newEntry); //Adding new subscription to start of table
+                        List<ReportTableModel> currentTableData = HttpContext.Session.GetObjectFromJson<List<ReportTableModel>>("marMaxxSubTableData");
+                        currentTableData.Insert(0, newEntry);
+                        HttpContext.Session.SetObjectAsJson<List<ReportTableModel>>("marMaxxSubTableData", currentTableData);
+
 
                         return Json(new { message = "Success saving subscription: ", result = "Redirect", url = Url.Action("Index", "MarMaxxReports") });
                     }
@@ -818,22 +859,24 @@ namespace eComm_Reporting_Application.Controllers
                             connection.Close();
                         }
 
-                        for (int i = 0; i < tableData.Count; i++)
+                        List<ReportTableModel> currentTableData = HttpContext.Session.GetObjectFromJson<List<ReportTableModel>>("marMaxxSubTableData");
+                        for (int i = 0; i < currentTableData.Count; i++)
                         {
-                            if (tableData[i].subscriptionID == reportSub.subscriptionID)
+                            if (currentTableData[i].subscriptionID == reportSub.subscriptionID)
                             {
-                                tableData[i].subscriptionName = reportSub.subscriptionName;
-                                tableData[i].reportName = reportSub.reportName;
-                                tableData[i].groupNames = reportSub.groupNames;
-                                tableData[i].groupIDs = reportSub.groupIDs;
-                                tableData[i].fileFormat = reportSub.fileFormat;
-                                tableData[i].schedule = reportSub.schedule;
-                                tableData[i].dynamicParams = reportSub.dynamicParams;
+                                currentTableData[i].subscriptionName = reportSub.subscriptionName;
+                                currentTableData[i].reportName = reportSub.reportName;
+                                currentTableData[i].groupNames = reportSub.groupNames;
+                                currentTableData[i].groupIDs = reportSub.groupIDs;
+                                currentTableData[i].fileFormat = reportSub.fileFormat;
+                                currentTableData[i].schedule = reportSub.schedule;
+                                currentTableData[i].dynamicParams = reportSub.dynamicParams;
 
                                 break;
                             }
 
                         }
+                        HttpContext.Session.SetObjectAsJson<List<ReportTableModel>>("marMaxxSubTableData", currentTableData);
 
                         return Json(new { message = "Success editing subscription: ", result = "Redirect", url = Url.Action("Index", "MarMaxxReports") });
                     }
@@ -873,7 +916,9 @@ namespace eComm_Reporting_Application.Controllers
                         connection.Close();
                     }
 
-                    tableData.RemoveAll(x => x.subscriptionID == ID);
+                    List<ReportTableModel> currentTableData = HttpContext.Session.GetObjectFromJson<List<ReportTableModel>>("marMaxxSubTableData");
+                    currentTableData.RemoveAll(x => x.subscriptionID == ID);
+                    HttpContext.Session.SetObjectAsJson<List<ReportTableModel>>("marMaxxSubTableData", currentTableData);
 
                     return Json(new { success = true, message = "Success Deleting Subscription: " });
                 }

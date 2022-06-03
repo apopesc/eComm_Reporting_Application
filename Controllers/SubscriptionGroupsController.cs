@@ -216,8 +216,6 @@ namespace eComm_Reporting_Application.Controllers
 
                     List<UserSubscriptionTableModel> currentTable = HttpContext.Session.GetObjectFromJson<List<UserSubscriptionTableModel>>("userSubTableData");
 
-                    //tableData.Insert(0, newEntry); //Adding new user to start of table
-
                     currentTable.Insert(0, newEntry); //Adding new user to start of table
 
                     HttpContext.Session.SetObjectAsJson<List<UserSubscriptionTableModel>>("userSubTableData", currentTable);
