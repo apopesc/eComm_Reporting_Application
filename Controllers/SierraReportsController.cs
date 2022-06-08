@@ -11,6 +11,7 @@ using System.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using System.Text.RegularExpressions;
+using eComm_Reporting_Application.Extensions;
 
 namespace eComm_Reporting_Application.Controllers
 {
@@ -23,10 +24,10 @@ namespace eComm_Reporting_Application.Controllers
         private static string myJsonString = System.IO.File.ReadAllText("JSON Report Parameter Mapping - Sierra.json");
         private static JObject jsonObject = JObject.Parse(myJsonString);
 
-        public static List<ReportTableModel> tableData = new List<ReportTableModel>();
-        public static ReportParameterModel reportParams = new ReportParameterModel();
-        public static ReportModel selectedReport = new ReportModel();
-        public static bool changedReport = false;
+        //public static List<ReportTableModel> tableData = new List<ReportTableModel>();
+        //public static ReportParameterModel reportParams = new ReportParameterModel();
+        //public static ReportModel selectedReport = new ReportModel();
+        //public static bool changedReport = false;
 
         public SierraReportsController(IConfiguration config, ILogger<SierraReportsController> logger)
         {
@@ -75,12 +76,18 @@ namespace eComm_Reporting_Application.Controllers
 
             if (selectedReportName == "null")
             {
-                tableData = new List<ReportTableModel>();
-                reportParams = new ReportParameterModel();
-                selectedReport = new ReportModel();
+                List<ReportTableModel> tableData = new List<ReportTableModel>();
+                HttpContext.Session.SetObjectAsJson<List<ReportTableModel>>("sierraSubTableData", tableData);
+
+                ReportParameterModel reportParams = new ReportParameterModel();
+                HttpContext.Session.SetObjectAsJson<ReportParameterModel>("sierraReportParams", reportParams);
+
+                ReportModel selectedReport = new ReportModel();
+                HttpContext.Session.SetObjectAsJson<ReportModel>("selectedSierraReport", selectedReport);
             }
             else
             {
+                ReportModel selectedReport = HttpContext.Session.GetObjectFromJson<ReportModel>("selectedSierraReport");
                 addNewDropdownModel.selectedFolder = selectedReport.reportFolder;
                 addNewDropdownModel.selectedReport = selectedReport.reportName;
             }
@@ -208,14 +215,15 @@ namespace eComm_Reporting_Application.Controllers
                 }
                 else
                 {
-                    reportParams = GetReportParameters(reportData);
-                    tableData = new List<ReportTableModel>();
-                    selectedReport = reportData;
+                    ReportParameterModel sierraReportParams = GetReportParameters(reportData);
+
+                    List<ReportTableModel> newSierraTableData = new List<ReportTableModel>();
+                    HttpContext.Session.SetObjectAsJson<ReportModel>("selectedSierraReport", reportData);
 
                     ReportParameterModel reportSpecificParams = new ReportParameterModel();
                     reportSpecificParams.parameters = new List<Parameter>();
 
-                    foreach (Parameter r_param in reportParams.parameters)
+                    foreach (Parameter r_param in sierraReportParams.parameters)
                     {
                         reportSpecificParams.parameters.Add(r_param);
                     }
@@ -223,25 +231,25 @@ namespace eComm_Reporting_Application.Controllers
                     //Adding the static columns to the table (these will appear for every report)
                     Parameter schedule = new Parameter();
                     schedule.name = "Schedule";
-                    reportParams.parameters.Insert(0, schedule);
+                    sierraReportParams.parameters.Insert(0, schedule);
                     Parameter fileFormat = new Parameter();
                     fileFormat.name = "File_Format";
-                    reportParams.parameters.Insert(0, fileFormat);
+                    sierraReportParams.parameters.Insert(0, fileFormat);
                     Parameter groupID = new Parameter();
                     groupID.name = "Group_ID";
-                    reportParams.parameters.Insert(0, groupID);
+                    sierraReportParams.parameters.Insert(0, groupID);
                     Parameter groupName = new Parameter();
                     groupName.name = "Group_Name";
-                    reportParams.parameters.Insert(0, groupName);
+                    sierraReportParams.parameters.Insert(0, groupName);
                     Parameter reportName = new Parameter();
                     reportName.name = "Report_Name";
-                    reportParams.parameters.Insert(0, reportName);
+                    sierraReportParams.parameters.Insert(0, reportName);
                     Parameter subscriptionName = new Parameter();
                     subscriptionName.name = "Subscription_Name";
-                    reportParams.parameters.Insert(0, subscriptionName);
+                    sierraReportParams.parameters.Insert(0, subscriptionName);
                     Parameter subscriptionID = new Parameter();
                     subscriptionID.name = "Subscription_ID";
-                    reportParams.parameters.Insert(0, subscriptionID);
+                    sierraReportParams.parameters.Insert(0, subscriptionID);
 
 
                     string connectionstring = configuration.GetConnectionString("ReportSubscriptions_DB");
@@ -281,13 +289,17 @@ namespace eComm_Reporting_Application.Controllers
 
                                 tableRow.dynamicParams = dynamicReportParams;
 
-                                tableData.Add(tableRow);
+                                newSierraTableData.Add(tableRow);
                             }
                         }
                         connection.Close();
                     }
 
-                    return Json(new { tableParams = reportParams.parameters, rowData = tableData });
+
+                    HttpContext.Session.SetObjectAsJson<List<ReportTableModel>>("sierraSubTableData", newSierraTableData);
+                    HttpContext.Session.SetObjectAsJson<ReportParameterModel>("sierraReportParams", sierraReportParams);
+
+                    return Json(new { tableParams = sierraReportParams.parameters, rowData = newSierraTableData });
                 }
             }
             catch (Exception e)
@@ -303,6 +315,20 @@ namespace eComm_Reporting_Application.Controllers
         {
             try
             {
+                List<ReportTableModel> tableData = HttpContext.Session.GetObjectFromJson<List<ReportTableModel>>("sierraSubTableData");
+                ReportParameterModel reportParams = HttpContext.Session.GetObjectFromJson<ReportParameterModel>("sierraReportParams");
+                ReportModel selectedReport = HttpContext.Session.GetObjectFromJson<ReportModel>("selectedSierraReport");
+
+                if (tableData == null)
+                {
+                    tableData = new List<ReportTableModel>();
+                }
+
+                if (reportParams == null)
+                {
+                    reportParams = new ReportParameterModel();
+                }
+
                 if (reportParams.parameters != null)
                 {
                     if (reportParams.parameters.Count == 0 || reportParams.parameters[0].name != "Subscription_ID")
@@ -348,25 +374,26 @@ namespace eComm_Reporting_Application.Controllers
             {
                 if (reportData != null && reportData.reportName != "" && reportData.reportFolder != "")
                 {
-                    reportParams = GetReportParameters(reportData);
+                    ReportParameterModel sierraReportParams = GetReportParameters(reportData);
+                    ReportModel selectedSierraReport = HttpContext.Session.GetObjectFromJson<ReportModel>("selectedSierraReport");
 
-                    if (reportData.reportName != selectedReport.reportName)
+                    if (reportData.reportName != selectedSierraReport.reportName)
                     {
-                        selectedReport = reportData;
-                        changedReport = true;
+                        HttpContext.Session.SetObjectAsJson<ReportModel>("selectedSierraReport", reportData);
+                        HttpContext.Session.SetObjectAsJson<bool>("changedSierraReport", true);
                     }
 
                     string connectionstring = "";
 
                     //There are other data sources that need to be mapped here
-                    if (reportParams.dataSource == "STP_CMS_DW")
+                    if (sierraReportParams.dataSource == "STP_CMS_DW")
                     {
                         connectionstring = configuration.GetConnectionString("STP_CMS_DW");
                     }
 
-                    for (int i = 0; i < reportParams.parameters.Count; i++)
+                    for (int i = 0; i < sierraReportParams.parameters.Count; i++)
                     {
-                        if ((reportParams.parameters[i].type == "Dropdown" || reportParams.parameters[i].type == "Textbox" || reportParams.parameters[i].type == "MultiDropdown") && (reportParams.parameters[i].queryType == "Stored Procedure"))
+                        if ((sierraReportParams.parameters[i].type == "Dropdown" || sierraReportParams.parameters[i].type == "Textbox" || sierraReportParams.parameters[i].type == "MultiDropdown") && (sierraReportParams.parameters[i].queryType == "Stored Procedure"))
                         {
 
                             SqlConnection connection = new SqlConnection(connectionstring);
@@ -374,7 +401,7 @@ namespace eComm_Reporting_Application.Controllers
                             string procQueryString = "EXEC @storedProc";
 
                             SqlCommand storedProcQuery = new SqlCommand(procQueryString, connection);
-                            storedProcQuery.Parameters.AddWithValue("@storedProc", reportParams.parameters[i].query);
+                            storedProcQuery.Parameters.AddWithValue("@storedProc", sierraReportParams.parameters[i].query);
 
                             //storedProcQuery.CommandType = CommandType.StoredProcedure;
 
@@ -383,7 +410,7 @@ namespace eComm_Reporting_Application.Controllers
                                 List<string> dropdownValues = new List<string>();
                                 List<string> dropdownLabels = new List<string>();
 
-                                if (reportParams.parameters[i].name != "Department_No" && reportParams.parameters[i].name != "Class_Number" && reportParams.parameters[i].name != "Category") //these parameters take values from banner and each other to return data.
+                                if (sierraReportParams.parameters[i].name != "Department_No" && sierraReportParams.parameters[i].name != "Class_Number" && sierraReportParams.parameters[i].name != "Category") //these parameters take values from banner and each other to return data.
                                 {
                                     connection.Open();
                                     using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
@@ -397,7 +424,7 @@ namespace eComm_Reporting_Application.Controllers
                                                 for (int j = 0; j < proc_data_length; j++)
                                                 {
                                                     var proc_data_name = stored_proc_reader.GetName(j);
-                                                    if (proc_data_name == reportParams.parameters[i].values[0])
+                                                    if (proc_data_name == sierraReportParams.parameters[i].values[0])
                                                     {
                                                         var proc_val = stored_proc_reader.GetValue(j);
 
@@ -405,7 +432,7 @@ namespace eComm_Reporting_Application.Controllers
                                                         dropdownValues.Add(dropdownVal);
                                                     }
 
-                                                    if (proc_data_name == reportParams.parameters[i].labels[0])
+                                                    if (proc_data_name == sierraReportParams.parameters[i].labels[0])
                                                     {
                                                         var proc_label = stored_proc_reader.GetValue(j);
 
@@ -427,14 +454,15 @@ namespace eComm_Reporting_Application.Controllers
                                     connection.Close();
                                 }
 
-                                reportParams.parameters[i].values = dropdownValues;
-                                reportParams.parameters[i].labels = dropdownLabels;
+                                sierraReportParams.parameters[i].values = dropdownValues;
+                                sierraReportParams.parameters[i].labels = dropdownLabels;
                             }
 
                         }
                     }
 
-                    return Json(new { success = true, reportParams = reportParams });
+                    HttpContext.Session.SetObjectAsJson<ReportParameterModel>("sierraReportParams", sierraReportParams);
+                    return Json(new { success = true, reportParams = sierraReportParams });
                 }
                 else
                 {
@@ -557,13 +585,24 @@ namespace eComm_Reporting_Application.Controllers
                         newEntry.schedule = reportSub.schedule;
                         newEntry.dynamicParams = reportSub.dynamicParams;
 
+                        bool changedReport = HttpContext.Session.GetObjectFromJson<bool>("changedSierraReport");
+
                         if (changedReport == true)
                         {
-                            tableData = new List<ReportTableModel>();
-                            changedReport = false;
+                            List<ReportTableModel> sierraTableData = new List<ReportTableModel>();
+                            HttpContext.Session.SetObjectAsJson<List<ReportTableModel>>("sierraSubTableData", sierraTableData);
+                            HttpContext.Session.SetObjectAsJson<bool>("changedSierraReport", false);
                         }
 
-                        tableData.Insert(0, newEntry); //Adding new subscription to start of table
+                        List<ReportTableModel> currentTableData = HttpContext.Session.GetObjectFromJson<List<ReportTableModel>>("sierraSubTableData");
+
+                        if (currentTableData == null)
+                        {
+                            currentTableData = new List<ReportTableModel>();
+                        }
+
+                        currentTableData.Insert(0, newEntry);
+                        HttpContext.Session.SetObjectAsJson<List<ReportTableModel>>("sierraSubTableData", currentTableData);
 
                         return Json(new { message = "Success saving subscription: ", result = "Redirect", url = Url.Action("Index", "SierraReports") });
                     }
@@ -663,22 +702,24 @@ namespace eComm_Reporting_Application.Controllers
                             connection.Close();
                         }
 
-                        for (int i = 0; i < tableData.Count; i++)
+                        List<ReportTableModel> currentTableData = HttpContext.Session.GetObjectFromJson<List<ReportTableModel>>("sierraSubTableData");
+                        for (int i = 0; i < currentTableData.Count; i++)
                         {
-                            if (tableData[i].subscriptionID == reportSub.subscriptionID)
+                            if (currentTableData[i].subscriptionID == reportSub.subscriptionID)
                             {
-                                tableData[i].subscriptionName = reportSub.subscriptionName;
-                                tableData[i].reportName = reportSub.reportName;
-                                tableData[i].groupNames = reportSub.groupNames;
-                                tableData[i].groupIDs = reportSub.groupIDs;
-                                tableData[i].fileFormat = reportSub.fileFormat;
-                                tableData[i].schedule = reportSub.schedule;
-                                tableData[i].dynamicParams = reportSub.dynamicParams;
+                                currentTableData[i].subscriptionName = reportSub.subscriptionName;
+                                currentTableData[i].reportName = reportSub.reportName;
+                                currentTableData[i].groupNames = reportSub.groupNames;
+                                currentTableData[i].groupIDs = reportSub.groupIDs;
+                                currentTableData[i].fileFormat = reportSub.fileFormat;
+                                currentTableData[i].schedule = reportSub.schedule;
+                                currentTableData[i].dynamicParams = reportSub.dynamicParams;
 
                                 break;
                             }
 
                         }
+                        HttpContext.Session.SetObjectAsJson<List<ReportTableModel>>("sierraSubTableData", currentTableData);
 
                         return Json(new { message = "Success editing subscription: ", result = "Redirect", url = Url.Action("Index", "SierraReports") });
                     }
@@ -716,7 +757,9 @@ namespace eComm_Reporting_Application.Controllers
                         connection.Close();
                     }
 
-                    tableData.RemoveAll(x => x.subscriptionID == ID);
+                    List<ReportTableModel> currentTableData = HttpContext.Session.GetObjectFromJson<List<ReportTableModel>>("sierraSubTableData");
+                    currentTableData.RemoveAll(x => x.subscriptionID == ID);
+                    HttpContext.Session.SetObjectAsJson<List<ReportTableModel>>("sierraSubTableData", currentTableData);
 
                     return Json(new { success = true, message = "Success Deleting Subscription: " });
                 }

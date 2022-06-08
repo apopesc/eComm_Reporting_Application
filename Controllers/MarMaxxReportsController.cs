@@ -516,7 +516,6 @@ namespace eComm_Reporting_Application.Controllers
 
                     string connectionstring = "";
 
-                    //There are other data sources that need to be mapped here
                     if (marMaxxReportParams.dataSource == "ReportDataSource")
                     {
                         connectionstring = configuration.GetConnectionString("NetSuite_DB");
@@ -759,6 +758,12 @@ namespace eComm_Reporting_Application.Controllers
                         }
 
                         List<ReportTableModel> currentTableData = HttpContext.Session.GetObjectFromJson<List<ReportTableModel>>("marMaxxSubTableData");
+
+                        if (currentTableData == null)
+                        {
+                            currentTableData = new List<ReportTableModel>();
+                        }
+
                         currentTableData.Insert(0, newEntry);
                         HttpContext.Session.SetObjectAsJson<List<ReportTableModel>>("marMaxxSubTableData", currentTableData);
 
