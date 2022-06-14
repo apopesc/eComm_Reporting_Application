@@ -555,14 +555,27 @@ namespace eComm_Reporting_Application.Controllers
 
                     for (int i = 0; i < marMaxxReportParams.parameters.Count; i++)
                     {
-                        if ((marMaxxReportParams.parameters[i].type == "Dropdown" || marMaxxReportParams.parameters[i].type == "Textbox" || marMaxxReportParams.parameters[i].type == "MultiDropdown") && (marMaxxReportParams.parameters[i].queryType == "Stored Procedure"))
+                        if ((marMaxxReportParams.parameters[i].type == "Dropdown" || marMaxxReportParams.parameters[i].type == "Textbox" || marMaxxReportParams.parameters[i].type == "MultiDropdown") && (marMaxxReportParams.parameters[i].queryType == "Stored Procedure" || marMaxxReportParams.parameters[i].queryType == "In Line"))
                         {
                             SqlConnection connection = new SqlConnection(connectionstring);
 
-                            string procQueryString = "EXEC @storedProc"; //Only have this for stored procs, just execute inline queries (unless this works for inline too). Need to add inline back to add functionality of reports
+                            string procQueryString = "";
+                            
+                            if(marMaxxReportParams.parameters[i].queryType == "Stored Procedure")
+                            {
+                                procQueryString = "EXEC @storedProc";
+                            }
+                            else if (marMaxxReportParams.parameters[i].queryType == "In Line") //SQL Injection Risk in veracode
+                            {
+                                procQueryString = marMaxxReportParams.parameters[i].query;
+                            }                      
 
                             SqlCommand storedProcQuery = new SqlCommand(procQueryString, connection);
-                            storedProcQuery.Parameters.AddWithValue("@storedProc", marMaxxReportParams.parameters[i].query);
+
+                            if (marMaxxReportParams.parameters[i].queryType == "Stored Procedure")
+                            {
+                                storedProcQuery.Parameters.AddWithValue("@storedProc", marMaxxReportParams.parameters[i].query);
+                            }
 
                             //storedProcQuery.CommandType = CommandType.StoredProcedure;
 
