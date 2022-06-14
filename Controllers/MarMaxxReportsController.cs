@@ -559,7 +559,7 @@ namespace eComm_Reporting_Application.Controllers
                         {
                             SqlConnection connection = new SqlConnection(connectionstring);
 
-                            string procQueryString = "EXEC @storedProc";
+                            string procQueryString = "EXEC @storedProc"; //Only have this for stored procs, just execute inline queries (unless this works for inline too). Need to add inline back to add functionality of reports
 
                             SqlCommand storedProcQuery = new SqlCommand(procQueryString, connection);
                             storedProcQuery.Parameters.AddWithValue("@storedProc", marMaxxReportParams.parameters[i].query);
