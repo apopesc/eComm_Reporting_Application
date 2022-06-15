@@ -174,6 +174,35 @@ $(document).ready(function () {
         var fileFormat = $('#fileFormat').val();
         var schedule = $('#schedule').val();
         var dynamicParams = {};
+        var validParams = true;
+
+        if ($('#Banner').length != 0) {
+            var bannerVal = $('#Banner').val();
+            if (bannerVal.length == 0) {
+                validParams = false;
+            }
+        }
+
+        if ($('#Department_No').length != 0) {
+            var deptVal = $('#Department_No').val();
+            if (deptVal.length == 0) {
+                validParams = false;
+            }
+        }
+
+        if ($('#Class_Number').length != 0) {
+            var classVal = $('#Class_Number').val();
+            if (classVal.length == 0) {
+                validParams = false;
+            }
+        }
+
+        if ($('#Category').length != 0) {
+            var catVal = $('#Category').val();
+            if (catVal.length == 0) {
+                validParams = false;
+            }
+        }
 
         if (subscriptionName == '') {
             alert("Please enter a value for Subscription Name");
@@ -185,6 +214,8 @@ $(document).ready(function () {
             alert("Please select a value for Report Name");
         } else if (isValidString == false) {
             alert("Subscription Name contains special characters, you can only enter values a-z, A-Z, 0-9, space( ), and hyphen(-).");
+        } else if (validParams == false) {
+            alert("Please do not leave Banner, Department, Class, or Category Empty.");
         } else {
             var isAllDept = false;
             var isAllClass = false;

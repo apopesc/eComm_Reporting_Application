@@ -1537,6 +1537,11 @@ namespace eComm_Reporting_Application.Controllers
                         connectionstring = configuration.GetConnectionString("eCom_ReportDB");
                         connection = new SqlConnection(connectionstring);
                     }
+                    else if (local_reportParams.dataSource == "ECD")
+                    {
+                        connectionstring = configuration.GetConnectionString("ECD");
+                        connection = new SqlConnection(connectionstring);
+                    }
 
                     SqlCommand storedProcQuery = new SqlCommand("par_Banner", connection);
                     storedProcQuery.CommandType = CommandType.StoredProcedure;
