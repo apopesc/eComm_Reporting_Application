@@ -54,11 +54,27 @@
     min-width:235px;
 }
 
+.marMaxxSubscriptionsEntry_ReportName {
+    min-width: 235px;
+}
+
+.marMaxxSubscriptionsEntry_FileFormat {
+    min-width: 140px;
+}
+
 .marMaxxSubscriptionsEntry_SubscriptionID, .marMaxxSubscriptionsEntry_SubscriptionName, .marMaxxSubscriptionsEntry_ReportName, .marMaxxSubscriptionsEntry_GroupName, .marMaxxSubscriptionsEntry_GroupID, .marMaxxSubscriptionEntry_Dynamic, .marMaxxSubscriptionsEntry_FileFormat, .marMaxxSubscriptionsEntry_Schedule {
     text-align: center;
 }
 
-.marMaxxSubscriptionsEntry_Icon{
+.marMaxxSubscriptionsEntry_SubscriptionName{
+    min-width: 240px;
+}
+
+.marMaxxSubscriptionsEntry_GroupID{
+    min-width: 180px;
+}
+
+.marMaxxSubscriptionsEntry_Icon {
     min-width: 100px;
 }
 

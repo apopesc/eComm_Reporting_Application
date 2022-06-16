@@ -3743,7 +3743,7 @@
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
-            "Department": {
+            "Department_No": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
@@ -3798,7 +3798,7 @@
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
-            "Department": {
+            "Department_No": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
@@ -3853,7 +3853,7 @@
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
-            "Department": {
+            "Department_No": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
@@ -7934,7 +7934,7 @@
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
-            "Dept_Number": {
+            "Department_No": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
@@ -8013,7 +8013,7 @@
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
-            "Department_ID": {
+            "Department_No": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",

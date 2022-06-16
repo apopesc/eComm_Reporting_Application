@@ -88,8 +88,12 @@ namespace eComm_Reporting_Application.Controllers
             else
             {
                 ReportModel selectedReport = HttpContext.Session.GetObjectFromJson<ReportModel>("selectedMarMaxxReport");
-                addNewDropdownModel.selectedFolder = selectedReport.reportFolder;
-                addNewDropdownModel.selectedReport = selectedReport.reportName;
+
+                if(selectedReport != null)
+                {
+                    addNewDropdownModel.selectedFolder = selectedReport.reportFolder;
+                    addNewDropdownModel.selectedReport = selectedReport.reportName;
+                }
             }
 
             addNewDropdownModel.folders = folderModel.folders;
