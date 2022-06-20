@@ -343,7 +343,6 @@ $(document).ready(function () {
         $('#Category').multiselect('disable');
     });
 
-
     $('#dynamicParams').on('change', '#Banner', function () {
         if ($('#Department_No').length) {
             if ($('#Banner :selected').length == 0) {
