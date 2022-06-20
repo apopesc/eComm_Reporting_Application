@@ -693,7 +693,7 @@ namespace eComm_Reporting_Application.Controllers
                     }
 
                     //Checking if the group has at least one email tied to it, if not, return error.
-                    usersInGroupQuery.CommandText = string.Format("SELECT COUNT(*) FROM UserSubscriptions WHERE Group_ID IN ({0})", string.Join(",", groupIDParams));
+                    usersInGroupQuery.CommandText = string.Format("SELECT COUNT(*) FROM UserSubscriptions WHERE Group_ID IN ({0}) AND Is_Active = 'Y'", string.Join(",", groupIDParams));
                     usersInGroupQuery.Connection = connection;
 
                     int usersInGroup = 0;
@@ -714,7 +714,7 @@ namespace eComm_Reporting_Application.Controllers
 
                     if (usersInGroup < groupIDList.Count)
                     {
-                        return Json(new { message = "One or more groups that have been selected have no users tied to them. You can add a user to a group on the User Subscriptions Groups screen.", result = "Error" });
+                        return Json(new { message = "One or more groups that have been selected have no ACTIVE users tied to them. You can add an ACTIVE user to a group on the User Subscriptions Groups screen.", result = "Error" });
                     }
                     else
                     {
@@ -833,7 +833,7 @@ namespace eComm_Reporting_Application.Controllers
                     }
 
                     //Checking if the group has at least one email tied to it, if not, return error.
-                    usersInGroupQuery.CommandText = string.Format("SELECT COUNT(*) FROM UserSubscriptions WHERE Group_ID IN ({0})", string.Join(",", groupIDParams));
+                    usersInGroupQuery.CommandText = string.Format("SELECT COUNT(*) FROM UserSubscriptions WHERE Group_ID IN ({0}) AND Is_Active = 'Y'", string.Join(",", groupIDParams));
                     usersInGroupQuery.Connection = connection;
 
                     int usersInGroup = 0;
@@ -854,7 +854,7 @@ namespace eComm_Reporting_Application.Controllers
 
                     if (usersInGroup < groupIDList.Count)
                     {
-                        return Json(new { message = "One or more groups that have been selected have no users tied to them. You can add a user to a group on the User Subscriptions Groups screen.", result = "Error" });
+                        return Json(new { message = "One or more groups that have been selected have no ACTIVE users tied to them. You can add an ACTIVE user to a group on the User Subscriptions Groups screen.", result = "Error" });
                     }
                     else
                     {

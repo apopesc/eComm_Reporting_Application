@@ -344,6 +344,14 @@
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
+            "ViewBy": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Matrix Dept,Merchandising Dept",
+              "label": "Matrix Dept,Merchandising Dept",
+              "default_val": "Matrix Dept"
+            },
             "Department_No": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
@@ -372,14 +380,6 @@
               "value": "Season",
               "label": "Season",
               "default_val": "selectAll"
-            },
-            "ViewBy": {
-              "type": "Dropdown",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Matrix Dept,Merchandising Dept",
-              "label": "Matrix Dept,Merchandising Dept",
-              "default_val": "Matrix Dept"
             },
             "Summary": {
               "type": "Dropdown",
@@ -438,6 +438,14 @@
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
+            "ViewBy": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Matrix Dept,Merchandising Dept",
+              "label": "Matrix Dept,Merchandising Dept",
+              "default_val": "Matrix Dept"
+            },
             "Department_No": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
@@ -458,14 +466,6 @@
               "query": "Par_rpt_MatrixOrMechandisingCategory_By_Banner",
               "value": "Category_Number",
               "label": "Category"
-            },
-            "ViewBy": {
-              "type": "Dropdown",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Matrix Dept,Merchandising Dept",
-              "label": "Matrix Dept,Merchandising Dept",
-              "default_val": "Matrix Dept"
             },
             "Combine_Banners": {
               "type": "Dropdown",
@@ -1420,24 +1420,32 @@
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
+            "ViewBy": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Matrix Dept,Merchandising Dept",
+              "label": "Matrix Dept,Merchandising Dept",
+              "default_val": "Matrix Dept"
+            },
             "Department_No": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner",
-              "value": "Department_Number",
-              "label": "Department"
+              "query": "Par_rpt_MatrixOrMechandisingDepartments_By_Banner",
+              "value": "Dept_Number",
+              "label": "Dept_FullName"
             },
             "Class_Number": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner",
+              "query": "Par_rpt_MatrixOrMechandisingClass_by_Banner",
               "value": "Class_Number",
               "label": "Class"
             },
             "Category": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
-              "query": "par_Category_by_Banner",
+              "query": "Par_rpt_MatrixOrMechandisingCategory_by_Banner",
               "value": "Category_Number",
               "label": "Category"
             },
@@ -1517,6 +1525,14 @@
               "label": "Vendor",
               "default_val": "ALL"
             },
+            "Exclude_Vendor": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Include All",
+              "label": "Include All",
+              "default_val": "Include All"
+            },
             "Fiscal_Year": {
               "type": "Dropdown",
               "query_type": "Stored Procedure",
@@ -1545,7 +1561,7 @@
               "query": "",
               "value": "Y,N",
               "label": "Yes,No",
-              "default_val": "No"
+              "default_val": "N"
             },
             "Display_PY_Data": {
               "type": "Dropdown",
@@ -1553,7 +1569,7 @@
               "query": "",
               "value": "Y,N",
               "label": "Yes,No",
-              "default_val": "No"
+              "default_val": "N"
             }
           }
         },
@@ -2193,7 +2209,7 @@
               "label": "Season",
               "default_val": "selectAll"
             },
-            "Trend_Flag": {
+            "Trend": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Trend",
@@ -2352,6 +2368,14 @@
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
+            "ViewBy": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Matrix Dept,Merchandising Dept",
+              "label": "Matrix Dept,Merchandising Dept",
+              "default_val": "Matrix Dept"
+            },
             "Department_No": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
@@ -2381,7 +2405,7 @@
               "label": "Buy_Type",
               "default_val": "selectAll"
             },
-            "Trend_Flag": {
+            "Trend": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Trend",
@@ -2404,14 +2428,6 @@
               "value": "LP_Month",
               "label": "LP_Month",
               "default_val": "selectAll"
-            },
-            "ViewBy": {
-              "type": "Dropdown",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Matrix Dept,Merchandising Dept",
-              "label": "Matrix Dept,Merchandising Dept",
-              "default_val": "Matrix Dept"
             },
             "Buyer": {
               "type": "MultiDropdown",
@@ -2565,6 +2581,14 @@
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
+            "ViewBy": {
+              "type": "Dropdown",
+              "query_type": "Fixed",
+              "query": "",
+              "value": "Matrix Dept,Merchandising Dept",
+              "label": "Matrix Dept,Merchandising Dept",
+              "default_val": "Matrix Dept"
+            },
             "Department_No": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
@@ -2586,14 +2610,6 @@
               "value": "Category_Number",
               "label": "Category"
             },
-            "ViewBy": {
-              "type": "Dropdown",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Matrix Dept,Merchandising Dept",
-              "label": "Matrix Dept,Merchandising Dept",
-              "default_val": "Matrix Dept"
-            },
             "Buy_Type": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
@@ -2602,7 +2618,7 @@
               "label": "Buy_Type",
               "default_val": "selectAll"
             },
-            "Trend_Flag": {
+            "Trend": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_rpt_Trend",
@@ -3743,7 +3759,7 @@
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
-            "Department": {
+            "Department_No": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
@@ -3798,7 +3814,7 @@
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
-            "Department": {
+            "Department_No": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
@@ -3853,7 +3869,7 @@
               "value": "Banner_Number",
               "label": "Banner_Name"
             },
-            "Department": {
+            "Department_No": {
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "Par_rpt_Departments_by_Banner",
@@ -5498,7 +5514,8 @@
               "query_type": "Fixed",
               "query": "",
               "value": "All,Processed/On-Order,Unprocessed",
-              "label": "All,Processed/On-Order,Unprocessed"
+              "label": "All,Processed/On-Order,Unprocessed",
+              "default_val": "All"
             }
           }
         },
