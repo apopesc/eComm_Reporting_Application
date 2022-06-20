@@ -10,5 +10,6 @@ namespace eComm_Reporting_Application.Models
         public ReportModel reportData { get; set; }
         public List<string> selectedDepartments { get; set; }
         public List<string> selectedClasses { get; set; }
+        public string viewBy { get; set; }
     }
 }

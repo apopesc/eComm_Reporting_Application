@@ -954,7 +954,7 @@ namespace eComm_Reporting_Application.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult GetDepartmentData([Bind("reportName,reportFolder")] ReportModel reportData, List<string> selectedBanners)
+        public JsonResult GetDepartmentData([Bind("reportName,reportFolder")] ReportModel reportData, List<string> selectedBanners, string viewBy = "")
         {
             try
             {
@@ -973,27 +973,40 @@ namespace eComm_Reporting_Application.Controllers
                     SqlConnection connection = new SqlConnection();
                     SqlCommand storedProcQuery = new SqlCommand();
 
-                    //There are other data sources that need to be mapped here
-                    if (local_reportParams.dataSource == "ReportDataSource")
-                    {
-                        connectionstring = configuration.GetConnectionString("NetSuite_DB");
-                        connection = new SqlConnection(connectionstring);
-                        storedProcQuery = new SqlCommand("Par_rpt_Departments_by_Banner", connection);
-                    }
-                    else if (local_reportParams.dataSource == "eCom_ReportDB")
+                    Parameter departmentParameter = local_reportParams.parameters.Find(x => x.name == "Department_No");
+
+                    if (departmentParameter.query == "Par_rpt_MatrixOrMechandisingDepartments_By_Banner")
                     {
                         connectionstring = configuration.GetConnectionString("eCom_ReportDB");
                         connection = new SqlConnection(connectionstring);
-                        storedProcQuery = new SqlCommand("Par_rpt_Departments_by_Banner", connection);
+                        storedProcQuery = new SqlCommand("Par_rpt_MatrixOrMechandisingDepartments_By_Banner", connection);
+
+                        if (viewBy != null)
+                        {
+                            storedProcQuery.Parameters.AddWithValue("@ViewBy", viewBy);
+                        }
+
+                    }
+                    else
+                    {
+                        if (local_reportParams.dataSource == "ReportDataSource")
+                        {
+                            connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                            connection = new SqlConnection(connectionstring);
+                            storedProcQuery = new SqlCommand(departmentParameter.query, connection);
+                        }
+                        else if (local_reportParams.dataSource == "eCom_ReportDB")
+                        {
+                            connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                            connection = new SqlConnection(connectionstring);
+                            storedProcQuery = new SqlCommand(departmentParameter.query, connection);
+                        }
                     }
 
-                    Parameter departmentParameter = local_reportParams.parameters.Find(x => x.name == "Department_No");
                     storedProcQuery.CommandType = CommandType.StoredProcedure;
 
                     string selectedBannersString = string.Join(",", selectedBanners.ToArray());
                     storedProcQuery.Parameters.AddWithValue("@Banner", selectedBannersString);
-
-                    //Parameter populatedParam = getCascadingDropdownValues(departmentParameter, storedProcQuery, connection);
 
                     List<string> dropdownValues = new List<string>();
                     List<string> dropdownLabels = new List<string>();
@@ -1059,7 +1072,7 @@ namespace eComm_Reporting_Application.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult GetClassData([FromBody][Bind("reportData,selectedDepartments")] DepartmentModel departmentModel)
+        public JsonResult GetClassData([FromBody][Bind("reportData,selectedDepartments,viewBy")] DepartmentModel departmentModel)
         {
             try
             {
@@ -1078,21 +1091,35 @@ namespace eComm_Reporting_Application.Controllers
                     SqlConnection connection = new SqlConnection();
                     SqlCommand storedProcQuery = new SqlCommand();
 
-                    //There are other data sources that need to be mapped here
-                    if (local_reportParams.dataSource == "ReportDataSource")
-                    {
-                        connectionstring = configuration.GetConnectionString("NetSuite_DB");
-                        connection = new SqlConnection(connectionstring);
-                        storedProcQuery = new SqlCommand("par_Class_Details_by_Banner", connection);
-                    }
-                    else if (local_reportParams.dataSource == "eCom_ReportDB")
+                    Parameter classParameter = local_reportParams.parameters.Find(x => x.name == "Class_Number");
+
+                    if (classParameter.query == "Par_rpt_MatrixOrMechandisingClass_by_Banner")
                     {
                         connectionstring = configuration.GetConnectionString("eCom_ReportDB");
                         connection = new SqlConnection(connectionstring);
-                        storedProcQuery = new SqlCommand("par_rpt_Class_By_Banner", connection);
-                    }
+                        storedProcQuery = new SqlCommand("Par_rpt_MatrixOrMechandisingClass_by_Banner", connection);
 
-                    Parameter classParameter = local_reportParams.parameters.Find(x => x.name == "Class_Number");
+                        if (departmentModel.viewBy != null)
+                        {
+                            storedProcQuery.Parameters.AddWithValue("@ViewBy", departmentModel.viewBy);
+                        }
+
+                    }
+                    else
+                    {
+                        if (local_reportParams.dataSource == "ReportDataSource")
+                        {
+                            connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                            connection = new SqlConnection(connectionstring);
+                            storedProcQuery = new SqlCommand(classParameter.query, connection);
+                        }
+                        else if (local_reportParams.dataSource == "eCom_ReportDB")
+                        {
+                            connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                            connection = new SqlConnection(connectionstring);
+                            storedProcQuery = new SqlCommand(classParameter.query, connection);
+                        }
+                    }
 
                     storedProcQuery.CommandType = CommandType.StoredProcedure;
 
@@ -1156,8 +1183,11 @@ namespace eComm_Reporting_Application.Controllers
                     for (int i = 0; i < populatedParam.values.Count; i++)
                     {
                         int charLocation = populatedParam.values[i].IndexOf("~");
-                        string parsedClass = populatedParam.values[i].Substring(0, charLocation);
-                        populatedParam.values[i] = parsedClass;
+                        if(charLocation > -1)
+                        {
+                            string parsedClass = populatedParam.values[i].Substring(0, charLocation);
+                            populatedParam.values[i] = parsedClass;
+                        }
                     }
 
                     return Json(populatedParam);
@@ -1172,7 +1202,7 @@ namespace eComm_Reporting_Application.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult GetCategoryData([FromBody][Bind("reportData,selectedDepartments,selectedClasses")] ClassModel classModel)
+        public JsonResult GetCategoryData([FromBody][Bind("reportData,selectedDepartments,selectedClasses,viewBy")] ClassModel classModel)
         {
             try
             {
@@ -1196,28 +1226,61 @@ namespace eComm_Reporting_Application.Controllers
                     SqlCommand storedProcQuery = new SqlCommand();
 
                     //There are other data sources that need to be mapped here
-                    if (local_reportParams.dataSource == "ReportDataSource")
-                    {
-                        connectionstring = configuration.GetConnectionString("NetSuite_DB");
-                        connection = new SqlConnection(connectionstring);
-                        storedProcQuery = new SqlCommand("par_Category_by_Banner", connection);
-                    }
-                    else if (local_reportParams.dataSource == "eCom_ReportDB")
+                    //if (local_reportParams.dataSource == "ReportDataSource")
+                    //{
+                    //    connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                    //    connection = new SqlConnection(connectionstring);
+                    //    storedProcQuery = new SqlCommand("par_Category_by_Banner", connection);
+                    //}
+                    //else if (local_reportParams.dataSource == "eCom_ReportDB")
+                    //{
+                    //    connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                    //    connection = new SqlConnection(connectionstring);
+                    //    storedProcQuery = new SqlCommand("par_rpt_Category_by_Banner", connection);
+                    //}
+
+                    Parameter categoryParameter = local_reportParams.parameters.Find(x => x.name == "Category");
+
+                    if (categoryParameter.query == "Par_rpt_MatrixOrMechandisingCategory_by_Banner")
                     {
                         connectionstring = configuration.GetConnectionString("eCom_ReportDB");
                         connection = new SqlConnection(connectionstring);
-                        storedProcQuery = new SqlCommand("par_rpt_Category_by_Banner", connection);
+                        storedProcQuery = new SqlCommand("Par_rpt_MatrixOrMechandisingCategory_by_Banner", connection);
+
+                        if (classModel.viewBy != null)
+                        {
+                            storedProcQuery.Parameters.AddWithValue("@ViewBy", classModel.viewBy);
+                        }
+
+                    }
+                    else
+                    {
+                        if (local_reportParams.dataSource == "ReportDataSource")
+                        {
+                            connectionstring = configuration.GetConnectionString("NetSuite_DB");
+                            connection = new SqlConnection(connectionstring);
+                            storedProcQuery = new SqlCommand(categoryParameter.query, connection);
+                        }
+                        else if (local_reportParams.dataSource == "eCom_ReportDB")
+                        {
+                            connectionstring = configuration.GetConnectionString("eCom_ReportDB");
+                            connection = new SqlConnection(connectionstring);
+                            storedProcQuery = new SqlCommand(categoryParameter.query, connection);
+                        }
                     }
 
-                    Parameter categoryParameter = local_reportParams.parameters.Find(x => x.name == "Category");
                     storedProcQuery.CommandType = CommandType.StoredProcedure;
 
                     string selectedDepartmentsString = string.Join(",", classModel.selectedDepartments.ToArray());
                     storedProcQuery.Parameters.AddWithValue("@Department_No", selectedDepartmentsString);
 
-                    for (int i = 0; i < classModel.selectedClasses.Count; i++)
+
+                    if (classModel.viewBy != "Matrix Dept")
                     {
-                        classModel.selectedClasses[i] = classModel.selectedClasses[i] + "~";
+                        for (int i = 0; i < classModel.selectedClasses.Count; i++)
+                        {
+                            classModel.selectedClasses[i] = classModel.selectedClasses[i] + "~";
+                        }
                     }
 
                     string selectedClassesString = string.Join(",", classModel.selectedClasses.ToArray());

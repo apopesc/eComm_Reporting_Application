@@ -325,6 +325,25 @@ $(document).ready(function () {
         
     });
 
+    $('#dynamicParams').on('change', '#ViewBy', function () {
+
+        $('#Banner').multiselect('deselectAll', false);
+
+        $('#Department_No').multiselect('deselectAll', false);
+        $('#Department_No').multiselect('updateButtonText');
+
+        $('#Class_Number').multiselect('deselectAll', false);
+        $('#Class_Number').multiselect('updateButtonText');
+
+        $('#Category').multiselect('deselectAll', false);
+        $('#Category').multiselect('updateButtonText');
+
+        $('#Department_No').multiselect('disable');
+        $('#Class_Number').multiselect('disable');
+        $('#Category').multiselect('disable');
+    });
+
+
     $('#dynamicParams').on('change', '#Banner', function () {
         if ($('#Department_No').length) {
             if ($('#Banner :selected').length == 0) {
@@ -345,6 +364,12 @@ $(document).ready(function () {
             } else {
                 var selectedBannerValues = $('#Banner').val();
 
+                var viewBy = "";
+
+                if (!$('#ViewBy').length == 0) {
+                    viewBy = $('#ViewBy').val();
+                }
+
                 var controllerUrl = '/MarMaxxReports/GetDepartmentData';
 
                 var token = $("#RequestVerificationToken").val();
@@ -363,7 +388,8 @@ $(document).ready(function () {
                     error: errorFunc,
                     data: {
                         'reportData': reportData,
-                        'selectedBanners': selectedBannerValues
+                        'selectedBanners': selectedBannerValues,
+                        'viewBy': viewBy
                     }
                 });
 
@@ -430,6 +456,12 @@ $(document).ready(function () {
                     });
                 }
 
+                var viewBy = "";
+
+                if (!$('#ViewBy').length == 0) {
+                    viewBy = $('#ViewBy').val();
+                }
+
                 var controllerUrl = '/MarMaxxReports/GetClassData';
 
                 var token = $("#RequestVerificationToken").val();
@@ -441,7 +473,8 @@ $(document).ready(function () {
 
                 var departmentData = {
                     'reportData': reportData,
-                    'selectedDepartments': selectedDepartmentValues
+                    'selectedDepartments': selectedDepartmentValues,
+                    'viewBy': viewBy
                 }
 
                 var json_DepartmentData = JSON.stringify(departmentData);
@@ -549,6 +582,12 @@ $(document).ready(function () {
                     });
                 }
 
+                var viewBy = "";
+
+                if (!$('#ViewBy').length == 0) {
+                    viewBy = $('#ViewBy').val();
+                }
+
                 var controllerUrl = '/MarMaxxReports/GetCategoryData';
 
                 var token = $("#RequestVerificationToken").val();
@@ -561,7 +600,8 @@ $(document).ready(function () {
                 var classData = {
                     'reportData': reportData,
                     'selectedDepartments': selectedDepartmentValues,
-                    'selectedClasses': selectedClassValues
+                    'selectedClasses': selectedClassValues,
+                    'viewBy': viewBy
                 };
 
                 var json_ClassData = JSON.stringify(classData);
