@@ -895,7 +895,7 @@ function selectDynamicParams() {
 
                     var selectedValues = '';
 
-                    if (selectedDynamicParamVals[paramName] == 'ALL') {
+                    if (selectedDynamicParamVals[paramName] == 'ALL' || selectedDynamicParamVals[paramName] == 'All') {
                         selectedValues = 'selectAll';
                     } else {
                         selectedValues = selectedDynamicParamVals[paramName].split(',');
@@ -965,7 +965,7 @@ function selectDynamicParams() {
             $("#Department_No").multiselect('dataprovider', data);
             var values = selectedDynamicParamVals["Department_No"].split(',');
 
-            if (values != null && values[0] == "ALL") {
+            if (values != null && (values[0] == "ALL" || values[0] == "All")) {
                 values = "selectAll";
             }
 
@@ -1030,7 +1030,7 @@ function selectDynamicParams() {
                     $("#Class_Number").multiselect('dataprovider', data);
                     var values = selectedDynamicParamVals["Class_Number"].split(',');
 
-                    if (values != null && values[0] == "ALL") {
+                    if (values != null && (values[0] == "ALL" || values[0] == "All")) {
                         values = "selectAll";
                     }
 
@@ -1096,7 +1096,7 @@ function selectDynamicParams() {
                             $("#Category").multiselect('dataprovider', data);
                             var values = selectedDynamicParamVals["Category"].split(',');
 
-                            if (values != null && values[0] == "ALL") {
+                            if (values != null && (values[0] == "ALL" || values[0] == "All")) {
                                 values = "selectAll";
                             }
 

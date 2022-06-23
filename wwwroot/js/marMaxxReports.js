@@ -305,24 +305,21 @@ $(document).ready(function () {
             dataTable_row.child.hide();
 
         } else {
-            for (const rowID of expandableRowIDs) {
+            let childRows = "";
 
-                let childRows = "";
+            var _ID = parseInt($selectedRow.attr('id'));
 
-                for (let g = 0; g < expandableRowEntries.length; g++) {
-                    if (expandableRowEntries[g].rowID == rowID) {
-                        var paramName = expandableRowEntries[g].parameter_name;
+            for (let g = 0; g < expandableRowEntries.length; g++) {
+                if (expandableRowEntries[g].rowID == _ID) {
+                    var paramName = expandableRowEntries[g].parameter_name;
 
-                        if (paramName == selectedParameter) {
-                            var childEntry = '<tr id="' + paramName + '"><td class="expanded_row"><b>' + paramName + ':</b> ' + expandableRowEntries[g].data + '</td></tr>';
-                            childRows = childRows + childEntry;
-                        }
+                    if (paramName == selectedParameter) {
+                        var childEntry = '<tr id="' + paramName + '"><td class="expanded_row"><b>' + paramName + ':</b> ' + expandableRowEntries[g].data + '</td></tr>';
+                        childRows = childRows + childEntry;
                     }
                 }
-
-                marMaxxTable.row($selectedRow).child(childRows, 'child-row').show();
-
             }
+            marMaxxTable.row($selectedRow).child(childRows, 'child-row').show();
             $(this).addClass("shown_child");
         }
     });
@@ -454,8 +451,6 @@ function createTable(tableData) {
     header.append(Hrow);
     subTable.append(header); //Adding the row to the table
 
-
-
     let body = $('<tbody>');
     //Adding the data under the headers
     for (let j = 0; j < tableData.rowData.length; j++) {
@@ -491,10 +486,48 @@ function createTable(tableData) {
         row.append(tableEntry2);
         let tableEntry3 = $('<td>').addClass('marMaxxSubscriptionsEntry_ReportName').text(tableData.rowData[j].reportName);
         row.append(tableEntry3);
-        let tableEntry4 = $('<td>').addClass('marMaxxSubscriptionsEntry_GroupName').text(tableData.rowData[j].groupNames);
+
+        let tableEntry4 = $('<td>').addClass('marMaxxSubscriptionsEntry_GroupName');
+        let groupNameData = tableData.rowData[j].groupNames;
+        let grpName_commaCount = groupNameData.split(",").length - 1;
+        if (grpName_commaCount > 1) {
+            let substringIndex = getPosition(groupNameData, ',', 2);
+
+            let expandableRowEntry = { rowID: tableData.rowData[j].subscriptionID, data: groupNameData, parameter_name: 'Group_Name' };
+            expandableRowEntries.push(expandableRowEntry);
+            expandableRowIDs.add(tableData.rowData[j].subscriptionID);
+
+            groupNameData = groupNameData.substring(0, substringIndex + 1);
+            tableEntry4.text(groupNameData);
+
+            var button = $('<a id = "expandBtn" class = "Group_Name">(...)</a>');
+            button.appendTo(tableEntry4);
+        } else {
+            tableEntry4.text(groupNameData);
+        }
         row.append(tableEntry4);
-        let tableEntry5 = $('<td>').addClass('marMaxxSubscriptionsEntry_GroupID').text(tableData.rowData[j].groupIDs);
+
+
+        let tableEntry5 = $('<td>').addClass('marMaxxSubscriptionsEntry_GroupID');
+        let groupIDData = tableData.rowData[j].groupIDs;
+        let grpID_commaCount = groupIDData.split(",").length - 1;
+        if (grpID_commaCount > 1) {
+            let substringIndex = getPosition(groupIDData, ',', 2);
+
+            let expandableRowEntry = { rowID: tableData.rowData[j].subscriptionID, data: groupIDData, parameter_name: 'Group_ID' };
+            expandableRowEntries.push(expandableRowEntry);
+            expandableRowIDs.add(tableData.rowData[j].subscriptionID);
+
+            groupIDData = groupIDData.substring(0, substringIndex + 1);
+            tableEntry5.text(groupIDData);
+
+            var button = $('<a id = "expandBtn" class = "Group_ID">(...)</a>');
+            button.appendTo(tableEntry5);
+        } else {
+            tableEntry5.text(groupNameData);
+        }
         row.append(tableEntry5);
+
         let tableEntry6 = $('<td>').addClass('marMaxxSubscriptionsEntry_FileFormat').text(tableData.rowData[j].fileFormat);
         row.append(tableEntry6);
         let tableEntry7 = $('<td>').addClass('marMaxxSubscriptionsEntry_Schedule').text(tableData.rowData[j].schedule);
