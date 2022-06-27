@@ -578,7 +578,7 @@
               "value": "Category_Number",
               "label": "Category"
             },
-            "Brand_Pattern": {
+            "Enter_Brand_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -601,7 +601,7 @@
               "label": "TREND_NAME",
               "default_val": "selectAll"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -773,7 +773,7 @@
               "label": "TREND_NAME",
               "default_val": "selectAll"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -788,7 +788,7 @@
               "label": "Vendor",
               "default_val": "ALL"
             },
-            "Brand_Pattern": {
+            "Enter_Brand_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -962,7 +962,7 @@
               "value": "Fiscal_Week_Default",
               "label": "Fiscal_Week_Default"
             }, 
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -977,7 +977,7 @@
               "label": "Vendor",
               "default_val": "ALL"
             },
-            "Brand_Pattern": {
+            "Enter_Brand_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -1069,7 +1069,7 @@
               "value": "Department_Number",
               "label": "Department"
             },
-            "Display_PY_Data": {
+            "Display_LY_Data": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
@@ -1252,7 +1252,7 @@
               "label": "Yes,No",
               "default_val": "No"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -1267,7 +1267,7 @@
               "label": "Vendor",
               "default_val": "ALL"
             },
-            "Brand_Pattern": {
+            "Enter_Brand_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -1495,7 +1495,7 @@
               "label": "Yes,No",
               "default_val": "No"
             },
-            "Brand_Pattern": {
+            "Enter_Brand_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -1510,7 +1510,7 @@
               "label": "Brand",
               "default_val": "ALL"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -1555,7 +1555,7 @@
               "value": "Fiscal_Week_Default",
               "label": "Fiscal_Week_Default"
             },
-            "DisplaySummary": {
+            "Display_LY_Data": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
@@ -1563,7 +1563,7 @@
               "label": "Yes,No",
               "default_val": "N"
             },
-            "Display_PY_Data": {
+            "Display_LLY_Data": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
@@ -1686,7 +1686,7 @@
               "label": "Yes,No",
               "default_val": "No"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -1701,7 +1701,7 @@
               "label": "Vendor",
               "default_val": "ALL"
             },      
-            "Brand_Pattern": {
+            "Enter_Brand_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -1853,7 +1853,7 @@
               "value": "Fiscal_Week_Default",
               "label": "Fiscal_Week_Default"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -1868,7 +1868,7 @@
               "label": "Vendor",
               "default_val": "ALL"
             },         
-            "Brand_Pattern": {
+            "Enter_Brand_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -1891,7 +1891,7 @@
               "label": "TREND_NAME",
               "default_val": "selectAll"
             },   
-            "Display_PY_Data": {
+            "Display_LY_Data": {
               "type": "Dropdown",
               "query_type": "Fixed",
               "query": "",
@@ -2040,7 +2040,7 @@
               "label": "Top 10,Top 15,Top 20,Top 25,Bottom 10,Bottom 15,Bottom 20,Bottom 25",
               "default_val": "Top_10"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -2055,7 +2055,7 @@
               "label": "Vendor",
               "default_val": "ALL"
             },
-            "Brand_Pattern": {
+            "Enter_Brand_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -2233,7 +2233,7 @@
               "label": "Buyer",
               "default_val": "selectAll"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -2248,7 +2248,7 @@
               "label": "Vendor",
               "default_val": "ALL"
             },
-            "Brand_Pattern": {
+            "Enter_Brand_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -2437,7 +2437,7 @@
               "label": "Buyer",
               "default_val": "selectAll"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -2452,7 +2452,7 @@
               "label": "Vendor",
               "default_val": "ALL"
             },
-            "Brand_Pattern": {
+            "Enter_Brand_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -2634,7 +2634,7 @@
               "label": "Brand,Group/Class",
               "default_val": "Brand"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -2649,7 +2649,7 @@
               "label": "Vendor",
               "default_val": "ALL"
             },
-            "Brand_Pattern": {
+            "Enter_Brand_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -3240,7 +3240,7 @@
               "label": "Buyer",
               "default_val": "selectAll"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -3255,7 +3255,7 @@
               "label": "Vendor",
               "default_val": "ALL"
             },
-            "Brand_Pattern": {
+            "Enter_Brand_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -3436,7 +3436,7 @@
               "value": "ALL",
               "label": "ALL"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -3451,7 +3451,7 @@
               "label": "Vendor",
               "default_val": "ALL"
             },
-            "Brand_Pattern": {
+            "Enter_Brand_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -7172,7 +7172,7 @@
               "value": "Brand,Group/Class",
               "label": "Brand,Group/Class"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -7187,7 +7187,7 @@
               "label": "Vendor",
               "default_val": "ALL"
             },
-            "Brand_Pattern": {
+            "Enter_Brand_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -8378,7 +8378,7 @@
               "value": "LP_Month",
               "label": "LP_Month"
             },          
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -9011,7 +9011,7 @@
               "value": "Category_Number",
               "label": "Category"
             },
-            "Brand_Pattern": {
+            "Enter_Brand_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -9034,7 +9034,7 @@
               "label": "TREND_NAME",
               "default_val": "selectAll"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -9198,7 +9198,7 @@
               "value": "Category_Number",
               "label": "Category"
             },
-            "Brand_Pattern": {
+            "Enter_Brand_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -9221,7 +9221,7 @@
               "label": "TREND_NAME",
               "default_val": "selectAll"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -9468,7 +9468,7 @@
               "value": "Display",
               "label": "Display"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -9590,7 +9590,7 @@
               "value": "Display",
               "label": "Display"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
@@ -9720,7 +9720,7 @@
               "value": "Department_Number",
               "label": "Department"
             },
-            "Vendor_Pattern": {
+            "Enter_Vendor_Name": {
               "type": "Textbox",
               "query_type": "Fixed",
               "query": "",
