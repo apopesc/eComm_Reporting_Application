@@ -2680,12 +2680,13 @@
               "label": "Season",
               "default_val": "selectAll"
             },
-            "Status": {
+            "Ladder_Plan_Date": {
               "type": "MultiDropdown",
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT ISNULL(H.Status,'No Status') AS Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER By 1",
-              "value": "Trend",
-              "label": "Trend"
+              "query_type": "Stored Procedure",
+              "query": "par_rpt_LPMonth",
+              "value": "LP_Month",
+              "label": "LP_Month",
+              "default_val": "selectAll"
             },
             "Combine_Banners": {
               "type": "Dropdown",
@@ -2694,14 +2695,6 @@
               "value": "Yes,No",
               "label": "Yes,No",
               "default_val": "No"
-            },
-            "Ladder_Plan_Date": {
-              "type": "MultiDropdown",
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth",
-              "value": "LP_Month",
-              "label": "LP_Month",
-              "default_val": "selectAll"
             }
           }
         },
@@ -3291,14 +3284,6 @@
               "query": "par_Banner",
               "value": "Banner_Number",
               "label": "Banner_Name"
-            },
-            "Combine_Banners": {
-              "type": "Dropdown",
-              "query_type": "Fixed",
-              "query": "",
-              "value": "Yes,No",
-              "label": "Yes,No",
-              "default_val": "No"
             }
           }
         },

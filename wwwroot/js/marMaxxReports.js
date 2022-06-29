@@ -524,7 +524,7 @@ function createTable(tableData) {
             var button = $('<a id = "expandBtn" class = "Group_ID">(...)</a>');
             button.appendTo(tableEntry5);
         } else {
-            tableEntry5.text(groupNameData);
+            tableEntry5.text(groupIDData);
         }
         row.append(tableEntry5);
 
