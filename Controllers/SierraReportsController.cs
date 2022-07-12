@@ -393,15 +393,28 @@ namespace eComm_Reporting_Application.Controllers
 
                     for (int i = 0; i < sierraReportParams.parameters.Count; i++)
                     {
-                        if ((sierraReportParams.parameters[i].type == "Dropdown" || sierraReportParams.parameters[i].type == "Textbox" || sierraReportParams.parameters[i].type == "MultiDropdown") && (sierraReportParams.parameters[i].queryType == "Stored Procedure"))
+                        if ((sierraReportParams.parameters[i].type == "Dropdown" || sierraReportParams.parameters[i].type == "Textbox" || sierraReportParams.parameters[i].type == "MultiDropdown") && (sierraReportParams.parameters[i].queryType == "Stored Procedure" || sierraReportParams.parameters[i].queryType == "In Line"))
                         {
 
                             SqlConnection connection = new SqlConnection(connectionstring);
 
-                            string procQueryString = "EXEC @storedProc";
+                            string procQueryString = "";
+
+                            if (sierraReportParams.parameters[i].queryType == "Stored Procedure")
+                            {
+                                procQueryString = "EXEC @storedProc";
+                            }
+                            else if (sierraReportParams.parameters[i].queryType == "In Line") //SQL Injection Risk in veracode
+                            {
+                                procQueryString = sierraReportParams.parameters[i].query;
+                            }
 
                             SqlCommand storedProcQuery = new SqlCommand(procQueryString, connection);
-                            storedProcQuery.Parameters.AddWithValue("@storedProc", sierraReportParams.parameters[i].query);
+
+                            if (sierraReportParams.parameters[i].queryType == "Stored Procedure")
+                            {
+                                storedProcQuery.Parameters.AddWithValue("@storedProc", sierraReportParams.parameters[i].query);
+                            }
 
                             //storedProcQuery.CommandType = CommandType.StoredProcedure;
 
@@ -410,49 +423,47 @@ namespace eComm_Reporting_Application.Controllers
                                 List<string> dropdownValues = new List<string>();
                                 List<string> dropdownLabels = new List<string>();
 
-                                if (sierraReportParams.parameters[i].name != "Department_No" && sierraReportParams.parameters[i].name != "Class_Number" && sierraReportParams.parameters[i].name != "Category") //these parameters take values from banner and each other to return data.
+                                connection.Open();
+                                using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
                                 {
-                                    connection.Open();
-                                    using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                                    while (stored_proc_reader.Read())
                                     {
-                                        while (stored_proc_reader.Read())
+                                        var proc_data_length = stored_proc_reader.FieldCount;
+
+                                        if (proc_data_length > 1)
                                         {
-                                            var proc_data_length = stored_proc_reader.FieldCount;
-
-                                            if (proc_data_length > 1)
+                                            for (int j = 0; j < proc_data_length; j++)
                                             {
-                                                for (int j = 0; j < proc_data_length; j++)
+                                                var proc_data_name = stored_proc_reader.GetName(j);
+                                                if (proc_data_name == sierraReportParams.parameters[i].values[0])
                                                 {
-                                                    var proc_data_name = stored_proc_reader.GetName(j);
-                                                    if (proc_data_name == sierraReportParams.parameters[i].values[0])
-                                                    {
-                                                        var proc_val = stored_proc_reader.GetValue(j);
+                                                    var proc_val = stored_proc_reader.GetValue(j);
 
-                                                        string dropdownVal = proc_val.ToString();
-                                                        dropdownValues.Add(dropdownVal);
-                                                    }
+                                                    string dropdownVal = proc_val.ToString();
+                                                    dropdownValues.Add(dropdownVal);
+                                                }
 
-                                                    if (proc_data_name == sierraReportParams.parameters[i].labels[0])
-                                                    {
-                                                        var proc_label = stored_proc_reader.GetValue(j);
+                                                if (proc_data_name == sierraReportParams.parameters[i].labels[0])
+                                                {
+                                                    var proc_label = stored_proc_reader.GetValue(j);
 
-                                                        string dropdownLab = proc_label.ToString();
-                                                        dropdownLabels.Add(dropdownLab);
-                                                    }
+                                                    string dropdownLab = proc_label.ToString();
+                                                    dropdownLabels.Add(dropdownLab);
                                                 }
                                             }
-                                            else //if only one column is returned from the stored procedure, put in both labels and values
-                                            {
-                                                var proc_val = stored_proc_reader.GetValue(0);
+                                        }
+                                        else //if only one column is returned from the stored procedure, put in both labels and values
+                                        {
+                                            var proc_val = stored_proc_reader.GetValue(0);
 
-                                                string dropdownEntry = proc_val.ToString();
-                                                dropdownValues.Add(dropdownEntry);
-                                                dropdownLabels.Add(dropdownEntry);
-                                            }
+                                            string dropdownEntry = proc_val.ToString();
+                                            dropdownValues.Add(dropdownEntry);
+                                            dropdownLabels.Add(dropdownEntry);
                                         }
                                     }
-                                    connection.Close();
                                 }
+                                connection.Close();
+
 
                                 sierraReportParams.parameters[i].values = dropdownValues;
                                 sierraReportParams.parameters[i].labels = dropdownLabels;
@@ -655,7 +666,7 @@ namespace eComm_Reporting_Application.Controllers
                     }
 
                     //Checking if the group has at least one email tied to it, if not, return error.
-                    usersInGroupQuery.CommandText = string.Format("SELECT COUNT(*) FROM UserSubscriptions WHERE Group_ID IN ({0})", string.Join(",", groupIDParams));
+                    usersInGroupQuery.CommandText = string.Format("SELECT COUNT(*) FROM UserSubscriptions WHERE Group_ID IN ({0}) AND Is_Active = 'Y'", string.Join(",", groupIDParams));
                     usersInGroupQuery.Connection = connection;
 
                     int usersInGroup = 0;
@@ -676,7 +687,7 @@ namespace eComm_Reporting_Application.Controllers
 
                     if (usersInGroup < groupIDList.Count)
                     {
-                        return Json(new { message = "One or more groups that have been selected have no users tied to them. You can add a user to a group on the User Subscriptions Groups screen.", result = "Error" });
+                        return Json(new { message = "One or more groups that have been selected have no ACTIVE users tied to them. You can add an ACTIVE user to a group on the User Subscriptions Groups screen.", result = "Error" });
                     }
                     else
                     {
@@ -732,6 +743,8 @@ namespace eComm_Reporting_Application.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult DeleteSierraReportSubscription(int ID)
         {
             try

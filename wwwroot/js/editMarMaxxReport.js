@@ -972,7 +972,7 @@ function selectDynamicParams() {
             $("#Department_No").val(values);
             $("#Department_No").multiselect("refresh");
 
-            if ("Class_Number" in selectedDynamicParamVals) {
+            if ("Class_Number" in selectedDynamicParamVals && selectedReportName != "BCF Dollars and Units By Department") {
                 var selectedDepartmentValues = selectedDynamicParamVals["Department_No"].split(',');
 
                 if (selectedDepartmentValues.includes('ALL')) {
@@ -1037,7 +1037,7 @@ function selectDynamicParams() {
                     $("#Class_Number").val(values);
                     $("#Class_Number").multiselect("refresh");
 
-                    if ("Category" in selectedDynamicParamVals) {
+                    if ("Category" in selectedDynamicParamVals && selectedReportName != "BCF Dollars and Units By Department") {
                         var selectedClassValues = selectedDynamicParamVals["Class_Number"].split(',');
 
                         if (selectedClassValues.includes('ALL')) {
