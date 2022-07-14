@@ -133,6 +133,7 @@ $(document).ready(function () {
                 $.ajax({
                     type: "POST",
                     url: controllerUrl,
+                    headers: { 'RequestVerificationToken': token },
                     dataType: "json",
                     success: successFunc,
                     error: errorFunc,

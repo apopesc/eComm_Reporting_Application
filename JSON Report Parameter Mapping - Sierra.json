@@ -2,6 +2,57 @@
     "folders": {
       "Financial Accounting": {
         "reports": {
+          "Adjusted Sales": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Fiscal_Year": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              }
+            },
+            "parameters": {
+              "Fiscal_Year": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Fiscal_Year",
+                "value": "FISCAL_YEAR",
+                "label": "FISCAL_YEAR"
+              }
+            }
+          },
+          "Aged in Transit Report": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Facility": {
+                "query_type": "Stored Procedure",
+                "query": "par_Facility"
+              }
+            },
+            "parameters": {
+              "Facility": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Facility",
+                "value": "DimFacilityID",
+                "label": "FacilityName"
+              },
+              "PackedDateRangeDays": {
+                "type": "Textbox",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "21",
+                "label": "21"
+              }
+            }
+          },
           "Cash Tender Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
@@ -260,6 +311,50 @@
               }
             }
           },
+          "Inventory Receiving Report Transactional": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Fiscal_Month_Inventory_Receiving"
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Fiscal_Month_Inventory_Receiving",
+                "value": "Display",
+                "label": "Display"
+              }
+            }
+          },
+          "Markdown Capture Report": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Fiscal_Year": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              }
+            },
+            "parameters": {
+              "Fiscal_Year": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Fiscal_Year",
+                "value": "FISCAL_YEAR",
+                "label": "FISCAL_YEAR"
+              }
+            }
+          },
           "Non-Merchandise Summary": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
@@ -293,7 +388,616 @@
               }
             }
           },
+          "Online and Store Multibranded GC Details": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              },
+              "Store_Location": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations"
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month",
+                "value": "Display",
+                "label": "Display"
+              },
+              "Store_Location": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations",
+                "value": "Location_Code",
+                "label": "Location_Name"
+              },
+              "Display_State_Code": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Yes,No",
+                "label": "Yes,No",
+                "default_val": "No"
+              }
+            }
+          },
+          "Online and Store Sales": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              },
+              "Store_Location": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations"
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month",
+                "value": "Display",
+                "label": "Display"
+              },
+              "Store_Location": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations",
+                "value": "Location_Code",
+                "label": "Location_Name"
+              },
+              "Display_State_Code": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Yes,No",
+                "label": "Yes,No",
+                "default_val": "No"
+              }
+            }
+          },
+          "Online and Store Sales by ZipCode": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              },
+              "Store_Location": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations"
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month",
+                "value": "Display",
+                "label": "Display"
+              },
+              "Store_Location": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations",
+                "value": "Location_Code",
+                "label": "Location_Name"
+              }
+            }
+          },
+          "Outstanding Gift Cards": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Store_Location": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations"
+              }
+            },
+            "parameters": {
+              "Store_Location": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations",
+                "value": "Location_Code",
+                "label": "Location_Name"
+              },
+              "Display_Before_FY19_Data": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Yes,No",
+                "label": "Yes,No",
+                "default_val": "No"
+              }
+            }
+          },
+          "Payment Tender Report for TJX and Merch GC": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              },
+              "Store_Location": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations"
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month",
+                "value": "Display",
+                "label": "Display"
+              },
+              "Store_Location": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations",
+                "value": "Location_Code",
+                "label": "Location_Name"
+              }
+            }
+          },
+          "Payment Tender Report": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              },
+              "Store_Location": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations"
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month",
+                "value": "Display",
+                "label": "Display"
+              },
+              "Store_Location": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations",
+                "value": "Location_Code",
+                "label": "Location_Name"
+              }
+            }
+          },
+          "Paypal Tender Report": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month",
+                "value": "Display",
+                "label": "Display"
+              }
+            }
+          },
+          "Petty Cash Transactions Report": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month",
+                "value": "Display",
+                "label": "Display"
+              }
+            }
+          },
+          "PO Transaction History Report": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              }
+            },
+            "parameters": {
+              "PONumber": {
+                "type": "Textbox",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
+              }
+            }
+          },
+          "Processed Inventory Report": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Store_Location": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations"
+              }
+            },
+            "parameters": {
+              "Store_Location": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations",
+                "value": "Location_Code",
+                "label": "Location_Name"
+              }
+            }
+          },
+          "Promotional and Goodwill Gift Card Insurance": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              },
+              "Store_Location": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations"
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month",
+                "value": "Display",
+                "label": "Display"
+              },
+              "Store_Location": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations",
+                "value": "Location_Code",
+                "label": "Location_Name"
+              }
+            }
+          },
+          "Promotional and Goodwill Gift Card Insurance Details": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              },
+              "Store_Location": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations"
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month",
+                "value": "Display",
+                "label": "Display"
+              },
+              "Store_Location": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations",
+                "value": "Location_Code",
+                "label": "Location_Name"
+              }
+            }
+          },
+          "Return Express Reconciliation": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month",
+                "value": "Display",
+                "label": "Display"
+              },
+              "Run_Type": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Summary,Details",
+                "label": "Summary,Details",
+                "default_val": "Summary"
+              }
+            }
+          },
+          "Returns by Original Sales Channel": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Fiscal_Month": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month"
+              },
+              "Store_Location": {
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations"
+              }
+            },
+            "parameters": {
+              "Fiscal_Month": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Sales_Fiscal_Month",
+                "value": "Display",
+                "label": "Display"
+              },
+              "Store_Location": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "Par_rpt_Store_Locations",
+                "value": "Location_Code",
+                "label": "Location_Name"
+              }
+            }
+          },
+          "Returns Reserve Report": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              }
+            },
+            "parameters": {
+              "Start_Date": {
+                "type": "DateTime",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
+              },
+              "End_Date": {
+                "type": "DateTime",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
+              }
+            }
+          },
+          "RMA Inventory Weekly": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "dsResults": {
+                "query_type": "Stored Procedure",
+                "query": "rpt_RMAInventory_Weekly_Operations"
+              },
+              "dsRMATransactionType": {
+                "query_type": "Stored Procedure",
+                "query": "par_RMATransactionTypes"
+              }
+            },
+            "parameters": {
+              "Start_Date": {
+                "type": "DateTime",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
+              },
+              "End_Date": {
+                "type": "DateTime",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
+              },
+              "TransactionType": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "dsRMATransactionType",
+                "value": "TransactionType",
+                "label": "TransactionType"
+              },
+              "Channel": {
+                "type": "MultiDropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Stores,Web,Unknown",
+                "label": "Stores,Web,Unknown"
+              },
+              "ReportType": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Financial,Operational",
+                "label": "Financial,Operational",
+                "default_val": "Operational"
+              }
+              
+            }
+          },
+          "Shipment Level Detail Report": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              }
+            },
+            "parameters": {
+              "Start_Date": {
+                "type": "DateTime",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
+              },
+              "End_Date": {
+                "type": "DateTime",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
+              }
+            }
+          },
+          "Tax Audit Report": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              }
+            },
+            "parameters": {
+              "Start_Date": {
+                "type": "DateTime",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
+              },
+              "End_Date": {
+                "type": "DateTime",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
+              },
+              "Ship_State": {
+                "type": "Textbox",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "ALL",
+                "label": "ALL"
+              }
+            }
+          },
+          "Under Allocated Inventory Receiving": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              }
+            },
+            "parameters": {
+              "Start_Date": {
+                "type": "DateTime",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
+              },
+              "End_Date": {
+                "type": "DateTime",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
+              }
+            }
+          },
+          "Unprocessed InYard and InTransit Report": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+              "ReportDataset": {
+                "query_type": "",
+                "query": ""
+              },
+              "Facility": {
+                "query_type": "Stored Procedure",
+                "query": "par_Facility"
+              }
+            },
+            "parameters": {
+              "Facility": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Facility",
+                "value": "DimFacilityID",
+                "label": "FacilityName"
+              }
+            }
+          }
         }
       }
-    }
+    } 
   }
