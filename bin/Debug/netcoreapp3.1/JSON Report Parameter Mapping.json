@@ -761,8 +761,8 @@
               "type": "MultiDropdown",
               "query_type": "Stored Procedure",
               "query": "par_Season",
-              "value": "Category_Number",
-              "label": "Category",
+              "value": "Season",
+              "label": "Season",
               "default_val": "selectAll"
             },
             "Trend": {

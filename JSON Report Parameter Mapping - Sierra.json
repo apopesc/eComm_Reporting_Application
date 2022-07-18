@@ -44,7 +44,7 @@
                 "value": "DimFacilityID",
                 "label": "FacilityName"
               },
-              "PackedDateRangeDays": {
+              "PackedDateRange": {
                 "type": "Textbox",
                 "query_type": "Fixed",
                 "query": "",

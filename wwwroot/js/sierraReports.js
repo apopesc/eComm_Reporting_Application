@@ -190,24 +190,21 @@ $(document).ready(function () {
             dataTable_row.child.hide();
 
         } else {
-            for (const rowID of expandableRowIDs) {
+            let childRows = "";
 
-                let childRows = "";
+            var _ID = parseInt($selectedRow.attr('id'));
 
-                for (let g = 0; g < expandableRowEntries.length; g++) {
-                    if (expandableRowEntries[g].rowID == rowID) {
-                        var paramName = expandableRowEntries[g].parameter_name;
+            for (let g = 0; g < expandableRowEntries.length; g++) {
+                if (expandableRowEntries[g].rowID == _ID) {
+                    var paramName = expandableRowEntries[g].parameter_name;
 
-                        if (paramName == selectedParameter) {
-                            var childEntry = '<tr id="' + paramName + '"><td class="expanded_row"><b>' + paramName + ': </b>' + expandableRowEntries[g].data + '</td></tr>';
-                            childRows = childRows + childEntry;
-                        }
+                    if (paramName == selectedParameter) {
+                        var childEntry = '<tr id="' + paramName + '"><td class="expanded_row"><b>' + paramName + ':</b> ' + expandableRowEntries[g].data + '</td></tr>';
+                        childRows = childRows + childEntry;
                     }
                 }
-
-                sierraTable.row($selectedRow).child(childRows, 'child-row').show();
-
             }
+            sierraTable.row($selectedRow).child(childRows, 'child-row').show();
             $(this).addClass("shown_child");
         }
     });

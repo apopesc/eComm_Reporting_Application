@@ -248,6 +248,22 @@
 
     });
 
+    $('#dynamicParams').on('change', '.multiselect_dynamic', function () {
+
+        var parameterID = $(this).attr('id');
+
+        var selectedValues = $('#' + parameterID).val();
+
+        if (selectedValues.includes('selectAll')) {
+            if (selectedValues.length > 1) {
+                var index = selectedValues.indexOf('selectAll');
+                var deselectValues = selectedValues;
+                deselectValues.splice(index, 1);
+                $('#' + parameterID).multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
 });
 
 function selectedFolder(selectedVal = "") {
@@ -339,7 +355,9 @@ function createParams(paramData) {
                 dropdown.append(defaultDropdownOption);
             }
 
-            else if (paramData.parameters[i].type == "MultiDropdown") {
+            else if (paramData.parameters[i].type == "MultiDropdown" && (paramData.parameters[i].name != "Class_Number" && paramData.parameters[i].name != "Category" && paramData.parameters[i].name != "Brand" && paramData.parameters[i].name != "Vendor")) {
+                var allDropdownOption = $('<option value="selectAll">').text("(ALL)");
+                dropdown.append(allDropdownOption);
                 dropdown.addClass('multiselect_dynamic');
             }
 
@@ -391,10 +409,35 @@ function createParams(paramData) {
         if (paramData.parameters[i].type == "MultiDropdown") {
 
             $('#' + paramData.parameters[i].name).multiselect({
-                nonSelectedText: 'Select a value...',
                 enableCaseInsensitiveFiltering: true,
-                includeSelectAllOption: true
+                buttonText: function (options, select) {
+                    if (options.length > 0) {
+                        var labels = [];
+                        options.each(function () {
+                            if ($(this).attr('label') !== undefined) {
+
+                                if ($(this).attr('value') == "selectAll") {
+                                    labels = [];
+                                    labels.push('(ALL)');
+                                    return false;
+                                } else {
+                                    labels.push($(this).attr('label'));
+                                }
+                            }
+                            else {
+                                labels.push($(this).html());
+                            }
+                        });
+                        return labels.join(', ') + '';
+                    } else {
+                        return 'Select a Value...';
+                    }
+                }
             });
+
+            if (paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category") {
+                $('#' + paramData.parameters[i].name).multiselect('disable');
+            }
         }
         if (paramData.parameters[i].defaultVal != null) {
             $('#' + paramData.parameters[i].name).val(paramData.parameters[i].defaultVal);
