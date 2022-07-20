@@ -1009,6 +1009,204 @@ namespace eComm_Reporting_Application.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult GetBrandData([FromBody][Bind("reportData,brandPattern")] BrandModel brandModel)
+        {
+            try
+            {
+                if (brandModel.brandPattern == "")
+                {
+                    return Json("Error Getting Brand Data: Brand_Pattern field is empty");
+                }
+                else if (brandModel.reportData == null || brandModel.reportData.reportName == "" || brandModel.reportData.reportFolder == "")
+                {
+                    return Json("Error Getting Brand Data: Report Name or Report Folder is empty");
+                }
+                else
+                {
+                    ReportParameterModel local_reportParams = GetReportParameters(brandModel.reportData);
+
+                    string connectionstring = "";
+                    SqlConnection connection = new SqlConnection();
+                    SqlCommand storedProcQuery = new SqlCommand();
+                    
+
+                    Parameter brandParameter = local_reportParams.parameters.Find(x => x.name == "Brand");
+
+                    if (local_reportParams.dataSource == "STP_CMS_DW")
+                    {
+                        connectionstring = configuration.GetConnectionString("STP_CMS_DW");
+                        connection = new SqlConnection(connectionstring);
+                        storedProcQuery = new SqlCommand(brandParameter.query, connection);
+                    }
+                    storedProcQuery.CommandType = CommandType.StoredProcedure;
+
+                    storedProcQuery.Parameters.AddWithValue("@Brand_Pattern", brandModel.brandPattern);
+
+                    //Parameter populatedParam = getCascadingDropdownValues(brandParameter, storedProcQuery, connection);
+
+                    List<string> dropdownValues = new List<string>();
+                    List<string> dropdownLabels = new List<string>();
+
+                    Parameter populatedParam = brandParameter;
+
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                        {
+                            while (stored_proc_reader.Read())
+                            {
+                                var proc_data_length = stored_proc_reader.FieldCount;
+
+                                if (proc_data_length > 1)
+                                {
+                                    for (int j = 0; j < proc_data_length; j++)
+                                    {
+                                        var proc_data_name = stored_proc_reader.GetName(j);
+                                        if (proc_data_name == brandParameter.values[0])
+                                        {
+                                            var proc_val = stored_proc_reader.GetValue(j);
+
+                                            string dropdownVal = proc_val.ToString();
+                                            dropdownValues.Add(dropdownVal);
+                                        }
+
+                                        if (proc_data_name == brandParameter.labels[0])
+                                        {
+                                            var proc_label = stored_proc_reader.GetValue(j);
+
+                                            string dropdownLab = proc_label.ToString();
+                                            dropdownLabels.Add(dropdownLab);
+                                        }
+                                    }
+                                }
+                                else //if only one column is returned from the stored procedure, put in both labels and values
+                                {
+                                    var proc_val = stored_proc_reader.GetValue(0);
+
+                                    string dropdownEntry = proc_val.ToString();
+                                    dropdownValues.Add(dropdownEntry);
+                                    dropdownLabels.Add(dropdownEntry);
+                                }
+                            }
+                        }
+                        connection.Close();
+                    }
+
+                    populatedParam.values = dropdownValues;
+                    populatedParam.labels = dropdownLabels;
+
+                    return Json(populatedParam);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error Getting Brand Data: " + e);
+                return Json("Error Getting Brand Data: " + e);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult GetVendorData([FromBody][Bind("reportData,vendorPattern")] VendorModel vendorModel)
+        {
+            try
+            {
+                if (vendorModel.vendorPattern == "")
+                {
+                    return Json("Error Getting Brand Data: Brand_Pattern field is empty");
+                }
+                else if (vendorModel.reportData == null || vendorModel.reportData.reportName == "" || vendorModel.reportData.reportFolder == "")
+                {
+                    return Json("Error Getting Brand Data: Report Name or Report Folder is empty");
+                }
+                else
+                {
+                    ReportParameterModel local_reportParams = GetReportParameters(vendorModel.reportData);
+
+                    string connectionstring = "";
+                    SqlConnection connection = new SqlConnection();
+                    SqlCommand storedProcQuery = new SqlCommand();
+
+                    Parameter vendorParameter = local_reportParams.parameters.Find(x => x.name == "Vendor");
+
+                    if (local_reportParams.dataSource == "STP_CMS_DW")
+                    {
+                        connectionstring = configuration.GetConnectionString("STP_CMS_DW");
+                        connection = new SqlConnection(connectionstring);
+                        storedProcQuery = new SqlCommand(vendorParameter.query, connection);
+                    }
+
+                    storedProcQuery.CommandType = CommandType.StoredProcedure;
+
+                    storedProcQuery.Parameters.AddWithValue("@Vendor_Pattern", vendorModel.vendorPattern);
+
+                    //Parameter populatedParam = getCascadingDropdownValues(vendorParameter, storedProcQuery, connection);
+
+                    List<string> dropdownValues = new List<string>();
+                    List<string> dropdownLabels = new List<string>();
+
+                    Parameter populatedParam = vendorParameter;
+
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                        {
+                            while (stored_proc_reader.Read())
+                            {
+                                var proc_data_length = stored_proc_reader.FieldCount;
+
+                                if (proc_data_length > 1)
+                                {
+                                    for (int j = 0; j < proc_data_length; j++)
+                                    {
+                                        var proc_data_name = stored_proc_reader.GetName(j);
+                                        if (proc_data_name == vendorParameter.values[0])
+                                        {
+                                            var proc_val = stored_proc_reader.GetValue(j);
+
+                                            string dropdownVal = proc_val.ToString();
+                                            dropdownValues.Add(dropdownVal);
+                                        }
+
+                                        if (proc_data_name == vendorParameter.labels[0])
+                                        {
+                                            var proc_label = stored_proc_reader.GetValue(j);
+
+                                            string dropdownLab = proc_label.ToString();
+                                            dropdownLabels.Add(dropdownLab);
+                                        }
+                                    }
+                                }
+                                else //if only one column is returned from the stored procedure, put in both labels and values
+                                {
+                                    var proc_val = stored_proc_reader.GetValue(0);
+
+                                    string dropdownEntry = proc_val.ToString();
+                                    dropdownValues.Add(dropdownEntry);
+                                    dropdownLabels.Add(dropdownEntry);
+                                }
+                            }
+                        }
+                        connection.Close();
+                    }
+
+                    populatedParam.values = dropdownValues;
+                    populatedParam.labels = dropdownLabels;
+
+                    return Json(populatedParam);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error Getting Vendor Data: " + e);
+                return Json("Error Getting Vendor Data: " + e);
+            }
+        }
+
         public ReportPageDropdownModel GetFoldersForDropdown()
         {
             ReportPageDropdownModel dropdownModel = new ReportPageDropdownModel();
