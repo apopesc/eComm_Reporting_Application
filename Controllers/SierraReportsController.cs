@@ -784,6 +784,231 @@ namespace eComm_Reporting_Application.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult GetClassData([FromBody][Bind("reportData,selectedDepartments")] DepartmentModel departmentModel)
+        {
+            try
+            {
+                if (departmentModel.selectedDepartments.Count == 0)
+                {
+                    return Json("Error Getting Class Data: Department field is empty");
+                }
+                else if (departmentModel.reportData == null || departmentModel.reportData.reportName == "" || departmentModel.reportData.reportFolder == "")
+                {
+                    return Json("Error Getting Class Data: Report Name or Report Folder is empty");
+                }
+                else
+                {
+                    ReportParameterModel local_reportParams = GetReportParameters(departmentModel.reportData);
+                    string connectionstring = "";
+                    SqlConnection connection = new SqlConnection();
+                    SqlCommand storedProcQuery = new SqlCommand();
+
+                    Parameter classParameter = local_reportParams.parameters.Find(x => x.name == "Class_Number");
+
+                    if (local_reportParams.dataSource == "STP_CMS_DW")
+                    {
+                        connectionstring = configuration.GetConnectionString("STP_CMS_DW");
+                        connection = new SqlConnection(connectionstring);
+                        storedProcQuery = new SqlCommand(classParameter.query, connection);
+                    }
+
+                    storedProcQuery.CommandType = CommandType.StoredProcedure;
+
+                    string selectedDepartmentsString = string.Join(",", departmentModel.selectedDepartments.ToArray());
+                    storedProcQuery.Parameters.AddWithValue("@Department_No", selectedDepartmentsString);
+
+                    //Parameter populatedParam = getCascadingDropdownValues(classParameter, storedProcQuery, connection);
+
+                    List<string> dropdownValues = new List<string>();
+                    List<string> dropdownLabels = new List<string>();
+
+                    Parameter populatedParam = classParameter;
+
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                        {
+                            while (stored_proc_reader.Read())
+                            {
+                                var proc_data_length = stored_proc_reader.FieldCount;
+
+                                if (proc_data_length > 1)
+                                {
+                                    for (int j = 0; j < proc_data_length; j++)
+                                    {
+                                        var proc_data_name = stored_proc_reader.GetName(j);
+                                        if (proc_data_name == classParameter.values[0])
+                                        {
+                                            var proc_val = stored_proc_reader.GetValue(j);
+
+                                            string dropdownVal = proc_val.ToString();
+                                            dropdownValues.Add(dropdownVal);
+                                        }
+
+                                        if (proc_data_name == classParameter.labels[0])
+                                        {
+                                            var proc_label = stored_proc_reader.GetValue(j);
+
+                                            string dropdownLab = proc_label.ToString();
+                                            dropdownLabels.Add(dropdownLab);
+                                        }
+                                    }
+                                }
+                                else //if only one column is returned from the stored procedure, put in both labels and values
+                                {
+                                    var proc_val = stored_proc_reader.GetValue(0);
+
+                                    string dropdownEntry = proc_val.ToString();
+                                    dropdownValues.Add(dropdownEntry);
+                                    dropdownLabels.Add(dropdownEntry);
+                                }
+                            }
+                        }
+                        connection.Close();
+                    }
+
+                    populatedParam.values = dropdownValues;
+                    populatedParam.labels = dropdownLabels;
+
+                    for (int i = 0; i < populatedParam.values.Count; i++)
+                    {
+                        int charLocation = populatedParam.values[i].IndexOf("~");
+                        if (charLocation > -1)
+                        {
+                            string parsedClass = populatedParam.values[i].Substring(0, charLocation);
+                            populatedParam.values[i] = parsedClass;
+                        }
+                    }
+
+                    return Json(populatedParam);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error Getting Class Data: " + e);
+                return Json("Error Getting Class Data: " + e);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult GetCategoryData([FromBody][Bind("reportData,selectedDepartments,selectedClasses")] ClassModel classModel)
+        {
+            try
+            {
+                if (classModel.selectedDepartments.Count == 0)
+                {
+                    return Json("Error Getting Category Data: Department field is empty");
+                }
+                else if (classModel.selectedClasses.Count == 0)
+                {
+                    return Json("Error Getting Category Data: Class field is empty");
+                }
+                else if (classModel.reportData == null || classModel.reportData.reportName == "" || classModel.reportData.reportFolder == "")
+                {
+                    return Json("Error Getting Category Data: Report Name or Report Folder is empty");
+                }
+                else
+                {
+                    ReportParameterModel local_reportParams = GetReportParameters(classModel.reportData);
+                    string connectionstring = "";
+                    SqlConnection connection = new SqlConnection();
+                    SqlCommand storedProcQuery = new SqlCommand();
+
+                    Parameter categoryParameter = local_reportParams.parameters.Find(x => x.name == "Category");
+
+                    if (local_reportParams.dataSource == "STP_CMS_DW")
+                    {
+                        connectionstring = configuration.GetConnectionString("STP_CMS_DW");
+                        connection = new SqlConnection(connectionstring);
+                        storedProcQuery = new SqlCommand(categoryParameter.query, connection);
+                    }
+
+                    storedProcQuery.CommandType = CommandType.StoredProcedure;
+
+                    string selectedDepartmentsString = string.Join(",", classModel.selectedDepartments.ToArray());
+                    storedProcQuery.Parameters.AddWithValue("@Department_No", selectedDepartmentsString);
+
+
+
+                    for (int i = 0; i < classModel.selectedClasses.Count; i++)
+                    {
+                        classModel.selectedClasses[i] = classModel.selectedClasses[i] + "~";
+                    }
+
+
+                    string selectedClassesString = string.Join(",", classModel.selectedClasses.ToArray());
+                    storedProcQuery.Parameters.AddWithValue("@Class_Number", selectedClassesString);
+                    storedProcQuery.CommandTimeout = 350;
+
+                    //Parameter populatedParam = getCascadingDropdownValues(categoryParameter, storedProcQuery, connection);
+
+                    List<string> dropdownValues = new List<string>();
+                    List<string> dropdownLabels = new List<string>();
+
+                    Parameter populatedParam = categoryParameter;
+
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                        {
+                            while (stored_proc_reader.Read())
+                            {
+                                var proc_data_length = stored_proc_reader.FieldCount;
+
+                                if (proc_data_length > 1)
+                                {
+                                    for (int j = 0; j < proc_data_length; j++)
+                                    {
+                                        var proc_data_name = stored_proc_reader.GetName(j);
+                                        if (proc_data_name == categoryParameter.values[0])
+                                        {
+                                            var proc_val = stored_proc_reader.GetValue(j);
+
+                                            string dropdownVal = proc_val.ToString();
+                                            dropdownValues.Add(dropdownVal);
+                                        }
+
+                                        if (proc_data_name == categoryParameter.labels[0])
+                                        {
+                                            var proc_label = stored_proc_reader.GetValue(j);
+
+                                            string dropdownLab = proc_label.ToString();
+                                            dropdownLabels.Add(dropdownLab);
+                                        }
+                                    }
+                                }
+                                else //if only one column is returned from the stored procedure, put in both labels and values
+                                {
+                                    var proc_val = stored_proc_reader.GetValue(0);
+
+                                    string dropdownEntry = proc_val.ToString();
+                                    dropdownValues.Add(dropdownEntry);
+                                    dropdownLabels.Add(dropdownEntry);
+                                }
+                            }
+                        }
+                        connection.Close();
+                    }
+
+                    populatedParam.values = dropdownValues;
+                    populatedParam.labels = dropdownLabels;
+
+
+                    return Json(populatedParam);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error Getting Category Data: " + e);
+                return Json("Error Getting Category Data: " + e);
+            }
+        }
+
         public ReportPageDropdownModel GetFoldersForDropdown()
         {
             ReportPageDropdownModel dropdownModel = new ReportPageDropdownModel();
