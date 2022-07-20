@@ -60,22 +60,25 @@
                 "query_type": "Stored Procedure",
                 "query": "rpt_Cash_Tender_Report"
               },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              },
               "Store_Location": {
                 "query_type": "Stored Procedure",
                 "query": "Par_rpt_Store_Locations"
               }
             },
             "parameters": {
-              "Fiscal_Month": {
-                "type": "MultiDropdown",
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month",
-                "value": "Display",
-                "label": "Display"
+              "Start_Date": {
+                "type": "DateTime",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
+              },
+              "End_Date": {
+                "type": "DateTime",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
               },
               "Store_Location": {
                 "type": "MultiDropdown",
@@ -273,14 +276,14 @@
                 "value": "Display",
                 "label": "Display"
               },
-              "Shipped_From_Location": {
+              "Ship_From_Location": {
                 "type": "MultiDropdown",
                 "query_type": "Stored Procedure",
                 "query": "Par_rpt_Store_Locations",
                 "value": "Location_Code",
                 "label": "Location_Name"
               },
-              "Shipped_To_Location": {
+              "Ship_To_Location": {
                 "type": "MultiDropdown",
                 "query_type": "Stored Procedure",
                 "query": "Par_rpt_Store_Locations",
@@ -320,14 +323,14 @@
               },
               "Fiscal_Month": {
                 "query_type": "Stored Procedure",
-                "query": "Par_rpt_Fiscal_Month_Inventory_Receiving"
+                "query": "Par_rpt_Sales_Fiscal_Month"
               }
             },
             "parameters": {
               "Fiscal_Month": {
                 "type": "MultiDropdown",
                 "query_type": "Stored Procedure",
-                "query": "Par_rpt_Fiscal_Month_Inventory_Receiving",
+                "query": "Par_rpt_Sales_Fiscal_Month",
                 "value": "Display",
                 "label": "Display"
               }
@@ -418,14 +421,6 @@
                 "query": "Par_rpt_Store_Locations",
                 "value": "Location_Code",
                 "label": "Location_Name"
-              },
-              "Display_State_Code": {
-                "type": "Dropdown",
-                "query_type": "Fixed",
-                "query": "",
-                "value": "Yes,No",
-                "label": "Yes,No",
-                "default_val": "No"
               }
             }
           },
@@ -871,7 +866,7 @@
               "TransactionType": {
                 "type": "MultiDropdown",
                 "query_type": "Stored Procedure",
-                "query": "dsRMATransactionType",
+                "query": "par_RMATransactionTypes",
                 "value": "TransactionType",
                 "label": "TransactionType"
               },

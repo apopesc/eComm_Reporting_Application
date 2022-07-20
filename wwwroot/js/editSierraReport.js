@@ -103,10 +103,10 @@ $(document).ready(function () {
                 var inputID = this.value;
                 var dynamicParamVal = $('#' + inputID).val();
 
-                if (dynamicParamVal !== null) {
-                    dynamicParams[inputID] = dynamicParamVal.toString();
+                if (dynamicParamVal.includes('selectAll')) {
+                    dynamicParams[inputID] = 'ALL';
                 } else {
-                    dynamicParams[inputID] = dynamicParamVal;
+                    dynamicParams[inputID] = dynamicParamVal.toString();
                 }
 
             });
@@ -155,6 +155,22 @@ $(document).ready(function () {
 
             function errorFunc(error) {
                 alert("Error Saving Report Subscription Data: " + error);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '.multiselect_dynamic', function () {
+
+        var parameterID = $(this).attr('id');
+
+        var selectedValues = $('#' + parameterID).val();
+
+        if (selectedValues.includes('selectAll')) {
+            if (selectedValues.length > 1) {
+                var index = selectedValues.indexOf('selectAll');
+                var deselectValues = selectedValues;
+                deselectValues.splice(index, 1);
+                $('#' + parameterID).multiselect('deselect', deselectValues);
             }
         }
     });
@@ -261,7 +277,9 @@ function createParams(paramData) {
                 dropdown.append(defaultDropdownOption);
             }
 
-            else if (paramData.parameters[i].type == "MultiDropdown") {
+            else if (paramData.parameters[i].type == "MultiDropdown" && (paramData.parameters[i].name != "Class_Number" && paramData.parameters[i].name != "Category")) {
+                var allDropdownOption = $('<option value="selectAll">').text("(ALL)");
+                dropdown.append(allDropdownOption);
                 dropdown.addClass('multiselect_dynamic');
             }
 
@@ -310,11 +328,31 @@ function createParams(paramData) {
         $('#dynamicParams').append(row);
 
         if (paramData.parameters[i].type == "MultiDropdown") {
-
             $('#' + paramData.parameters[i].name).multiselect({
-                nonSelectedText: 'Select a value...',
                 enableCaseInsensitiveFiltering: true,
-                includeSelectAllOption: true
+                buttonText: function (options, select) {
+                    if (options.length > 0) {
+                        var labels = [];
+                        options.each(function () {
+                            if ($(this).attr('label') !== undefined) {
+
+                                if ($(this).attr('value') == "selectAll") {
+                                    labels = [];
+                                    labels.push('(ALL)');
+                                    return false;
+                                } else {
+                                    labels.push($(this).attr('label'));
+                                }
+                            }
+                            else {
+                                labels.push($(this).html());
+                            }
+                        });
+                        return labels.join(', ') + '';
+                    } else {
+                        return 'Select a Value...';
+                    }
+                }
             });
         }
     }
@@ -354,10 +392,18 @@ function selectDynamicParams() {
 
                 if ($("#" + paramName).prop("multiple")) { // Multi Select Box
 
-                    var selectedValues = selectedDynamicParamVals[paramName].split(',');
+                    var selectedValues = '';
 
-                    $("#" + paramName).val(selectedValues);
-                    $("#" + paramName).multiselect('refresh');
+                    if (selectedDynamicParamVals[paramName] == 'ALL' || selectedDynamicParamVals[paramName] == 'All') {
+                        selectedValues = 'selectAll';
+                    } else {
+                        selectedValues = selectedDynamicParamVals[paramName].split(',');
+                    }
+
+                    if (paramName != "Class_Number" && paramName != "Category") { //Not disabled multi-select
+                        $("#" + paramName).val(selectedValues);
+                        $("#" + paramName).multiselect('refresh');
+                    }
 
                 } else { // Single Select Box
                     $("#" + paramName).val(selectedDynamicParamVals[paramName]);
