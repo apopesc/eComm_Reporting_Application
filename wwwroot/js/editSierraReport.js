@@ -268,6 +268,114 @@ $(document).ready(function () {
         }
     });
 
+    $('#dynamicParams').on('change', '#Enter_Brand_Name', function () {
+
+        var brand_pattern = $('#Enter_Brand_Name').val();
+
+        if (brand_pattern.trim() != "") {
+            var controllerUrl = '/SierraReports/GetBrandData';
+
+            var token = $("#RequestVerificationToken").val();
+
+            var reportData = {
+                reportName: $('#sierraReportName option[disabled]:selected').val(),
+                reportFolder: $('#folderName').val()
+            };
+
+            var brandData = {
+                'reportData': reportData,
+                'brandPattern': brand_pattern
+            };
+
+            var json_BrandData = JSON.stringify(brandData);
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
+                dataType: "json",
+                contentType: "application/json",
+                success: successFunc,
+                error: errorFunc,
+                data: json_BrandData
+            });
+
+            function successFunc(dropdownData) {
+
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
+                    var data = [];
+
+                    data.push({ label: "(ALL)", value: "selectAll" });
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Brand").multiselect('dataprovider', data);
+                    $('#Brand').multiselect('enable');
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Brands: " + error);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Enter_Vendor_Name', function () {
+        var vendor_pattern = $('#Enter_Vendor_Name').val();
+
+        if (vendor_pattern.trim() != "") {
+            var controllerUrl = '/SierraReports/GetVendorData';
+
+            var token = $("#RequestVerificationToken").val();
+
+            var reportData = {
+                reportName: $('#sierraReportName option[disabled]:selected').val(),
+                reportFolder: $('#folderName').val()
+            };
+
+            var vendorData = {
+                'reportData': reportData,
+                'vendorPattern': vendor_pattern
+            };
+
+            var json_VendorData = JSON.stringify(vendorData);
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
+                dataType: "json",
+                contentType: "application/json",
+                success: successFunc,
+                error: errorFunc,
+                data: json_VendorData
+            });
+
+            function successFunc(dropdownData) {
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
+                    var data = [];
+
+                    data.push({ label: "(ALL)", value: "selectAll" });
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Vendor").multiselect('dataprovider', data);
+                    $('#Vendor').multiselect('enable');
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Vendors: " + error);
+            }
+        }
+    });
+
     $('#saveSubscription').on('click', '#saveSierraSubscription', function () {
         var subscriptionID;
 
