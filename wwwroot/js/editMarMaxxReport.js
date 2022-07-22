@@ -588,6 +588,32 @@ $(document).ready(function () {
                         } else {
                             dynamicParams[inputID] = dynamicParamVal.toString();
                         }
+                    } else if (inputID == 'Vendor') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParamVal = [];
+                            $("#Vendor option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    dynamicParamVal.push(thisOptionValue);
+                                }
+                            });
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'Brand') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParamVal = [];
+                            $("#Brand option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    dynamicParamVal.push(thisOptionValue);
+                                }
+                            });
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
                     } else {
                         if (dynamicParamVal.includes('selectAll')) {
                             dynamicParams[inputID] = 'ALL';
@@ -674,6 +700,32 @@ $(document).ready(function () {
                 var deselectValues = selectedValues;
                 deselectValues.splice(index, 1);
                 $('#' + parameterID).multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Brand', function () {
+        var selectedBrandValues = $('#Brand').val();
+
+        if (selectedBrandValues.includes('selectAll')) {
+            if (selectedBrandValues.length > 1) {
+                var index = selectedBrandValues.indexOf('selectAll');
+                var deselectValues = selectedBrandValues;
+                deselectValues.splice(index, 1);
+                $('#Brand').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Vendor', function () {
+        var selectedVendorValues = $('#Vendor').val();
+
+        if (selectedVendorValues.includes('selectAll')) {
+            if (selectedVendorValues.length > 1) {
+                var index = selectedVendorValues.indexOf('selectAll');
+                var deselectValues = selectedVendorValues;
+                deselectValues.splice(index, 1);
+                $('#Vendor').multiselect('deselect', deselectValues);
             }
         }
     });
@@ -777,7 +829,7 @@ function createParams(paramData) {
                 dropdown.append(defaultDropdownOption);
             }
 
-            else if (paramData.parameters[i].type == "MultiDropdown" && (paramData.parameters[i].name != "Banner" && paramData.parameters[i].name != "Department_No" && paramData.parameters[i].name != "Class_Number" && paramData.parameters[i].name != "Category")) {
+            else if (paramData.parameters[i].type == "MultiDropdown" && (paramData.parameters[i].name != "Banner" && paramData.parameters[i].name != "Department_No" && paramData.parameters[i].name != "Class_Number" && paramData.parameters[i].name != "Category" && paramData.parameters[i].name != "Brand" && paramData.parameters[i].name != "Vendor")) {
                 var allDropdownOption = $('<option value="selectAll">').text("(ALL)");
                 dropdown.append(allDropdownOption);
                 dropdown.addClass('multiselect_dynamic');
@@ -900,7 +952,7 @@ function selectDynamicParams() {
                         selectedValues = selectedDynamicParamVals[paramName].split(',');
                     }
 
-                    if (paramName != "Department_No" && paramName != "Class_Number" && paramName != "Category") { //Not disabled multi-select
+                    if (paramName != "Department_No" && paramName != "Class_Number" && paramName != "Category" && paramName != "Vendor" && paramName != "Brand") { //Not disabled multi-select
                         $("#" + paramName).val(selectedValues);
                         $("#" + paramName).multiselect('refresh');
                     }
@@ -918,6 +970,137 @@ function selectDynamicParams() {
 
     var selectedReportName = $('#marMaxxReportName option[disabled]:selected').val();
     var selectedFolderName = $('#folderName').val();
+
+    if ("Enter_Vendor_Name" in selectedDynamicParamVals) {
+        if ($('#Enter_Vendor_Name').val().length > 0) {
+
+            var vendor_pattern = $('#Enter_Vendor_Name').val();
+
+            var controllerUrl = '/MarMaxxReports/GetVendorData';
+
+            var token = $("#RequestVerificationToken").val();
+
+            var reportData = {
+                reportName: selectedReportName,
+                reportFolder: selectedFolderName
+            };
+
+            var vendorData = {
+                'reportData': reportData,
+                'vendorPattern': vendor_pattern
+            };
+
+            var json_VendorData = JSON.stringify(vendorData);
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
+                dataType: "json",
+                contentType: "application/json",
+                success: successFunc,
+                error: errorFunc,
+                data: json_VendorData
+            });
+
+            function successFunc(dropdownData) {
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
+                    var data = [];
+
+                    data.push({ label: "(ALL)", value: "selectAll" });
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Vendor").multiselect('dataprovider', data);
+                    var values = selectedDynamicParamVals["Vendor"].split(',');
+
+                    if (values != null && (values[0] == "ALL" || values[0] == "All")) {
+                        values = "selectAll";
+                    }
+
+                    $("#Vendor").val(values);
+                    $("#Vendor").multiselect("refresh");
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Vendors: " + error);
+            }
+
+        } else {
+            $('#Vendor').val(selectedDynamicParamVals["Vendor"]);
+            $("#Vendor").multiselect("refresh");
+        }
+    }
+
+    if ("Enter_Brand_Name" in selectedDynamicParamVals) {
+        if ($('#Enter_Brand_Name').val().length > 0) {
+
+            var brand_pattern = $('#Enter_Brand_Name').val();
+
+            var controllerUrl = '/MarMaxxReports/GetBrandData';
+
+            var token = $("#RequestVerificationToken").val();
+
+            var reportData = {
+                reportName: selectedReportName,
+                reportFolder: selectedFolderName
+            };
+
+            var brandData = {
+                'reportData': reportData,
+                'brandPattern': brand_pattern
+            };
+
+            var json_BrandData = JSON.stringify(brandData);
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
+                dataType: "json",
+                contentType: "application/json",
+                success: successFunc,
+                error: errorFunc,
+                data: json_BrandData
+            });
+
+            function successFunc(dropdownData) {
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
+                    var data = [];
+
+                    data.push({ label: "(ALL)", value: "selectAll" });
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Brand").multiselect('dataprovider', data);
+                    var values = selectedDynamicParamVals["Brand"].split(',');
+
+                    if (values != null && (values[0] == "ALL" || values[0] == "All")) {
+                        values = "selectAll";
+                    }
+
+                    $("#Brand").val(values);
+                    $("#Brand").multiselect("refresh");
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Brands: " + error);
+            }
+
+        } else {
+            $('#Brand').val(selectedDynamicParamVals["Brand"]);
+            $("#Brand").multiselect("refresh");
+        }
+
+    }
 
     if ("Department_No" in selectedDynamicParamVals) {
 

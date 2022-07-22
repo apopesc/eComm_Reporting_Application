@@ -268,6 +268,58 @@ $(document).ready(function () {
         }
     });
 
+    $('#dynamicParams').on('change', '#StoreGroup', function () {
+        var selectedStoreGroupValues = $('#StoreGroup').val();
+
+        if (selectedStoreGroupValues.includes('selectAll')) {
+            if (selectedStoreGroupValues.length > 1) {
+                var index = selectedStoreGroupValues.indexOf('selectAll');
+                var deselectValues = selectedStoreGroupValues;
+                deselectValues.splice(index, 1);
+                $('#StoreGroup').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Location', function () {
+        var selectedLocationValues = $('#Location').val();
+
+        if (selectedLocationValues.includes('selectAll')) {
+            if (selectedLocationValues.length > 1) {
+                var index = selectedLocationValues.indexOf('selectAll');
+                var deselectValues = selectedLocationValues;
+                deselectValues.splice(index, 1);
+                $('#Location').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Brand', function () {
+        var selectedBrandValues = $('#Brand').val();
+
+        if (selectedBrandValues.includes('selectAll')) {
+            if (selectedBrandValues.length > 1) {
+                var index = selectedBrandValues.indexOf('selectAll');
+                var deselectValues = selectedBrandValues;
+                deselectValues.splice(index, 1);
+                $('#Brand').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Vendor', function () {
+        var selectedVendorValues = $('#Vendor').val();
+
+        if (selectedVendorValues.includes('selectAll')) {
+            if (selectedVendorValues.length > 1) {
+                var index = selectedVendorValues.indexOf('selectAll');
+                var deselectValues = selectedVendorValues;
+                deselectValues.splice(index, 1);
+                $('#Vendor').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
     $('#dynamicParams').on('change', '#Enter_Brand_Name', function () {
 
         var brand_pattern = $('#Enter_Brand_Name').val();
@@ -486,6 +538,32 @@ $(document).ready(function () {
                         } else {
                             dynamicParams[inputID] = dynamicParamVal.toString();
                         }
+                    } else if (inputID == 'Vendor') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParamVal = [];
+                            $("#Vendor option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    dynamicParamVal.push(thisOptionValue);
+                                }
+                            });
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'Brand') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParamVal = [];
+                            $("#Brand option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    dynamicParamVal.push(thisOptionValue);
+                                }
+                            });
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
                     } else if (inputID == 'StoreGroup') {
                         if (dynamicParamVal.includes('selectAll')) {
                             dynamicParamVal = [];
@@ -558,7 +636,6 @@ $(document).ready(function () {
             });
 
             function successFunc(returnedData) {
-
                 if (returnedData.result == 'Redirect') {
                     alert(returnedData.message + subscriptionName);
                     window.location = returnedData.url;
@@ -599,9 +676,9 @@ $(document).ready(function () {
             var token = $("#RequestVerificationToken").val();
 
             var reportData = {
-                reportName: $('#hiddenSelectedReport').attr('name'),
-                reportFolder: $('#hiddenSelectedReport').attr('folder')
-            }
+                reportName: $('#sierraReportName option[disabled]:selected').val(),
+                reportFolder: $('#folderName').val()
+            };
 
             $.ajax({
                 type: "POST",
@@ -646,9 +723,9 @@ $(document).ready(function () {
             var token = $("#RequestVerificationToken").val();
 
             var reportData = {
-                reportName: $('#hiddenSelectedReport').attr('name'),
-                reportFolder: $('#hiddenSelectedReport').attr('folder')
-            }
+                reportName: $('#sierraReportName option[disabled]:selected').val(),
+                reportFolder: $('#folderName').val()
+            };
 
             $.ajax({
                 type: "POST",
@@ -931,6 +1008,252 @@ function selectDynamicParams() {
 
     var selectedReportName = $('#sierraReportName option[disabled]:selected').val();
     var selectedFolderName = $('#folderName').val();
+
+    if ("Enter_Vendor_Name" in selectedDynamicParamVals) {
+        if ($('#Enter_Vendor_Name').val().length > 0) {
+
+            var vendor_pattern = $('#Enter_Vendor_Name').val();
+
+            var controllerUrl = '/SierraReports/GetVendorData';
+
+            var token = $("#RequestVerificationToken").val();
+
+            var reportData = {
+                reportName: selectedReportName,
+                reportFolder: selectedFolderName
+            };
+
+            var vendorData = {
+                'reportData': reportData,
+                'vendorPattern': vendor_pattern
+            };
+
+            var json_VendorData = JSON.stringify(vendorData);
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
+                dataType: "json",
+                contentType: "application/json",
+                success: successFunc,
+                error: errorFunc,
+                data: json_VendorData
+            });
+
+            function successFunc(dropdownData) {
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
+                    var data = [];
+
+                    data.push({ label: "(ALL)", value: "selectAll" });
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Vendor").multiselect('dataprovider', data);
+                    var values = selectedDynamicParamVals["Vendor"].split(',');
+
+                    if (values != null && (values[0] == "ALL" || values[0] == "All")) {
+                        values = "selectAll";
+                    }
+
+                    $("#Vendor").val(values);
+                    $("#Vendor").multiselect("refresh");
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Vendors: " + error);
+            }
+
+        } else {
+            $('#Vendor').val(selectedDynamicParamVals["Vendor"]);
+            $("#Vendor").multiselect("refresh");
+        }
+
+    }
+
+    if ("Enter_Brand_Name" in selectedDynamicParamVals) {
+        if ($('#Enter_Brand_Name').val().length > 0) {
+
+            var brand_pattern = $('#Enter_Brand_Name').val();
+
+            var controllerUrl = '/SierraReports/GetBrandData';
+
+            var token = $("#RequestVerificationToken").val();
+
+            var reportData = {
+                reportName: selectedReportName,
+                reportFolder: selectedFolderName
+            };
+
+            var brandData = {
+                'reportData': reportData,
+                'brandPattern': brand_pattern
+            };
+
+            var json_BrandData = JSON.stringify(brandData);
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
+                dataType: "json",
+                contentType: "application/json",
+                success: successFunc,
+                error: errorFunc,
+                data: json_BrandData
+            });
+
+            function successFunc(dropdownData) {
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
+                    var data = [];
+
+                    data.push({ label: "(ALL)", value: "selectAll" });
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Brand").multiselect('dataprovider', data);
+                    var values = selectedDynamicParamVals["Brand"].split(',');
+
+                    if (values != null && (values[0] == "ALL" || values[0] == "All")) {
+                        values = "selectAll";
+                    }
+
+                    $("#Brand").val(values);
+                    $("#Brand").multiselect("refresh");
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Brands: " + error);
+            }
+
+        } else {
+            $('#Brand').val(selectedDynamicParamVals["Brand"]);
+            $("#Brand").multiselect("refresh");
+        }
+
+    }
+
+    if ("StoreGroup" in selectedDynamicParamVals) {
+        var selectedChannelValue = selectedDynamicParamVals["Channel"];
+
+        var controllerUrl = '/SierraReports/GetStoreGroupData';
+
+        var token = $("#RequestVerificationToken").val();
+
+        var reportData = {
+            reportName: selectedReportName,
+            reportFolder: selectedFolderName
+        }
+
+        $.ajax({
+            type: "POST",
+            url: controllerUrl,
+            headers: { 'RequestVerificationToken': token },
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc,
+            data: {
+                'reportData': reportData,
+                'channel': selectedChannelValue
+            }
+        });
+
+        function successFunc(dropdownData) {
+            if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                alert(returnedData);
+            } else {
+                var data = [];
+
+                if (dropdownData.values.length > 1) {
+                    data.push({ label: "(ALL)", value: "selectAll" });
+                }
+
+                for (i = 0; i < dropdownData.values.length; i++) {
+                    data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                }
+
+                $("#StoreGroup").multiselect('dataprovider', data);
+
+                var values = selectedDynamicParamVals["StoreGroup"].split(',');
+
+                if (values != null && (values[0] == "ALL" || values[0] == "All")) {
+                    values = "selectAll";
+                }
+
+                $("#StoreGroup").val(values);
+                $("#StoreGroup").multiselect("refresh");
+            }
+        }
+
+        function errorFunc(error) {
+            alert("Error Retrieving Store Group: " + error);
+        }
+    }
+
+    if ("Location" in selectedDynamicParamVals) {
+        var selectedChannelValue = selectedDynamicParamVals["Channel"];
+
+        var controllerUrl = '/SierraReports/GetLocationData';
+
+        var token = $("#RequestVerificationToken").val();
+
+        var reportData = {
+            reportName: selectedReportName,
+            reportFolder: selectedFolderName
+        }
+
+        $.ajax({
+            type: "POST",
+            url: controllerUrl,
+            headers: { 'RequestVerificationToken': token },
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc,
+            data: {
+                'reportData': reportData,
+                'channel': selectedChannelValue
+            }
+        });
+
+        function successFunc(dropdownData) {
+            if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                alert(returnedData);
+            } else {
+                var data = [];
+
+                if (dropdownData.values.length > 1) {
+                    data.push({ label: "(ALL)", value: "selectAll" });
+                }
+
+                for (i = 0; i < dropdownData.values.length; i++) {
+                    data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                }
+
+                $("#Location").multiselect('dataprovider', data);
+
+                var values = selectedDynamicParamVals["Location"].split(',');
+
+                if (values != null && (values[0] == "ALL" || values[0] == "All")) {
+                    values = "selectAll";
+                }
+
+                $("#Location").val(values);
+                $("#Location").multiselect("refresh");
+            }
+        }
+
+        function errorFunc(error) {
+            alert("Error Retrieving Store Group: " + error);
+        }
+    }
 
     if ("Class_Number" in selectedDynamicParamVals) {
         var selectedDepartmentValues = selectedDynamicParamVals["Department_No"].split(',');

@@ -611,6 +611,58 @@
         }
     });
 
+    $('#dynamicParams').on('change', '#StoreGroup', function () {
+        var selectedStoreGroupValues = $('#StoreGroup').val();
+
+        if (selectedStoreGroupValues.includes('selectAll')) {
+            if (selectedStoreGroupValues.length > 1) {
+                var index = selectedStoreGroupValues.indexOf('selectAll');
+                var deselectValues = selectedStoreGroupValues;
+                deselectValues.splice(index, 1);
+                $('#StoreGroup').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Location', function () {
+        var selectedLocationValues = $('#Location').val();
+
+        if (selectedLocationValues.includes('selectAll')) {
+            if (selectedLocationValues.length > 1) {
+                var index = selectedLocationValues.indexOf('selectAll');
+                var deselectValues = selectedLocationValues;
+                deselectValues.splice(index, 1);
+                $('#Location').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Brand', function () {
+        var selectedBrandValues = $('#Brand').val();
+
+        if (selectedBrandValues.includes('selectAll')) {
+            if (selectedBrandValues.length > 1) {
+                var index = selectedBrandValues.indexOf('selectAll');
+                var deselectValues = selectedBrandValues;
+                deselectValues.splice(index, 1);
+                $('#Brand').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Vendor', function () {
+        var selectedVendorValues = $('#Vendor').val();
+
+        if (selectedVendorValues.includes('selectAll')) {
+            if (selectedVendorValues.length > 1) {
+                var index = selectedVendorValues.indexOf('selectAll');
+                var deselectValues = selectedVendorValues;
+                deselectValues.splice(index, 1);
+                $('#Vendor').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
     $('#dynamicParams').on('change', '#Enter_Brand_Name', function () {
 
         var brand_pattern = $('#Enter_Brand_Name').val();
