@@ -57,8 +57,28 @@
     z-index: 10;
 }
 
+.sierraSubscriptionsEntry_GroupName {
+    min-width: 235px;
+}
+
+.sierraSubscriptionsEntry_ReportName {
+    min-width: 235px;
+}
+
+.sierraSubscriptionsEntry_FileFormat {
+    min-width: 140px;
+}
+
 .sierraSubscriptionsEntry_SubscriptionID, .sierraSubscriptionsEntry_SubscriptionName, .sierraSubscriptionsEntry_ReportName, .sierraSubscriptionsEntry_GroupName, .sierraSubscriptionsEntry_GroupID, .sierraSubscriptionEntry_Dynamic, .sierraSubscriptionsEntry_FileFormat, .sierraSubscriptionsEntry_Schedule {
     text-align: center;
+}
+
+.sierraSubscriptionsEntry_SubscriptionName {
+    min-width: 240px;
+}
+
+.sierraSubscriptionsEntry_GroupID {
+    min-width: 180px;
 }
 
 .sierraSubscriptionsEntry_Icon {

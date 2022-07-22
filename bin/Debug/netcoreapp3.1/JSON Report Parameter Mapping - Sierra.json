@@ -871,7 +871,7 @@
                 "label": "TransactionType"
               },
               "Channel": {
-                "type": "MultiDropdown",
+                "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
                 "value": "Stores,Web,Unknown",
@@ -1147,7 +1147,7 @@
                 "label": "Fiscal_Week_Default"
               },
               "Channel": {
-                "type": "MultiDropdown",
+                "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
                 "value": "Web,Retail",
@@ -1329,7 +1329,7 @@
                 "label": "Fiscal_Week_Default"
               },
               "Channel": {
-                "type": "MultiDropdown",
+                "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
                 "value": "Web,Retail",
@@ -1461,7 +1461,7 @@
                 "default_val": "No"
               },
               "Channel": {
-                "type": "MultiDropdown",
+                "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
                 "value": "Web,Retail",
@@ -1556,7 +1556,7 @@
                 "label": "Fiscal_Week_Default"
               },
               "Channel": {
-                "type": "MultiDropdown",
+                "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
                 "value": "Web,Retail",
@@ -1584,8 +1584,7 @@
                 "value": "Yes,No",
                 "label": "Yes,No",
                 "default_val": "No"
-              },
-              
+              }
             }
           },
           "BCF for Market Travel": {
@@ -1723,7 +1722,7 @@
                 "label": "Fiscal_Week_Default"
               },
               "Channel": {
-                "type": "MultiDropdown",
+                "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
                 "value": "Web,Retail",
@@ -1911,7 +1910,7 @@
                 "label": "Fiscal_Week_Default"
               },
               "Channel": {
-                "type": "MultiDropdown",
+                "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
                 "value": "Web,Retail",
@@ -2124,7 +2123,7 @@
                 "default_val": "No"
               },
               "Channel": {
-                "type": "MultiDropdown",
+                "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
                 "value": "Web,Retail",
@@ -2283,7 +2282,7 @@
                 "label": "Fiscal_Week_Default"
               },
               "Channel": {
-                "type": "MultiDropdown",
+                "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
                 "value": "Web,Retail",
@@ -2466,7 +2465,7 @@
                 "default_val": "Top_10"
               },
               "Channel": {
-                "type": "MultiDropdown",
+                "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
                 "value": "Web,Retail",
@@ -2653,7 +2652,7 @@
                 "default_val": "ALL"
               },
               "Channel": {
-                "type": "MultiDropdown",
+                "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
                 "value": "Web,Stores",
@@ -2844,7 +2843,7 @@
                 "default_val": "ALL"
               },
               "Channel": {
-                "type": "MultiDropdown",
+                "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
                 "value": "Web,Stores",
@@ -3019,7 +3018,7 @@
                 "default_val": "ALL"
               },
               "Channel": {
-                "type": "MultiDropdown",
+                "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
                 "value": "Web,Stores",
@@ -3194,7 +3193,7 @@
                 "default_val": "ALL"
               },
               "Channel": {
-                "type": "MultiDropdown",
+                "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
                 "value": "Web,Stores",

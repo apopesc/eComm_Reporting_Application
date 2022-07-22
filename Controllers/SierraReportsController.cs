@@ -1207,6 +1207,204 @@ namespace eComm_Reporting_Application.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult GetStoreGroupData([Bind("reportName,reportFolder")] ReportModel reportData, string channel)
+        {
+            try
+            {
+                if (channel == null || channel == "") 
+                {
+                    return Json("Error Getting Store Group Data: Channel is Empty.");
+                }
+                else
+                {
+                    ReportParameterModel local_reportParams = GetReportParameters(reportData);
+
+                    string connectionstring = "";
+                    SqlConnection connection = new SqlConnection();
+                    SqlCommand storedProcQuery = new SqlCommand();
+
+                    Parameter storeGroupParameter = local_reportParams.parameters.Find(x => x.name == "StoreGroup");
+
+                    if (local_reportParams.dataSource == "STP_CMS_DW")
+                    {
+                        connectionstring = configuration.GetConnectionString("STP_CMS_DW");
+                        connection = new SqlConnection(connectionstring);
+                        storedProcQuery = new SqlCommand(storeGroupParameter.query, connection);
+                    }
+
+                    storedProcQuery.CommandType = CommandType.StoredProcedure;
+
+                    storedProcQuery.Parameters.AddWithValue("@Channel", channel);
+
+                    List<string> dropdownValues = new List<string>();
+                    List<string> dropdownLabels = new List<string>();
+
+                    Parameter populatedParam = storeGroupParameter;
+
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                        {
+                            while (stored_proc_reader.Read())
+                            {
+                                var proc_data_length = stored_proc_reader.FieldCount;
+
+                                if (proc_data_length > 1)
+                                {
+                                    for (int j = 0; j < proc_data_length; j++)
+                                    {
+                                        var proc_data_name = stored_proc_reader.GetName(j);
+                                        if (proc_data_name == storeGroupParameter.values[0])
+                                        {
+                                            var proc_val = stored_proc_reader.GetValue(j);
+
+                                            string dropdownVal = proc_val.ToString();
+                                            dropdownValues.Add(dropdownVal);
+                                        }
+
+                                        if (proc_data_name == storeGroupParameter.labels[0])
+                                        {
+                                            var proc_label = stored_proc_reader.GetValue(j);
+
+                                            string dropdownLab = proc_label.ToString();
+                                            dropdownLabels.Add(dropdownLab);
+                                        }
+                                    }
+                                }
+                                else //if only one column is returned from the stored procedure, put in both labels and values
+                                {
+                                    var proc_val = stored_proc_reader.GetValue(0);
+
+                                    string dropdownEntry = proc_val.ToString();
+                                    dropdownValues.Add(dropdownEntry);
+                                    dropdownLabels.Add(dropdownEntry);
+                                }
+                            }
+                        }
+                        connection.Close();
+                    }
+
+                    populatedParam.values = dropdownValues;
+                    populatedParam.labels = dropdownLabels;
+
+                    if(populatedParam.values.Count < 1)
+                    {
+                        populatedParam.values.Add("Web");
+                        populatedParam.labels.Add("Web");
+                    }
+
+                    return Json(populatedParam);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error Getting Store Group Data: " + e);
+                return Json("Error Getting Store Group Data: " + e);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult GetLocationData([Bind("reportName,reportFolder")] ReportModel reportData, string channel)
+        {
+            try
+            {
+                if (channel == null || channel == "")
+                {
+                    return Json("Error Getting Store Group Data: Channel is Empty.");
+                }
+                else
+                {
+                    ReportParameterModel local_reportParams = GetReportParameters(reportData);
+
+                    string connectionstring = "";
+                    SqlConnection connection = new SqlConnection();
+                    SqlCommand storedProcQuery = new SqlCommand();
+
+                    Parameter locationParameter = local_reportParams.parameters.Find(x => x.name == "Location");
+
+                    if (local_reportParams.dataSource == "STP_CMS_DW")
+                    {
+                        connectionstring = configuration.GetConnectionString("STP_CMS_DW");
+                        connection = new SqlConnection(connectionstring);
+                        storedProcQuery = new SqlCommand(locationParameter.query, connection);
+                    }
+
+                    storedProcQuery.CommandType = CommandType.StoredProcedure;
+
+                    storedProcQuery.Parameters.AddWithValue("@Channel", channel);
+
+                    List<string> dropdownValues = new List<string>();
+                    List<string> dropdownLabels = new List<string>();
+
+                    Parameter populatedParam = locationParameter;
+
+                    using (connection)
+                    {
+                        connection.Open();
+                        using (SqlDataReader stored_proc_reader = storedProcQuery.ExecuteReader())
+                        {
+                            while (stored_proc_reader.Read())
+                            {
+                                var proc_data_length = stored_proc_reader.FieldCount;
+
+                                if (proc_data_length > 1)
+                                {
+                                    for (int j = 0; j < proc_data_length; j++)
+                                    {
+                                        var proc_data_name = stored_proc_reader.GetName(j);
+                                        if (proc_data_name == locationParameter.values[0])
+                                        {
+                                            var proc_val = stored_proc_reader.GetValue(j);
+
+                                            string dropdownVal = proc_val.ToString();
+                                            dropdownValues.Add(dropdownVal);
+                                        }
+
+                                        if (proc_data_name == locationParameter.labels[0])
+                                        {
+                                            var proc_label = stored_proc_reader.GetValue(j);
+
+                                            string dropdownLab = proc_label.ToString();
+                                            dropdownLabels.Add(dropdownLab);
+                                        }
+                                    }
+                                }
+                                else //if only one column is returned from the stored procedure, put in both labels and values
+                                {
+                                    var proc_val = stored_proc_reader.GetValue(0);
+
+                                    string dropdownEntry = proc_val.ToString();
+                                    dropdownValues.Add(dropdownEntry);
+                                    dropdownLabels.Add(dropdownEntry);
+                                }
+                            }
+                        }
+                        connection.Close();
+                    }
+
+                    populatedParam.values = dropdownValues;
+                    populatedParam.labels = dropdownLabels;
+
+                    if (populatedParam.values.Count < 1)
+                    {
+                        populatedParam.values.Add("Web");
+                        populatedParam.labels.Add("No Stores");
+                    }
+
+                    return Json(populatedParam);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error Getting Location Data: " + e);
+                return Json("Error Getting Location Data: " + e);
+            }
+        }
+
         public ReportPageDropdownModel GetFoldersForDropdown()
         {
             ReportPageDropdownModel dropdownModel = new ReportPageDropdownModel();

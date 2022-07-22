@@ -257,7 +257,59 @@
                                 });
                                 dynamicParams[inputID] = dynamicParamVal.toString();
                             }
-
+                    
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'Vendor') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParamVal = [];
+                            $("#Vendor option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    dynamicParamVal.push(thisOptionValue);
+                                }
+                            });
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'Brand') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParamVal = [];
+                            $("#Brand option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    dynamicParamVal.push(thisOptionValue);
+                                }
+                            });
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'StoreGroup') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParamVal = [];
+                            $("#StoreGroup option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    dynamicParamVal.push(thisOptionValue);
+                                }
+                            });
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'Location') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParamVal = [];
+                            $("#Location option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    dynamicParamVal.push(thisOptionValue);
+                                }
+                            });
+                            dynamicParams[inputID] = dynamicParamVal.toString();
                         } else {
                             dynamicParams[inputID] = dynamicParamVal.toString();
                         }
@@ -666,6 +718,105 @@
             }
         }
     });
+
+    $('#dynamicParams').on('change', '#Channel', function () {
+
+        var channelVal = $('#Channel').val();
+
+        if (!$('#StoreGroup').length == 0) {
+            var controllerUrl = '/SierraReports/GetStoreGroupData';
+
+            var token = $("#RequestVerificationToken").val();
+
+            var reportData = {
+                reportName: $('#hiddenSelectedReport').attr('name'),
+                reportFolder: $('#hiddenSelectedReport').attr('folder')
+            }
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc,
+                data: {
+                    'reportData': reportData,
+                    'channel': channelVal
+                }
+            });
+
+            function successFunc(dropdownData) {
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
+                    var data = [];
+
+                    if (dropdownData.values.length > 1) {
+                        data.push({ label: "(ALL)", value: "selectAll" });
+                    }
+                    
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#StoreGroup").multiselect('dataprovider', data);
+                    $('#StoreGroup').multiselect('enable');
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Store Group: " + error);
+            }
+        }
+
+        if (!$('#Location').length == 0) {
+            var controllerUrl = '/SierraReports/GetLocationData';
+
+            var token = $("#RequestVerificationToken").val();
+
+            var reportData = {
+                reportName: $('#hiddenSelectedReport').attr('name'),
+                reportFolder: $('#hiddenSelectedReport').attr('folder')
+            }
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc,
+                data: {
+                    'reportData': reportData,
+                    'channel': channelVal
+                }
+            });
+
+            function successFunc(dropdownData) {
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
+                    var data = [];
+
+                    if (dropdownData.values.length > 1) {
+                        data.push({ label: "(ALL)", value: "selectAll" });
+                    }
+
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Location").multiselect('dataprovider', data);
+                    $('#Location').multiselect('enable');
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Store Group: " + error);
+            }
+        }
+    });
 });
 
 function selectedFolder(selectedVal = "") {
@@ -757,7 +908,7 @@ function createParams(paramData) {
                 dropdown.append(defaultDropdownOption);
             }
 
-            else if (paramData.parameters[i].type == "MultiDropdown" && (paramData.parameters[i].name != "Class_Number" && paramData.parameters[i].name != "Category" && paramData.parameters[i].name != "Brand" && paramData.parameters[i].name != "Vendor")) {
+            else if (paramData.parameters[i].type == "MultiDropdown" && (paramData.parameters[i].name != "Class_Number" && paramData.parameters[i].name != "Category" && paramData.parameters[i].name != "Brand" && paramData.parameters[i].name != "Vendor" && paramData.parameters[i].name != "StoreGroup" && paramData.parameters[i].name != "Location")) {
                 var allDropdownOption = $('<option value="selectAll">').text("(ALL)");
                 dropdown.append(allDropdownOption);
                 dropdown.addClass('multiselect_dynamic');
@@ -837,7 +988,7 @@ function createParams(paramData) {
                 }
             });
 
-            if (paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category") {
+            if (paramData.parameters[i].name == "Class_Number" || paramData.parameters[i].name == "Category" || paramData.parameters[i].name == "StoreGroup" || paramData.parameters[i].name == "Location") {
                 $('#' + paramData.parameters[i].name).multiselect('disable');
             }
         }
