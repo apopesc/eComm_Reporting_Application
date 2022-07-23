@@ -1350,7 +1350,7 @@
                 "label": "Expand,Collapse",
                 "default_val": "Collapse"
               },
-              "Combine_Banners": {
+              "Combine_Channels": {
                 "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
@@ -1482,14 +1482,14 @@
                 "label": "Yes,No",
                 "default_val": "No"
               },
-              "Display_PY_Data": {
+              "Display_LY_Data": {
                 "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
                 "value": "Yes,No",
                 "label": "Yes,No",
                 "default_val": "No"
-              },
+              }
               
             }
           },
@@ -1577,7 +1577,7 @@
                 "label": "Yes,No",
                 "default_val": "No"
               },
-              "Display_PY_Data": {
+              "Display_LY_Data": {
                 "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",
@@ -1922,6 +1922,14 @@
                 "query": "par_StoreGroups_by_Channel",
                 "value": "PlanningGroupName",
                 "label": "PlanningGroupName"
+              },
+              "Buy_Type": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Buy_Type",
+                "value": "QualityName",
+                "label": "Quality",
+                "default_val": "selectAll"
               },
               "ExpandOrCollapse": {
                 "type": "Dropdown",
@@ -2803,7 +2811,7 @@
                 "query": "",
                 "value": "Yes,No",
                 "label": "Yes,No",
-                "default_val": "Yes"
+                "default_val": "No"
               },
               "Facility": {
                 "type": "MultiDropdown",
@@ -2978,7 +2986,7 @@
                 "query": "",
                 "value": "Yes,No",
                 "label": "Yes,No",
-                "default_val": "Yes"
+                "default_val": "No"
               },
               "Facility": {
                 "type": "MultiDropdown",
@@ -3153,7 +3161,7 @@
                 "query": "",
                 "value": "Yes,No",
                 "label": "Yes,No",
-                "default_val": "Yes"
+                "default_val": "No"
               },
               "Facility": {
                 "type": "MultiDropdown",
@@ -3233,7 +3241,7 @@
                 "value": "CalendarDate",
                 "label": "CalendarDate"
               },
-              "End_Date": {
+              "Days_Prior": {
                 "type": "Textbox",
                 "query_type": "Fixed",
                 "query": "",
