@@ -5,14 +5,6 @@
         "Return Reserve": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Returns_Reserve_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -41,18 +33,6 @@
         "Shipping and Tracking Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_ShipandTrack_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            },
-            "FiscalMonth": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_SalesMonths"
-            }
           },
           "parameters": {
             "Banner": {
@@ -78,38 +58,18 @@
         "DDS Validation": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "In Line",
-              "query": "BEGIN SELECT S.[Report_Name], COUNT(DISTINCT S.Subscription_Id) AS Subscription_Count, COUNT(DISTINCT E.ExecutionId) AS Execution_Count FROM [dbo].[BCF_Subscriptions_DD] S WITH(NOLOCK) LEFT OUTER JOIN [ReportServer].dbo.ExecutionLog3 E WITH(NOLOCK) ON S.Report_Name collate SQL_Latin1_General_CP1_CI_AS  = SUBSTRING(E.ItemPath, CHARINDEX('/', E.ItemPath,CHARINDEX('/',E.ItemPath)+1)+1, LEN(ItemPath)) AND E.UserName = 'CORP\\TJXASVC-DBSG-SVC-SS' AND Convert(varchar(10),E.TimeStart,111) = DATEADD(wk, DATEDIFF(wk,0,GETDATE()), 0) AND E.ItemPath LIKE '%BCF%' GROUP BY [Report_Name] UNION ALL SELECT S.[Report_Name], COUNT(DISTINCT S.Subscription_Id) AS Subscription_Count, COUNT(DISTINCT E.ExecutionId) AS Execution_Count FROM [dbo].[VPP_Subscriptions_DD] S WITH(NOLOCK) LEFT OUTER JOIN [ReportServer].dbo.ExecutionLog3 E WITH(NOLOCK) --ON S.Report_Name collate SQL_Latin1_General_CP1_CI_AS  = SUBSTRING(E.ItemPath, CHARINDEX('/', E.ItemPath,CHARINDEX('/',E.ItemPath)+1)+1, LEN(ItemPath)) ON (CASE WHEN S.Report_Name = 'VPP by Buy Type' THEN 'Vendor Performance Profitability By BuyType' WHEN S.Report_Name = 'VPP Summary' THEN 'Vendor Performance Profitability Summary' ELSE S.Report_Name END) collate SQL_Latin1_General_CP1_CI_AS  = SUBSTRING(E.ItemPath, CHARINDEX('/', E.ItemPath,CHARINDEX('/',E.ItemPath)+1)+1, LEN(ItemPath)) AND E.UserName = 'CORP\\TJXASVC-DBSG-SVC-SS' AND Convert(varchar(10),E.TimeStart,111) = DATEADD(wk, DATEDIFF(wk,0,GETDATE()), 0) AND E.ItemPath LIKE '%Vendor Performance Profitability%' GROUP BY [Report_Name] UNION ALL SELECT S.[Report_Name], COUNT(DISTINCT S.Subscription_Id) AS Subscription_Count, COUNT(DISTINCT E.ExecutionId) AS Execution_Count FROM [eCom_ReportDB].[dbo].[eComReport_Subscriptions_DD] S WITH(NOLOCK) LEFT OUTER JOIN [ReportServer].dbo.ExecutionLog3 E WITH(NOLOCK) ON CASE WHEN S.Report_Name = 'On Order' THEN 'On Order Report' ELSE S.Report_Name END collate SQL_Latin1_General_CP1_CI_AS  = SUBSTRING(E.ItemPath, CHARINDEX('/', E.ItemPath,CHARINDEX('/',E.ItemPath)+1)+1, LEN(ItemPath)) AND E.UserName = 'CORP\\TJXASVC-DBSG-SVC-SS' AND Convert(varchar(10),E.TimeStart,111) = DATEADD(wk, DATEDIFF(wk,0,GETDATE()), 0) WHERE S.Schedule = 'Weekly' AND S.Is_Active = 'Y' GROUP BY [Report_Name] ORDER BY 1 END ELSE BEGIN SELECT S.[Report_Name], COUNT(DISTINCT S.Subscription_Id) AS Subscription_Count, COUNT(DISTINCT E.ExecutionId) AS Execution_Count FROM [dbo].[BCF_Subscriptions_DD] S WITH(NOLOCK) LEFT OUTER JOIN [ReportServer].dbo.ExecutionLog3 E WITH(NOLOCK) ON S.Report_Name collate SQL_Latin1_General_CP1_CI_AS  = SUBSTRING(E.ItemPath, CHARINDEX('/', E.ItemPath,CHARINDEX('/',E.ItemPath)+1)+1, LEN(ItemPath)) AND E.UserName = 'CORP\\TJXASVC-DBSG-SVC-SS' AND Convert(varchar(10),E.TimeStart,111) = DATEADD(wk, DATEDIFF(wk,0,GETDATE()), 0) AND E.ItemPath LIKE '%BCF%' WHERE S.Schedule = 'Weekly' GROUP BY [Report_Name] UNION ALL SELECT S.[Report_Name], COUNT(DISTINCT S.Subscription_Id) AS Subscription_Count, COUNT(DISTINCT E.ExecutionId) AS Execution_Count FROM [dbo].[VPP_Subscriptions_DD] S WITH(NOLOCK) LEFT OUTER JOIN [ReportServer].dbo.ExecutionLog3 E WITH(NOLOCK) --ON S.Report_Name collate SQL_Latin1_General_CP1_CI_AS  = SUBSTRING(E.ItemPath, CHARINDEX('/', E.ItemPath,CHARINDEX('/',E.ItemPath)+1)+1, LEN(ItemPath)) ON (CASE WHEN S.Report_Name = 'VPP by Buy Type' THEN 'Vendor Performance Profitability By BuyType' WHEN S.Report_Name = 'VPP Summary' THEN 'Vendor Performance Profitability Summary' ELSE S.Report_Name END) collate SQL_Latin1_General_CP1_CI_AS  = SUBSTRING(E.ItemPath, CHARINDEX('/', E.ItemPath,CHARINDEX('/',E.ItemPath)+1)+1, LEN(ItemPath)) AND E.UserName = 'CORP\\TJXASVC-DBSG-SVC-SS' AND Convert(varchar(10),E.TimeStart,111) = DATEADD(wk, DATEDIFF(wk,0,GETDATE()), 0) AND E.ItemPath LIKE '%Vendor Performance Profitability%' WHERE S.Schedule = 'Weekly' GROUP BY [Report_Name] UNION ALL SELECT S.[Report_Name], COUNT(DISTINCT S.Subscription_Id) AS Subscription_Count, COUNT(DISTINCT E.ExecutionId) AS Execution_Count FROM [eCom_ReportDB].[dbo].[eComReport_Subscriptions_DD] S WITH(NOLOCK) LEFT OUTER JOIN [ReportServer].dbo.ExecutionLog3 E WITH(NOLOCK) ON CASE WHEN S.Report_Name = 'On Order' THEN 'On Order Report' ELSE S.Report_Name END collate SQL_Latin1_General_CP1_CI_AS  = SUBSTRING(E.ItemPath, CHARINDEX('/', E.ItemPath,CHARINDEX('/',E.ItemPath)+1)+1, LEN(ItemPath)) AND E.UserName = 'CORP\\TJXASVC-DBSG-SVC-SS' AND Convert(varchar(10),E.TimeStart,111) = DATEADD(wk, DATEDIFF(wk,0,GETDATE()), 0) WHERE S.Schedule = 'Weekly' AND S.Is_Active = 'Y' GROUP BY [Report_Name] ORDER BY 1 END"
-            }
           },
           "parameters": {}
         },
         "In Progress Reports": {
           "data_source": "ReportServerDB",
           "data_sets": {
-            "RunningJobsDS": {
-              "query_type": "In Line",
-              "query": "SELECT RunningJobs.RequestPath ,RunningJobs.StartDate ,Users.UserName ,RunningJobs.ComputerName ,CASE WHEN RunningJobs.JobType = 0 THEN 'Interactive' WHEN RunningJobs.JobType = 1 THEN 'Subscription' ELSE ' ' END AS ReportType ,RunningJobs.Description FROM RunningJobs INNER JOIN Users ON  Users.UserID = RunningJobs.UserId ORDER BY RunningJobs.StartDate DESC"
-            }
           },
           "parameters": {}
         },
         "Report Analysis": {
           "data_source": "ReportServerDB",
           "data_sets": {
-            "SubscriptionDataSet": {
-              "query_type": "In Line",
-              "query": "SELECT ExecutionLog3.ItemPath ,ExecutionLog3.UserName ,COUNT(ExecutionLog3.TimeStart) AS Counts, ROW_NUMBER() OVER(PARTITION BY ExecutionLog3.ItemPath ORDER BY ExecutionLog3.ItemPath,COUNT(ExecutionLog3.TimeStart) DESC) AS [Rank] FROM ExecutionLog3 WHERE CONVERT(varchar(10),ExecutionLog3.TimeStart,111) >= (CASE WHEN @FromDate IS NULL THEN CONVERT(varchar(10),ExecutionLog3.TimeStart,111) ELSE @FromDate END) AND CONVERT(varchar(10),ExecutionLog3.TimeEnd,111) <= (CASE WHEN @ToDate IS NULL THEN CONVERT(varchar(10),ExecutionLog3.TimeEnd,111) ELSE @ToDate END) GROUP BY  ExecutionLog3.ItemPath ,ExecutionLog3.UserName"
-            },
-            "ReportListDataSet": {
-              "query_type": "In Line",
-              "query": "Select Name, Left(Path, Len(Path)-Len(Name)-1) Path, Path as FullPath from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 2"
-            },
-            "FolderListDataSet": {
-              "query_type": "In Line",
-              "query": "Select Right(Path, Len(Path)-1) Folders, Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 1 and ParentID is not NULL"
-            }
           },
           "parameters": {
             "FolderList": {
@@ -145,18 +105,6 @@
         "Report Failures": {
           "data_source": "ReportServerDB",
           "data_sets": {
-            "SubscriptionDataSet": {
-              "query_type": "In Line",
-              "query": "DECLARE @PreviousDateFrom datetime; DECLARE @PreviousDateTo datetime; DECLARE @Today datetime; SET @Today = CONVERT(varchar(10),GETDATE(),111); SET @PreviousDateFrom = @Today; SET @PreviousDateTo = GETDATE(); IF @RunToday = 'Y' BEGIN SELECT ExecutionLog3.ItemPath AS ReportName ,ExecutionLog3.TimeStart ,ExecutionLog3.TimeEnd ,ExecutionLog3.UserName ,dbo.fn_ParseParameters(ExecutionLog3.[Parameters]) Parameters ,ExecutionLog3.Format ,ExecutionLog3.Status ,ExecutionLog3.RequestType ,ExecutionLog3.InstanceName ,CONVERT(varchar(8),(TimeEnd - TimeStart),108) as Duration FROM [dbo].[ExecutionLog3] WHERE ExecutionLog3.Status <> 'rsSuccess' AND ExecutionLog3.TimeStart >= @PreviousDateFrom AND ExecutionLog3.TimeEnd <= @PreviousDateTo AND ExecutionLog3.RequestType IN (SELECT Item FROM dbo.FN_Split_Char (@RequestType, ',')) ORDER BY [dbo].[ExecutionLog3].[TimeStart] desc END ELSE BEGIN SELECT ExecutionLog3.ItemPath AS ReportName ,ExecutionLog3.TimeStart ,ExecutionLog3.TimeEnd ,ExecutionLog3.UserName ,dbo.fn_ParseParameters(ExecutionLog3.[Parameters]) Parameters ,ExecutionLog3.Format ,ExecutionLog3.Status ,ExecutionLog3.RequestType ,ExecutionLog3.InstanceName ,CONVERT(varchar(8),(TimeEnd - TimeStart),108) as Duration FROM [dbo].[ExecutionLog3] WHERE ExecutionLog3.Status <> 'rsSuccess' AND CONVERT(varchar(10),ExecutionLog3.TimeStart,111) >= (CASE WHEN @StartDate IS NULL THEN CONVERT(varchar(10),ExecutionLog3.TimeStart,111) ELSE @StartDate END) AND CONVERT(varchar(10),ExecutionLog3.TimeEnd,111) <= (CASE WHEN @EndDate IS NULL THEN CONVERT(varchar(10),ExecutionLog3.TimeEnd,111) ELSE @EndDate END) AND ExecutionLog3.RequestType IN (SELECT Item FROM dbo.FN_Split_Char (@RequestType, ',')) ORDER BY [dbo].[ExecutionLog3].[TimeStart] desc END"
-            },
-            "ReportListDataSet": {
-              "query_type": "In Line",
-              "query": "Select Name, Left(Path, Len(Path)-Len(Name)-1) Path, Path as FullPath from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 2"
-            },
-            "FolderListDataSet": {
-              "query_type": "In Line",
-              "query": "Select Right(Path, Len(Path)-1) Folders, Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 1 and ParentID is not NULL"
-            }
           },
           "parameters": {
             "FolderList": {
@@ -208,18 +156,6 @@
         "Report History (with Status Filter)": {
           "data_source": "ReportServerDB",
           "data_sets": {
-            "ReportHistoryDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "GetReportHistory"
-            },
-            "ReportListDataSet": {
-              "query_type": "In Line",
-              "query": "SELECT NULL as Name, NULL as Path, NULL as FullPath UNION Select Name, Left(Path, Len(Path)-Len(Name)-1) Path, Path as FullPath from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 2"
-            },
-            "FolderListDataSet": {
-              "query_type": "In Line",
-              "query": "SELECT NULL as Folders, NULL as Path UNION Select Right(Path, Len(Path)-1) Folders, Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 1 and ParentID is not NULL"
-            }
           },
           "parameters": {
             "FolderList": {
@@ -263,18 +199,6 @@
         "Subscription Details": {
           "data_source": "ReportServerDB",
           "data_sets": {
-            "SubscriptionDataSet": {
-              "query_type": "In Line",
-              "query": "IF @Subject IS NULL BEGIN SELECT Catalog.Name as ReportName ,U1.UserName as CreatedBy , Case DeliveryExtension WHEN 'Report Server Email' THEN CASE WHEN LEN(Cast(Subscriptions.ExtensionSettings AS NVARCHAR(Max))) > 3500 THEN NULL ELSE Replace(Replace(SubString(ExtensionSettings,CHARINDEX('Subject</Name><Value>',ExtensionSettings)+21,CHARINDEX('<Name>IncludeLink',ExtensionSettings)-CHARINDEX('Subject</Name><Value>',ExtensionSettings)-62) , '@ReportName',Catalog.Name),'@ExecutionTime',IsNULL(LastRunTime,'')) END ELSE NULL End AS Subject ,Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Cast(Subscriptions.ExtensionSettings AS NVARCHAR(Max)),'<ParameterValues>',''), '<ParameterValue>',''), '</ParameterValue>',''), '<Name>',''), '</Name>',': '), '<Value>',''), '</Value>',' -- '),'</ParameterValues>',''), '@ReportName',Catalog.Name), '@ExecutionTime',IsNULL(LastRunTime,'')) AS ExtensionSettings ,Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Cast(Subscriptions.Parameters AS NVARCHAR(Max)),'<ParameterValues>',''), '<ParameterValue>',''), '</ParameterValue>',''), '<Name>',''), '</Name>',': '), '<Value>',''), '</Value>',' -- '),'</ParameterValues>',''), '<ParameterValues />',''), '<Value />','') Parameters ,Subscriptions.LastStatus ,convert(VARCHAR,Subscriptions.LastRunTime,101) + ' ' + convert(VARCHAR,Subscriptions.LastRunTime,108) LastRunTime ,U2.UserName as ModifiedBy ,convert(VARCHAR,Subscriptions.ModifiedDate,101) + ' ' + convert(VARCHAR,Subscriptions.ModifiedDate,108) ModifiedDate ,Subscriptions.Description ,Subscriptions.DeliveryExtension FROM Subscriptions INNER JOIN dbo.Users U1 ON U1.UserID = OwnerID INNER JOIN dbo.Users U2 ON U2.UserID = ModifiedByID INNER JOIN dbo.Catalog ON ItemID = Report_OID WHERE DataSettings is NULL and DeliveryExtension is not NULL END ELSE BEGIN SELECT Catalog.Name as ReportName ,U1.UserName as CreatedBy , Case DeliveryExtension WHEN 'Report Server Email' THEN CASE WHEN LEN(Cast(Subscriptions.ExtensionSettings AS NVARCHAR(Max))) > 3500 THEN NULL ELSE Replace(Replace(SubString(ExtensionSettings,CHARINDEX('Subject</Name><Value>',ExtensionSettings)+21,CHARINDEX('<Name>IncludeLink',ExtensionSettings)-CHARINDEX('Subject</Name><Value>',ExtensionSettings)-62) , '@ReportName',Catalog.Name),'@ExecutionTime',IsNULL(LastRunTime,'')) END ELSE NULL End AS Subject ,Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Cast(Subscriptions.ExtensionSettings AS NVARCHAR(Max)),'<ParameterValues>',''), '<ParameterValue>',''), '</ParameterValue>',''), '<Name>',''), '</Name>',': '), '<Value>',''), '</Value>',' -- '),'</ParameterValues>',''), '@ReportName',Catalog.Name), '@ExecutionTime',IsNULL(LastRunTime,'')) AS ExtensionSettings ,Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Replace(Cast(Subscriptions.Parameters AS NVARCHAR(Max)),'<ParameterValues>',''), '<ParameterValue>',''), '</ParameterValue>',''), '<Name>',''), '</Name>',': '), '<Value>',''), '</Value>',' -- '),'</ParameterValues>',''), '<ParameterValues />',''), '<Value />','') Parameters ,Subscriptions.LastStatus ,convert(VARCHAR,Subscriptions.LastRunTime,101) + ' ' + convert(VARCHAR,Subscriptions.LastRunTime,108) LastRunTime ,U2.UserName as ModifiedBy ,convert(VARCHAR,Subscriptions.ModifiedDate,101) + ' ' + convert(VARCHAR,Subscriptions.ModifiedDate,108) ModifiedDate ,Subscriptions.Description ,Subscriptions.DeliveryExtension FROM Subscriptions INNER JOIN dbo.Users U1 ON U1.UserID = OwnerID INNER JOIN dbo.Users U2 ON U2.UserID = ModifiedByID INNER JOIN dbo.Catalog ON ItemID = Report_OID WHERE DataSettings is NULL and DeliveryExtension is not NULL and (Case DeliveryExtension WHEN 'Report Server Email' THEN Replace(Replace(SubString(ExtensionSettings,CHARINDEX('Subject</Name><Value>',ExtensionSettings)+21,CHARINDEX('<Name>IncludeLink',ExtensionSettings)-CHARINDEX('Subject</Name><Value>',ExtensionSettings)-62) , '@ReportName',Catalog.Name),'@ExecutionTime',IsNULL(LastRunTime,'')) ELSE NULL End) LIKE '%'+@Subject+'%' END"
-            },
-            "ReportListDataSet": {
-              "query_type": "In Line",
-              "query": "Select Name, Left(Path, Len(Path)-Len(Name)-1) Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 2"
-            },
-            "FolderListDataSet": {
-              "query_type": "In Line",
-              "query": "Select Right(Path, Len(Path)-1) Folders, Path from dbo.Catalog where Path not like '%SubReports%' and Path not like '%Data Sources%' and TYPE = 1 and ParentID is not NULL"
-            }
           },
           "parameters": {
             "FolderList": {
@@ -307,34 +231,6 @@
         "Production Tracker": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Production_Tracker"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingDepartments_By_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "Class": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingClass_By_Banner"
-            },
-            "Category": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingCategory_By_Banner"
-            },
-            "Seasons": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Season"
-            },
-            "Banners": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -409,26 +305,6 @@
         "Week To Date": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Week_To_Date"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingDepartments_By_Banner"
-            },
-            "Class": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingClass_By_Banner"
-            },
-            "Category": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingCategory_By_Banner"
-            },
-            "Banners": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -484,70 +360,6 @@
         "BCF Child SKU By Color": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Child_SKU_By_Color_Report"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Classes": {
-              "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner"
-            },
-            "Categories": {
-              "query_type": "Stored Procedure",
-              "query": "par_Category_by_Banner"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_ClassHeaders_by_Banner"
-            },
-            "Vendors": {
-              "query_type": "Stored Procedure",
-              "query": "par_Vendors"
-            },
-            "Brands": {
-              "query_type": "Stored Procedure",
-              "query": "par_Brands"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_VendorHeaders"
-            },
-            "BrandHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_BrandHeaders"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_CategoryHeaders_by_Banner"
-            },
-            "Trend": {
-              "query_type": "Stored Procedure",
-              "query": "par_Trend"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -659,74 +471,6 @@
         "BCF Detail By Style": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Detail_By_Style_Report"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Classes": {
-              "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner"
-            },
-            "Categories": {
-              "query_type": "Stored Procedure",
-              "query": "par_Category_by_Banner"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_ClassHeaders_by_Banner"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_CategoryHeaders_by_Banner"
-            },
-            "Vendors": {
-              "query_type": "Stored Procedure",
-              "query": "par_Vendors"
-            },
-            "Brands": {
-              "query_type": "Stored Procedure",
-              "query": "par_Brands"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_VendorHeaders"
-            },
-            "BrandHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_BrandHeaders"
-            },
-            "Trend": {
-              "query_type": "Stored Procedure",
-              "query": "par_Trend"
-            },
-            "Season": {
-              "query_type": "Stored Procedure",
-              "query": "par_Season"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -846,70 +590,6 @@
         "BCF Detail By Style Multi Week": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Detail_By_Style_Multi_Week_Report"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Classes": {
-              "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner"
-            },
-            "Categories": {
-              "query_type": "Stored Procedure",
-              "query": "par_Category_by_Banner"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_ClassHeaders_by_Banner"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_CategoryHeaders_by_Banner"
-            },
-            "Vendors": {
-              "query_type": "Stored Procedure",
-              "query": "par_Vendors"
-            },
-            "Brands": {
-              "query_type": "Stored Procedure",
-              "query": "par_Brands"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_VendorHeaders"
-            },
-            "BrandHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_BrandHeaders"
-            },
-            "Trend": {
-              "query_type": "Stored Procedure",
-              "query": "par_Trend"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -1021,38 +701,6 @@
         "BCF Dollars and Units By Department": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Dollars_Units_By_Department"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "Trend": {
-              "query_type": "Stored Procedure",
-              "query": "par_Trend"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -1120,78 +768,6 @@
         "BCF for Market Travel": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_for_Market_Travel"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Classes": {
-              "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner"
-            },
-            "Categories": {
-              "query_type": "Stored Procedure",
-              "query": "par_Category_by_Banner"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_ClassHeaders_by_Banner"
-            },
-            "Vendors": {
-              "query_type": "Stored Procedure",
-              "query": "par_Vendors"
-            },
-            "Brands": {
-              "query_type": "Stored Procedure",
-              "query": "par_Brands"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_VendorHeaders"
-            },
-            "BrandHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_BrandHeaders"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_CategoryHeaders_by_Banner"
-            },
-            "Trend": {
-              "query_type": "Stored Procedure",
-              "query": "par_Trend"
-            },
-            "Buy_Type": {
-              "query_type": "Stored Procedure",
-              "query": "par_BuyTypes"
-            },
-            "Season": {
-              "query_type": "Stored Procedure",
-              "query": "par_Season"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -1311,106 +887,6 @@
         "BCF Mix Master": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingDepartments_By_Banner"
-            },
-            "ReportDataSet_ByBrand": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Dollars_Units_by_Brand"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "Classes": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingClass_by_Banner"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_MatrixOrMechandisingDepartmentHeaders_by_Banners"
-            },
-            "Categories": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingCategory_by_Banner"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_MatrixOrMechandisingCategoryHeaders_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_MatrixOrMechandisingClassHeaders_by_Banner"
-            },
-            "ReportDataset_ByRetailPrice": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Dollars_Units_by_RetailPrice"
-            },
-            "ReportDataset_ByClass": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Dollars_Units_by_Class"
-            },
-            "ReportDataset_ByColor": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Dollars_Units_by_Color"
-            },
-            "ReportDataset_ByCategory": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Dollars_Units_by_Category"
-            },
-            "Brands": {
-              "query_type": "Stored Procedure",
-              "query": "par_Brands"
-            },
-            "BrandHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_BrandHeaders"
-            },
-            "Season": {
-              "query_type": "Stored Procedure",
-              "query": "par_Season"
-            },
-            "Trend": {
-              "query_type": "Stored Procedure",
-              "query": "par_Trend"
-            },
-            "ReportDataset_ByTrend": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Dollars_Units_by_Trend"
-            },
-            "ReportDataSet_ByBuyType": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Dollars_Units_by_Buy_Type"
-            },
-            "Buy_Type": {
-              "query_type": "Stored Procedure",
-              "query": "par_BuyTypes"
-            },
-            "ReportDataset_BySeason": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Dollars_Units_by_Season"
-            },
-            "Vendors": {
-              "query_type": "Stored Procedure",
-              "query": "par_Vendors"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_VendorHeaders"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -1576,70 +1052,6 @@
         "BCF Parent History": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Parent_History"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Classes": {
-              "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner"
-            },
-            "Categories": {
-              "query_type": "Stored Procedure",
-              "query": "par_Category_by_Banner"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_ClassHeaders_by_Banner"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_CategoryHeaders_by_Banner"
-            },
-            "Vendors": {
-              "query_type": "Stored Procedure",
-              "query": "par_Vendors"
-            },
-            "Brands": {
-              "query_type": "Stored Procedure",
-              "query": "par_Brands"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_VendorHeaders"
-            },
-            "BrandHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_BrandHeaders"
-            },
-            "Trend": {
-              "query_type": "Stored Procedure",
-              "query": "par_Trend"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -1737,70 +1149,6 @@
         "BCF Summary Report": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Summary_Report"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Classes": {
-              "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner"
-            },
-            "Categories": {
-              "query_type": "Stored Procedure",
-              "query": "par_Category_by_Banner"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_ClassHeaders_by_Banner"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_CategoryHeaders_by_Banner"
-            },
-            "Vendors": {
-              "query_type": "Stored Procedure",
-              "query": "par_Vendors"
-            },
-            "Brands": {
-              "query_type": "Stored Procedure",
-              "query": "par_Brands"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_VendorHeaders"
-            },
-            "BrandHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_BrandHeaders"
-            },
-            "Trend": {
-              "query_type": "Stored Procedure",
-              "query": "par_Trend"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -1912,74 +1260,6 @@
         "BCF Top Or Bottom N Parent SKU": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Classes": {
-              "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner"
-            },
-            "Categories": {
-              "query_type": "Stored Procedure",
-              "query": "par_Category_by_Banner"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Top_N_ParentSKU_Report"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_ClassHeaders_by_Banner"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_CategoryHeaders_by_Banner"
-            },
-            "Vendors": {
-              "query_type": "Stored Procedure",
-              "query": "par_Vendors"
-            },
-            "Brands": {
-              "query_type": "Stored Procedure",
-              "query": "par_Brands"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_VendorHeaders"
-            },
-            "BrandHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_BrandHeaders"
-            },
-            "Buy_Types": {
-              "query_type": "Stored Procedure",
-              "query": "par_BuyTypes"
-            },
-            "Trend": {
-              "query_type": "Stored Procedure",
-              "query": "par_Trend"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -2107,70 +1387,6 @@
         "On Order Mix Master": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Mix_Master"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "Vendor": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Vendors"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_DepartmentHeaders_by_Banner"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_VendorHeaders"
-            },
-            "BrandHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_BrandHeaders"
-            },
-            "Buyers": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Buyers"
-            },
-            "Brands": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Brands"
-            },
-            "Class": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Class_by_Banner"
-            },
-            "Category": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Category_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_ClassHeaders_by_Banner"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_CategoryHeaders_by_Banner"
-            },
-            "Seasons": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Season"
-            },
-            "Trends": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Trend"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -2283,82 +1499,6 @@
         "On Order Report": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_On_Order"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingDepartments_By_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "Vendor": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Vendors"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_MatrixOrMechandisingDepartmentHeaders"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_VendorHeaders"
-            },
-            "BrandHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_BrandHeaders"
-            },
-            "Buyers": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Buyers"
-            },
-            "Brands": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Brands"
-            },
-            "Class": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingClass_by_Banner"
-            },
-            "Category": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingCategory_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_MatrixOrMechandisingClassHeaders_by_Banner"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_MatrixOrMechandisingCategoryHeaders_by_Banner"
-            },
-            "BuyType": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_BuyType"
-            },
-            "Seasons": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Season"
-            },
-            "Trends": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Trend"
-            },
-            "Status": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT ISNULL(H.Status,'No Status') AS Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER By 1"
-            },
-            "POStatus": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT ISNULL(H.PO_Status ,'No Status') AS PO_Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER BY 1"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -2496,82 +1636,6 @@
         "On Order Summary Report": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_On_Order_Summary"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingDepartments_By_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "Vendor": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Vendors"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_MatrixOrMechandisingDepartmentHeaders_by_Banners"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_VendorHeaders"
-            },
-            "BrandHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_BrandHeaders"
-            },
-            "Buyers": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Buyers"
-            },
-            "Brands": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Brands"
-            },
-            "Class": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingClass_by_Banner"
-            },
-            "Category": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MatrixOrMechandisingCategory_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_MatrixOrMechandisingClassHeaders_by_Banner"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_MatrixOrMechandisingCategoryHeaders_by_Banner"
-            },
-            "BuyType": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_BuyType"
-            },
-            "Seasons": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Season"
-            },
-            "Trends": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Trend"
-            },
-            "Status": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT ISNULL(H.Status,'No Status') AS Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER By 1"
-            },
-            "POStatus": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT ISNULL(H.PO_Status ,'No Status') AS PO_Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER BY 1"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -2701,54 +1765,6 @@
         "Open to Receive": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Open_to_Receive"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "MerchMgr": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MerchMgr"
-            },
-            "Buyer": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Buyers"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_DepartmentHeaders_by_Banner"
-            },
-            "DCCancelMonth": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_CalMonth"
-            },
-            "Divisions": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Divisions"
-            },
-            "Class": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Class_By_Banner"
-            },
-            "Category": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Category_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_ClassHeaders_by_Banner"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_CategoryHeaders_by_Banner"
-            },
-            "Banners": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -2839,58 +1855,6 @@
         "Open to Receive Detail": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Open_to_Receive_Detail"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "MerchMgr": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MerchMgr"
-            },
-            "Buyer": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Buyers"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_DepartmentHeaders_by_Banner"
-            },
-            "DCCancelMonth": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_CalMonth"
-            },
-            "Divisions": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Divisions"
-            },
-            "Class": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Class_By_Banner"
-            },
-            "Category": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Category_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_ClassHeaders_by_Banner"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_CategoryHeaders_by_Banner"
-            },
-            "BuyerHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_BuyerHeaders"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -2994,54 +1958,6 @@
         "Open to Receive Summary": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Open_to_Receive_Summary"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "MerchMgr": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_MerchMgr"
-            },
-            "Buyer": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Buyers"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_DepartmentHeaders_by_Banner"
-            },
-            "Cal_Month": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_CalMonth"
-            },
-            "Divisions": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Divisions"
-            },
-            "Class": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Class_By_Banner"
-            },
-            "Category": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Category_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_ClassHeaders_by_Banner"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_CategoryHeaders_by_Banner"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -3132,62 +2048,6 @@
         "Parents by LP Month": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_PO_by_LP_Month"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "Vendor": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Vendors"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_DepartmentHeaders_by_Banner"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_VendorHeaders"
-            },
-            "BrandHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_BrandHeaders"
-            },
-            "Buyers": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Buyers"
-            },
-            "Brands": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Brands"
-            },
-            "Class": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Class_By_Banner"
-            },
-            "Category": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Category_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_ClassHeaders_by_Banner"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_CategoryHeaders_by_Banner"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -3268,14 +2128,6 @@
         "Partial POs": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Partial_POs_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -3290,14 +2142,6 @@
         "Quarantine Dollars": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Quarantine_Dollars"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -3320,62 +2164,6 @@
         "Unprocessed Holdings Parent Details": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Unprocessed_Holdings_Parent_Details"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "Vendor": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Vendors"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_DepartmentHeaders_by_Banner"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_VendorHeaders"
-            },
-            "BrandHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_BrandHeaders"
-            },
-            "Brands": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Brands"
-            },
-            "Class": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Class_By_Banner"
-            },
-            "Category": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Category_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_ClassHeaders_by_Banner"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_CategoryHeaders_by_Banner"
-            },
-            "Seasons": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Season"
-            },
-            "Trends": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Trend"
-            }
           },
           "parameters": {
             "Banner": {
@@ -3475,14 +2263,6 @@
         "Customer History Detail Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Customer_History_Detail_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -3596,14 +2376,6 @@
         "Customer History Summary Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Customer_History_Summary_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -3668,14 +2440,6 @@
         "GC LookUp Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_GC_LookUp_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -3723,18 +2487,6 @@
         "Daily Stock Ledger Detail - EOM": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Daily_Stock_Ledger_Detail_EOM_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -3778,18 +2530,6 @@
         "Daily Stock Ledger Detail - MP": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Daily_Stock_Ledger_Detail_MP_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -3833,18 +2573,6 @@
         "Daily Stock Ledger Detail - T4G Markdown": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_T4G_Daily_Stock_Ledger_Detail-T4G Markdown_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -3896,18 +2624,6 @@
         "Daily Stock Ledger Reconciliation Totals": {
           "data_source": "eCom_RefDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Daily_Stock_Ledger_Reconciliation_Totals_Report_MP"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            },
-            "Component_Dynamic": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Components_Totals"
-            }
           },
           "parameters": {
             "Banner": {
@@ -3954,14 +2670,6 @@
         "EMAF File": {
           "data_source": "ECD",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_EMAF_File"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -3998,14 +2706,6 @@
         "EMAF Summary Report": {
           "data_source": "ECD",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_EMAF_Summary_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4042,18 +2742,6 @@
         "Exceptions from EMAF to EOM": {
           "data_source": "ECD",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Exceptions_from_EMAF_to_EOM"
-            },
-            "Previous_Day": {
-              "query_type": "In Line",
-              "query": "SELECT CAST(DATEADD(day,-2,GETDATE()) AS Date) AS Previous_Day"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4090,18 +2778,6 @@
         "Exceptions from EOM to EMAF": {
           "data_source": "ECD",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Exceptions_from_EOM_to_EMAF"
-            },
-            "Previous_Day": {
-              "query_type": "In Line",
-              "query": "SELECT CAST(DATEADD(day,-2,GETDATE()) AS Date) AS Previous_Day"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4138,18 +2814,6 @@
         "Exceptions from EOM to Netsuite": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Exceptions_from_EOM_to_Netsuite"
-            },
-            "Previous_Day": {
-              "query_type": "In Line",
-              "query": "SELECT CAST(DATEADD(day,-1,GETDATE()) AS Date) AS Previous_Day"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4186,18 +2850,6 @@
         "Exceptions from Netsuite to EOM": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Exceptions_from_Netsuite_to_EOM"
-            },
-            "Previous_Day": {
-              "query_type": "In Line",
-              "query": "SELECT CAST(DATEADD(day,-1,GETDATE()) AS Date) AS Previous_Day"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4234,14 +2886,6 @@
         "Gift Card Redemption Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_GC_Redemption_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4278,18 +2922,6 @@
         "Manual Settlements in EMAF": {
           "data_source": "ECD",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Manual_Settlements_in_EMAF"
-            },
-            "Previous_Day": {
-              "query_type": "In Line",
-              "query": "SELECT CAST(DATEADD(day,-1,GETDATE()) AS Date) AS Previous_Day"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4326,22 +2958,6 @@
         "Monthly Cross Divisional Report": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Monthly_Cross_Divisional_Report"
-            },
-            "Current_Month": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT [F_Month] + '-' + [F_Year] AS FMonth FROM [Dim_Calendar] WITH(NOLOCK) WHERE CALENDAR_DATE = CAST(GETDATE() AS Date)"
-            },
-            "Fiscal_Month": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_FiscalMonth"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4378,22 +2994,6 @@
         "Monthly Usage Summary": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Monthly_Usage_Summary"
-            },
-            "Current_Month": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT [F_Month] + '-' + [F_Year] AS FMonth FROM [Dim_Calendar] WITH(NOLOCK) WHERE CALENDAR_DATE = CAST(GETDATE() AS Date)"
-            },
-            "Fiscal_Month": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_FiscalMonth"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4431,18 +3031,6 @@
         "Open Gift Card Orders": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Open_Gift_Card_Orders"
-            },
-            "ReportDataset_Summary": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Open_Gift_Card_Orders"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4472,18 +3060,6 @@
         "Out of Balance Report": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Out_of_Balance_Report"
-            },
-            "Previous_Day": {
-              "query_type": "In Line",
-              "query": "SELECT CAST(DATEADD(day,-1,GETDATE()) AS Date) AS Previous_Day"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4520,22 +3096,6 @@
         "Sales by Order Type": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Sales_by_Order_Type"
-            },
-            "Current_Month": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT [F_Month] + '-' + [F_Year] AS FMonth FROM [Dim_Calendar] WITH(NOLOCK) WHERE CALENDAR_DATE = CAST(GETDATE() AS Date)"
-            },
-            "Fiscal_Month": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_FiscalMonth"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4573,18 +3133,6 @@
         "Sales Total": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Sales_Total"
-            },
-            "Previous_Day": {
-              "query_type": "In Line",
-              "query": "SELECT CAST(DATEADD(day,-1,GETDATE()) AS Date) AS Previous_Day"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4621,14 +3169,6 @@
         "Sales Usage by Date": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Sales_Total"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4665,18 +3205,6 @@
         "Settlement Detail Report by ATG Order": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Settlement_Summary_and_Detail_Report"
-            },
-            "Tender_Type": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT Description FROM EOM_A_CREDIT_CARD WITH(NOLOCK) WHERE Mark_for_Deletion = 0 AND COMPANY_ID = 1 UNION SELECT 'Paypal' ORDER BY 1"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4720,18 +3248,6 @@
         "Settlement Detail Report by Invoice": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Settlement_Detail_Report_by_Invoice"
-            },
-            "Tender_Type": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT Description FROM EOM_A_CREDIT_CARD WITH(NOLOCK) WHERE Mark_for_Deletion = 0 AND COMPANY_ID = 1 UNION SELECT 'Paypal' ORDER BY 1"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4775,18 +3291,6 @@
         "Settlement Summary Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Settlement_Summary_and_Detail_Report"
-            },
-            "Tender_Type": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT Description FROM EOM_A_CREDIT_CARD WITH(NOLOCK) WHERE Mark_for_Deletion = 0 AND COMPANY_ID = 1 UNION SELECT 'Paypal' ORDER BY 1"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4830,14 +3334,6 @@
         "SVC Activity Detail Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_SVC_Activity_Detail_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4874,14 +3370,6 @@
         "SVC Activity Summary Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_SVC_Activity_Summary_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -4922,30 +3410,6 @@
         "Digital Website Statistics": {
           "data_source": "eCom_WebAnalytics",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Digital_Site_Statistics"
-            },
-            "ReportDatasetByBanner": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Digital_Site_Statistics"
-            },
-            "ReportDatasetbyPeaks": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Digital_Site_Statistics_Peaks"
-            },
-            "ReportDataset_YOY": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Digital_Site_Statistics_YOY"
-            },
-            "ReportDataset_Holiday": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Digital_Site_Statistics_Holiday"
-            },
-            "ReportDataset_YOYByDate": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Digital_Site_Statistics_YOY_By_Date"
-            }
           },
           "parameters": {
             "Start_Date": {
@@ -4967,100 +3431,24 @@
         "Homegoods Executive Summary": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "rpt_HomegoodsExecutiveSummaryMTDDetailPage": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_HomegoodsExecutiveSummaryMTDDetailPage"
-            },
-            "rpt_HomegoodsExecutiveSummary_Daily": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_HomegoodsExecutiveSummary"
-            },
-            "rpt_HomegoodsExecutiveSummary_WTD": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_HomegoodsExecutiveSummary"
-            },
-            "rpt_HomegoodsExecutiveSummary_MTD": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_HomegoodsExecutiveSummary"
-            },
-            "rpt_HomegoodsExecutiveSummary_YTD": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_HomegoodsExecutiveSummary"
-            },
-            "rpt_HomegoodsExecutiveSummary_QTD": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_HomegoodsExecutiveSummary"
-            }
           },
           "parameters": {}
         },
         "Marshalls Executive Summary": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "rpt_MarshallsExecutiveSummaryMTDDetailPage": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_MarshallsExecutiveSummaryMTDDetailPage"
-            },
-            "rpt_MarshallsExecutiveSummary_Daily": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_MarshallsExecutiveSummary"
-            },
-            "rpt_MarshallsExecutiveSummary_WTD": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_MarshallsExecutiveSummary"
-            },
-            "rpt_MarshallsExecutiveSummary_MTD": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_MarshallsExecutiveSummary"
-            },
-            "rpt_MarshallsExecutiveSummary_YTD": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_MarshallsExecutiveSummary"
-            },
-            "rpt_MarshallsExecutiveSummary_QTD": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_MarshallsExecutiveSummary"
-            }
           },
           "parameters": {}
         },
         "TJMaxx Executive Summary": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "rpt_TJMaxxExecutiveSummaryMTDDetailPage": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_TJMaxxExecutiveSummaryMTDDetailPage"
-            },
-            "rpt_TJMaxxExecutiveSummary_Daily": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_TJMaxxExecutiveSummary"
-            },
-            "rpt_TJMaxxExecutiveSummary_WTD": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_TJMaxxExecutiveSummary"
-            },
-            "rpt_TJMaxxExecutiveSummary_MTD": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_TJMaxxExecutiveSummary"
-            },
-            "rpt_TJMaxxExecutiveSummary_YTD": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_TJMaxxExecutiveSummary"
-            },
-            "rpt_TJMaxxExecutiveSummary_QTD": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_TJMaxxExecutiveSummary"
-            }
           },
           "parameters": {}
         },
         "Order Capacity Report": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Order_Capacity"
-            }
           },
           "parameters": {}
         }
@@ -5071,34 +3459,6 @@
         "Clearance Sales": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Clearance_Sales"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "Department": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Class": {
-              "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -5150,18 +3510,6 @@
         "Clearance Site Inventory": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Clearance_Site_Inventory"
-            },
-            "Department": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -5183,26 +3531,6 @@
         "Inventory Snapshot": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Inventory_Snapshot"
-            },
-            "Department": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_DepartmentHeaders_by_Banner"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -5239,14 +3567,6 @@
         "Live to Web Details": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Live_to_Web_Details"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -5275,38 +3595,6 @@
         "Merchandising Operating Results": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_VPP_Merch_Operating_Results"
-            },
-            "Department": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Class": {
-              "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_DepartmentHeaders_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_ClassHeaders_by_Banner"
-            },
-            "DefaultLPMonth": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT (C.F_MONTH + '-' + C.F_YEAR) AS Default_FMonth FROM Calendar C WITH(NOLOCK)"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -5351,38 +3639,6 @@
         "Merchandising Operating Results - Sales Version": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_VPP_Merch_Operating_Results"
-            },
-            "Department": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Class": {
-              "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_DepartmentHeaders_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_ClassHeaders_by_Banner"
-            },
-            "DefaultLPMonth": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT (C.F_MONTH + '-' + C.F_YEAR) AS Default_FMonth FROM Calendar C WITH(NOLOCK)"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -5419,18 +3675,6 @@
         "MFP Marmaxx Backlog Orders": {
           "data_source": "TJX_MFP_Marmaxx",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_MFP_Marmaxx_Backlog_Orders"
-            },
-            "Fiscal_Dataset": {
-              "query_type": "In Line",
-              "query": "SELECT LEFT([FiscalWeekId],4) AS Fiscal_Year, [FiscalWeekNumber] FROM [TJX_MFP_Marmaxx].[dbo].[FiscalWeek] WITH(NOLOCK) WHERE (DATEADD(wk, DATEDIFF(wk, -1, GETDATE()), -2)) BETWEEN StartDate AND EndDate"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -5467,24 +3711,12 @@
         "MULP Item Search": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "In Line",
-              "query": "EXEC RPT_MULP_ITEM_SEARCH"
-            }
           },
           "parameters": {}
         },
         "MULP Item Search with Sandbox Data": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Mulp_Item_Search_With_SBX_Data"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -5507,34 +3739,6 @@
         "Price Point Profitability By Department and Class": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Price_Point_Profitability_By_Department_and_Class"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -5586,22 +3790,6 @@
         "Price Point Report": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Price_Point_Report"
-            },
-            "Department": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "CalendarOrLP": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_CalMonthOrLadderPlan"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -5661,14 +3849,6 @@
         "Trial Balance Report": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Trial_Balance_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -5697,34 +3877,6 @@
         "Vendor Performance Profitability By BuyType": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Vendor_Performance_Profitability"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -5793,34 +3945,6 @@
         "Vendor Performance Profitability By Department and Class": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Vendor_Performance_Profitability"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -5881,34 +4005,6 @@
         "Vendor Performance Profitability Summary": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Vendor_Performance_Profitability"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -5969,34 +4065,6 @@
         "Vendor Performance Profitability Summary By Brand": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Vendor_Performance_Profitability"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -6061,22 +4129,6 @@
         "Import Receipts": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Import_Receipts_ELC"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "FiscalMonth": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_SalesMonths"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -6105,22 +4157,6 @@
         "Import Receipts Detail": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Import_Receipts_ELC"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "FiscalMonth": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_SalesMonths"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -6168,30 +4204,6 @@
         "Adjustments Report": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Adjustments_Report"
-            },
-            "Reason_Code": {
-              "query_type": "Stored Procedure",
-              "query": "par_Reason_Code"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Classes": {
-              "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner"
-            },
-            "Logical_Warehouses": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT [LOCATION_ID],NAME FROM [dbo].[Locations] WITH(NOLOCK) WHERE [POSTING_BANNER] = 'T' ORDER BY 1"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -6256,14 +4268,6 @@
         "Appeasements Report": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Appeasements_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -6307,14 +4311,6 @@
         "Customer Returns Percentage": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Customer_Return_Percentage_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -6365,26 +4361,6 @@
         "Customer Sales Or Returns Report": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Customer_Sales_or_Report"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "PreviousWeekDates": {
-              "query_type": "In Line",
-              "query": "SELECT * FROM [fn_PrevWeekStartAndEndDates] (GETDATE())"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -6444,14 +4420,6 @@
         "High Value Returns Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_High_Value_Returns_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -6530,14 +4498,6 @@
         "High Value Sales Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_High_Value_Returns_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -6623,22 +4583,6 @@
         "Photo Returns": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Photo_Returns"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "PreviousWeekDates": {
-              "query_type": "In Line",
-              "query": "SELECT * FROM [fn_PrevWeekStartAndEndDates] (GETDATE())"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -6674,26 +4618,6 @@
         "Sales Details by State or City": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Sales_Details_by_State_or_City"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "PreviousWeekDates": {
-              "query_type": "In Line",
-              "query": "SELECT * FROM [fn_PrevWeekStartAndEndDates] (GETDATE())"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -6773,14 +4697,6 @@
         "SKU Retail": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_SKU_Retail"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -6810,18 +4726,6 @@
         "SKU Snapshot": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_SKU_Snapshot"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -6857,14 +4761,6 @@
         "SVC to SVC Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_SVC_Activity_Detail_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -6901,14 +4797,6 @@
         "Top N Customers Detail Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_TopN_Customers_Detail_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -6988,14 +4876,6 @@
         "Top N Customers Summary Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_TopN_Customers_Summary_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -7079,54 +4959,6 @@
         "Late Listing Report": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Late_Listing"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "Vendor": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Vendors"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_DepartmentHeaders_by_Banner"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_VendorHeaders"
-            },
-            "BrandHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_BrandHeaders"
-            },
-            "Buyers": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Buyers"
-            },
-            "Brands": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Brands"
-            },
-            "Status": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT ISNULL(H.Status,'No Status') AS Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER By 1"
-            },
-            "POStatus": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT ISNULL(H.PO_Status ,'No Status') AS PO_Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER BY 1"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -7238,14 +5070,6 @@
         "PO Lookup Report": {
           "data_source": "Transportation",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_PO_LookUp"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -7282,14 +5106,6 @@
         "Reveal Designer Exception Report": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Reveal_Designer_Exception"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -7316,18 +5132,6 @@
         "Do Not Reveal Designer Products": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "DataSet1": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_DoNot_Reveal_Designer_Products"
-            },
-            "DataSet2": {
-              "query_type": "In Line",
-              "query": "select distinct list_item_name from vendor_visibility_restriction"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -7358,14 +5162,6 @@
         "Sales Returns Report - Marketing": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_SalesRetuns_Marketing"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -7406,14 +5202,6 @@
         "Age of Units on Floor": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Aging_of_Units_on_Floor"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -7444,22 +5232,6 @@
         "Age of Units on Floor Detail": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Aging_of_Units_on_Floor_Detail"
-            },
-            "ProcessingType": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT Dept_ProcessingType AS Processing_Type FROM Dim_Departments WITH(NOLOCK) WHERE Dept_ProcessingType IS NOT NULL ORDER BY 1"
-            },
-            "Today": {
-              "query_type": "In Line",
-              "query": "SELECT CONVERT(varchar(20),GETDATE(),111) AS Today"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -7495,14 +5267,6 @@
         "Appeasements by Type Report": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Appeasements_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -7539,10 +5303,6 @@
         "Cancelled Line Report": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Cancelled_Line_Report"
-            }
           },
           "parameters": {
             "Start_Date": {
@@ -7564,10 +5324,6 @@
         "Consume USKU Exceptions Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_USKU_Report"
-            }
           },
           "parameters": {
             "Start_Date": {
@@ -7589,50 +5345,18 @@
         "Cubiscan Exception Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "Report_Dataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Cubiscan_Exception_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {}
         },
         "DC Scheduling Report": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "Report_Dataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_DC_Scheduling_Report"
-            }
           },
           "parameters": {}
         },
         "Deployable": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Operations_Deployable"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "ChartDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Operations_Deployable"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -7677,36 +5401,12 @@
         "Homegoods Dashboard": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Homegoods_Dashboard"
-            }
           },
           "parameters": {}
         },
         "In Yard to Putaway": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Operations_Putaway"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "ChartDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Operations_Putaway"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -7751,26 +5451,6 @@
         "Inbound Detail": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Operations_Inbound_Detail"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "ChartDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Operations_Inbound_Detail"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -7815,38 +5495,18 @@
         "Inventory Comparison Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Inventory_comparison"
-            }
           },
           "parameters": {}
         },
         "Inventory Details by DC": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "Inventory_by_DC": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Inventory_by_DC"
-            }
           },
           "parameters": {}
         },
         "Items Comparison Between Netsuite and WMS": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Item_Comparison"
-            },
-            "Dates": {
-              "query_type": "In Line",
-              "query": "SELECT CAST(DATEADD(day,-180,GETDATE()) AS Date) AS [6_Months_Ago],CAST(DATEADD(day,-2,GETDATE()) AS Date) AS Two_Days_Ago"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -7875,14 +5535,6 @@
         "Keytrol ID Report": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "Inventory_by_DC": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Keytrol_ID"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -7904,22 +5556,6 @@
         "Keytrol Tracking Details": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "Inventory_by_DC": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Keytrol_Tracking_Details"
-            },
-            "Today": {
-              "query_type": "In Line",
-              "query": "SELECT CONVERT(varchar(20),GETDATE(),111) AS Today"
-            },
-            "Department": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Selected_Date": {
@@ -7948,20 +5584,12 @@
         "Keytrol Tracking Summary": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Keytrol_Tracking_Summary"
-            }
           },
           "parameters": {}
         },
         "Low Inventory in Forward Pick": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Low_Inventory_in_Forward_Pick"
-            }
           },
           "parameters": {
             "DCNumber": {
@@ -7976,36 +5604,12 @@
         "Negative Inventory Report": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Negative_Inventory_Report"
-            }
           },
           "parameters": {}
         },
         "Operations Report": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Operations_High_Level_View"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "ChartDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Operations_High_Level_View"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -8050,10 +5654,6 @@
         "Order Pipeline Analysis": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Order_Pipeline_Analysis_Report"
-            }
           },
           "parameters": {
             "Start_Date": {
@@ -8075,14 +5675,6 @@
         "Outstanding Items Report": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Outstanding_Report"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            }
           },
           "parameters": {
             "Ladder_Plan_Date": {
@@ -8120,26 +5712,6 @@
         "Photo": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Operations_Photo"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "ChartDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Operations_Photo"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -8184,18 +5756,6 @@
         "PO Comparison between Netsuite and WMS": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_PO_Comparison"
-            },
-            "Dates": {
-              "query_type": "In Line",
-              "query": "SELECT CAST(DATEADD(day,-180,GETDATE()) AS Date) AS [6_Months_Ago],CAST(DATEADD(day,-2,GETDATE()) AS Date) AS Two_Days_Ago"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -8224,22 +5784,6 @@
         "PO Detail": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Operations_DrillDown"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -8275,50 +5819,6 @@
         "PO Status Detail": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_PO_Status_Detail"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "Class": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Class_By_Banner"
-            },
-            "Category": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Category_by_Banner"
-            },
-            "Vendor": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_Vendors"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_DepartmentHeaders_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_ClassHeaders_by_Banner"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_CategoryHeaders_by_Banner"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_VendorHeaders"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -8398,22 +5898,6 @@
         "PO Velocity Report": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_PO_Velocity"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -8449,26 +5933,6 @@
         "Putaway to Photo Pick": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Operations_PhotoPick"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "ChartDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Operations_PhotoPick"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -8513,22 +5977,6 @@
         "Rejections Report": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Rejections_Report"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -8573,10 +6021,6 @@
         "Ship Alone Ratio": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Cancelled_Line_Report"
-            }
           },
           "parameters": {
             "Start_Date": {
@@ -8598,10 +6042,6 @@
         "Shipment Data by Sku or Order": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Cancelled_Line_Report"
-            }
           },
           "parameters": {
             "Start_Date": {
@@ -8623,10 +6063,6 @@
         "TLOG Lookup Report": {
           "data_source": "ECD",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_TLOG_Lookup_Report"
-            }
           },
           "parameters": {
             "Invoice_Numbers": {
@@ -8641,26 +6077,6 @@
         "Unpickable Items": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataset": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Unpickable_Items"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "LPMonth": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_LPMonth"
-            },
-            "Status": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT ISNULL(H.Status,'No Status') AS Status FROM Dim_PO_Header H WITH(NOLOCK) ORDER By 1"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -8697,42 +6113,6 @@
         "Warehouse Inventory Report": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Warehouse_Inventory_Report"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Class": {
-              "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner"
-            },
-            "Category": {
-              "query_type": "Stored Procedure",
-              "query": "par_Category_by_Banner"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_ClassHeaders_by_Banner"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_CategoryHeaders_by_Banner"
-            },
-            "Business_Unit": {
-              "query_type": "In Line",
-              "query": "SELECT DISTINCT Business_Unit,CAST(Business_Unit AS varchar(20)) + '-' + REPLACE(Description,'Warehouse','') AS Description FROM [dbo].[PFSWeb_BusinessUnit] WITH(NOLOCK) ORDER BY 1"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -8804,14 +6184,6 @@
         "WM Inventory Details Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "Inventory_by_DC": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_WM_Inventory_by_DC"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -8833,10 +6205,6 @@
         "WM Location Header": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "Inventory_by_DC": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_WMSMDA_LOCN_HDR"
-            }
           },
           "parameters": {
             "DCNumber": {
@@ -8851,14 +6219,6 @@
         "WMOS Inventory Transaction Detail Report": {
           "data_source": "eCom_WMSDB",
           "data_sets": {
-            "Inventory_by_DC": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_WMOS_Inventory_Transaction_Detail_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -8898,74 +6258,6 @@
         "BCF Collections Detail By Size By Color": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Detail_By_Style_Report"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Classes": {
-              "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner"
-            },
-            "Categories": {
-              "query_type": "Stored Procedure",
-              "query": "par_Category_by_Banner"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_ClassHeaders_by_Banner"
-            },
-            "Vendors": {
-              "query_type": "Stored Procedure",
-              "query": "par_Vendors"
-            },
-            "Brands": {
-              "query_type": "Stored Procedure",
-              "query": "par_Brands"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_VendorHeaders"
-            },
-            "BrandHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_BrandHeaders"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_CategoryHeaders_by_Banner"
-            },
-            "Trend": {
-              "query_type": "Stored Procedure",
-              "query": "par_Trend"
-            },
-            "Seasons": {
-              "query_type": "Stored Procedure",
-              "query": "par_Season"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -9085,74 +6377,6 @@
         "BCF Detail By Size By Color": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Detail_By_Style_Report"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Classes": {
-              "query_type": "Stored Procedure",
-              "query": "par_Class_Details_by_Banner"
-            },
-            "Categories": {
-              "query_type": "Stored Procedure",
-              "query": "par_Category_by_Banner"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_DepartmentHeaders_by_Banner"
-            },
-            "ClassHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_ClassHeaders_by_Banner"
-            },
-            "Vendors": {
-              "query_type": "Stored Procedure",
-              "query": "par_Vendors"
-            },
-            "Brands": {
-              "query_type": "Stored Procedure",
-              "query": "par_Brands"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_VendorHeaders"
-            },
-            "BrandHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_BrandHeaders"
-            },
-            "CategoryHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_CategoryHeaders_by_Banner"
-            },
-            "Trend": {
-              "query_type": "Stored Procedure",
-              "query": "par_Trend"
-            },
-            "Seasons": {
-              "query_type": "Stored Procedure",
-              "query": "par_Season"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -9272,18 +6496,6 @@
         "Production Tracker Details": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_Detail_By_Style_Report"
-            },
-            "Status": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Status"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -9313,30 +6525,6 @@
         "Year End Size Reporting": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_Year_End_Size_Reporting"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Fiscal_Year": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year"
-            },
-            "FiscalYearDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Year_Default"
-            },
-            "FiscalWeekDefault": {
-              "query_type": "Stored Procedure",
-              "query": "par_Fiscal_Week_Default"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -9398,38 +6586,6 @@
         "eReady Written Report": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_eReady_Written_Report"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Vendors": {
-              "query_type": "Stored Procedure",
-              "query": "par_Vendors"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_VendorHeaders"
-            },
-            "Buy_Type": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_BuyType"
-            },
-            "Buyer": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Buyers"
-            },
-            "FiscalMonth": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_FiscalMonth"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -9520,38 +6676,6 @@
         "eReady PO Breakdown": {
           "data_source": "ReportDataSource",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_BCF_for_Market_Travel"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Vendors": {
-              "query_type": "Stored Procedure",
-              "query": "par_Vendors"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_VendorHeaders"
-            },
-            "Buy_Type": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_BuyType"
-            },
-            "Buyer": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Buyers"
-            },
-            "FiscalMonth": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_FiscalMonth"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -9657,38 +6781,6 @@
         "Vendor Compliance Details Report": {
           "data_source": "eCom_ReportDB",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_VC_Details_Report"
-            },
-            "Departments": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Departments_by_Banner"
-            },
-            "Vendors": {
-              "query_type": "Stored Procedure",
-              "query": "par_Vendors"
-            },
-            "VendorHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_VendorHeaders"
-            },
-            "Buy_Type": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_BuyType"
-            },
-            "Buyer": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_Buyers"
-            },
-            "DepartmentHeaders": {
-              "query_type": "Stored Procedure",
-              "query": "par_rpt_DepartmentHeaders_by_Banner"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -9763,18 +6855,6 @@
         "Vendor Compliance Infraction Trend Summary": {
           "data_source": "VCTool",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_VC_Infraction_Trend_Summary"
-            },
-            "FMonth": {
-              "query_type": "Stored Procedure",
-              "query": "Par_rpt_FiscalMonth"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -9803,14 +6883,6 @@
         "Vendor Compliance PO and Infraction Metrics": {
           "data_source": "VCTool",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_VC_PO_and_Infraction_Metrics"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {
@@ -9825,14 +6897,6 @@
         "Vendor Compliance Summary Report": {
           "data_source": "VCTool",
           "data_sets": {
-            "ReportDataSet": {
-              "query_type": "Stored Procedure",
-              "query": "rpt_VC_Summary_Report"
-            },
-            "Banner": {
-              "query_type": "Stored Procedure",
-              "query": "par_Banner"
-            }
           },
           "parameters": {
             "Banner": {

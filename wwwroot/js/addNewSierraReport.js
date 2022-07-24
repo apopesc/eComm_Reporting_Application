@@ -287,6 +287,19 @@
                         } else {
                             dynamicParams[inputID] = dynamicParamVal.toString();
                         }
+                    } else if (inputID == 'Fiscal_Month') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParamVal = [];
+                            $("#Fiscal_Month option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    dynamicParamVal.push(thisOptionValue);
+                                }
+                            });
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
                     } else if (inputID == 'StoreGroup') {
                         if (dynamicParamVal.includes('selectAll')) {
                             dynamicParamVal = [];

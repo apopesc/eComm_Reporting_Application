@@ -5,14 +5,6 @@
           "Adjusted Sales": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Year": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              }
             },
             "parameters": {
               "Fiscal_Year": {
@@ -27,14 +19,6 @@
           "Aged in Transit Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Facility": {
-                "query_type": "Stored Procedure",
-                "query": "par_Facility"
-              }
             },
             "parameters": {
               "Facility": {
@@ -56,14 +40,6 @@
           "Cash Tender Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "Stored Procedure",
-                "query": "rpt_Cash_Tender_Report"
-              },
-              "Store_Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Store_Locations"
-              }
             },
             "parameters": {
               "Start_Date": {
@@ -93,14 +69,6 @@
           "Credit Card Tender Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              }
             },
             "parameters": {
               "Start_Date": {
@@ -122,18 +90,6 @@
           "Deferred Ship to Customer Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              },
-              "Store_Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Store_Locations"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -156,28 +112,12 @@
           "Deferred Ship to Store": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              }
             },
             "parameters": {}
           },
           "Discount Type Summary": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              },
-              "Store_Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Store_Locations"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -200,14 +140,6 @@
           "Exceptions Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -222,18 +154,6 @@
           "Inventory Adjustments Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              },
-              "Store_Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Store_Locations"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -255,18 +175,6 @@
           "Inventory Billings Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              },
-              "Store_Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Store_Locations"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -295,14 +203,6 @@
           "Inventory Receiving Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -317,14 +217,6 @@
           "Inventory Receiving Report Transactional": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -339,14 +231,6 @@
           "Markdown Capture Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Year": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              }
             },
             "parameters": {
               "Fiscal_Year": {
@@ -361,18 +245,6 @@
           "Non-Merchandise Summary": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              },
-              "Store_Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Store_Locations"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -394,18 +266,6 @@
           "Online and Store Multibranded GC Details": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              },
-              "Store_Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Store_Locations"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -427,18 +287,6 @@
           "Online and Store Sales": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              },
-              "Store_Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Store_Locations"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -468,18 +316,6 @@
           "Online and Store Sales by ZipCode": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              },
-              "Store_Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Store_Locations"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -501,14 +337,6 @@
           "Outstanding Gift Cards": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Store_Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Store_Locations"
-              }
             },
             "parameters": {
               "Store_Location": {
@@ -531,18 +359,6 @@
           "Payment Tender Report for TJX and Merch GC": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              },
-              "Store_Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Store_Locations"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -564,18 +380,6 @@
           "Payment Tender Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              },
-              "Store_Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Store_Locations"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -597,14 +401,6 @@
           "Paypal Tender Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -619,14 +415,6 @@
           "Petty Cash Transactions Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -641,10 +429,6 @@
           "PO Transaction History Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              }
             },
             "parameters": {
               "PONumber": {
@@ -659,14 +443,6 @@
           "Processed Inventory Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Store_Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Store_Locations"
-              }
             },
             "parameters": {
               "Store_Location": {
@@ -681,18 +457,6 @@
           "Promotional and Goodwill Gift Card Insurance": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              },
-              "Store_Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Store_Locations"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -714,18 +478,6 @@
           "Promotional and Goodwill Gift Card Insurance Details": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              },
-              "Store_Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Store_Locations"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -747,14 +499,6 @@
           "Return Express Reconciliation": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -777,18 +521,6 @@
           "Returns by Original Sales Channel": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Fiscal_Month": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Sales_Fiscal_Month"
-              },
-              "Store_Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_rpt_Store_Locations"
-              }
             },
             "parameters": {
               "Fiscal_Month": {
@@ -810,10 +542,6 @@
           "Returns Reserve Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              }
             },
             "parameters": {
               "Start_Date": {
@@ -835,18 +563,6 @@
           "RMA Inventory Weekly": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "dsResults": {
-                "query_type": "Stored Procedure",
-                "query": "rpt_RMAInventory_Weekly_Operations"
-              },
-              "dsRMATransactionType": {
-                "query_type": "Stored Procedure",
-                "query": "par_RMATransactionTypes"
-              }
             },
             "parameters": {
               "Start_Date": {
@@ -891,10 +607,6 @@
           "Shipment Level Detail Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              }
             },
             "parameters": {
               "Start_Date": {
@@ -916,10 +628,6 @@
           "Tax Audit Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              }
             },
             "parameters": {
               "Start_Date": {
@@ -948,10 +656,6 @@
           "Under Allocated Inventory Receiving": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              }
             },
             "parameters": {
               "Start_Date": {
@@ -973,14 +677,6 @@
           "Unprocessed InYard and InTransit Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              },
-              "Facility": {
-                "query_type": "Stored Procedure",
-                "query": "par_Facility"
-              }
             },
             "parameters": {
               "Facility": {
@@ -999,70 +695,6 @@
           "BCF Detail By Style (No Groupings)": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataSet": {
-                "query_type": "Stored Procedure",
-                "query": "rpt_BCF_Detail_By_Style_Report"
-              },
-              "Departments": {
-                "query_type": "Stored Procedure",
-                "query": "par_Departments"
-              },
-              "Classes": {
-                "query_type": "Stored Procedure",
-                "query": "par_Class_Details"
-              },
-              "Categories": {
-                "query_type": "Stored Procedure",
-                "query": "par_Category"
-              },
-              "Fiscal_Year": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year"
-              },
-              "FiscalYearDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year_Default"
-              },
-              "FiscalWeekDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Week_Default"
-              },
-              "DepartmentHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_DepartmentHeaders"
-              },
-              "ClassHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_ClassHeaders"
-              },
-              "CategoryHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_CategoryHeaders"
-              },
-              "Vendors": {
-                "query_type": "Stored Procedure",
-                "query": "par_Vendors"
-              },
-              "Brands": {
-                "query_type": "Stored Procedure",
-                "query": "par_Brands"
-              },
-              "VendorHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_VendorHeaders"
-              },
-              "BrandHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_BrandHeaders"
-              },
-              "Season": {
-                "query_type": "Stored Procedure",
-                "query": "par_Season"
-              },
-              "StoreGroups": {
-                "query_type": "Stored Procedure",
-                "query": "par_StoreGroups_by_Channel"
-              }
             },
             "parameters": {
               "Department_No": {
@@ -1181,70 +813,6 @@
           "BCF Detail By Style and Location": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataSet": {
-                "query_type": "Stored Procedure",
-                "query": "rpt_BCF_Detail_By_Style_Report"
-              },
-              "Departments": {
-                "query_type": "Stored Procedure",
-                "query": "par_Departments"
-              },
-              "Classes": {
-                "query_type": "Stored Procedure",
-                "query": "par_Class_Details"
-              },
-              "Categories": {
-                "query_type": "Stored Procedure",
-                "query": "par_Category"
-              },
-              "Fiscal_Year": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year"
-              },
-              "FiscalYearDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year_Default"
-              },
-              "FiscalWeekDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Week_Default"
-              },
-              "DepartmentHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_DepartmentHeaders"
-              },
-              "ClassHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_ClassHeaders"
-              },
-              "CategoryHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_CategoryHeaders"
-              },
-              "Vendors": {
-                "query_type": "Stored Procedure",
-                "query": "par_Vendors"
-              },
-              "Brands": {
-                "query_type": "Stored Procedure",
-                "query": "par_Brands"
-              },
-              "VendorHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_VendorHeaders"
-              },
-              "BrandHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_BrandHeaders"
-              },
-              "Season": {
-                "query_type": "Stored Procedure",
-                "query": "par_Season"
-              },
-              "Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_Locations"
-              }
             },
             "parameters": {
               "Department_No": {
@@ -1363,50 +931,6 @@
           "BCF Dollars And Units By DCC And Location": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataSet": {
-                "query_type": "Stored Procedure",
-                "query": "rpt_BCF_Detail_By_Style_Report"
-              },
-              "Departments": {
-                "query_type": "Stored Procedure",
-                "query": "par_Departments"
-              },
-              "Classes": {
-                "query_type": "Stored Procedure",
-                "query": "par_Class_Details"
-              },
-              "Categories": {
-                "query_type": "Stored Procedure",
-                "query": "par_Category"
-              },
-              "Fiscal_Year": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year"
-              },
-              "FiscalYearDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year_Default"
-              },
-              "FiscalWeekDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Week_Default"
-              },
-              "DepartmentHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_DepartmentHeaders"
-              },
-              "ClassHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_ClassHeaders"
-              },
-              "CategoryHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_CategoryHeaders"
-              },
-              "Location": {
-                "query_type": "Stored Procedure",
-                "query": "Par_Locations"
-              }
             },
             "parameters": {
               "Department_No": {
@@ -1496,34 +1020,6 @@
           "BCF Dollars And Units By Department": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataSet": {
-                "query_type": "Stored Procedure",
-                "query": "rpt_BCF_Detail_By_Style_Report"
-              },
-              "Departments": {
-                "query_type": "Stored Procedure",
-                "query": "par_Departments"
-              },
-              "Fiscal_Year": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year"
-              },
-              "FiscalYearDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year_Default"
-              },
-              "FiscalWeekDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Week_Default"
-              },
-              "DepartmentHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_DepartmentHeaders"
-              },
-              "StoreGroups": {
-                "query_type": "Stored Procedure",
-                "query": "par_StoreGroups_by_Channel"
-              }
             },
             "parameters": {
               "Department_No": {
@@ -1590,62 +1086,6 @@
           "BCF for Market Travel": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataSet": {
-                "query_type": "Stored Procedure",
-                "query": "rpt_BCF_Detail_By_Style_Report"
-              },
-              "Departments": {
-                "query_type": "Stored Procedure",
-                "query": "par_Departments"
-              },
-              "Classes": {
-                "query_type": "Stored Procedure",
-                "query": "par_Class_Details"
-              },
-              "Categories": {
-                "query_type": "Stored Procedure",
-                "query": "par_Category"
-              },
-              "Fiscal_Year": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year"
-              },
-              "FiscalYearDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year_Default"
-              },
-              "FiscalWeekDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Week_Default"
-              },
-              "DepartmentHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_DepartmentHeaders"
-              },
-              "ClassHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_ClassHeaders"
-              },
-              "CategoryHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_CategoryHeaders"
-              },
-              "Vendors": {
-                "query_type": "Stored Procedure",
-                "query": "par_Vendors"
-              },
-              "Brands": {
-                "query_type": "Stored Procedure",
-                "query": "par_Brands"
-              },
-              "VendorHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_VendorHeaders"
-              },
-              "BrandHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_BrandHeaders"
-              }
             },
             "parameters": {
               "Department_No": {
@@ -1741,70 +1181,6 @@
           "BCF Mix Master": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataSet": {
-                "query_type": "Stored ",
-                "query": ""
-              },
-              "Departments": {
-                "query_type": "Stored Procedure",
-                "query": "par_Departments"
-              },
-              "Classes": {
-                "query_type": "Stored Procedure",
-                "query": "par_Class_Details"
-              },
-              "Categories": {
-                "query_type": "Stored Procedure",
-                "query": "par_Category"
-              },
-              "Fiscal_Year": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year"
-              },
-              "FiscalYearDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year_Default"
-              },
-              "FiscalWeekDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Week_Default"
-              },
-              "DepartmentHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_DepartmentHeaders"
-              },
-              "ClassHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_ClassHeaders"
-              },
-              "CategoryHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_CategoryHeaders"
-              },
-              "Vendors": {
-                "query_type": "Stored Procedure",
-                "query": "par_Vendors"
-              },
-              "Brands": {
-                "query_type": "Stored Procedure",
-                "query": "par_Brands"
-              },
-              "VendorHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_VendorHeaders"
-              },
-              "BrandHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_BrandHeaders"
-              },
-              "Season": {
-                "query_type": "Stored Procedure",
-                "query": "par_Season"
-              },
-              "StoreGroups": {
-                "query_type": "Stored Procedure",
-                "query": "par_StoreGroups_by_Channel"
-              }
             },
             "parameters": {
               "Department_No": {
@@ -1968,70 +1344,6 @@
           "BCF Mix Master by Location": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataSet": {
-                "query_type": "Stored ",
-                "query": ""
-              },
-              "Departments": {
-                "query_type": "Stored Procedure",
-                "query": "par_Departments"
-              },
-              "Classes": {
-                "query_type": "Stored Procedure",
-                "query": "par_Class_Details"
-              },
-              "Categories": {
-                "query_type": "Stored Procedure",
-                "query": "par_Category"
-              },
-              "Fiscal_Year": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year"
-              },
-              "FiscalYearDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year_Default"
-              },
-              "FiscalWeekDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Week_Default"
-              },
-              "DepartmentHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_DepartmentHeaders"
-              },
-              "ClassHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_ClassHeaders"
-              },
-              "CategoryHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_CategoryHeaders"
-              },
-              "Vendors": {
-                "query_type": "Stored Procedure",
-                "query": "par_Vendors"
-              },
-              "Brands": {
-                "query_type": "Stored Procedure",
-                "query": "par_Brands"
-              },
-              "VendorHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_VendorHeaders"
-              },
-              "BrandHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_BrandHeaders"
-              },
-              "Season": {
-                "query_type": "Stored Procedure",
-                "query": "par_Season"
-              },
-              "StoreGroups": {
-                "query_type": "Stored Procedure",
-                "query": "par_StoreGroups_by_Channel"
-              }
             },
             "parameters": {
               "Department_No": {
@@ -2158,62 +1470,6 @@
           "BCF Summary": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataSet": {
-                "query_type": "Stored ",
-                "query": ""
-              },
-              "Departments": {
-                "query_type": "Stored Procedure",
-                "query": "par_Departments"
-              },
-              "Classes": {
-                "query_type": "Stored Procedure",
-                "query": "par_Class_Details"
-              },
-              "Categories": {
-                "query_type": "Stored Procedure",
-                "query": "par_Category"
-              },
-              "Fiscal_Year": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year"
-              },
-              "FiscalYearDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year_Default"
-              },
-              "FiscalWeekDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Week_Default"
-              },
-              "DepartmentHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_DepartmentHeaders"
-              },
-              "ClassHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_ClassHeaders"
-              },
-              "CategoryHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_CategoryHeaders"
-              },
-              "Vendors": {
-                "query_type": "Stored Procedure",
-                "query": "par_Vendors"
-              },
-              "Brands": {
-                "query_type": "Stored Procedure",
-                "query": "par_Brands"
-              },
-              "VendorHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_VendorHeaders"
-              },
-              "BrandHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_BrandHeaders"
-              }
             },
             "parameters": {
               "Department_No": {
@@ -2317,62 +1573,6 @@
           "BCF Top Or Bottom N Parent SKU": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataSet": {
-                "query_type": "Stored Procedure",
-                "query": ""
-              },
-              "Departments": {
-                "query_type": "Stored Procedure",
-                "query": "par_Departments"
-              },
-              "Classes": {
-                "query_type": "Stored Procedure",
-                "query": "par_Class_Details"
-              },
-              "Categories": {
-                "query_type": "Stored Procedure",
-                "query": "par_Category"
-              },
-              "Fiscal_Year": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year"
-              },
-              "FiscalYearDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year_Default"
-              },
-              "FiscalWeekDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Week_Default"
-              },
-              "DepartmentHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_DepartmentHeaders"
-              },
-              "ClassHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_ClassHeaders"
-              },
-              "CategoryHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_CategoryHeaders"
-              },
-              "Vendors": {
-                "query_type": "Stored Procedure",
-                "query": "par_Vendors"
-              },
-              "Brands": {
-                "query_type": "Stored Procedure",
-                "query": "par_Brands"
-              },
-              "VendorHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_VendorHeaders"
-              },
-              "BrandHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_BrandHeaders"
-              }
             },
             "parameters": {
               "Department_No": {
@@ -2492,82 +1692,18 @@
           "DCC Sync Between Netsuite and OMS": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              }
             },
             "parameters": {}
           },
           "Non Saleable Bin": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              }
             },
             "parameters": {}
           },
           "On Order Mix Master": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataSet": {
-                "query_type": "Stored Procedure",
-                "query": ""
-              },
-              "Departments": {
-                "query_type": "Stored Procedure",
-                "query": "par_Departments"
-              },
-              "Classes": {
-                "query_type": "Stored Procedure",
-                "query": "par_Class_Details"
-              },
-              "Categories": {
-                "query_type": "Stored Procedure",
-                "query": "par_Category"
-              },
-              "Fiscal_Year": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year"
-              },
-              "FiscalYearDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year_Default"
-              },
-              "FiscalWeekDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Week_Default"
-              },
-              "DepartmentHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_DepartmentHeaders"
-              },
-              "ClassHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_ClassHeaders"
-              },
-              "CategoryHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_CategoryHeaders"
-              },
-              "Vendors": {
-                "query_type": "Stored Procedure",
-                "query": "par_Vendors"
-              },
-              "Brands": {
-                "query_type": "Stored Procedure",
-                "query": "par_Brands"
-              },
-              "VendorHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_VendorHeaders"
-              },
-              "BrandHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_BrandHeaders"
-              }
             },
             "parameters": {
               "Department_No": {
@@ -2695,62 +1831,6 @@
           "On Order Report": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataSet": {
-                "query_type": "Stored Procedure",
-                "query": ""
-              },
-              "Departments": {
-                "query_type": "Stored Procedure",
-                "query": "par_Departments"
-              },
-              "Classes": {
-                "query_type": "Stored Procedure",
-                "query": "par_Class_Details"
-              },
-              "Categories": {
-                "query_type": "Stored Procedure",
-                "query": "par_Category"
-              },
-              "Fiscal_Year": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year"
-              },
-              "FiscalYearDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year_Default"
-              },
-              "FiscalWeekDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Week_Default"
-              },
-              "DepartmentHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_DepartmentHeaders"
-              },
-              "ClassHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_ClassHeaders"
-              },
-              "CategoryHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_CategoryHeaders"
-              },
-              "Vendors": {
-                "query_type": "Stored Procedure",
-                "query": "par_Vendors"
-              },
-              "Brands": {
-                "query_type": "Stored Procedure",
-                "query": "par_Brands"
-              },
-              "VendorHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_VendorHeaders"
-              },
-              "BrandHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_BrandHeaders"
-              }
             },
             "parameters": {
               "Department_No": {
@@ -2870,62 +1950,6 @@
           "On Order Report (No Groupings)": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataSet": {
-                "query_type": "Stored Procedure",
-                "query": ""
-              },
-              "Departments": {
-                "query_type": "Stored Procedure",
-                "query": "par_Departments"
-              },
-              "Classes": {
-                "query_type": "Stored Procedure",
-                "query": "par_Class_Details"
-              },
-              "Categories": {
-                "query_type": "Stored Procedure",
-                "query": "par_Category"
-              },
-              "Fiscal_Year": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year"
-              },
-              "FiscalYearDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year_Default"
-              },
-              "FiscalWeekDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Week_Default"
-              },
-              "DepartmentHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_DepartmentHeaders"
-              },
-              "ClassHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_ClassHeaders"
-              },
-              "CategoryHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_CategoryHeaders"
-              },
-              "Vendors": {
-                "query_type": "Stored Procedure",
-                "query": "par_Vendors"
-              },
-              "Brands": {
-                "query_type": "Stored Procedure",
-                "query": "par_Brands"
-              },
-              "VendorHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_VendorHeaders"
-              },
-              "BrandHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_BrandHeaders"
-              }
             },
             "parameters": {
               "Department_No": {
@@ -3045,62 +2069,6 @@
           "On Order Summary": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataSet": {
-                "query_type": "Stored Procedure",
-                "query": ""
-              },
-              "Departments": {
-                "query_type": "Stored Procedure",
-                "query": "par_Departments"
-              },
-              "Classes": {
-                "query_type": "Stored Procedure",
-                "query": "par_Class_Details"
-              },
-              "Categories": {
-                "query_type": "Stored Procedure",
-                "query": "par_Category"
-              },
-              "Fiscal_Year": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year"
-              },
-              "FiscalYearDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Year_Default"
-              },
-              "FiscalWeekDefault": {
-                "query_type": "Stored Procedure",
-                "query": "par_Fiscal_Week_Default"
-              },
-              "DepartmentHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_DepartmentHeaders"
-              },
-              "ClassHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_ClassHeaders"
-              },
-              "CategoryHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_CategoryHeaders"
-              },
-              "Vendors": {
-                "query_type": "Stored Procedure",
-                "query": "par_Vendors"
-              },
-              "Brands": {
-                "query_type": "Stored Procedure",
-                "query": "par_Brands"
-              },
-              "VendorHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_VendorHeaders"
-              },
-              "BrandHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_BrandHeaders"
-              }
             },
             "parameters": {
               "Department_No": {
@@ -3228,10 +2196,6 @@
           "Royalty Brands Purchase Orders": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataset": {
-                "query_type": "",
-                "query": ""
-              }
             },
             "parameters": {
               "Extract_Date": {
@@ -3253,18 +2217,6 @@
           "Web Orders Returned InStores": {
             "data_source": "STP_CMS_DW",
             "data_sets": {
-              "ReportDataSet": {
-                "query_type": "Stored Procedure",
-                "query": ""
-              },
-              "Departments": {
-                "query_type": "Stored Procedure",
-                "query": "par_Departments"
-              },
-              "DepartmentHeaders": {
-                "query_type": "Stored Procedure",
-                "query": "par_DepartmentHeaders"
-              }
             },
             "parameters": {
               "Department_No": {
