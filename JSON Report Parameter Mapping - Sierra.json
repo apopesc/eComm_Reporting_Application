@@ -690,6 +690,450 @@
           }
         }
       },
+      "Finance Control": {
+        "reports": {
+          "Items Sold from Unreceived Pallets": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+            },
+            "parameters": {
+              "Start_Date": {
+                "type": "DateTime",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
+              },
+              "End_Date": {
+                "type": "DateTime",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "",
+                "label": ""
+              }
+            }
+          },
+          "MPA Inventory Analysis Detail": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+            },
+            "parameters": {
+              "Fiscal_Week": {
+                "type": "Dropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_rpt_FiscalWeekFilter",
+                "value": "FiscalWeekBeginDate",
+                "label": "FiscalWeekFilterLabel"
+              },
+              "Location_Name": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_locations",
+                "value": "Location_Code",
+                "label": "Location_Name"
+              },
+              "Location_Group": {
+                "type": "MultiDropdown",
+                "query_type": "In Line",
+                "query": "SELECT DISTINCT LocationGroup FROM (Values ('Retail'),('Web')) l (LocationGroup)",
+                "value": "LocationGroup",
+                "label": "LocationGroup"
+              },
+              "Department_No": {
+                "type": "MultiDropdown",
+                "query_type": "In Line",
+                "query": "select Distinct DepartmentCode,DepartmentName ,(CASE WHEN DepartmentName = '' THEN 1 ELSE 0 END) from DimDepartment with (NoLock) Order by (CASE WHEN DepartmentName = '' THEN 1 ELSE 0 END), DepartmentName",
+                "value": "DepartmentCode",
+                "label": "DepartmentName"
+              },
+              "Markdown_Cycle": {
+                "type": "MultiDropdown",
+                "query_type": "In Line",
+                "query": "SELECT DISTINCT [Markdown_Cycle] = COALESCE(CASE [Cycle] WHEN 1 THEN 'Cycle One' WHEN 2 THEN 'Cycle Two' ELSE CONVERT(CHAR(9),[Cycle]) END, 'Unknown') FROM [STP_CMS_DW].[dbo].[DeptCycles] DC WITH (NOLOCK) UNION SELECT 'Unknown'",
+                "value": "Markdown_Cycle",
+                "label": "Markdown_Cycle"
+              },
+              "Markdown_Flag": {
+                "type": "MultiDropdown",
+                "query_type": "In Line",
+                "query": "SELECT DISTINCT MarkdownFlag FROM (Values ('Full Price'),('Markdown')) M (MarkdownFlag )",
+                "value": "MarkdownFlag",
+                "label": "MarkdownFlag"
+              },
+              "Season_Code": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Season",
+                "value": "Season",
+                "label": "Season"
+              },
+              "Year_Flag": {
+                "type": "MultiDropdown",
+                "query_type": "In Line",
+                "query": "SELECT DISTINCT YearFlag FROM (Values ('TY'),('LY')) M (YearFlag )",
+                "value": "YearFlag",
+                "label": "YearFlag"
+              }
+            }
+          },
+          "MPA Inventory Analysis YoY": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+            },
+            "parameters": {
+              "Fiscal_Week": {
+                "type": "Dropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_rpt_FiscalWeekFilter",
+                "value": "FiscalWeekBeginDate",
+                "label": "FiscalWeekFilterLabel"
+              },
+              "Location_Name": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_locations",
+                "value": "Location_Code",
+                "label": "Location_Name"
+              },
+              "Location_Group": {
+                "type": "MultiDropdown",
+                "query_type": "In Line",
+                "query": "SELECT DISTINCT LocationGroup FROM (Values ('Retail'),('Web')) l (LocationGroup)",
+                "value": "LocationGroup",
+                "label": "LocationGroup"
+              },
+              "Department_No": {
+                "type": "MultiDropdown",
+                "query_type": "In Line",
+                "query": "select Distinct DepartmentCode,DepartmentName ,(CASE WHEN DepartmentName = '' THEN 1 ELSE 0 END) from DimDepartment with (NoLock) Order by (CASE WHEN DepartmentName = '' THEN 1 ELSE 0 END), DepartmentName",
+                "value": "DepartmentCode",
+                "label": "DepartmentName"
+              }
+            }
+          },
+          "Sales by Location and Department": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+            },
+            "parameters": {
+              "Fiscal_Year": {
+                "type": "Dropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Fiscal_Year",
+                "value": "FISCAL_YEAR",
+                "label": "FISCAL_YEAR",
+                "default_val": "2023"
+              },
+              "FW_Start": {
+                "type": "Textbox",
+                "query_type": "Stored Procedure",
+                "query": "par_Fiscal_Week_Default",
+                "value": "Fiscal_Week_Default",
+                "label": "Fiscal_Week_Default"
+              },
+              "FW_End": {
+                "type": "Textbox",
+                "query_type": "Stored Procedure",
+                "query": "par_Fiscal_Week_Default",
+                "value": "Fiscal_Week_Default",
+                "label": "Fiscal_Week_Default"
+              },
+              "Transaction_Type": {
+                "type": "MultiDropdown",
+                "query_type": "In Line",
+                "query": "SELECT [TransactionTypeName] FROM [dbo].[DimSalesInventoryTransactionTypeReference] WITH(NOLOCK) WHERE ([TransactionTypeName] LIKE '%Sale%' OR [TransactionTypeName] LIKE '%Return%')",
+                "value": "TransactionTypeName",
+                "label": "TransactionTypeName",
+                "default_val": "selectAll"
+              }
+            }
+          },
+          "Sierra In-Distro To Stores": { 
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+            },
+            "parameters": {
+              "Facility": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Facility",
+                "value": "DimFacilityID",
+                "label": "FacilityName"
+              }
+            }
+          },
+          "Sierra Pallets Not Received in Stores": { 
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+            },
+            "parameters": {
+              "Facility": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Facility",
+                "value": "DimFacilityID",
+                "label": "FacilityName"
+              }
+            }
+          },
+          "Vendor Performance Profitability By BuyType": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+            },
+            "parameters": {
+              "Department_No": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Departments",
+                "value": "Department_Number",
+                "label": "Department"
+              },
+              "Fiscal_Year": {
+                "type": "Dropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Fiscal_Year",
+                "value": "FISCAL_YEAR",
+                "label": "FISCAL_YEAR",
+                "default_val": "2023"
+              },
+              "FW_End": {
+                "type": "Textbox",
+                "query_type": "Stored Procedure",
+                "query": "par_Fiscal_Week_Default",
+                "value": "Fiscal_Week_Default",
+                "label": "Fiscal_Week_Default"
+              },
+              "Channel": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Web,Stores",
+                "label": "Web,Stores"
+              },
+              "ExpandOrCollapse": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Expand,Collapse",
+                "label": "Expand,Collapse",
+                "default_val": "Expand"
+              },
+              "Combine_Channels": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Yes,No",
+                "label": "Yes,No",
+                "default_val": "No"
+              },
+              "Display_LY_Data": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Yes,No",
+                "label": "Yes,No",
+                "default_val": "No"
+              },
+              "Display_QTD_Data": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Yes,No",
+                "label": "Yes,No",
+                "default_val": "No"
+              }
+            }
+          },
+          "Vendor Performance Profitability By Department and Class": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+            },
+            "parameters": {
+              "Channel": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Web,Stores",
+                "label": "Web,Stores"
+              },
+              "Department_No": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Departments",
+                "value": "Department_Number",
+                "label": "Department"
+              },
+              "Fiscal_Year": {
+                "type": "Dropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Fiscal_Year",
+                "value": "FISCAL_YEAR",
+                "label": "FISCAL_YEAR",
+                "default_val": "2023"
+              },
+              "FW_End": {
+                "type": "Textbox",
+                "query_type": "Stored Procedure",
+                "query": "par_Fiscal_Week_Default",
+                "value": "Fiscal_Week_Default",
+                "label": "Fiscal_Week_Default"
+              },
+              "ExpandOrCollapse": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Expand,Collapse",
+                "label": "Expand,Collapse",
+                "default_val": "Collapse"
+              },
+              "Combine_Channels": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Yes,No",
+                "label": "Yes,No",
+                "default_val": "No"
+              },
+              "Display_LY_Data": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Yes,No",
+                "label": "Yes,No",
+                "default_val": "No"
+              },
+              "Display_QTD_Data": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Yes,No",
+                "label": "Yes,No",
+                "default_val": "No"
+              }
+            }
+          },
+          "Vendor Performance Profitability Summary": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+            },
+            "parameters": {
+              "Channel": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Web,Stores",
+                "label": "Web,Stores"
+              },
+              "Department_No": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Departments",
+                "value": "Department_Number",
+                "label": "Department"
+              },
+              "Fiscal_Year": {
+                "type": "Dropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Fiscal_Year",
+                "value": "FISCAL_YEAR",
+                "label": "FISCAL_YEAR",
+                "default_val": "2023"
+              },
+              "FW_End": {
+                "type": "Textbox",
+                "query_type": "Stored Procedure",
+                "query": "par_Fiscal_Week_Default",
+                "value": "Fiscal_Week_Default",
+                "label": "Fiscal_Week_Default"
+              },
+              "Combine_Channels": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Yes,No",
+                "label": "Yes,No",
+                "default_val": "No"
+              },
+              "Display_LY_Data": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Yes,No",
+                "label": "Yes,No",
+                "default_val": "No"
+              },
+              "Display_QTD_Data": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Yes,No",
+                "label": "Yes,No",
+                "default_val": "No"
+              }
+            }
+          },
+          "Vendor Performance Profitability By Brand": {
+            "data_source": "STP_CMS_DW",
+            "data_sets": {
+            },
+            "parameters": {
+              "Channel": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Web,Stores",
+                "label": "Web,Stores"
+              },
+              "Department_No": {
+                "type": "MultiDropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Departments",
+                "value": "Department_Number",
+                "label": "Department"
+              },
+              "Fiscal_Year": {
+                "type": "Dropdown",
+                "query_type": "Stored Procedure",
+                "query": "par_Fiscal_Year",
+                "value": "FISCAL_YEAR",
+                "label": "FISCAL_YEAR",
+                "default_val": "2023"
+              },
+              "FW_End": {
+                "type": "Textbox",
+                "query_type": "Stored Procedure",
+                "query": "par_Fiscal_Week_Default",
+                "value": "Fiscal_Week_Default",
+                "label": "Fiscal_Week_Default"
+              },
+              "Combine_Channels": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Yes,No",
+                "label": "Yes,No",
+                "default_val": "No"
+              },
+              "Display_LY_Data": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Yes,No",
+                "label": "Yes,No",
+                "default_val": "No"
+              },
+              "Display_QTD_Data": {
+                "type": "Dropdown",
+                "query_type": "Fixed",
+                "query": "",
+                "value": "Yes,No",
+                "label": "Yes,No",
+                "default_val": "No"
+              }
+            }
+          }
+        }
+      },
       "STP Buyer Reports": {
         "reports": {
           "BCF Detail By Style (No Groupings)": {
@@ -763,7 +1207,7 @@
                 "value": "FISCAL_YEAR",
                 "label": "FISCAL_YEAR",
                 "default_val": "2023"
-              },            
+              },
               "FW_Start": {
                 "type": "Textbox",
                 "query_type": "Stored Procedure",
@@ -800,7 +1244,7 @@
                 "label": "Expand,Collapse",
                 "default_val": "Collapse"
               },
-              "Combine_Banners": {
+              "Combine_Channels": {
                 "type": "Dropdown",
                 "query_type": "Fixed",
                 "query": "",

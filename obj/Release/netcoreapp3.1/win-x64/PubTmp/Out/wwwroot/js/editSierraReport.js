@@ -63,6 +63,371 @@ $(document).ready(function () {
         alert("Can't find report/folder. Please delete this report subscription record and create a new one to use updated report data.");
     }
 
+    $('#dynamicParams').on('change', '#Department_No', function () {
+        if ($('#Class_Number').length) {
+            if ($('#Department_No :selected').length == 0) {
+
+                $('#Class_Number').multiselect('deselectAll', false);
+                $('#Class_Number').multiselect('updateButtonText');
+
+                $('#Category').multiselect('deselectAll', false);
+                $('#Category').multiselect('updateButtonText');
+
+                $('#Class_Number').multiselect('disable');
+                $('#Category').multiselect('disable');
+
+            } else {
+
+                $("#loadMe").modal({
+                    backdrop: "static", //remove ability to close modal with click
+                    keyboard: false, //remove option to close with keyboard
+                    show: true //Display loader!
+                });
+
+                var selectedDepartmentValues = $('#Department_No').val();
+
+                if (selectedDepartmentValues.includes('selectAll')) {
+                    if (selectedDepartmentValues.length > 1) {
+                        var index = selectedDepartmentValues.indexOf('selectAll');
+                        var deselectValues = selectedDepartmentValues;
+                        deselectValues.splice(index, 1);
+                        $('#Department_No').multiselect('deselect', deselectValues);
+                    }
+                    selectedDepartmentValues = [];
+                    $("#Department_No option").each(function () {
+                        var thisOptionValue = $(this).val();
+                        if (thisOptionValue != 'selectAll') {
+                            selectedDepartmentValues.push(thisOptionValue);
+                        }
+                    });
+                }
+                var controllerUrl = '/SierraReports/GetClassData';
+
+                var token = $("#RequestVerificationToken").val();
+
+                var reportData = {
+                    reportName: selectedReportName,
+                    reportFolder: selectedFolderName
+                }
+
+                var departmentData = {
+                    'reportData': reportData,
+                    'selectedDepartments': selectedDepartmentValues
+                }
+
+                var json_DepartmentData = JSON.stringify(departmentData);
+
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    headers: { 'RequestVerificationToken': token },
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: json_DepartmentData
+                });
+
+                function successFunc(dropdownData) {
+                    if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                        alert(returnedData);
+                        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                    } else {
+                        var data = [];
+
+                        data.push({ label: "(ALL)", value: "selectAll" });
+
+                        for (i = 0; i < dropdownData.values.length; i++) {
+                            data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                        }
+
+                        $("#Class_Number").multiselect('dataprovider', data);
+                        $('#Class_Number').multiselect('enable');
+
+                        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                    }
+                }
+
+                function errorFunc(error) {
+                    alert("Error Retrieving Classes: " + error);
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                }
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Class_Number', function () {
+        if ($('#Category').length) {
+            if ($('#Class_Number :selected').length == 0) {
+
+                $('#Category').multiselect('deselectAll', false);
+                $('#Category').multiselect('updateButtonText');
+
+                $('#Category').multiselect('disable');
+
+            } else {
+
+                $("#loadMe").modal({
+                    backdrop: "static", //remove ability to close modal with click
+                    keyboard: false, //remove option to close with keyboard
+                    show: true //Display loader!
+                });
+
+                var selectedDepartmentValues = $('#Department_No').val();
+                var selectedClassValues = $('#Class_Number').val();
+
+                if (selectedDepartmentValues.includes('selectAll')) {
+                    $("#Department_No option").each(function () {
+                        var thisOptionValue = $(this).val();
+                        if (thisOptionValue != 'selectAll') {
+                            selectedDepartmentValues.push(thisOptionValue);
+                        }
+                    });
+                }
+
+                if (selectedClassValues.includes('selectAll')) {
+                    if (selectedClassValues.length > 1) {
+                        var index = selectedClassValues.indexOf('selectAll');
+                        var deselectValues = selectedClassValues;
+                        deselectValues.splice(index, 1);
+                        $('#Class_Number').multiselect('deselect', deselectValues);
+                    }
+                    selectedClassValues = [];
+                    $("#Class_Number option").each(function () {
+                        var thisOptionValue = $(this).val();
+                        if (thisOptionValue != 'selectAll') {
+                            selectedClassValues.push(thisOptionValue);
+                        }
+                    });
+                }
+
+                var controllerUrl = '/SierraReports/GetCategoryData';
+
+                var token = $("#RequestVerificationToken").val();
+
+                var reportData = {
+                    reportName: selectedReportName,
+                    reportFolder: selectedFolderName
+                }
+
+                var classData = {
+                    'reportData': reportData,
+                    'selectedDepartments': selectedDepartmentValues,
+                    'selectedClasses': selectedClassValues
+                };
+
+                var json_ClassData = JSON.stringify(classData);
+
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    headers: { 'RequestVerificationToken': token },
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: json_ClassData
+                });
+
+                function successFunc(dropdownData) {
+                    if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                        alert(returnedData);
+                        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                    } else {
+                        var data = [];
+
+                        data.push({ label: "(ALL)", value: "selectAll" });
+                        for (i = 0; i < dropdownData.values.length; i++) {
+                            data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                        }
+
+                        $("#Category").multiselect('dataprovider', data);
+                        $('#Category').multiselect('enable');
+                        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                    }
+                }
+
+                function errorFunc(error) {
+                    alert("Error Retrieving Categories: " + error);
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                }
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Category', function () {
+        var selectedCategoryValues = $('#Category').val();
+
+        if (selectedCategoryValues.includes('selectAll')) {
+            if (selectedCategoryValues.length > 1) {
+                var index = selectedCategoryValues.indexOf('selectAll');
+                var deselectValues = selectedCategoryValues;
+                deselectValues.splice(index, 1);
+                $('#Category').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#StoreGroup', function () {
+        var selectedStoreGroupValues = $('#StoreGroup').val();
+
+        if (selectedStoreGroupValues.includes('selectAll')) {
+            if (selectedStoreGroupValues.length > 1) {
+                var index = selectedStoreGroupValues.indexOf('selectAll');
+                var deselectValues = selectedStoreGroupValues;
+                deselectValues.splice(index, 1);
+                $('#StoreGroup').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Location', function () {
+        var selectedLocationValues = $('#Location').val();
+
+        if (selectedLocationValues.includes('selectAll')) {
+            if (selectedLocationValues.length > 1) {
+                var index = selectedLocationValues.indexOf('selectAll');
+                var deselectValues = selectedLocationValues;
+                deselectValues.splice(index, 1);
+                $('#Location').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Brand', function () {
+        var selectedBrandValues = $('#Brand').val();
+
+        if (selectedBrandValues.includes('selectAll')) {
+            if (selectedBrandValues.length > 1) {
+                var index = selectedBrandValues.indexOf('selectAll');
+                var deselectValues = selectedBrandValues;
+                deselectValues.splice(index, 1);
+                $('#Brand').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Vendor', function () {
+        var selectedVendorValues = $('#Vendor').val();
+
+        if (selectedVendorValues.includes('selectAll')) {
+            if (selectedVendorValues.length > 1) {
+                var index = selectedVendorValues.indexOf('selectAll');
+                var deselectValues = selectedVendorValues;
+                deselectValues.splice(index, 1);
+                $('#Vendor').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Enter_Brand_Name', function () {
+
+        var brand_pattern = $('#Enter_Brand_Name').val();
+
+        if (brand_pattern.trim() != "") {
+            var controllerUrl = '/SierraReports/GetBrandData';
+
+            var token = $("#RequestVerificationToken").val();
+
+            var reportData = {
+                reportName: $('#sierraReportName option[disabled]:selected').val(),
+                reportFolder: $('#folderName').val()
+            };
+
+            var brandData = {
+                'reportData': reportData,
+                'brandPattern': brand_pattern
+            };
+
+            var json_BrandData = JSON.stringify(brandData);
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
+                dataType: "json",
+                contentType: "application/json",
+                success: successFunc,
+                error: errorFunc,
+                data: json_BrandData
+            });
+
+            function successFunc(dropdownData) {
+
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
+                    var data = [];
+
+                    data.push({ label: "(ALL)", value: "selectAll" });
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Brand").multiselect('dataprovider', data);
+                    $('#Brand').multiselect('enable');
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Brands: " + error);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Enter_Vendor_Name', function () {
+        var vendor_pattern = $('#Enter_Vendor_Name').val();
+
+        if (vendor_pattern.trim() != "") {
+            var controllerUrl = '/SierraReports/GetVendorData';
+
+            var token = $("#RequestVerificationToken").val();
+
+            var reportData = {
+                reportName: $('#sierraReportName option[disabled]:selected').val(),
+                reportFolder: $('#folderName').val()
+            };
+
+            var vendorData = {
+                'reportData': reportData,
+                'vendorPattern': vendor_pattern
+            };
+
+            var json_VendorData = JSON.stringify(vendorData);
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
+                dataType: "json",
+                contentType: "application/json",
+                success: successFunc,
+                error: errorFunc,
+                data: json_VendorData
+            });
+
+            function successFunc(dropdownData) {
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
+                    var data = [];
+
+                    data.push({ label: "(ALL)", value: "selectAll" });
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Vendor").multiselect('dataprovider', data);
+                    $('#Vendor').multiselect('enable');
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Vendors: " + error);
+            }
+        }
+    });
+
     $('#saveSubscription').on('click', '#saveSierraSubscription', function () {
         var subscriptionID;
 
@@ -89,6 +454,28 @@ $(document).ready(function () {
         var fileFormat = $('#fileFormat').val();
         var schedule = $('#schedule').val();
         var dynamicParams = {};
+        var validParams = true;
+
+        if ($('#Department_No').length != 0) {
+            var deptVal = $('#Department_No').val();
+            if (deptVal.length == 0) {
+                validParams = false;
+            }
+        }
+
+        if ($('#Class_Number').length != 0) {
+            var classVal = $('#Class_Number').val();
+            if (classVal.length == 0) {
+                validParams = false;
+            }
+        }
+
+        if ($('#Category').length != 0) {
+            var catVal = $('#Category').val();
+            if (catVal.length == 0) {
+                validParams = false;
+            }
+        }
 
         if (subscriptionName == '') {
             alert("Please enter a value for Subscription Name");
@@ -98,13 +485,131 @@ $(document).ready(function () {
             alert("Please select a value for Group Name");
         } else if (isValidString == false) {
             alert("Subscription Name contains special characters, you can only enter values a-z, A-Z, 0-9, space( ), and hyphen(-).");
+        } else if (validParams == false) {
+            alert("Please do not leave Department, Class, or Category Empty.");
         } else {
+            var isAllDept = false;
+            var isAllClass = false;
             $('#hiddenParamNames > input').each(function () {
                 var inputID = this.value;
                 var dynamicParamVal = $('#' + inputID).val();
 
                 if (dynamicParamVal !== null) {
-                    dynamicParams[inputID] = dynamicParamVal.toString();
+                    if (inputID == 'Department_No') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            isAllDept = true;
+                            dynamicParams[inputID] = 'ALL';
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'Class_Number') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            if (isAllDept == true) {
+                                isAllClass = true;
+                                dynamicParams[inputID] = 'ALL';
+                            } else {
+                                dynamicParamVal = [];
+                                $("#Class_Number option").each(function () {
+                                    var thisOptionValue = $(this).val();
+                                    if (thisOptionValue != 'selectAll') {
+                                        dynamicParamVal.push(thisOptionValue);
+                                    }
+                                });
+                                dynamicParams[inputID] = dynamicParamVal.toString();
+                            }
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'Category') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            if (isAllDept == true && isAllClass == true) {
+                                dynamicParams[inputID] = 'ALL';
+                            } else {
+                                dynamicParamVal = [];
+                                $("#Category option").each(function () {
+                                    var thisOptionValue = $(this).val();
+                                    if (thisOptionValue != 'selectAll') {
+                                        dynamicParamVal.push(thisOptionValue);
+                                    }
+                                });
+                                dynamicParams[inputID] = dynamicParamVal.toString();
+                            }
+
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'Vendor') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParamVal = [];
+                            $("#Vendor option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    dynamicParamVal.push(thisOptionValue);
+                                }
+                            });
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'Brand') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParamVal = [];
+                            $("#Brand option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    dynamicParamVal.push(thisOptionValue);
+                                }
+                            });
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'Fiscal_Month') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParamVal = [];
+                            $("#Fiscal_Month option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    dynamicParamVal.push(thisOptionValue);
+                                }
+                            });
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'StoreGroup') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParamVal = [];
+                            $("#StoreGroup option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    dynamicParamVal.push(thisOptionValue);
+                                }
+                            });
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'Location') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParamVal = [];
+                            $("#Location option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    dynamicParamVal.push(thisOptionValue);
+                                }
+                            });
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParams[inputID] = 'ALL';
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    }
                 } else {
                     dynamicParams[inputID] = dynamicParamVal;
                 }
@@ -144,7 +649,6 @@ $(document).ready(function () {
             });
 
             function successFunc(returnedData) {
-
                 if (returnedData.result == 'Redirect') {
                     alert(returnedData.message + subscriptionName);
                     window.location = returnedData.url;
@@ -155,6 +659,121 @@ $(document).ready(function () {
 
             function errorFunc(error) {
                 alert("Error Saving Report Subscription Data: " + error);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '.multiselect_dynamic', function () {
+
+        var parameterID = $(this).attr('id');
+
+        var selectedValues = $('#' + parameterID).val();
+
+        if (selectedValues.includes('selectAll')) {
+            if (selectedValues.length > 1) {
+                var index = selectedValues.indexOf('selectAll');
+                var deselectValues = selectedValues;
+                deselectValues.splice(index, 1);
+                $('#' + parameterID).multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Channel', function () {
+
+        var channelVal = $('#Channel').val();
+
+        if (!$('#StoreGroup').length == 0) {
+            var controllerUrl = '/SierraReports/GetStoreGroupData';
+
+            var token = $("#RequestVerificationToken").val();
+
+            var reportData = {
+                reportName: $('#sierraReportName option[disabled]:selected').val(),
+                reportFolder: $('#folderName').val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc,
+                data: {
+                    'reportData': reportData,
+                    'channel': channelVal
+                }
+            });
+
+            function successFunc(dropdownData) {
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
+                    var data = [];
+
+                    if (dropdownData.values.length > 1) {
+                        data.push({ label: "(ALL)", value: "selectAll" });
+                    }
+
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#StoreGroup").multiselect('dataprovider', data);
+                    $('#StoreGroup').multiselect('enable');
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Store Group: " + error);
+            }
+        }
+
+        if (!$('#Location').length == 0) {
+            var controllerUrl = '/SierraReports/GetLocationData';
+
+            var token = $("#RequestVerificationToken").val();
+
+            var reportData = {
+                reportName: $('#sierraReportName option[disabled]:selected').val(),
+                reportFolder: $('#folderName').val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc,
+                data: {
+                    'reportData': reportData,
+                    'channel': channelVal
+                }
+            });
+
+            function successFunc(dropdownData) {
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
+                    var data = [];
+
+                    if (dropdownData.values.length > 1) {
+                        data.push({ label: "(ALL)", value: "selectAll" });
+                    }
+
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Location").multiselect('dataprovider', data);
+                    $('#Location').multiselect('enable');
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Store Group: " + error);
             }
         }
     });
@@ -261,7 +880,9 @@ function createParams(paramData) {
                 dropdown.append(defaultDropdownOption);
             }
 
-            else if (paramData.parameters[i].type == "MultiDropdown") {
+            else if (paramData.parameters[i].type == "MultiDropdown" && (paramData.parameters[i].name != "Class_Number" && paramData.parameters[i].name != "Category" && paramData.parameters[i].name != "Brand" && paramData.parameters[i].name != "Vendor" && paramData.parameters[i].name != "StoreGroup" && paramData.parameters[i].name != "Location")) {
+                var allDropdownOption = $('<option value="selectAll">').text("(ALL)");
+                dropdown.append(allDropdownOption);
                 dropdown.addClass('multiselect_dynamic');
             }
 
@@ -310,11 +931,31 @@ function createParams(paramData) {
         $('#dynamicParams').append(row);
 
         if (paramData.parameters[i].type == "MultiDropdown") {
-
             $('#' + paramData.parameters[i].name).multiselect({
-                nonSelectedText: 'Select a value...',
                 enableCaseInsensitiveFiltering: true,
-                includeSelectAllOption: true
+                buttonText: function (options, select) {
+                    if (options.length > 0) {
+                        var labels = [];
+                        options.each(function () {
+                            if ($(this).attr('label') !== undefined) {
+
+                                if ($(this).attr('value') == "selectAll") {
+                                    labels = [];
+                                    labels.push('(ALL)');
+                                    return false;
+                                } else {
+                                    labels.push($(this).attr('label'));
+                                }
+                            }
+                            else {
+                                labels.push($(this).html());
+                            }
+                        });
+                        return labels.join(', ') + '';
+                    } else {
+                        return 'Select a Value...';
+                    }
+                }
             });
         }
     }
@@ -354,10 +995,18 @@ function selectDynamicParams() {
 
                 if ($("#" + paramName).prop("multiple")) { // Multi Select Box
 
-                    var selectedValues = selectedDynamicParamVals[paramName].split(',');
+                    var selectedValues = '';
 
-                    $("#" + paramName).val(selectedValues);
-                    $("#" + paramName).multiselect('refresh');
+                    if (selectedDynamicParamVals[paramName] == 'ALL' || selectedDynamicParamVals[paramName] == 'All') {
+                        selectedValues = 'selectAll';
+                    } else {
+                        selectedValues = selectedDynamicParamVals[paramName].split(',');
+                    }
+
+                    if (paramName != "Class_Number" && paramName != "Category" && paramName != "StoreGroup" && paramName != "Location" && paramName != "Vendor" && paramName != "Brand") { //Not disabled multi-select
+                        $("#" + paramName).val(selectedValues);
+                        $("#" + paramName).multiselect('refresh');
+                    }
 
                 } else { // Single Select Box
                     $("#" + paramName).val(selectedDynamicParamVals[paramName]);
@@ -370,5 +1019,393 @@ function selectDynamicParams() {
         }
     }
 
-    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+    var selectedReportName = $('#sierraReportName option[disabled]:selected').val();
+    var selectedFolderName = $('#folderName').val();
+
+    if ("Enter_Vendor_Name" in selectedDynamicParamVals) {
+        if ($('#Enter_Vendor_Name').val().length > 0) {
+
+            var vendor_pattern = $('#Enter_Vendor_Name').val();
+
+            var controllerUrl = '/SierraReports/GetVendorData';
+
+            var token = $("#RequestVerificationToken").val();
+
+            var reportData = {
+                reportName: selectedReportName,
+                reportFolder: selectedFolderName
+            };
+
+            var vendorData = {
+                'reportData': reportData,
+                'vendorPattern': vendor_pattern
+            };
+
+            var json_VendorData = JSON.stringify(vendorData);
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
+                dataType: "json",
+                contentType: "application/json",
+                success: successFunc,
+                error: errorFunc,
+                data: json_VendorData
+            });
+
+            function successFunc(dropdownData) {
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
+                    var data = [];
+
+                    data.push({ label: "(ALL)", value: "selectAll" });
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Vendor").multiselect('dataprovider', data);
+                    var values = selectedDynamicParamVals["Vendor"].split(',');
+
+                    if (values != null && (values[0] == "ALL" || values[0] == "All")) {
+                        values = "selectAll";
+                    }
+
+                    $("#Vendor").val(values);
+                    $("#Vendor").multiselect("refresh");
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Vendors: " + error);
+            }
+
+        } else {
+            $('#Vendor').val(selectedDynamicParamVals["Vendor"]);
+            $("#Vendor").multiselect("refresh");
+        }
+
+    }
+
+    if ("Enter_Brand_Name" in selectedDynamicParamVals) {
+        if ($('#Enter_Brand_Name').val().length > 0) {
+
+            var brand_pattern = $('#Enter_Brand_Name').val();
+
+            var controllerUrl = '/SierraReports/GetBrandData';
+
+            var token = $("#RequestVerificationToken").val();
+
+            var reportData = {
+                reportName: selectedReportName,
+                reportFolder: selectedFolderName
+            };
+
+            var brandData = {
+                'reportData': reportData,
+                'brandPattern': brand_pattern
+            };
+
+            var json_BrandData = JSON.stringify(brandData);
+
+            $.ajax({
+                type: "POST",
+                url: controllerUrl,
+                headers: { 'RequestVerificationToken': token },
+                dataType: "json",
+                contentType: "application/json",
+                success: successFunc,
+                error: errorFunc,
+                data: json_BrandData
+            });
+
+            function successFunc(dropdownData) {
+                if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                    alert(returnedData);
+                } else {
+                    var data = [];
+
+                    data.push({ label: "(ALL)", value: "selectAll" });
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Brand").multiselect('dataprovider', data);
+                    var values = selectedDynamicParamVals["Brand"].split(',');
+
+                    if (values != null && (values[0] == "ALL" || values[0] == "All")) {
+                        values = "selectAll";
+                    }
+
+                    $("#Brand").val(values);
+                    $("#Brand").multiselect("refresh");
+                }
+            }
+
+            function errorFunc(error) {
+                alert("Error Retrieving Brands: " + error);
+            }
+
+        } else {
+            $('#Brand').val(selectedDynamicParamVals["Brand"]);
+            $("#Brand").multiselect("refresh");
+        }
+
+    }
+
+    if ("StoreGroup" in selectedDynamicParamVals) {
+        var selectedChannelValue = selectedDynamicParamVals["Channel"];
+
+        var controllerUrl = '/SierraReports/GetStoreGroupData';
+
+        var token = $("#RequestVerificationToken").val();
+
+        var reportData = {
+            reportName: selectedReportName,
+            reportFolder: selectedFolderName
+        }
+
+        $.ajax({
+            type: "POST",
+            url: controllerUrl,
+            headers: { 'RequestVerificationToken': token },
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc,
+            data: {
+                'reportData': reportData,
+                'channel': selectedChannelValue
+            }
+        });
+
+        function successFunc(dropdownData) {
+            if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                alert(returnedData);
+            } else {
+                var data = [];
+
+                if (dropdownData.values.length > 1) {
+                    data.push({ label: "(ALL)", value: "selectAll" });
+                }
+
+                for (i = 0; i < dropdownData.values.length; i++) {
+                    data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                }
+
+                $("#StoreGroup").multiselect('dataprovider', data);
+
+                var values = selectedDynamicParamVals["StoreGroup"].split(',');
+
+                if (values != null && (values[0] == "ALL" || values[0] == "All")) {
+                    values = "selectAll";
+                }
+
+                $("#StoreGroup").val(values);
+                $("#StoreGroup").multiselect("refresh");
+            }
+        }
+
+        function errorFunc(error) {
+            alert("Error Retrieving Store Group: " + error);
+        }
+    }
+
+    if ("Location" in selectedDynamicParamVals) {
+        var selectedChannelValue = selectedDynamicParamVals["Channel"];
+
+        var controllerUrl = '/SierraReports/GetLocationData';
+
+        var token = $("#RequestVerificationToken").val();
+
+        var reportData = {
+            reportName: selectedReportName,
+            reportFolder: selectedFolderName
+        }
+
+        $.ajax({
+            type: "POST",
+            url: controllerUrl,
+            headers: { 'RequestVerificationToken': token },
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc,
+            data: {
+                'reportData': reportData,
+                'channel': selectedChannelValue
+            }
+        });
+
+        function successFunc(dropdownData) {
+            if (typeof returnedData === 'string') { //If there is an error pulling it from the database
+                alert(returnedData);
+            } else {
+                var data = [];
+
+                if (dropdownData.values.length > 1) {
+                    data.push({ label: "(ALL)", value: "selectAll" });
+                }
+
+                for (i = 0; i < dropdownData.values.length; i++) {
+                    data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                }
+
+                $("#Location").multiselect('dataprovider', data);
+
+                var values = selectedDynamicParamVals["Location"].split(',');
+
+                if (values != null && (values[0] == "ALL" || values[0] == "All")) {
+                    values = "selectAll";
+                }
+
+                $("#Location").val(values);
+                $("#Location").multiselect("refresh");
+            }
+        }
+
+        function errorFunc(error) {
+            alert("Error Retrieving Store Group: " + error);
+        }
+    }
+
+    if ("Class_Number" in selectedDynamicParamVals && selectedReportName != "BCF Dollars And Units By Department") {
+        var selectedDepartmentValues = selectedDynamicParamVals["Department_No"].split(',');
+
+        if (selectedDepartmentValues.includes('ALL')) {
+            $("#Department_No option").each(function () {
+                var thisOptionValue = $(this).val();
+                if (thisOptionValue != 'selectAll') {
+                    selectedDepartmentValues.push(thisOptionValue);
+                }
+            });
+        }
+
+        var controllerUrl = '/SierraReports/GetClassData';
+
+        var token = $("#RequestVerificationToken").val();
+
+        var reportData = {
+            reportName: selectedReportName,
+            reportFolder: selectedFolderName
+        }
+
+        var departmentData = {
+            'reportData': reportData,
+            'selectedDepartments': selectedDepartmentValues
+        }
+
+        var json_DepartmentData = JSON.stringify(departmentData);
+
+        $.ajax({
+            type: "POST",
+            url: controllerUrl,
+            headers: { 'RequestVerificationToken': token },
+            dataType: "json",
+            contentType: "application/json",
+            success: successFunc,
+            error: errorFunc,
+            data: json_DepartmentData
+        });
+
+        function successFunc(dropdownData) {
+            var data = [];
+
+            data.push({ label: "(ALL)", value: "selectAll" });
+
+            for (i = 0; i < dropdownData.values.length; i++) {
+                data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+            }
+
+            $("#Class_Number").multiselect('dataprovider', data);
+            var values = selectedDynamicParamVals["Class_Number"].split(',');
+
+            if (values != null && (values[0] == "ALL" || values[0] == "All")) {
+                values = "selectAll";
+            }
+
+            $("#Class_Number").val(values);
+            $("#Class_Number").multiselect("refresh");
+
+            if ("Category" in selectedDynamicParamVals) {
+                var selectedClassValues = selectedDynamicParamVals["Class_Number"].split(',');
+
+                if (selectedClassValues.includes('ALL')) {
+                    $("#Class_Number option").each(function () {
+                        var thisOptionValue = $(this).val();
+                        if (thisOptionValue != 'selectAll') {
+                            selectedClassValues.push(thisOptionValue);
+                        }
+                    });
+                }
+
+                var controllerUrl = '/SierraReports/GetCategoryData';
+
+                var token = $("#RequestVerificationToken").val();
+
+                var reportData = {
+                    reportName: selectedReportName,
+                    reportFolder: selectedFolderName
+                }
+
+                var classData = {
+                    'reportData': reportData,
+                    'selectedDepartments': selectedDepartmentValues,
+                    'selectedClasses': selectedClassValues
+                };
+
+                var json_ClassData = JSON.stringify(classData);
+
+                $.ajax({
+                    type: "POST",
+                    url: controllerUrl,
+                    headers: { 'RequestVerificationToken': token },
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: successFunc,
+                    error: errorFunc,
+                    data: json_ClassData
+                });
+
+                function successFunc(dropdownData) {
+                    var data = [];
+
+                    data.push({ label: "(ALL)", value: "selectAll" });
+
+                    for (i = 0; i < dropdownData.values.length; i++) {
+                        data.push({ label: dropdownData.labels[i], value: dropdownData.values[i] });
+                    }
+
+                    $("#Category").multiselect('dataprovider', data);
+                    var values = selectedDynamicParamVals["Category"].split(',');
+
+                    if (values != null && (values[0] == "ALL" || values[0] == "All")) {
+                        values = "selectAll";
+                    }
+
+                    $("#Category").val(values);
+                    $("#Category").multiselect("refresh");
+
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                }
+
+                function errorFunc(error) {
+                    setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+                    alert("Error Retrieving Categories: " + error);
+                }
+            } else {
+                setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+            }
+
+        }
+
+        function errorFunc(error) {
+            setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+            alert("Error Retrieving Classes: " + error);
+        }
+    } else {
+        setTimeout(function () { $("#loadMe").modal("hide"); }, 500);
+    }
 }
+
+        
+

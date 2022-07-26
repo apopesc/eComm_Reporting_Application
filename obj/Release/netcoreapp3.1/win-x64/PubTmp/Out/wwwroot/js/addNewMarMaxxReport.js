@@ -268,6 +268,32 @@ $(document).ready(function () {
                         } else {
                             dynamicParams[inputID] = dynamicParamVal.toString();
                         }
+                    } else if (inputID == 'Vendor') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParamVal = [];
+                            $("#Vendor option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    dynamicParamVal.push(thisOptionValue);
+                                }
+                            });
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
+                    } else if (inputID == 'Brand') {
+                        if (dynamicParamVal.includes('selectAll')) {
+                            dynamicParamVal = [];
+                            $("#Brand option").each(function () {
+                                var thisOptionValue = $(this).val();
+                                if (thisOptionValue != 'selectAll') {
+                                    dynamicParamVal.push(thisOptionValue);
+                                }
+                            });
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        } else {
+                            dynamicParams[inputID] = dynamicParamVal.toString();
+                        }
                     } else {
                         if (dynamicParamVal.includes('selectAll')) {
                             dynamicParams[inputID] = 'ALL';
@@ -651,6 +677,32 @@ $(document).ready(function () {
                 var deselectValues = selectedCategoryValues;
                 deselectValues.splice(index, 1);
                 $('#Category').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Brand', function () {
+        var selectedBrandValues = $('#Brand').val();
+
+        if (selectedBrandValues.includes('selectAll')) {
+            if (selectedBrandValues.length > 1) {
+                var index = selectedBrandValues.indexOf('selectAll');
+                var deselectValues = selectedBrandValues;
+                deselectValues.splice(index, 1);
+                $('#Brand').multiselect('deselect', deselectValues);
+            }
+        }
+    });
+
+    $('#dynamicParams').on('change', '#Vendor', function () {
+        var selectedVendorValues = $('#Vendor').val();
+
+        if (selectedVendorValues.includes('selectAll')) {
+            if (selectedVendorValues.length > 1) {
+                var index = selectedVendorValues.indexOf('selectAll');
+                var deselectValues = selectedVendorValues;
+                deselectValues.splice(index, 1);
+                $('#Vendor').multiselect('deselect', deselectValues);
             }
         }
     });

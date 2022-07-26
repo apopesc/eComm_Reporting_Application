@@ -1268,7 +1268,7 @@ function selectDynamicParams() {
         }
     }
 
-    if ("Class_Number" in selectedDynamicParamVals) {
+    if ("Class_Number" in selectedDynamicParamVals && selectedReportName != "BCF Dollars And Units By Department") {
         var selectedDepartmentValues = selectedDynamicParamVals["Department_No"].split(',');
 
         if (selectedDepartmentValues.includes('ALL')) {
