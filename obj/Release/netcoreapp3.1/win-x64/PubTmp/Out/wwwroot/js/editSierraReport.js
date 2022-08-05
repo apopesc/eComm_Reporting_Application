@@ -1326,7 +1326,7 @@ function selectDynamicParams() {
             $("#Class_Number").val(values);
             $("#Class_Number").multiselect("refresh");
 
-            if ("Category" in selectedDynamicParamVals) {
+            if ("Category" in selectedDynamicParamVals && selectedReportName != "BCF Dollars And Units By Department") {
                 var selectedClassValues = selectedDynamicParamVals["Class_Number"].split(',');
 
                 if (selectedClassValues.includes('ALL')) {
